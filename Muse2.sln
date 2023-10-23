@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Muse2", "Muse2\Muse2.csproj", "{D6B5D621-45C1-4059-9F72-95EC355E18C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muse2", "Muse2\Muse2.csproj", "{D6B5D621-45C1-4059-9F72-95EC355E18C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessFakes", "DataAccessFakes\DataAccessFakes.csproj", "{FA72677C-745B-4D4C-8427-A8EF86E882FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessInterfaces", "DataAccessInterfaces\DataAccessInterfaces.csproj", "{52F14C8A-8B39-46A2-B171-8C78A060C8B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataObjects", "DataObjects\DataObjects.csproj", "{DD5EDD8B-8A58-4318-A778-0510B821B7E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicLayer", "LogicLayer\LogicLayer.csproj", "{299986C3-0F65-4C23-BB2B-7711BB18E53D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicLayerTests", "LogicLayerTests\LogicLayerTests.csproj", "{959FA536-6641-412F-B4B1-3BA665F50058}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{3394C672-6B87-4957-BA59-266D39449D88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +27,30 @@ Global
 		{D6B5D621-45C1-4059-9F72-95EC355E18C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6B5D621-45C1-4059-9F72-95EC355E18C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6B5D621-45C1-4059-9F72-95EC355E18C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA72677C-745B-4D4C-8427-A8EF86E882FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA72677C-745B-4D4C-8427-A8EF86E882FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA72677C-745B-4D4C-8427-A8EF86E882FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA72677C-745B-4D4C-8427-A8EF86E882FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F14C8A-8B39-46A2-B171-8C78A060C8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F14C8A-8B39-46A2-B171-8C78A060C8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F14C8A-8B39-46A2-B171-8C78A060C8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F14C8A-8B39-46A2-B171-8C78A060C8B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD5EDD8B-8A58-4318-A778-0510B821B7E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD5EDD8B-8A58-4318-A778-0510B821B7E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD5EDD8B-8A58-4318-A778-0510B821B7E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD5EDD8B-8A58-4318-A778-0510B821B7E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{299986C3-0F65-4C23-BB2B-7711BB18E53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{299986C3-0F65-4C23-BB2B-7711BB18E53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{299986C3-0F65-4C23-BB2B-7711BB18E53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{299986C3-0F65-4C23-BB2B-7711BB18E53D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{959FA536-6641-412F-B4B1-3BA665F50058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{959FA536-6641-412F-B4B1-3BA665F50058}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{959FA536-6641-412F-B4B1-3BA665F50058}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{959FA536-6641-412F-B4B1-3BA665F50058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3394C672-6B87-4957-BA59-266D39449D88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3394C672-6B87-4957-BA59-266D39449D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3394C672-6B87-4957-BA59-266D39449D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3394C672-6B87-4957-BA59-266D39449D88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

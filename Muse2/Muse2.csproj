@@ -7,4 +7,31 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="defaultAccount.png" />
+    <None Remove="defaultAlbumImage.png" />
+    <None Remove="museLogo.png" />
+    <None Remove="next.png" />
+    <None Remove="queue.png" />
+    <None Remove="rewind.png" />
+    <None Remove="shuffle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessFakes\DataAccessFakes.csproj" />
+    <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj" />
+    <ProjectReference Include="..\DataObjects\DataObjects.csproj" />
+    <ProjectReference Include="..\LogicLayer\LogicLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="defaultAccount.png" />
+    <Resource Include="defaultAlbumImage.png" />
+    <Resource Include="museLogo.png" />
+    <Resource Include="next.png" />
+    <Resource Include="queue.png" />
+    <Resource Include="rewind.png" />
+    <Resource Include="shuffle.png" />
+  </ItemGroup>
+
 </Project>

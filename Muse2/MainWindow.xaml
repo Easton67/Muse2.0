@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+        Title="MainWindow" Height="900" Width="1500" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="180"/>
             <RowDefinition Height="10"/>
             <RowDefinition />
             <RowDefinition Height="50"/>
@@ -22,7 +22,7 @@
             </MenuItem>
             <MenuItem x:Name="mnuSong" Header="Song">
                 <MenuItem x:Name="mnuAddSongToLibrary" Header="Add Song To Library"/>
-                <MenuItem x:Name="mnuViewAllSongs" Header="ViewAllSongs"/>
+                <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs"/>
             </MenuItem>
             <MenuItem x:Name="mnuAccount" Header="Account">
                 <MenuItem x:Name="mnuViewProfile" Header="View Profile"/>
@@ -41,6 +41,59 @@
                 <MenuItem x:Name="mnuNext" Header="Next"/>
                 <MenuItem x:Name="mnuRewind" Header="Rewind"/>
             </MenuItem>
+            <MenuItem x:Name="mnuArtist" Header="Artist" Visibility="Hidden">
+                <MenuItem x:Name="mnuViewPage" Header="View Page"/>
+                <MenuItem x:Name="mnuPostSong" Header="Post Song"/>
+                <MenuItem x:Name="mnuPostAlbum" Header="Post Album"/>
+            </MenuItem>
+            <MenuItem x:Name="mnuAdmin" Header="Admin" Visibility="Hidden">
+                <MenuItem x:Name="mnuViewAllUsers" Header="View All Users"/>
+            </MenuItem>
         </Menu>
+        <Grid Grid.Row="1" Margin="0,0,5,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <!-- Col0 -->
+            <Image x:Name="imgLogo" Grid.Row="0" Width="200" Source="/museLogo.png" HorizontalAlignment="Left" Margin="50,0,0,0"/>
+            <!-- Col1 -->
+            <Image x:Name="imgRewind" Grid.Row="1" Grid.Column="1" Width="25" Source="/rewind.png" Margin="0,0,5,0"/>
+            <!-- Col2 -->
+            <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="2" Width="100" Source="/defaultAlbumImage.png" HorizontalAlignment="Left"/>
+            <ProgressBar x:Name="barSongLength" Grid.Row="1" Grid.Column="2" Height="10" Width="300" Foreground="#FFD5C9E3"/>
+            <Image x:Name="imgShuffle" Grid.Row="2" Grid.Column="2" Width="25" Source="/shuffle.png" HorizontalAlignment="Left"/>
+            <Image x:Name="imgQueue" Grid.Row="2" Grid.Column="2" Width="25" Source="/queue.png" HorizontalAlignment="Right"/>
+            <!-- Col3 -->
+            <!-- Col4 -->
+            <!-- Col5 -->
+            <Image x:Name="imgNext" Grid.Row="1" Grid.Column="5" Width="25" Source="/next.png" Margin="5,0,0,0"/>
+            <!-- Col6 -->
+            
+            <!-- Col7 -->
+            <Button x:Name="btnLogin" Content="Log In"
+                    Grid.Column="7" Grid.Row="1"
+                    FontWeight="Bold"/>
+            <!-- Col8 -->
+            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="8" Width="100" Source="/defaultAccount.png"/>
+            <!-- Col9 -->
+            <Button x:Name="btnSignUp" Content="Sign Up"
+                    Grid.Column="9" Grid.Row="1"
+                    FontWeight="Bold" Margin="0,0,5,0"/>
+        </Grid>
     </Grid>
 </Window>
