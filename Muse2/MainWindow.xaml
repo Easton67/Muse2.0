@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1500" WindowState="Maximized">
+        Title="MainWindow" Height="900" Width="1500" MinWidth="810" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -41,12 +41,12 @@
                 <MenuItem x:Name="mnuNext" Header="Next"/>
                 <MenuItem x:Name="mnuRewind" Header="Rewind"/>
             </MenuItem>
-            <MenuItem x:Name="mnuArtist" Header="Artist" Visibility="Hidden">
+            <MenuItem x:Name="mnuArtist" Header="Artist">
                 <MenuItem x:Name="mnuViewPage" Header="View Page"/>
                 <MenuItem x:Name="mnuPostSong" Header="Post Song"/>
                 <MenuItem x:Name="mnuPostAlbum" Header="Post Album"/>
             </MenuItem>
-            <MenuItem x:Name="mnuAdmin" Header="Admin" Visibility="Hidden">
+            <MenuItem x:Name="mnuAdmin" Header="Admin">
                 <MenuItem x:Name="mnuViewAllUsers" Header="View All Users"/>
             </MenuItem>
         </Menu>
@@ -55,45 +55,74 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <!-- Col0 -->
-            <Image x:Name="imgLogo" Grid.Row="0" Width="200" Source="/museLogo.png" HorizontalAlignment="Left" Margin="50,0,0,0"/>
+            <Image x:Name="imgLogo" Grid.Row="0" Width="200" HorizontalAlignment="Left" Margin="50,0,0,0" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\museLogo.png"/>
             <!-- Col1 -->
-            <Image x:Name="imgRewind" Grid.Row="1" Grid.Column="1" Width="25" Source="/rewind.png" Margin="0,0,5,0"/>
+            <Label x:Name="lblSongTitle" Content="Song" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,47" FontSize="24" />
+            <Label x:Name="lblSongArtist" Content="Artist" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,21,0,0" FontSize="18" />
+            <Image x:Name="imgRewind" Grid.Row="1" Grid.Column="1" Width="25" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\rewind.png" Margin="0,0,5,0" HorizontalAlignment="Left"/>
+            <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="1" Width="75" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\defaultAlbumImage.png" HorizontalAlignment="Left" Margin="34,0,0,0" />
+            <ProgressBar x:Name="barSongLength" Grid.Row="1" Grid.Column="1" Height="10" Width="auto" Foreground="#FFD5C9E3" Margin="31,0,31,0"/>
+            <!-- 
+            <Image x:Name="imgShuffle" Grid.Row="2" Grid.Column="1" Width="25" Source="/shuffle.png" HorizontalAlignment="Left" Margin="30,0,0,0" VerticalAlignment="Top"/>
+            <Image x:Name="imgQueue" Grid.Row="2" Grid.Column="1" Width="25" Source="/queue.png" HorizontalAlignment="Right" Margin="0,0,30,0" VerticalAlignment="Top"/>
+            -->
+            <Image x:Name="imgNext" Grid.Row="1" Grid.Column="1" Width="25" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\next.png" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+            <Image x:Name="imgPause" Grid.Row="2" Grid.Column="1" Width="25" HorizontalAlignment="Center" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\pause.png" Margin="0,-14,0,0"/>
             <!-- Col2 -->
-            <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="2" Width="100" Source="/defaultAlbumImage.png" HorizontalAlignment="Left"/>
-            <ProgressBar x:Name="barSongLength" Grid.Row="1" Grid.Column="2" Height="10" Width="300" Foreground="#FFD5C9E3"/>
-            <Image x:Name="imgShuffle" Grid.Row="2" Grid.Column="2" Width="25" Source="/shuffle.png" HorizontalAlignment="Left"/>
-            <Image x:Name="imgQueue" Grid.Row="2" Grid.Column="2" Width="25" Source="/queue.png" HorizontalAlignment="Right"/>
-            <!-- Col3 -->
-            <!-- Col4 -->
-            <!-- Col5 -->
-            <Image x:Name="imgNext" Grid.Row="1" Grid.Column="5" Width="25" Source="/next.png" Margin="5,0,0,0"/>
-            <!-- Col6 -->
-            
-            <!-- Col7 -->
+            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\defaultAccount.png" HorizontalAlignment="Center"/>
+
             <Button x:Name="btnLogin" Content="Log In"
-                    Grid.Column="7" Grid.Row="1"
-                    FontWeight="Bold"/>
-            <!-- Col8 -->
-            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="8" Width="100" Source="/defaultAccount.png"/>
-            <!-- Col9 -->
-            <Button x:Name="btnSignUp" Content="Sign Up"
-                    Grid.Column="9" Grid.Row="1"
-                    FontWeight="Bold" Margin="0,0,5,0"/>
-        </Grid>
+                    Grid.Row="1" Grid.Column="2" 
+                    FontWeight="Bold" Width="50" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-165,0,0,0" Background="White" BorderThickness="0,0,0,0" Click="btnLogin_Click"/>
+
+            <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="2"
+                     Margin="2px" 
+                     Width="179"
+                     HorizontalAlignment="Right"/>
+
+            <Label x:Name="lblEmail" Grid.Row="1" Grid.Column="2"
+                   FontWeight="Bold" VerticalAlignment="Bottom"
+                   HorizontalContentAlignment="Center"
+                   Content="Email" HorizontalAlignment="Right" Margin="0,0,145,0" />
+
+            <Label x:Name="lblPassword" Grid.Row="3" Grid.Column="2"
+                   FontWeight="Bold" VerticalAlignment="Bottom"
+                   HorizontalContentAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Content="Password" Margin="0,0,123,0"/>
+
+
+            <PasswordBox x:Name="pwdPassword" Grid.Row="4" Grid.Column="2"
+                     Margin="2px" 
+                     Width="179"
+                     HorizontalAlignment="Right"/>
+        </Grid
+
+        <DataGrid Grid.Row="3" x:Name="grdLibrary" AutoGenerateColumns="False" BorderThickness="0,0,0,0" FontWeight="UltraBlack" HorizontalGridLinesBrush="White">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn x:Name="dataGridTemplateColumn" MaxWidth="50" CanUserResize="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding ImageFilePath}" MaxWidth="100" MinWidth="48" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Name" SortDirection="Ascending" MinWidth="500"/>
+                <DataGridTextColumn Header="Artist" MinWidth="500"/>
+                <DataGridTextColumn Header="Album" MinWidth="500" />
+                <DataGridTextColumn Header="Year"  MinWidth="75" />
+                <DataGridTextColumn Header="Length" MinWidth="75" />
+                <DataGridTextColumn Header="Plays" MinWidth="70" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

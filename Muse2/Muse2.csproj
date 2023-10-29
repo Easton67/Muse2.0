@@ -8,13 +8,43 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="defaultAccount.png" />
-    <None Remove="defaultAlbumImage.png" />
-    <None Remove="museLogo.png" />
-    <None Remove="next.png" />
-    <None Remove="queue.png" />
-    <None Remove="rewind.png" />
-    <None Remove="shuffle.png" />
+    <None Include="bin\Debug\static\shuffle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\static\rewind.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\static\queue.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\static\play.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\static\pause.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\static\next.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\static\museLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\static\defaultAlbumImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\static\defaultAccount.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,13 +55,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="defaultAccount.png" />
-    <Resource Include="defaultAlbumImage.png" />
-    <Resource Include="museLogo.png" />
-    <Resource Include="next.png" />
-    <Resource Include="queue.png" />
-    <Resource Include="rewind.png" />
-    <Resource Include="shuffle.png" />
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

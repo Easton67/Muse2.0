@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace Muse2
 {
     /// <summary>
-    /// Interaction logic for ViewSong.xaml
+    /// Interaction logic for EmailPasswordEntry.xaml
     /// </summary>
-    public partial class ViewSong : Window
+    public partial class EmailPasswordEntry : Window
     {
-        public ViewSong()
+        public EmailPasswordEntry()
         {
             InitializeComponent();
-        }
-
-        private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }
