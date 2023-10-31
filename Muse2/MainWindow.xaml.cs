@@ -36,11 +36,11 @@ namespace Muse2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _userManager = new UserManager();
-
             string password = pwdPassword.Password;
             string email = txtEmail.Text;
 
+            _userManager = new UserManager();
+            txtEmail.Focus();
             btnLogin.IsDefault = true;
 
 
@@ -109,20 +109,18 @@ namespace Muse2
                 {
                     loggedInUser = _userManager.LoginUser(email, password);
 
-                    if (pwdPassword.Password.ToString() == "Password")
-                    {
-                        txtEmail.Text = "";
-                        txtEmail.Visibility = Visibility.Hidden;
-                        lblEmail.Visibility = Visibility.Hidden;
+                    txtEmail.Text = "";
+                    txtEmail.Visibility = Visibility.Hidden;
+                    lblEmail.Visibility = Visibility.Hidden;
 
-                        pwdPassword.Password = "";
-                        pwdPassword.Visibility = Visibility.Hidden;
-                        lblPassword.Visibility = Visibility.Hidden;
+                    pwdPassword.Password = "";
+                    pwdPassword.Visibility = Visibility.Hidden;
+                    lblPassword.Visibility = Visibility.Hidden;
 
-                        btnLogin.Content = "Log Out";
-                        btnLogin.IsDefault = false;
-                        return;
-                    }
+                    grdLibrary.Visibility = Visibility.Visible;
+                    btnLogin.Content = "Log Out";
+                    btnLogin.IsDefault = false;
+
                 }
                 catch (Exception ex)
                 {

@@ -1,16 +1,16 @@
-﻿using DataAccessInterfaces;
-using DataObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessInterfaces;
+using DataObjects;
 
 namespace DataAccessFakes
 {
     public class UserAccessorFake : IUserAccessor
     {
-        // create a few fake employees for testing
+        // create a few fake users for testing
         private List<UserVM> fakeUsers = new List<UserVM>();
         private List<string> passwordHashes = new List<string>();
 
@@ -75,11 +75,11 @@ namespace DataAccessFakes
         {
             UserVM user = null;
 
-            foreach (var fakeEmployee in fakeUsers)
+            foreach (var fakeUser in fakeUsers)
             {
-                if (fakeEmployee.Email == email)
+                if (fakeUser.Email == email)
                 {
-                    user = fakeEmployee;
+                    user = fakeUser;
                 }
             }
             if (user == null) // no one found

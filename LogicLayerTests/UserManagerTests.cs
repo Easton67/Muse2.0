@@ -72,7 +72,7 @@ namespace LogicLayerTests
         public void TestGetUserByEmailReturnsCorrectUser()
         {
             // arrange
-            string email = "Easton@gmail.com";
+            string email = "Liam@gmail.com";
             int expectedUserID = 1;
             int actualUserID = 0;
 

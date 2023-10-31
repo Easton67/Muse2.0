@@ -21,7 +21,7 @@ namespace DataAccessLayer
             var conn = SqlConnectionProvider.GetConnection();
 
             // set the command text
-            var commandText = "sp_authenticate_employee";
+            var commandText = "sp_authenticate_user";
 
             // create the command object
             var cmd = new SqlCommand(commandText, conn);
@@ -68,7 +68,7 @@ namespace DataAccessLayer
             var conn = SqlConnectionProvider.GetConnection();
 
             //command text
-            var cmdText = "sp_select_user_by_email";
+            var cmdText = "sp_select_user_by_Email";
 
             //command
             var cmd = new SqlCommand(cmdText, conn);
@@ -97,11 +97,13 @@ namespace DataAccessLayer
                     if (reader.Read())
                     {
                         userVM.UserID = reader.GetInt32(0);
-                        userVM.FirstName = reader.GetString(1);
-                        userVM.LastName = reader.GetString(2);
-                        userVM.Email = reader.GetString(3);
-                        userVM.Active = reader.GetBoolean(4);
-                        userVM.Private = reader.GetBoolean(5);
+                        userVM.ProfileName = reader.GetString(1);
+                        userVM.Email = reader.GetString(2);
+                        userVM.FirstName = reader.GetString(3);
+                        userVM.LastName = reader.IsDBNull(5) ? "" : reader.GetString(4);
+                        userVM.ImageFilePath = reader.IsDBNull(5) ? "" : reader.GetString(5);
+                        userVM.Active = reader.GetBoolean(6);
+                        userVM.Private = reader.GetBoolean(7);
                     }
                     else
                     {
@@ -128,7 +130,7 @@ namespace DataAccessLayer
             var conn = SqlConnectionProvider.GetConnection();
 
             //command text
-            var cmdText = "sp_select_role_by_userID";
+            var cmdText = "sp_select_role_by_UserID";
 
             //command
             var cmd = new SqlCommand(cmdText, conn);
@@ -176,7 +178,7 @@ namespace DataAccessLayer
             var conn = SqlConnectionProvider.GetConnection();
 
             // set the command text
-            var commandText = "sp_update_passwordhash";
+            var commandText = "sp_update_PasswordHash";
 
             // create the command object
             var cmd = new SqlCommand(commandText, conn);
