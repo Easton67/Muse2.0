@@ -17,7 +17,7 @@ namespace DataObjects
         {
             bool isValid = false;
 
-            if (email.Length >= 14 && email.Length <= 100)
+            if (email.Length >= 10 && email.Length <= 100)
             {
                 isValid = true;
             }

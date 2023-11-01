@@ -50,7 +50,7 @@
                 <MenuItem x:Name="mnuViewAllUsers" Header="View All Users"/>
             </MenuItem>
         </Menu>
-        <Grid Grid.Row="1" Margin="0,0,5,0">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
@@ -76,7 +76,9 @@
             <Image x:Name="imgQueue" Grid.Row="2" Grid.Column="1" Width="25" Source="/queue.png" HorizontalAlignment="Right" Margin="0,0,30,0" VerticalAlignment="Top"/>
             -->
             <Image x:Name="imgNext" Grid.Row="1" Grid.Column="1" Width="25" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\next.png" Margin="5,0,0,0" HorizontalAlignment="Right"/>
-            <Image x:Name="imgPause" Grid.Row="2" Grid.Column="1" Width="25" HorizontalAlignment="Center" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\pause.png" Margin="0,-14,0,0"/>
+            <Image x:Name="imgPause" Grid.Row="2" Grid.Column="1" Width="25" HorizontalAlignment="Center" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\pause.png" Margin="0,0,0,0"/>
+            <Image x:Name="imgPlay" Grid.Row="2" Grid.Column="1" Width="25" HorizontalAlignment="Center" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\play.png"/>
+
             <!-- Col2 -->
             <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" Source="C:\Users\67Eas\source\repos\Muse2\Muse2\bin\Debug\static\defaultAccount.png" HorizontalAlignment="Center"/>
 
@@ -94,12 +96,16 @@
                    HorizontalContentAlignment="Center"
                    Content="Email" HorizontalAlignment="Right" Margin="0,0,145,0" />
 
+            <Label x:Name="lblProfileName" Grid.Row="1" Grid.Column="2"
+                   FontWeight="Bold"
+                   HorizontalContentAlignment="Center"
+                   Content="" HorizontalAlignment="Center" Margin="0,-2,-164,-2" Padding="5,5,5,5" />
+
             <Label x:Name="lblPassword" Grid.Row="3" Grid.Column="2"
                    FontWeight="Bold" VerticalAlignment="Bottom"
                    HorizontalContentAlignment="Center"
                    HorizontalAlignment="Right"
                    Content="Password" Margin="0,0,123,0"/>
-
 
             <PasswordBox x:Name="pwdPassword" Grid.Row="4" Grid.Column="2"
                      Margin="2px" 
