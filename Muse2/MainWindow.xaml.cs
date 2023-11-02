@@ -16,6 +16,8 @@ namespace Muse2
     {
         UserManager _userManager = null;
         UserVM loggedInUser = null;
+        SongManager _songManager = null;
+        // SongVM song = null;
 
         public MainWindow()
         {

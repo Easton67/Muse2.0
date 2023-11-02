@@ -20,9 +20,5 @@ namespace DataAccessLayer
             var connection = new SqlConnection(connectionString);
             return connection;
         }
-
-
-
-
     }
 }

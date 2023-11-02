@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISongManager.cs" />
+    <Compile Include="SongManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="IUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

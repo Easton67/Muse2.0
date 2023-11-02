@@ -17,7 +17,10 @@ namespace DataObjects
         {
             bool isValid = false;
 
-            if (email.Length >= 10 && email.Length <= 100)
+            if (email.Contains("@") && 
+                email.Contains(".") && 
+                email.Length >= 10 && 
+                email.Length <= 100)
             {
                 isValid = true;
             }
