@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection.PortableExecutable;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
@@ -33,9 +34,8 @@ namespace Muse2
 
             // Load images
 
-
-
             _userManager = new UserManager();
+            _songManager = new SongManager();
 
 
             // First time log in
@@ -57,12 +57,14 @@ namespace Muse2
             barSongLength.Visibility = Visibility.Collapsed;
 
             // Default the login and hide it
-            txtEmail.Text = "";
+
+            // txtEmail.Text = "";
             txtEmail.Visibility = Visibility.Visible;
             lblEmail.Visibility = Visibility.Visible;
             lblProfileName.Content = "";
             lblProfileName.Content = Visibility.Hidden;
-            pwdPassword.Password = "";
+
+            // pwdPassword.Password = "";
             pwdPassword.Visibility = Visibility.Visible;
             lblPassword.Visibility = Visibility.Visible;
             btnLogin.Content = "Log In";
@@ -74,21 +76,6 @@ namespace Muse2
             // Hide the grid
             grdLibrary.Visibility = Visibility.Collapsed;
 
-            List<MyDataObject> list = new List<MyDataObject>();
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            list.Add(new MyDataObject() { ImageFilePath = new Uri("file:C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAlbumImage.png") });
-            grdLibrary.ItemsSource = list;
         }
         private void updateUIForLogout()
         {
@@ -121,7 +108,7 @@ namespace Muse2
             btnLogin.Content = "Log In";
             btnLogin.IsDefault = false;
 
-            var AccountImage = new System.Uri("C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\static\\defaultAccount.png");
+            var AccountImage = new System.Uri("C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\Resources\\defaultAccount.png");
             BitmapImage bitmapImage = new BitmapImage(AccountImage);
             imgAccount.Source = bitmapImage;
 
@@ -131,7 +118,6 @@ namespace Muse2
             // Hide the grid
             grdLibrary.Visibility = Visibility.Collapsed;
         }
-
         private void updateUIForUserLogin()
         {
             // set song controls
@@ -159,9 +145,6 @@ namespace Muse2
             BitmapImage bitmapImage = new BitmapImage(AccountImage);
             imgAccount.Source = bitmapImage;
 
-
-
-
             foreach (var role in loggedInUser.Roles)
             {
                 if (role.ToString() == "Admin")
@@ -175,12 +158,9 @@ namespace Muse2
                     break;
                 }
             }
-
             // set library
             grdLibrary.Visibility = Visibility.Visible;
-
         }
-
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -197,6 +177,7 @@ namespace Muse2
             {
                 var email = txtEmail.Text;
                 var password = pwdPassword.Password;
+                var songList = new List<Song>();
 
                 if (!email.IsValidEmail())
                 {
@@ -220,6 +201,14 @@ namespace Muse2
                 try
                 {
                     loggedInUser = _userManager.LoginUser(email, password);
+
+                    var UserID = loggedInUser.UserID;
+                    // MessageBox.Show(UserID.ToString());
+
+                    List<Song> userSongs = _songManager.SelectSongsByUserID(UserID);
+
+                    grdLibrary.ItemsSource = userSongs;
+
                     updateUIForUserLogin();
                 }
                 catch (Exception ex)

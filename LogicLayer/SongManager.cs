@@ -8,16 +8,16 @@ namespace LogicLayer
 {
     public class SongManager : ISongManager
     {
-        private ISongManager _songAccessor = null;
+        private ISongAccessor _songAccessor = null;
 
         public SongManager()
         {
-            _songAccessor = (ISongManager)new SongAccessor();
+            _songAccessor = new SongAccessor();
         }
 
         public SongManager(ISongAccessor songAccessor)
         {
-            _songAccessor = (ISongManager)songAccessor;
+            _songAccessor = songAccessor;
         }
 
         public List<Song> SelectSongsByUserID(int UserID)

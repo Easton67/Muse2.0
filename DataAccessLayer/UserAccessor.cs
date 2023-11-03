@@ -100,7 +100,7 @@ namespace DataAccessLayer
                         userVM.ProfileName = reader.GetString(1);
                         userVM.Email = reader.GetString(2);
                         userVM.FirstName = reader.GetString(3);
-                        userVM.LastName = reader.IsDBNull(5) ? "" : reader.GetString(4);
+                        userVM.LastName = reader.IsDBNull(4) ? "" : reader.GetString(4);
                         userVM.ImageFilePath = reader.IsDBNull(5) ? "" : reader.GetString(5);
                         userVM.Active = reader.GetBoolean(6);
                         userVM.Private = reader.GetBoolean(7);

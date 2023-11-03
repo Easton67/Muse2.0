@@ -9,6 +9,6 @@ namespace LogicLayer
 {
     public interface ISongManager
     {
-        List<Song> SelectSongsByUserID(int userID);
+        List<Song> SelectSongsByUserID(int CreatedBy);
     }
 }

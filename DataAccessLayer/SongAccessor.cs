@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using DataAccessInterfaces;
+﻿using DataAccessInterfaces;
 using DataObjects;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -43,24 +39,18 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
-                    Song song = new Song
+                    var song = new Song
                     {
-                        SongID = reader.GetInt32(reader.GetOrdinal("SongID")),
-                        Title = reader.GetString(reader.GetOrdinal("Title")),
-                        ImageFilePath = reader.IsDBNull(reader.GetOrdinal("ImageFilePath"))
-                            ? string.Empty
-                            : reader.GetString(reader.GetOrdinal("ImageFilePath")),
-                        Mp3FilePath = reader.GetString(reader.GetOrdinal("Mp3FilePath")),
-                        YearReleased = reader.GetInt32(reader.GetOrdinal("YearReleased")),
-                        Lyrics = reader.IsDBNull(reader.GetOrdinal("Lyrics"))
-                            ? string.Empty
-                            : reader.GetString(reader.GetOrdinal("Lyrics")),
-                        Explicit = reader.GetBoolean(reader.GetOrdinal("Explicit")),
-                        Private = reader.GetBoolean(reader.GetOrdinal("Private")),
-                        Plays = reader.IsDBNull(reader.GetOrdinal("Plays"))
-                            ? 0
-                            : reader.GetInt32(reader.GetOrdinal("Plays")),
-                        CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy"))
+                        SongID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ImageFilePath = reader.IsDBNull(2) ? "\\bin\\Debug\\MuseConfig\\art\\SongDefault.jpg" : reader.GetString(2),
+                        Mp3FilePath = reader.GetString(3),
+                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
+                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
+                        Explicit = reader.GetBoolean(6),
+                        Private = reader.GetBoolean(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        CreatedBy = reader.GetInt32(9)
                     };
                     songs.Add(song);
                 }

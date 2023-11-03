@@ -8,39 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="bin\Debug\static\shuffle.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\static\rewind.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\static\queue.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\static\play.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\static\pause.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\static\next.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\static\museLogo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\static\defaultAlbumImage.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\static\defaultAccount.png" />
+    <None Remove="defaultAlbumImage.png" />
+    <None Remove="Resources\defaultAccount.png" />
+    <None Remove="Resources\defaultAlbumImage.png" />
+    <None Remove="Resources\museLogo.png" />
+    <None Remove="Resources\next.png" />
+    <None Remove="Resources\pause.png" />
+    <None Remove="Resources\play.png" />
+    <None Remove="Resources\rewind.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,18 +30,33 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="defaultAlbumImage.png" />
+    <Resource Include="Resources\defaultAccount.png" />
+    <Resource Include="Resources\defaultAlbumImage.png" />
+    <Resource Include="Resources\museLogo.png" />
+    <Resource Include="Resources\next.png" />
+    <Resource Include="Resources\pause.png" />
+    <Resource Include="Resources\play.png" />
+    <Resource Include="Resources\rewind.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
 
 </Project>

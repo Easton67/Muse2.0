@@ -19,4 +19,9 @@ namespace DataObjects
         public int Plays { get; set; }
         public int CreatedBy { get; set; }
     }
+
+    public class SongVM : Song
+    {
+        public List<string> Song { get; set; }
+    }
 }
