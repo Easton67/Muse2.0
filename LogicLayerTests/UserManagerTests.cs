@@ -41,7 +41,7 @@ namespace LogicLayerTests
         public void TestAuthenticateUserPassesWithCorrectEmailAndPassword()
         {
             // arrange 
-            string email = "tess@company.com";
+            string email = "Liam@gmail.com";
             string password = "newuser";
             bool expectedResult = true;
             bool actualResult = false;
@@ -120,7 +120,7 @@ namespace LogicLayerTests
         public void TestResetPasswordWorksCorrectly()
         {
             // arrange
-            string email = "tess@company.com";
+            string email = "Liam@gmail.com";
             string password = "newuser";
             string newPassword = "password";
             bool expectedResult = true;

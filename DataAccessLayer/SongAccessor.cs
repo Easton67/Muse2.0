@@ -9,7 +9,7 @@ namespace DataAccessLayer
 {
     public class SongAccessor : ISongAccessor
     {
-        public List<Song> SelectSongsByUserID(int UserID)
+        public List<Song> SelectSongsByProfileName(string ProfileName)
         {
             List<Song> songs = new List<Song>();
 
@@ -17,7 +17,7 @@ namespace DataAccessLayer
             var conn = SqlConnectionProvider.GetConnection();
 
             //command text
-            var cmdText = "sp_select_songs_by_UserID";
+            var cmdText = "sp_select_songs_by_ProfileName";
 
             //command
             var cmd = new SqlCommand(cmdText, conn);
@@ -26,10 +26,10 @@ namespace DataAccessLayer
             cmd.CommandType = CommandType.StoredProcedure;
 
             // Add parameters
-            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@CreatedBy", SqlDbType.VarChar);
 
             // Parameter Values
-            cmd.Parameters["@UserID"].Value = UserID;
+            cmd.Parameters["@CreatedBy"].Value = ProfileName;
 
             try
             {
@@ -50,7 +50,9 @@ namespace DataAccessLayer
                         Explicit = reader.GetBoolean(6),
                         Private = reader.GetBoolean(7),
                         Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
-                        CreatedBy = reader.GetInt32(9)
+                        CreatedBy = reader.GetString(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.GetString(11)
                     };
                     songs.Add(song);
                 }

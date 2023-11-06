@@ -17,7 +17,9 @@ namespace DataObjects
         public bool Private { get; set; }
         public bool Explicit { get; set; }
         public int Plays { get; set; }
-        public int CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
+        public string Artist { get; set; }
+        public string Album { get; set; }
     }
 
     public class SongVM : Song

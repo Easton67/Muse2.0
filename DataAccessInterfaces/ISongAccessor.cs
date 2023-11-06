@@ -9,6 +9,6 @@ namespace DataAccessInterfaces
 {
     public interface ISongAccessor
     {
-        List<Song> SelectSongsByUserID(int UserID);
+        List<Song> SelectSongsByProfileName(string ProfileName);
     }
 }

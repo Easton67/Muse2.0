@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection.PortableExecutable;
+using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using DataObjects;
 using LogicLayer;
+using Microsoft.Win32;
 
 namespace Muse2
 {
@@ -18,64 +23,44 @@ namespace Muse2
         UserManager _userManager = null;
         UserVM loggedInUser = null;
         SongManager _songManager = null;
-        // SongVM song = null;
+        public int songNumber = 0;
+
+        private MediaPlayer mediaPlayer = new MediaPlayer();
 
         public MainWindow()
         {
             InitializeComponent();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+    private void timer_Tick(object sender, EventArgs e)
+    {
+        if (mediaPlayer.Source != null)
         {
+            lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
 
-            // set variables
-            string password = pwdPassword.Password;
-            string email = txtEmail.Text;
+            // Check for if Natural Duration has a valid time span to avoid 
+            // the "Duration value of Automatic" error
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
+            {
+                lblSongLength.Content = mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+            }
+            else
+            {
+                lblSongLength.Content = "00:00";
+            }
+        } 
+    }
 
-            // Load images
-
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
             _userManager = new UserManager();
             _songManager = new SongManager();
 
-
-            // First time log in
-            txtEmail.Focus();
-            btnLogin.IsDefault = true;
-
-            // Hide role specific buttons
-            mnuAdmin.Visibility = Visibility.Hidden;
-            mnuArtist.Visibility = Visibility.Hidden;
-
-            // Hide all song controls
-            lblSongTitle.Content = "";
-            lblSongArtist.Content = "";
-            imgCoverArt.Visibility = Visibility.Collapsed;
-            imgPause.Visibility = Visibility.Collapsed;
-            imgPlay.Visibility = Visibility.Collapsed;
-            imgRewind.Visibility = Visibility.Collapsed;
-            imgNext.Visibility = Visibility.Collapsed;
-            barSongLength.Visibility = Visibility.Collapsed;
-
-            // Default the login and hide it
-
-            // txtEmail.Text = "";
-            txtEmail.Visibility = Visibility.Visible;
-            lblEmail.Visibility = Visibility.Visible;
-            lblProfileName.Content = "";
-            lblProfileName.Content = Visibility.Hidden;
-
-            // pwdPassword.Password = "";
-            pwdPassword.Visibility = Visibility.Visible;
-            lblPassword.Visibility = Visibility.Visible;
-            btnLogin.Content = "Log In";
-            btnLogin.IsDefault = false;
-
-            // Hide Account
-            lblProfileName.Content = "";
-
-            // Hide the grid
-            grdLibrary.Visibility = Visibility.Collapsed;
-
+            updateUIForLogout();
         }
         private void updateUIForLogout()
         {
@@ -90,27 +75,23 @@ namespace Muse2
             lblSongTitle.Content = "";
             lblSongArtist.Content = "";
             imgCoverArt.Visibility = Visibility.Collapsed;
-            imgPause.Visibility = Visibility.Collapsed;
-            imgPlay.Visibility = Visibility.Collapsed;
-            imgRewind.Visibility = Visibility.Collapsed;
-            imgNext.Visibility = Visibility.Collapsed;
+            btnRewind.Visibility = Visibility.Collapsed;
+            btnPause.Visibility = Visibility.Collapsed;
+            btnPlay.Visibility = Visibility.Collapsed;
+            btnNext.Visibility = Visibility.Collapsed;
             barSongLength.Visibility = Visibility.Collapsed;
 
             // Default the login and hide it
-            txtEmail.Text = "";
+            txtEmail.Text = "Drake@gmail.com";
             txtEmail.Visibility = Visibility.Visible;
             lblEmail.Visibility = Visibility.Visible;
             lblProfileName.Content = "";
             lblProfileName.Content = Visibility.Hidden;
-            pwdPassword.Password = "";
+            pwdPassword.Password = "password";
             pwdPassword.Visibility = Visibility.Visible;
             lblPassword.Visibility = Visibility.Visible;
             btnLogin.Content = "Log In";
             btnLogin.IsDefault = false;
-
-            var AccountImage = new System.Uri("C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\Resources\\defaultAccount.png");
-            BitmapImage bitmapImage = new BitmapImage(AccountImage);
-            imgAccount.Source = bitmapImage;
 
             // Hide Account
             lblProfileName.Content = "";
@@ -120,15 +101,27 @@ namespace Muse2
         }
         private void updateUIForUserLogin()
         {
+            // set the variables
+            var ProfileName = loggedInUser.ProfileName;
+            var AccountImage = new System.Uri(loggedInUser.ImageFilePath);
+
+            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
+
             // set song controls
             lblSongTitle.Content = "";
             lblSongArtist.Content = "";
             imgCoverArt.Visibility = Visibility.Visible;
-            imgPause.Visibility = Visibility.Visible;
-            imgPlay.Visibility = Visibility.Visible;
-            imgRewind.Visibility = Visibility.Visible;
-            imgNext.Visibility = Visibility.Visible;
+            btnRewind.Visibility = Visibility.Visible;
+            btnPlay.Visibility = Visibility.Visible;
+            btnNext.Visibility = Visibility.Visible;
             barSongLength.Visibility = Visibility.Visible;
+
+            // load the first song in the list
+            lblSongTitle.Content = userSongs[songNumber].Title;
+            lblSongArtist.Content = userSongs[songNumber].Artist;
+            BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
+            imgCoverArt.Source = CoverArt;
+            mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
 
             // set account
             txtEmail.Text = "";
@@ -141,10 +134,11 @@ namespace Muse2
             btnLogin.Content = "Log Out";
             btnLogin.IsDefault = false;
 
-            var AccountImage = new System.Uri(loggedInUser.ImageFilePath);
-            BitmapImage bitmapImage = new BitmapImage(AccountImage);
-            imgAccount.Source = bitmapImage;
-
+            // account image
+            BitmapImage Account = new BitmapImage(AccountImage);
+            imgAccount.Source = Account;
+            
+            // set menus for specific roles
             foreach (var role in loggedInUser.Roles)
             {
                 if (role.ToString() == "Admin")
@@ -158,26 +152,21 @@ namespace Muse2
                     break;
                 }
             }
+
             // set library
             grdLibrary.Visibility = Visibility.Visible;
+            grdLibrary.ItemsSource = userSongs;
         }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
-        public class MyDataObject
-        {
-            public Uri ImageFilePath { get; set; }
-        }
-
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (btnLogin.Content.ToString() == "Log In")
             {
                 var email = txtEmail.Text;
                 var password = pwdPassword.Password;
-                var songList = new List<Song>();
 
                 if (!email.IsValidEmail())
                 {
@@ -202,13 +191,6 @@ namespace Muse2
                 {
                     loggedInUser = _userManager.LoginUser(email, password);
 
-                    var UserID = loggedInUser.UserID;
-                    // MessageBox.Show(UserID.ToString());
-
-                    List<Song> userSongs = _songManager.SelectSongsByUserID(UserID);
-
-                    grdLibrary.ItemsSource = userSongs;
-
                     updateUIForUserLogin();
                 }
                 catch (Exception ex)
@@ -225,6 +207,52 @@ namespace Muse2
             else // logout      
             {
                 updateUIForLogout();
+            }
+        }
+
+        // Song Controls
+        private void btnPause_Click(object sender, RoutedEventArgs e)
+        {
+            btnPlay.Visibility = Visibility.Visible;
+            btnPause.Visibility = Visibility.Hidden;
+
+            mediaPlayer.Pause();
+        }
+        private void btnPlay_Click(object sender, RoutedEventArgs e)
+        { 
+            btnPlay.Visibility = Visibility.Hidden;
+            btnPause.Visibility = Visibility.Visible;
+
+            mediaPlayer.Play();
+        }
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            var ProfileName = loggedInUser.ProfileName;
+            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
+
+            if (songNumber < userSongs.Count - 1)
+            {
+                songNumber++;
+                lblSongTitle.Content = userSongs[songNumber].Title;
+                lblSongArtist.Content = userSongs[songNumber].Artist;
+                BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
+                imgCoverArt.Source = CoverArt;
+                mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+                
+                // AutoPlay the next song if the pause button is visible
+                if (btnPause.IsVisible)
+                {
+                    mediaPlayer.Play();
+                }
+            }
+            else
+            {
+                songNumber = 0;
+                lblSongTitle.Content = userSongs[songNumber].Title;
+                lblSongArtist.Content = userSongs[songNumber].Artist;
+                BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
+                imgCoverArt.Source = CoverArt;
+                mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
             }
         }
     }

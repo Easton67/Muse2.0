@@ -19,9 +19,9 @@ namespace DataAccessFakes
             fakeUsers.Add(new UserVM()
             {
                 UserID = 1,
-                FirstName = "Tess",
-                LastName = "Data",
-                Email = "tess@company.com",
+                FirstName = "Liam",
+                LastName = "Easton",
+                Email = "Liam@gmail.com",
                 Active = true,
                 Private = true,
                 Roles = new List<string>()
@@ -31,7 +31,7 @@ namespace DataAccessFakes
                 UserID = 2,
                 FirstName = "Jess",
                 LastName = "Data",
-                Email = "tess@company.com",
+                Email = "jess@company.com",
                 Active = true,
                 Private = true,
                 Roles = new List<string>()
@@ -41,7 +41,7 @@ namespace DataAccessFakes
                 UserID = 3,
                 FirstName = "SNES",
                 LastName = "Data",
-                Email = "tess@company.com",
+                Email = "snes@company.com",
                 Active = true,
                 Private = true,
                 Roles = new List<string>()

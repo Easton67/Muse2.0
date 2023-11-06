@@ -20,13 +20,15 @@ namespace LogicLayer
             _songAccessor = songAccessor;
         }
 
-        public List<Song> SelectSongsByUserID(int UserID)
+        public object ProfileName { get; set; }
+
+        public List<Song> SelectSongsByProfileName(string ProfileName)
         {
             List<Song> songs = new List<Song>();
 
             try
             {
-                songs = _songAccessor.SelectSongsByUserID(UserID);
+                songs = _songAccessor.SelectSongsByProfileName(ProfileName);
             }
             catch (Exception)
             {
