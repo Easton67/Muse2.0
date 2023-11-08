@@ -22,48 +22,56 @@ namespace Muse2
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DispatcherTimer timer;
         UserManager _userManager = null;
         UserVM loggedInUser = null;
         SongManager _songManager = null;
         PlaylistManager _playlistManager = null;
-        public int songNumber = 0; 
+        public int songNumber = 0;
 
         private MediaPlayer mediaPlayer = new MediaPlayer();
 
         public MainWindow()
         {
             InitializeComponent();
-            DispatcherTimer timer = new DispatcherTimer();
+
+            timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += timer_Tick;
-            timer.Start();
+            timer.Tick += SongTimer;
         }
-
-    private void timer_Tick(object sender, EventArgs e)
-    {
-        if (mediaPlayer.Source != null)
+        private void SongTimer(object? sender, EventArgs e)
         {
-            lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
+            if (mediaPlayer.Source != null)
+            {
+                lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
+            }
+            // Check for if Natural Duration has a valid time span to avoid 
+            // the "Duration value of Automatic" error
 
-                // Check for if Natural Duration has a valid time span to avoid 
-                // the "Duration value of Automatic" error
-                if (mediaPlayer.NaturalDuration.HasTimeSpan)
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
             {
                 lblSongLength.Content = mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+
+                double SongLengthInSeconds = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                double SongCurrentPosition = mediaPlayer.Position.TotalSeconds;
+
+                barSongLength.Maximum = SongLengthInSeconds;
+                barSongLength.Minimum = 00.00;
+                barSongLength.Value = SongCurrentPosition;
             }
             else
             {
                 lblSongLength.Content = "00:00";
             }
-        } 
-    }
-    private void Window_Loaded(object sender, RoutedEventArgs e)
-    {
-        _userManager = new UserManager();
-        _songManager = new SongManager();
-        _playlistManager = new PlaylistManager();
-        updateUIForLogout();
-    }
+
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _userManager = new UserManager();
+            _songManager = new SongManager();
+            _playlistManager = new PlaylistManager();
+            updateUIForLogout();
+        }
         private void updateUIForLogout()
         {
             txtEmail.Focus();
@@ -181,8 +189,11 @@ namespace Muse2
 
             // set the playlists
 
-            grdPlaylists.Visibility = Visibility.Visible;
-            grdPlaylists.ItemsSource = playlists;
+            if (playlists.Count > 0)
+            {
+                grdPlaylists.Visibility = Visibility.Visible;
+                grdPlaylists.ItemsSource = playlists;
+            }
         }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
@@ -236,21 +247,20 @@ namespace Muse2
                 updateUIForLogout();
             }
         }
-
         // Song Controls
         private void btnPause_Click(object sender, RoutedEventArgs e)
         {
             btnPlay.Visibility = Visibility.Visible;
             btnPause.Visibility = Visibility.Hidden;
-
+            timer.Stop();
             mediaPlayer.Pause();
         }
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         { 
             btnPlay.Visibility = Visibility.Hidden;
             btnPause.Visibility = Visibility.Visible;
-
             mediaPlayer.Play();
+            timer.Start();
         }
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
@@ -300,7 +310,6 @@ namespace Muse2
                 mediaPlayer.Play();
                 return;
             }
-
             if (btnPause.IsVisible)
             {
                 if (songNumber <= 0)

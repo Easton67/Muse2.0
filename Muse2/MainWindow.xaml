@@ -138,7 +138,7 @@
                 <ColumnDefinition Width="1250*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="0,0,0,0" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True">
+            <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="" Width="25" MinWidth="25" MaxWidth="55">
                         <DataGridTemplateColumn.CellTemplate>
