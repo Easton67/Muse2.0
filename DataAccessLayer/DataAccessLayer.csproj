@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlaylistAccessor.cs" />
     <Compile Include="SongAccessor.cs" />
     <Compile Include="UserAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

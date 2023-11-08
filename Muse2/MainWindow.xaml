@@ -71,7 +71,7 @@
             <!-- Col1 -->
             <Label x:Name="lblSongTitle" Content="Song" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="20" Margin="0,0,0,31" />
             <Label x:Name="lblSongArtist" Content="Artist" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Margin="0,21,0,0" FontSize="15" />
-            <Button x:Name="btnRewind"  Grid.Row="1" Grid.Column="1" Width="25" Margin="0,0,5,0" HorizontalAlignment="Left"  Background="White" BorderThickness="0,0,0,0" >
+            <Button x:Name="btnRewind"  Grid.Row="1" Grid.Column="1" Width="25" Margin="0,0,5,0" HorizontalAlignment="Left"  Background="White" BorderThickness="0,0,0,0" Click="btnRewind_Click" >
                 <Image Source="/Resources/rewind.png"/>
             </Button>
             <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="1" Width="75" Source="/defaultAlbumImage.png" HorizontalAlignment="Left" Margin="34,0,0,0" />
@@ -90,7 +90,8 @@
                 <Image Source="/Resources/play.png"/>
             </Button>
             <!-- Col2 -->
-            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" Source="/Resources/defaultAccount.png" HorizontalAlignment="Center"/>
+            <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="2" Width="100" Source="/Resources/defaultAccount.png" HorizontalAlignment="Center"/>
+            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" HorizontalAlignment="Center"/>
 
             <Button x:Name="btnLogin" Content="Log In"
                     Grid.Row="1" Grid.Column="2" 
@@ -107,43 +108,57 @@
                    HorizontalContentAlignment="Center"
                    Content="Email" HorizontalAlignment="Right" Margin="0,-5,145,0" />
 
-            <Label x:Name="lblProfileName" Grid.Row="1" Grid.Column="2"
-                   FontWeight="Bold"
+            <Button x:Name="btnProfileName"  Grid.Row="1" Grid.Column="2" FontWeight="Bold"
                    HorizontalContentAlignment="Center"
-                   Content="" HorizontalAlignment="Center" Margin="25,0,-164,-2" Padding="5,0,5,5" VerticalAlignment="Top" />
+                   HorizontalAlignment="Center" Margin="25,0,-139,-2" Padding="5,0,5,5" VerticalAlignment="Top" Background="White" BorderThickness="0,0,0,0">
+            </Button>
 
             <Label x:Name="lblPassword" Grid.Row="3" Grid.Column="2"
                    FontWeight="Bold" VerticalAlignment="Bottom"
                    HorizontalContentAlignment="Center"
                    HorizontalAlignment="Right"
                    Content="Password" Margin="0,0,123,0" Padding="5,0,5,5"/>
+            
             <PasswordBox x:Name="pwdPassword" Grid.Row="4" Grid.Column="2"
                      Margin="2px" 
                      Width="179"
                      HorizontalAlignment="Right" Password=""/>
+            
             <Label x:Name="lblCurrentTime" Grid.Row="2" Grid.Column="1"
-                   Content="" FontWeight="Bold" HorizontalAlignment="Left" Margin="25,-8,0,0"
-                   />
+                   Content="" FontWeight="Bold" HorizontalAlignment="Left" Margin="25,-8,0,0" />
+
             <Label x:Name="lblSongLength" Grid.Row="2" Grid.Column="1"
-                    Content="" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,-8,25,0"
-                   />
+                    Content="" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,-8,25,0" />
         </Grid>
-        <DataGrid Grid.Row="3" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="0,0,0,0" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" IsReadOnly="True" VerticalAlignment="Top">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="" Width="25" MinWidth="25" MaxWidth="55">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding ImageFilePath}" MaxWidth="55" MinWidth="25" MaxHeight="55" MinHeight="25" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Name" Binding="{Binding Title}" Width="500"/>
-                <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" Width="300"/>
-                <DataGridTextColumn Header="Album" Binding="{Binding Album}" Width="300"/>
-                <DataGridTextColumn Header="Year" Binding="{Binding YearReleased}" Width="75"/>
-                <DataGridTextColumn Header="Plays" Binding="{Binding Plays}" Width="70"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Label Grid.Row="4" x:Name="lblTime"></Label>
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1250*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="0,0,0,0" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="" Width="25" MinWidth="25" MaxWidth="55">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImageFilePath}" MaxWidth="55" MinWidth="25" MaxHeight="55" MinHeight="25" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Title}" Width="500"/>
+                    <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" Width="300"/>
+                    <DataGridTextColumn Header="Album" Binding="{Binding Album}" Width="300"/>
+                    <DataGridTextColumn Header="Year" Binding="{Binding YearReleased}" Width="75" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Plays" Binding="{Binding Plays}" Width="70" CanUserResize="False"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Column="0" x:Name="grdPlaylists" AutoGenerateColumns="false" BorderThickness="0,0,0,0" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" VerticalAlignment="Bottom" HorizontalAlignment="right" FontSize="12" CanUserResizeColumns="False" CanUserResizeRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Playlists" Binding="{Binding Title}" Width="100" CanUserResize="True" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Window>

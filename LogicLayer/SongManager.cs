@@ -20,8 +20,6 @@ namespace LogicLayer
             _songAccessor = songAccessor;
         }
 
-        public object ProfileName { get; set; }
-
         public List<Song> SelectSongsByProfileName(string ProfileName)
         {
             List<Song> songs = new List<Song>();
