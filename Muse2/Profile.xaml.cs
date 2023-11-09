@@ -25,7 +25,6 @@ namespace Muse2
         private string _lastName;
         private string _profileName;
         private string _email;
-        UserVM loggedInUser = null;
 
         public Profile(UserVM loggedInUser)
         {
@@ -34,8 +33,6 @@ namespace Muse2
             _lastName = loggedInUser.LastName;
             _profileName = loggedInUser.ProfileName;
             _email = loggedInUser.Email;
-
-            loggedInUser = loggedInUser;
 
             InitializeComponent();
         }

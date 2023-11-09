@@ -48,10 +48,6 @@ namespace Muse2
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += SongTimer;
         }
-        public MainWindow (UserVM loggedInUser)
-        {
-            loggedInUser = _loggedInUser;
-        }
         private void SongTimer(object? sender, EventArgs e)
         {
             if (mediaPlayer.Source != null)
@@ -365,6 +361,27 @@ namespace Muse2
                     songNumber--;
                     CurrentSongHelper();
                 }
+            }
+        }
+
+        private void grdLibrary_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (grdLibrary.SelectedItems.Count != 0)
+            {
+                var Song = grdLibrary.SelectedItem as Song;
+                lblSongTitle.Content = Song.Title;
+                lblSongArtist.Content = Song.Artist;
+                BitmapImage CoverArt = new BitmapImage(new System.Uri(Song.ImageFilePath));
+                imgCoverArt.Source = CoverArt;
+                mediaPlayer.Open(new Uri((Song.Mp3FilePath)));
+                btnPlay.Visibility = Visibility.Hidden;
+                btnPause.Visibility = Visibility.Visible;
+                mediaPlayer.Play();
+                timer.Start();
+            }
+            else
+            {
+                MessageBox.Show("Select a Song to listen to it.");
             }
         }
     }
