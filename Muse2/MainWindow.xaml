@@ -25,7 +25,7 @@
                 <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs"/>
             </MenuItem>
             <MenuItem x:Name="mnuAccount" Header="Account">
-                <MenuItem x:Name="mnuViewProfile" Header="View Profile"/>
+                <MenuItem x:Name="mnuViewProfile" Header="View Profile" Click="mnuViewProfile_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuFriends" Header="Friends">
                 <MenuItem x:Name="mnuAddFriend" Header="Add a Friend"/>
@@ -96,7 +96,7 @@
             <Button x:Name="btnLogin" Content="Log In"
                     Grid.Row="1" Grid.Column="2" 
                     FontWeight="Bold" Width="50" 
-                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-165,-4,0,0" Background="White" BorderThickness="0,0,0,0" Click="btnLogin_Click"/>
+                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-165,-8,0,0" Background="White" BorderThickness="0,0,0,0" Click="btnLogin_Click" VerticalContentAlignment="Top" VerticalAlignment="Center"/>
 
             <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="2"
                      Margin="2px" 
@@ -110,7 +110,7 @@
 
             <Button x:Name="btnProfileName"  Grid.Row="1" Grid.Column="2" FontWeight="Bold"
                    HorizontalContentAlignment="Center"
-                   HorizontalAlignment="Center" Margin="25,0,-139,-2" Padding="5,0,5,5" VerticalAlignment="Top" Background="White" BorderThickness="0,0,0,0">
+                   HorizontalAlignment="Center" Margin="25,0,-139,-2" Padding="5,0,5,5" VerticalAlignment="Top" Background="White" BorderThickness="0,0,0,0" Click="btnProfileName_Click">
             </Button>
 
             <Label x:Name="lblPassword" Grid.Row="3" Grid.Column="2"

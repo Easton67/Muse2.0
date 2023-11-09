@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Reflection.PortableExecutable;
+using System.Resources;
 using System.Security.Principal;
 using System.Threading;
 using System.Timers;
@@ -22,14 +24,21 @@ namespace Muse2
     /// </summary>
     public partial class MainWindow : Window
     {
+        // ResourceManager _rm = new ResourceManager(
+        // "MuseProject.Resource1", Assembly.GetExecutingAssembly());
+        // string mp3DataPath = AppDomain.CurrentDomain.BaseDirectory + @"MuseConfig\SongFiles\";
+        // string albumImagePath = AppDomain.CurrentDomain.BaseDirectory + @"MuseConfig\AlbumArt\";
+        // string profileImagePath = AppDomain.CurrentDomain.BaseDirectory + @"MuseConfig\ProfileImages\";
+
+
         private DispatcherTimer timer;
         UserManager _userManager = null;
         UserVM loggedInUser = null;
         SongManager _songManager = null;
         PlaylistManager _playlistManager = null;
         public int songNumber = 0;
-
         private MediaPlayer mediaPlayer = new MediaPlayer();
+        UserVM _loggedInUser = null;
 
         public MainWindow()
         {
@@ -38,6 +47,10 @@ namespace Muse2
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += SongTimer;
+        }
+        public MainWindow (UserVM loggedInUser)
+        {
+            loggedInUser = _loggedInUser;
         }
         private void SongTimer(object? sender, EventArgs e)
         {
@@ -80,7 +93,8 @@ namespace Muse2
             // Turn off song if playing
             mediaPlayer.Pause();
 
-            // Hide role specific buttons
+            // Hide role specific buttons and menu items
+            mnuViewProfile.Visibility = Visibility.Hidden;
             mnuAdmin.Visibility = Visibility.Hidden;
             mnuArtist.Visibility = Visibility.Hidden;
 
@@ -167,8 +181,9 @@ namespace Muse2
             BitmapImage Account = new BitmapImage(AccountImage);
             imgAccount.Visibility = Visibility.Visible;
             imgAccount.Source = Account;
-            
+
             // set menus for specific roles
+            mnuViewProfile.Visibility = Visibility.Visible;
             foreach (var role in loggedInUser.Roles)
             {
                 if (role.ToString() == "Admin")
@@ -195,9 +210,22 @@ namespace Muse2
                 grdPlaylists.ItemsSource = playlists;
             }
         }
+        // Menu Items
+        private void mnuViewProfile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void btnProfileName_Click(object sender, RoutedEventArgs e)
+        {
+            mediaPlayer.Stop();
+            MainWindow home = new MainWindow();
+            Profile profileWindow = new Profile(loggedInUser);
+            home.Hide();
+            profileWindow.Show();
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
