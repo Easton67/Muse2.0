@@ -21,7 +21,7 @@ namespace Muse2
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// </summary>  
     public partial class MainWindow : Window
     {
         // ResourceManager _rm = new ResourceManager(
@@ -29,7 +29,6 @@ namespace Muse2
         // string mp3DataPath = AppDomain.CurrentDomain.BaseDirectory + @"MuseConfig\SongFiles\";
         // string albumImagePath = AppDomain.CurrentDomain.BaseDirectory + @"MuseConfig\AlbumArt\";
         // string profileImagePath = AppDomain.CurrentDomain.BaseDirectory + @"MuseConfig\ProfileImages\";
-
 
         private DispatcherTimer timer;
         UserManager _userManager = null;
@@ -48,7 +47,7 @@ namespace Muse2
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += SongTimer;
         }
-        private void SongTimer(object? sender, EventArgs e)
+        private void SongTimer(object sender, EventArgs e)
         {
             if (mediaPlayer.Source != null)
             {
@@ -67,6 +66,12 @@ namespace Muse2
                 barSongLength.Maximum = SongLengthInSeconds;
                 barSongLength.Minimum = 00.00;
                 barSongLength.Value = SongCurrentPosition;
+
+                if(SongCurrentPosition == SongLengthInSeconds)
+                {
+                    UpdateSongPlayCount();
+                    NextSongHelper();
+                }
             }
             else
             {
@@ -97,6 +102,7 @@ namespace Muse2
             // Hide all song controls
             lblSongTitle.Content = "";
             lblSongArtist.Content = "";
+            imgExplicit.Visibility = Visibility.Hidden;
             lblCurrentTime.Visibility = Visibility.Hidden;
             lblSongLength.Visibility = Visibility.Hidden;
             imgCoverArt.Visibility = Visibility.Collapsed;
@@ -107,7 +113,7 @@ namespace Muse2
             barSongLength.Visibility = Visibility.Collapsed;
 
             // Default the login and hide it
-            txtEmail.Text = "Drake@gmail.com";
+            txtEmail.Text = "Liam@gmail.com";
             txtEmail.Visibility = Visibility.Visible;
             lblEmail.Visibility = Visibility.Visible;
             btnProfileName.Content = "";
@@ -209,7 +215,11 @@ namespace Muse2
         // Menu Items
         private void mnuViewProfile_Click(object sender, RoutedEventArgs e)
         {
-
+            mediaPlayer.Stop();
+            MainWindow home = new MainWindow();
+            Profile profileWindow = new Profile(loggedInUser);
+            home.Hide();
+            profileWindow.Show();
         }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
@@ -252,7 +262,6 @@ namespace Muse2
                 try
                 {
                     loggedInUser = _userManager.LoginUser(email, password);
-
                     updateUIForUserLogin();
                 }
                 catch (Exception ex)
@@ -288,7 +297,50 @@ namespace Muse2
         }
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            // AutoPlay the next song if the pause button is visible
+            NextSongHelper();
+        }
+        // Song control helpers
+        private void UpdateSongPlayCount()
+        {
+            var ProfileName = loggedInUser.ProfileName;
+            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName); 
+            var SongID = userSongs[songNumber].SongID;
+            int NewPlays = userSongs[songNumber].Plays + 1;
+            try
+            {
+                _songManager.UpdatePlaysBySongID(SongID, NewPlays);
+                MessageBox.Show(NewPlays.ToString());
+            }
+            catch (Exception ex)
+            {
+                // you may never throw exceptions from the presentation layer
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Plays not updated",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        private void CurrentSongHelper()
+        {
+            // cut down on code reuse
+            var ProfileName = loggedInUser.ProfileName;
+            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
+            lblSongTitle.Content = userSongs[songNumber].Title;
+            lblSongArtist.Content = userSongs[songNumber].Artist;
+
+            if (userSongs[songNumber].Explicit == true)
+            {
+                imgExplicit.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                imgExplicit.Visibility = Visibility.Hidden;
+            }
+            BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
+            imgCoverArt.Source = CoverArt;
+            mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+        }
+        private void NextSongHelper()
+        {
             var ProfileName = loggedInUser.ProfileName;
             List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
 
@@ -310,17 +362,6 @@ namespace Muse2
                     mediaPlayer.Play();
                 }
             }
-        }
-        private void CurrentSongHelper()
-        {
-            // cut down on code reuse
-            var ProfileName = loggedInUser.ProfileName;
-            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
-            lblSongTitle.Content = userSongs[songNumber].Title;
-            lblSongArtist.Content = userSongs[songNumber].Artist;
-            BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
-            imgCoverArt.Source = CoverArt;
-            mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
         }
         private void btnRewind_Click(object sender, RoutedEventArgs e)
         {
@@ -363,14 +404,18 @@ namespace Muse2
                 }
             }
         }
-
         private void grdLibrary_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+
             if (grdLibrary.SelectedItems.Count != 0)
             {
                 var Song = grdLibrary.SelectedItem as Song;
                 lblSongTitle.Content = Song.Title;
                 lblSongArtist.Content = Song.Artist;
+                if (Song.Explicit == true)
+                {
+                    imgExplicit.Visibility = Visibility.Visible;
+                }
                 BitmapImage CoverArt = new BitmapImage(new System.Uri(Song.ImageFilePath));
                 imgCoverArt.Source = CoverArt;
                 mediaPlayer.Open(new Uri((Song.Mp3FilePath)));
@@ -382,6 +427,14 @@ namespace Muse2
             else
             {
                 MessageBox.Show("Select a Song to listen to it.");
+            }
+        }
+        private void grdLibrary_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (grdLibrary.SelectedItem != null)
+            {
+                int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
+                songNumber = selectedRowIndex;
             }
         }
     }

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="defaultAlbumImage.png" />
+    <None Remove="explicit.png" />
     <None Remove="Resources\defaultAccount.png" />
     <None Remove="Resources\defaultAlbumImage.png" />
     <None Remove="Resources\museLogo.png" />
@@ -46,6 +47,7 @@
 
   <ItemGroup>
     <Resource Include="defaultAlbumImage.png" />
+    <Resource Include="explicit.png" />
     <Resource Include="Resources\defaultAccount.png" />
     <Resource Include="Resources\defaultAlbumImage.png" />
     <Resource Include="Resources\museLogo.png" />

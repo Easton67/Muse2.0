@@ -68,5 +68,53 @@ namespace DataAccessLayer
             }
             return songs;
         }
+        public int UpdatePlaysBySongID(int SongID, int Plays)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_song_plays";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewPlays", SqlDbType.Int);
+
+            // Parameter Values
+            cmd.Parameters["@SongID"].Value = SongID;
+            cmd.Parameters["@NewPlays"].Value = Plays;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update song's play count.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return rows;
+        }
     }
 }

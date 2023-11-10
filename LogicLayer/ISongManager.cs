@@ -10,5 +10,6 @@ namespace LogicLayer
     public interface ISongManager
     {
         List<Song> SelectSongsByProfileName(string ProfileName);
+        bool UpdatePlaysBySongID(int SongID, int Plays);
     }
 }

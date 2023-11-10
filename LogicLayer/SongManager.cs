@@ -34,5 +34,20 @@ namespace LogicLayer
             }
             return songs;
         }
+        public bool UpdatePlaysBySongID(int SongID, int Plays)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _songAccessor.UpdatePlaysBySongID(SongID, Plays));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song's plays not found.", ex);
+            }
+
+            return result;
+        }
     }
 }

@@ -69,7 +69,10 @@
             <!-- Col0 -->
             <Image x:Name="imgLogo" Grid.Row="0" Width="200" HorizontalAlignment="Left" Margin="50,0,0,0" Source="/Resources/museLogo.png"/>
             <!-- Col1 -->
-            <Label x:Name="lblSongTitle" Content="Song" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="20" Margin="0,0,0,31" />
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="20" Margin="0,0,-20,31" >
+                <Label x:Name="lblSongTitle" Content="Song" />
+                <Image x:Name="imgExplicit" Source="/explicit.png" Width="12" Height="12" Margin="0,0,0,9"/>
+            </TextBlock>
             <Label x:Name="lblSongArtist" Content="Artist" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Margin="0,21,0,0" FontSize="15" />
             <Button x:Name="btnRewind"  Grid.Row="1" Grid.Column="1" Width="25" Margin="0,0,5,0" HorizontalAlignment="Left"  Background="White" BorderThickness="0,0,0,0" Click="btnRewind_Click" >
                 <Image Source="/Resources/rewind.png"/>
@@ -138,7 +141,7 @@
                 <ColumnDefinition Width="1250*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick">
+            <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" SelectionChanged="grdLibrary_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="" Width="25" MinWidth="25" MaxWidth="55">
                         <DataGridTemplateColumn.CellTemplate>
