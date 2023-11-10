@@ -37,7 +37,6 @@ namespace Muse2
         PlaylistManager _playlistManager = null;
         public int songNumber = 0;
         private MediaPlayer mediaPlayer = new MediaPlayer();
-        UserVM _loggedInUser = null;
 
         public MainWindow()
         {
@@ -309,7 +308,6 @@ namespace Muse2
             try
             {
                 _songManager.UpdatePlaysBySongID(SongID, NewPlays);
-                MessageBox.Show(NewPlays.ToString());
             }
             catch (Exception ex)
             {
@@ -326,7 +324,6 @@ namespace Muse2
             List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
             lblSongTitle.Content = userSongs[songNumber].Title;
             lblSongArtist.Content = userSongs[songNumber].Artist;
-
             if (userSongs[songNumber].Explicit == true)
             {
                 imgExplicit.Visibility = Visibility.Visible;
@@ -406,7 +403,6 @@ namespace Muse2
         }
         private void grdLibrary_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
             if (grdLibrary.SelectedItems.Count != 0)
             {
                 var Song = grdLibrary.SelectedItem as Song;
@@ -421,6 +417,11 @@ namespace Muse2
                 mediaPlayer.Open(new Uri((Song.Mp3FilePath)));
                 btnPlay.Visibility = Visibility.Hidden;
                 btnPause.Visibility = Visibility.Visible;
+                if (grdLibrary.SelectedItem != null)
+                {
+                    int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
+                    songNumber = selectedRowIndex;
+                }
                 mediaPlayer.Play();
                 timer.Start();
             }

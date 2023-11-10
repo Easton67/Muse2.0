@@ -10,7 +10,6 @@ namespace LogicLayer
     public interface IUserManager
     {
         UserVM LoginUser(string email, string password);
-
         // public helper methods
         string HashSha256(string source);
         bool AuthenticateUser(string email, string password);
