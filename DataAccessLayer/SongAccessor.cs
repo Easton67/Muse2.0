@@ -110,10 +110,10 @@ namespace DataAccessLayer
                         Explicit = reader.GetBoolean(6),
                         Private = reader.GetBoolean(7),
                         Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
-                        CreatedBy = reader.GetString(9),
-                        UserID = reader.GetInt32(10),
-                        Artist = reader.GetString(10),
-                        Album = reader.GetString(11)
+                        UserID = reader.GetInt32(9),
+                        CreatedBy = reader.GetString(10),
+                        Artist = reader.GetString(11),
+                        Album = reader.GetString(12)
                     };
                     songs.Add(song);
                 }

@@ -37,6 +37,7 @@ namespace Muse2
         PlaylistManager _playlistManager = null;
         public int songNumber = 0;
         private MediaPlayer mediaPlayer = new MediaPlayer();
+        List<Song> userSongs = null;
 
         public MainWindow()
         {
@@ -140,12 +141,18 @@ namespace Muse2
         private void updateUIForUserLogin()
         {
             // set the variables
-            var ProfileName = loggedInUser.ProfileName;
-            var userId = loggedInUser.UserID;
             var AccountImage = new System.Uri(loggedInUser.ImageFilePath);
             try
             {
-                List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
+                userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+
+                // load the first song in the list
+                BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
+                imgCoverArt.Source = CoverArt;
+                mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+                grdLibrary.ItemsSource = userSongs;
+                lblSongTitle.Content = userSongs[songNumber].Title;
+                lblSongArtist.Content = userSongs[songNumber].Artist;
             }
             catch(Exception ex)
             {
@@ -153,20 +160,8 @@ namespace Muse2
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            try
-            {
-                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(userId);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
 
             // set song controls
-            lblSongTitle.Content = "";
-            lblSongArtist.Content = "";
             lblCurrentTime.Visibility = Visibility.Visible;
             lblSongLength.Visibility = Visibility.Visible;
             imgCoverArt.Visibility = Visibility.Visible;
@@ -174,13 +169,6 @@ namespace Muse2
             btnPlay.Visibility = Visibility.Visible;
             btnNext.Visibility = Visibility.Visible;
             barSongLength.Visibility = Visibility.Visible;
-
-            // load the first song in the list
-            lblSongTitle.Content = userSongs[songNumber].Title;
-            lblSongArtist.Content = userSongs[songNumber].Artist;
-            BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
-            imgCoverArt.Source = CoverArt;
-            mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
 
             // set account
             txtEmail.Text = "";
@@ -218,14 +206,22 @@ namespace Muse2
 
             // set library
             grdLibrary.Visibility = Visibility.Visible;
-            grdLibrary.ItemsSource = userSongs;
 
             // set the playlists
-
-            if (playlists.Count > 0)
+            try
             {
-                grdPlaylists.Visibility = Visibility.Visible;
-                grdPlaylists.ItemsSource = playlists;
+                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+                if (playlists.Count > 0)
+                {
+                    grdPlaylists.Visibility = Visibility.Visible;
+                    grdPlaylists.ItemsSource = playlists;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
         // Menu Items
@@ -280,9 +276,7 @@ namespace Muse2
                     pwdPassword.Focus();
                     return;
                 }
-
                 // try to log in the user
-
                 try
                 {
                     loggedInUser = _userManager.LoginUser(email, password);
@@ -292,7 +286,7 @@ namespace Muse2
                 {
                     // you may never throw exceptions from the presentation layer
                     MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
-                         MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBoxButton.OK, MessageBoxImage.Error);
                     pwdPassword.SelectAll();
                     txtEmail.Clear();
                     txtEmail.Focus();
@@ -326,8 +320,6 @@ namespace Muse2
         // Song control helpers
         private void UpdateSongPlayCount()
         {
-            var ProfileName = loggedInUser.ProfileName;
-            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName); 
             var SongID = userSongs[songNumber].SongID;
             int NewPlays = userSongs[songNumber].Plays + 1;
             try
@@ -344,9 +336,6 @@ namespace Muse2
         }
         private void CurrentSongHelper()
         {
-            // cut down on code reuse
-            var ProfileName = loggedInUser.ProfileName;
-            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
             lblSongTitle.Content = userSongs[songNumber].Title;
             lblSongArtist.Content = userSongs[songNumber].Artist;
             if (userSongs[songNumber].Explicit == true)
@@ -363,9 +352,6 @@ namespace Muse2
         }
         private void NextSongHelper()
         {
-            var ProfileName = loggedInUser.ProfileName;
-            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
-
             if (songNumber < userSongs.Count - 1)
             {
                 songNumber++;
@@ -387,9 +373,6 @@ namespace Muse2
         }
         private void btnRewind_Click(object sender, RoutedEventArgs e)
         {
-            var ProfileName = loggedInUser.ProfileName;
-            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
-
             // if the song is not at the start, rewind it
             if (mediaPlayer.Position.ToString(@"mm\:ss") != "00:00")
             {
