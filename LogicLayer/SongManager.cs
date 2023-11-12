@@ -34,6 +34,22 @@ namespace LogicLayer
             }
             return songs;
         }
+
+        public List<Song> SelectSongsByUserID(int UserID)
+        {
+            List<Song> songs = new List<Song>();
+
+            try
+            {
+                songs = _songAccessor.SelectSongsByUserID(UserID);
+            }
+            catch (Exception)
+            {
+
+            }
+            return songs;
+        }
+
         public bool UpdatePlaysBySongID(int SongID, int Plays)
         {
             bool result = false;

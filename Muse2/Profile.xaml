@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1500" MinWidth="810" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="900" Width="1500" MinWidth="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -102,14 +102,34 @@
                 <TabItem Header="Stats"
                     FontSize="14" Padding="32,2,32,2">
                     <WrapPanel HorizontalAlignment="Center" >
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                            <StackPanel Orientation="Horizontal">
-                            <Image x:Name="imgStatsAccont" Source="/Resources/defaultAccount.png" Width="75"/>
-                            <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45"/>
+                        <StackPanel HorizontalAlignment="Left" >
+                            <Image x:Name="imgTopSongs" Source="/Resources/defaultAlbumImage.png" Width="200" HorizontalAlignment="Left" Margin="-325,150,0,0"/>
+                            <Label x:Name="lblMostPlayedSong" Margin="-428,20,0,0" Content="Most Played Songs" Width="260" FontWeight="UltraBlack" FontSize="25" />
+                            <Label x:Name="lblSong1" Margin="-428,10,0,0" Content="1. " Width="260" FontWeight="UltraBlack" FontSize="20" />
+                            <Label x:Name="lblSong2" Margin="-428,10,0,0" Content="2. " Width="260" FontWeight="UltraBlack" FontSize="20" />
+                            <Label x:Name="lblSong3" Margin="-428,1,0,0" Content="3. " Width="260" FontWeight="UltraBlack" FontSize="20" />
+                            <Label x:Name="lblSong4" Margin="-428,10,0,0" Content="4. " Width="260" FontWeight="UltraBlack" FontSize="20" />
+                            <Label x:Name="lblSong5" Margin="-428,10,0,0" Content="5. " Width="260" FontWeight="UltraBlack" FontSize="20" />
                         </StackPanel>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,100,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="32,-123,0,25">
+                                <Image x:Name="imgStatsAccont" Source="/Resources/defaultAccount.png" Width="75"/>
+                                <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45"/>
+                            </StackPanel>
                             <Label x:Name="lblMinutesTotalListened" HorizontalAlignment="Center" FontSize="80" Margin="0,22,0,0">1469</Label>
-                            <Label x:Name="lblMinutesListned" HorizontalAlignment="Center" FontSize="20">minutes listened</Label>
-                            <Image x:Name="imgMostPlayedAlbum" Source="/Resources/defaultAlbumImage.png" Width="200" VerticalAlignment="Bottom" Margin="0,150,0,0" />
+                            <Label x:Name="lblMinutesListned" HorizontalAlignment="Center" FontSize="20" BorderThickness="0,4,0,65" Margin="0,2,0,0">minutes listened</Label>
+                            <Image x:Name="imgMostPlayedAlbum" Source="/Resources/defaultAlbumImage.png" Width="200" VerticalAlignment="Bottom"/>
+                            <Label x:Name="lblMostPlayedAlbum" Content="blond"  Width="260" FontSize="25" HorizontalAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                            <Label HorizontalAlignment="Center" FontSize="20" FontWeight="UltraBlack" Content="Most Played Album"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Image x:Name="imgTopArtist" Source="/Resources/defaultAlbumImage.png" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,150,-325,0"/>
+                            <Label x:Name="lblMostPlayedArtist" Margin="0,20,-452,0" Content="Most Played Artists" Width="260" FontWeight="UltraBlack" FontSize="25"></Label>
+                            <Label x:Name="lblArtist1" Margin="0,10,-452,0" Content="1. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
+                            <Label x:Name="lblArtist2" Margin="0,10,-452,0" Content="2. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
+                            <Label x:Name="lblArtist3" Margin="0,10,-452,0" Content="3. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
+                            <Label x:Name="lblArtist4" Margin="0,10,-452,0" Content="4. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
+                            <Label x:Name="lblArtist5" Margin="0,10,-452,0" Content="5. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>

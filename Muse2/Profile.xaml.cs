@@ -1,4 +1,5 @@
 ﻿using DataObjects;
+using LogicLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,9 @@ namespace Muse2
         private string _lastName;
         private string _profileName;
         private string _email;
+        SongManager _songManager = null;
 
-        public Profile(UserVM loggedInUser)
+        public Profile(UserVM loggedInUser, SongManager _songManager)
         {
             _accountImage = loggedInUser.ImageFilePath;
             _firstName = loggedInUser.FirstName;

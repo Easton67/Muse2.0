@@ -143,9 +143,26 @@ namespace Muse2
             var ProfileName = loggedInUser.ProfileName;
             var userId = loggedInUser.UserID;
             var AccountImage = new System.Uri(loggedInUser.ImageFilePath);
-
-            List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
-            List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(userId);
+            try
+            {
+                List<Song> userSongs = _songManager.SelectSongsByProfileName(ProfileName);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your library. Please try logging in again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            try
+            {
+                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(userId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             // set song controls
             lblSongTitle.Content = "";
@@ -215,8 +232,12 @@ namespace Muse2
         private void mnuViewProfile_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Stop();
+            btnPlay.Visibility = Visibility.Visible;
+            btnPause.Visibility = Visibility.Hidden;
+            timer.Stop();
+            mediaPlayer.Pause();
             MainWindow home = new MainWindow();
-            Profile profileWindow = new Profile(loggedInUser);
+            Profile profileWindow = new Profile(loggedInUser, _songManager);
             home.Hide();
             profileWindow.Show();
         }
@@ -227,8 +248,12 @@ namespace Muse2
         private void btnProfileName_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Stop();
+            btnPlay.Visibility = Visibility.Visible;
+            btnPause.Visibility = Visibility.Hidden;
+            timer.Stop();
+            mediaPlayer.Pause();
             MainWindow home = new MainWindow();
-            Profile profileWindow = new Profile(loggedInUser);
+            Profile profileWindow = new Profile(loggedInUser, _songManager);
             home.Hide();
             profileWindow.Show();
         }

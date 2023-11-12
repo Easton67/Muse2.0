@@ -18,7 +18,6 @@ namespace LogicLayerTests
         {
             _songManager = new SongManager(new SongAccessorFake());
         }
-
         [TestMethod]
         public void TestGetSongsByProfileNameReturnsCorrectSongs()
         {
@@ -29,6 +28,21 @@ namespace LogicLayerTests
 
             // act
             actualSongCount = _songManager.SelectSongsByProfileName(testName).Count;
+
+
+            // assert
+            Assert.AreEqual(expectedSongCount, actualSongCount);
+        }
+        [TestMethod]
+        public void TestGetSongsByUserIDReturnsCorrectSongs()
+        {
+            // arrange
+            int testUserID = 100000;
+            int expectedSongCount = 2;
+            int actualSongCount = 0;
+
+            // act
+            actualSongCount = _songManager.SelectSongsByUserID(testUserID).Count;
 
 
             // assert
