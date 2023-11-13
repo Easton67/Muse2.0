@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessInterfaces;
+﻿using DataAccessInterfaces;
 using DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace DataAccessFakes
 {
@@ -21,6 +18,7 @@ namespace DataAccessFakes
                 UserID = 1,
                 FirstName = "Liam",
                 LastName = "Easton",
+                ProfileName = "Easton67",
                 Email = "Liam@gmail.com",
                 Active = true,
                 Private = true,
@@ -31,6 +29,7 @@ namespace DataAccessFakes
                 UserID = 2,
                 FirstName = "Jess",
                 LastName = "Data",
+                ProfileName = "Jester",
                 Email = "jess@company.com",
                 Active = true,
                 Private = true,
@@ -39,9 +38,10 @@ namespace DataAccessFakes
             fakeUsers.Add(new UserVM()
             {
                 UserID = 3,
-                FirstName = "SNES",
+                FirstName = "Bess",
                 LastName = "Data",
-                Email = "snes@company.com",
+                ProfileName = "Bessy",
+                Email = "Bess@company.com",
                 Active = true,
                 Private = true,
                 Roles = new List<string>()
@@ -54,7 +54,6 @@ namespace DataAccessFakes
             fakeUsers[0].Roles.Add("TestRole1");
             fakeUsers[0].Roles.Add("TestRole2");
         }
-
         public int AuthenticateUserWithEmailAndPasswordHash(string email, string passwordHash)
         {
             int numAuthenticated = 0;
@@ -70,7 +69,6 @@ namespace DataAccessFakes
             }
             return numAuthenticated;        // should be 1 or 0
         }
-
         public UserVM SelectUserVMByEmail(string email)
         {
             UserVM user = null;
@@ -88,7 +86,6 @@ namespace DataAccessFakes
             }
             return user;
         }
-
         public List<string> SelectRolesByUserID(int userID)
         {
             List<string> roles = new List<string>();
@@ -104,7 +101,6 @@ namespace DataAccessFakes
 
             return roles;
         }
-
         public int UpdatePasswordHash(string email, string oldPasswordHash, string newPasswordHash)
         {
             int rows = 0;
@@ -131,11 +127,13 @@ namespace DataAccessFakes
         {
             int rows = 0;
 
-            foreach (var fakeUser in fakeUsers)
+            for (int i = 0; i < fakeUsers.Count; i++)
             {
-                if (fakeUser.Email == Email)
+                if (fakeUsers[i].Email == Email)
                 {
-                    FirstName = fakeUser.FirstName;
+                    fakeUsers[i].FirstName = FirstName;
+                    rows += 1;
+                    break;
                 }
             }
             if (rows != 1) // no one found
@@ -143,6 +141,48 @@ namespace DataAccessFakes
                 throw new ApplicationException("Invalid first name.");
             }
             return rows;
+        }
+        public int UpdateLastName(string Email, string LastName)
+        {
+            int rows = 0;
+
+            for (int i = 0; i < fakeUsers.Count; i++)
+            {
+                if (fakeUsers[i].Email == Email)
+                {
+                    fakeUsers[i].LastName = LastName;
+                    rows += 1;
+                    break;
+                }
+            }
+            if (rows != 1) // no one found
+            {
+                throw new ApplicationException("Invalid last name.");
+            }
+            return rows;
+        }
+        public int UpdateProfileName(string Email, string ProfileName)
+        {
+            int rows = 0;
+
+            for (int i = 0; i < fakeUsers.Count; i++)
+            {
+                if (fakeUsers[i].Email == Email)
+                {
+                    fakeUsers[i].ProfileName = ProfileName;
+                    rows += 1;
+                    break;
+                }
+            }
+            if (rows != 1) // no one found
+            {
+                throw new ApplicationException("Invalid profile name.");
+            }
+            return rows;
+        }
+        public int UpdateAccountImage(string email, string accountImage)
+        {
+            throw new NotImplementedException();
         }
     }
 }

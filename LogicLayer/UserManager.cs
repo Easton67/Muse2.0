@@ -157,6 +157,20 @@ namespace LogicLayer
             }
             return result;
         }
+        public bool UpdateProfileName(string Email, string ProfileName)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _userAccessor.UpdateProfileName(Email, ProfileName));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Prpfile Name not accepted ", ex);
+            }
+            return result;
+        }
         public bool UpdateAccountImage(string Email, string AccountImage)
         {
             bool result = false;

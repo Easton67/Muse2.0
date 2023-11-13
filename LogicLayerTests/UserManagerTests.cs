@@ -17,7 +17,6 @@ namespace LogicLayerTests
         {
             _userManager = new UserManager(new UserAccessorFake());
         }
-
         [TestMethod]
         public void TestHashSha256ReturnsACorrectHashValue()
         {
@@ -36,7 +35,6 @@ namespace LogicLayerTests
             // Assert
             Assert.AreEqual(expectedHash, actualHash);
         }
-
         [TestMethod]
         public void TestAuthenticateUserPassesWithCorrectEmailAndPassword()
         {
@@ -67,7 +65,6 @@ namespace LogicLayerTests
             // assert 
             Assert.AreEqual(expectedResult, actualResult);
         }
-
         [TestMethod]
         public void TestGetUserByEmailReturnsCorrectUser()
         {
@@ -83,7 +80,6 @@ namespace LogicLayerTests
             // Assert
             Assert.AreEqual(expectedUserID, actualUserID);
         }
-
         [TestMethod]
         [ExpectedException(typeof(ApplicationException))]
         public void TestGetUserByEmailFailsWithBadEmail()
@@ -115,7 +111,6 @@ namespace LogicLayerTests
             // assert
             Assert.AreEqual(expectedRoleCount, actualRoleCount);
         }
-
         [TestMethod]
         public void TestResetPasswordWorksCorrectly()
         {
@@ -132,23 +127,50 @@ namespace LogicLayerTests
             // assert
             Assert.AreEqual(expectedResult, actualResult);
         }
-
-        /* 
         [TestMethod]
         public void TestUpdateFirstNameWorksCorrectly()
         {
             // arrange
             string Email = "Liam@gmail.com";
-            string NewFirstName = "Liyum";
+            string FirstName = "Liyum";
             bool expectedResult = true;
             bool actualResult = false;
 
             // act
-            actualResult = _userManager.UpdateFirstName(Email, NewFirstName);
+            actualResult = _userManager.UpdateFirstName(Email, FirstName);
 
             // assert
             Assert.AreEqual(expectedResult, actualResult);
         }
-        */
+        [TestMethod]
+        public void TestUpdateLastNameWorksCorrectly()
+        {
+            // arrange
+            string Email = "Liam@gmail.com";
+            string LastName = "Eassston";
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            // act
+            actualResult = _userManager.UpdateFirstName(Email, LastName);
+
+            // assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+        [TestMethod]
+        public void TestUpdateProfileNameWorksCorrectly()
+        {
+            // arrange
+            string Email = "Liam@gmail.com";
+            string ProfileName = "Easton68";
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            // act
+            actualResult = _userManager.UpdateFirstName(Email, ProfileName);
+
+            // assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
     }
 }

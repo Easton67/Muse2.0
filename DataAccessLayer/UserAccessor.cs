@@ -313,6 +313,53 @@ namespace DataAccessLayer
             }
             return rows;
         }
+        public int UpdateProfileName(string Email, string ProfileName)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_ProfileName";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@NewProfileName", SqlDbType.NVarChar);
+
+            // Parameter Values
+            cmd.Parameters["@Email"].Value = Email;
+            cmd.Parameters["@NewProfileName"].Value = ProfileName;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your profile name.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
         public int UpdateAccountImage(string Email, string AccountImage)
         {
             int rows = 0;
@@ -360,6 +407,5 @@ namespace DataAccessLayer
             }
             return rows;
         }
-
     }
 }

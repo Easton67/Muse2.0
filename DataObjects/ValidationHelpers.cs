@@ -30,7 +30,6 @@ namespace DataObjects
         {
             bool isValid = false;
 
-            // this needs to be done right eventually
             if (password.Length >= 7)
             {
                 isValid = true;
@@ -38,6 +37,41 @@ namespace DataObjects
 
             return isValid;
         }
+        public static bool IsValidFirstName(this string FirstName)
+        {
+            bool isValid = false;
 
+            // what the db has as its max
+            if (FirstName.Length <= 50)
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+        public static bool IsValidLastName(this string LastName)
+        {
+            bool isValid = false;
+
+            // what the db has as its max
+            if (LastName.Length <= 50)
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+        public static bool IsValidProfileName(this string ProfileName)
+        {
+            bool isValid = false;
+
+            // what the db has as its max
+            if (ProfileName.Length <= 200)
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
     }
 }

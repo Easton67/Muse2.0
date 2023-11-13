@@ -1,18 +1,10 @@
 ﻿using DataObjects;
 using LogicLayer;
+using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Muse2
 {
@@ -87,12 +79,39 @@ namespace Muse2
                 btnEdit.Content = "Add Changes";
                 txtFirstName.IsReadOnly = false;
                 txtLastName.IsReadOnly = false;
+                txtProfileName.IsReadOnly = false;
+                txtFirstName.IsEnabled = true;
+                txtLastName.IsEnabled = true;
+                txtProfileName.IsEnabled = true;
             }
             else
             {
                 var NewFirstName = txtFirstName.Text;
                 var NewLastName = txtLastName.Text;
-                //var NewAccountImage = txtFirstName.Text;
+                var NewProfileName = txtProfileName.Text;
+
+                if (!NewFirstName.IsValidFirstName())
+                {
+                    MessageBox.Show("That is not a valid first name", "Invalid first name",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    txtFirstName.Focus();
+                    return;
+                }
+                if (!NewLastName.IsValidLastName())
+                {
+                    MessageBox.Show("That is not a valid last name", "Invalid last name",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    txtFirstName.Focus();
+                    return;
+                }
+                if (!NewProfileName.IsValidProfileName())
+                {
+                    MessageBox.Show("That is not a valid profile name", "Invalid profile name",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    txtFirstName.Focus();
+                    return;
+                }
+
                 try
                 {
                     _userManager.UpdateFirstName(_email, NewFirstName);
@@ -101,10 +120,11 @@ namespace Muse2
                 {
                     MessageBox.Show("Invalid first name." + " " + ex.Message);
                     txtFirstName.Text = _firstName;
+
                 }
                 try
                 {
-                    // _userManager.UpdateLastName(_email, NewLastName);
+                    _userManager.UpdateLastName(_email, NewLastName);
                 }
                 catch (Exception ex)
                 {
@@ -113,14 +133,17 @@ namespace Muse2
                 }
                 try
                 {
-                    // _userManager.UpdateAccountImage(_email, NewAccountImage);
+                     _userManager.UpdateProfileName(_email, NewProfileName);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Invalid image." + " " + ex.Message);
+                    MessageBox.Show("Invalid profile name." + " " + ex.Message);
                     txtFirstName.Text = _firstName;
                 }
+
                 btnEdit.Content = "Edit";
+                MessageBox.Show("Your account details have been updated", "Success!",
+                MessageBoxButton.OK);
             }
         }
         private void btnFavoritesEdit_Click(object sender, RoutedEventArgs e)
@@ -132,6 +155,43 @@ namespace Muse2
             else
             {
                 btnFavoritesEdit.Content = "Edit";
+            }
+        }
+
+        private void btnAccontImage_Click(object sender, RoutedEventArgs e)
+        {
+            UserManager _userManager = new UserManager();
+            var NewAccountImage = "";
+
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+
+                openFileDialog.Title = "Open File";
+                openFileDialog.Filter = "Image Files (*.jpg;*.jpeg;*.png;)|*.jpg;*.jpeg;*.png;|All Files (*.*)|*.*";
+
+                bool? result = openFileDialog.ShowDialog();
+
+                if (result == true)
+                {
+                    string selectedFilePath = openFileDialog.FileName;
+                    var AccountImage = new BitmapImage(new System.Uri(selectedFilePath));
+                    _userManager.UpdateAccountImage(_email, selectedFilePath);
+
+                    imgAccontImage.Source = AccountImage;
+                }
+                else
+                {
+                    // user closes the file explorer before picking a photo
+                    MessageBox.Show("Choose a photo to update your current account photo.");
+                }
+
+                _userManager.UpdateAccountImage(_email, NewAccountImage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Invalid image." + " " + ex.Message);
+                txtFirstName.Text = _firstName;
             }
         }
     }

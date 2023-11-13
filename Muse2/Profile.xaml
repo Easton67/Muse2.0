@@ -62,17 +62,19 @@
                     FontSize="14" Padding="32,2,32,2">
                     <WrapPanel HorizontalAlignment="Center" Margin="0,90,0,0" >
                         <StackPanel>
-                            <Image x:Name="imgAccontImage" Source="/Resources/defaultAccount.png" Width="300" Margin="0,-30,15,0"/>
+                            <Button x:Name="btnAccontImage" Width="300" Margin="0,-30,15,0" Click="btnAccontImage_Click">
+                                <Image x:Name="imgAccontImage" Source="/Resources/defaultAccount.png" />
+                            </Button>
                         </StackPanel>
                         <StackPanel>
                             <Label x:Name="lblFirstName" Content="First Name" Padding="0,5,5,5" Margin="74,0,0,0" />
-                            <TextBox x:Name="txtFirstName" Text="" Margin="-3,0,0,5"  Width="300" />
+                            <TextBox x:Name="txtFirstName" Text="" Margin="-3,0,0,5"  Width="300" IsReadOnly="True" IsEnabled="False" />
                             <Label x:Name="lblLastName" Content="Last Name" Padding="0,5,5,5" Margin="74,0,0,0"/>
-                            <TextBox x:Name="txtLastName" Text=""  Margin="-3,0,0,5"  Width="300" />
+                            <TextBox x:Name="txtLastName" Text=""  Margin="-3,0,0,5"  Width="300" IsReadOnly="True" IsEnabled="False"/>
                             <Label x:Name="lblProfileName" Content="Profile Name" Padding="0,5,5,5" Margin="74,0,0,0"/>
-                            <TextBox x:Name="txtProfileName" Text=""  Margin="-3,0,0,5"  Width="300" IsReadOnly="True" />
+                            <TextBox x:Name="txtProfileName" Text=""  Margin="-3,0,0,5"  Width="300" IsReadOnly="True" IsEnabled="False"/>
                             <Label x:Name="lblEmail" Content="Email" Padding="0,5,5,5" Margin="74,0,0,0"/>
-                            <TextBox x:Name="txtEmail" Text="" Margin="-3,0,0,5" Width="300" IsReadOnly="True" />
+                            <TextBox x:Name="txtEmail" Text="" Margin="-3,0,0,5" Width="300" IsReadOnly="True" IsEnabled="False" />
                             <StackPanel Orientation="Horizontal" Margin="4,150,-50,0" Height="40">
                                 <Button x:Name="btnResetPassword" Content="Reset Password" Click="btnResetPassword_Click" Margin="-50,0,50,0" Padding="20,1,20,1" Background="#FFF194B6" >
                                     <Button.Resources>
@@ -142,9 +144,9 @@
                         </StackPanel>
                         <StackPanel>
                             <Label x:Name="lblFavoriteSong" Content="Favorite Song" Padding="0,5,5,5" />
-                            <TextBox x:Name="txtFavoriteSong" Margin="0,0,0,5"  Width="300" />
+                            <TextBox x:Name="txtFavoriteSong" Margin="0,0,0,30"  Width="300" />
                             <Label x:Name="lblFavoriteArtist" Content="Favorite Artist" Padding="0,5,5,5" Margin="0,0,0,0"/>
-                            <TextBox x:Name="txtFavoriteArtist" Margin="0,0,0,5"  Width="300" />
+                            <TextBox x:Name="txtFavoriteArtist" Margin="0,0,0,30"  Width="300" />
                             <Label x:Name="lblFavoriteAlbum" Content="Favorite Album" Padding="0,5,5,5" Margin="0,0,0,0"/>
                             <TextBox x:Name="txtFavoriteAlbum" Margin="0,0,0,5"  Width="300" />
                             <StackPanel Orientation="Horizontal" Margin="4,150,-50,0" Height="40">

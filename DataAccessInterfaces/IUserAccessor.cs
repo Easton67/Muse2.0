@@ -14,7 +14,8 @@ namespace DataAccessInterfaces
         List<string> SelectRolesByUserID(int UserID);
         int UpdatePasswordHash(string email, string oldPasswordHash, string newPasswordHash);
         int UpdateFirstName(string Email, string NewFirstName);
-        int UpdateLastName(string email, string accountImage);
+        int UpdateLastName(string email, string LastName);
+        int UpdateProfileName(string Email, string ProfileName);
         int UpdateAccountImage(string email, string accountImage);
     }
 }
