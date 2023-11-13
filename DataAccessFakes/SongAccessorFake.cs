@@ -96,7 +96,6 @@ namespace DataAccessFakes
                 Album = "none"
             });
         }
-
         public List<Song> SelectSongsByProfileName(string ProfileName)
         {
             List<Song> songs = new List<Song>();
@@ -110,7 +109,6 @@ namespace DataAccessFakes
             }
             return songs;
         }
-
         public List<Song> SelectSongsByUserID(int UserID)
         {
             List<Song> songs = new List<Song>();
@@ -124,7 +122,6 @@ namespace DataAccessFakes
             }
             return songs;
         }
-
         public int UpdatePlaysBySongID(int SongID, int Plays)
         {
             throw new NotImplementedException();

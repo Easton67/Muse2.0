@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace DataAccessLayer
 {
@@ -129,8 +130,6 @@ namespace DataAccessLayer
             }
             return songs;
         }
-
-
         public int UpdatePlaysBySongID(int SongID, int Plays)
         {
             int rows = 0;

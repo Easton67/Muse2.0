@@ -16,5 +16,8 @@ namespace LogicLayer
         UserVM GetUserVMByEmail(string email);
         List<string> GetRolesByUserID(int employeeID);
         bool ResetPassword(string email, string oldPassword, string newPassword);
+        bool UpdateFirstName(string Email, string FirstName);
+        bool UpdateLastName(string email, string accountImage);
+        bool UpdateAccountImage(string email, string accountImage);
     }
 }

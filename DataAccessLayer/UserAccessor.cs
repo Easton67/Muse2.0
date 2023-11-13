@@ -59,7 +59,6 @@ namespace DataAccessLayer
             return rows;
 
         }
-
         public UserVM SelectUserVMByEmail(string email)
         {
             UserVM userVM = new UserVM();
@@ -121,7 +120,6 @@ namespace DataAccessLayer
             }
             return userVM;
         }
-
         public List<string> SelectRolesByUserID(int userID)
         {
             List<string> roles = new List<string>();
@@ -169,7 +167,6 @@ namespace DataAccessLayer
             }
             return roles;
         }
-
         public int UpdatePasswordHash(string email, string oldPasswordHash, string newPasswordHash)
         {
             int rows = 0;
@@ -222,5 +219,147 @@ namespace DataAccessLayer
 
             return rows;
         }
+        public int UpdateFirstName(string Email, string FirstName)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_FirstName";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@NewFirstName", SqlDbType.NVarChar);
+
+            // Parameter Values
+            cmd.Parameters["@Email"].Value = Email;
+            cmd.Parameters["@NewFirstName"].Value = FirstName;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update first name.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateLastName(string Email, string LastName)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_LastName";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@NewLastName", SqlDbType.NVarChar);
+
+            // Parameter Values
+            cmd.Parameters["@Email"].Value = Email;
+            cmd.Parameters["@NewLastName"].Value = LastName;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update last name.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateAccountImage(string Email, string AccountImage)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_AccountImage";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@NewAccountImage", SqlDbType.NVarChar);
+
+            // Parameter Values
+            cmd.Parameters["@Email"].Value = Email;
+            cmd.Parameters["@NewAccountImage"].Value = AccountImage;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update account image.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+
     }
 }

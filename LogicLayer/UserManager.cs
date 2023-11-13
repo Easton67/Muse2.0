@@ -25,7 +25,6 @@ namespace LogicLayer
         {
             _userAccessor = employeeAccessor;
         }
-
         public bool AuthenticateUser(string email, string password)
         {
             bool result = false;
@@ -33,7 +32,6 @@ namespace LogicLayer
             result = (1 == _userAccessor.AuthenticateUserWithEmailAndPasswordHash(email, password));
             return result;
         }
-
         public UserVM GetUserVMByEmail(string email)
         {
             UserVM userVM = null;
@@ -48,7 +46,6 @@ namespace LogicLayer
             }
             return userVM;
         }
-
         public List<string> GetRolesByUserID(int employeeID)
         {
             List<string> roles = new List<string>();
@@ -67,7 +64,6 @@ namespace LogicLayer
 
             return roles;
         }
-
         public string HashSha256(string source)
         {
             string hashValue = "";
@@ -91,11 +87,9 @@ namespace LogicLayer
             {
                 s.Append(data[i].ToString("x2")); // outputs the byte as two hex digits
             }
-
             hashValue = s.ToString();
             return hashValue;
         }
-
         public UserVM LoginUser(string email, string password)
         {
             UserVM userVM = null;
@@ -118,7 +112,6 @@ namespace LogicLayer
             }
             return userVM;
         }
-
         public bool ResetPassword(string email, string oldPassword, string newPassword)
         {
             bool result = false;
@@ -133,6 +126,48 @@ namespace LogicLayer
             catch (Exception ex)
             {
                 throw new ApplicationException("User or password not found.", ex);
+            }
+            return result;
+        }
+        public bool UpdateFirstName(string Email, string FirstName)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _userAccessor.UpdateFirstName(Email, FirstName));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("First Name not accepted ", ex);
+            }
+            return result;
+        }
+        public bool UpdateLastName(string Email, string LastName)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _userAccessor.UpdateLastName(Email, LastName));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Last Name not accepted ", ex);
+            }
+            return result;
+        }
+        public bool UpdateAccountImage(string Email, string AccountImage)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _userAccessor.UpdateAccountImage(Email, AccountImage));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Last Name not accepted ", ex);
             }
             return result;
         }

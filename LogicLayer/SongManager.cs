@@ -28,9 +28,9 @@ namespace LogicLayer
             {
                 songs = _songAccessor.SelectSongsByProfileName(ProfileName);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw new ApplicationException("Library not found", ex);
             }
             return songs;
         }
@@ -43,9 +43,9 @@ namespace LogicLayer
             {
                 songs = _songAccessor.SelectSongsByUserID(UserID);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw new ApplicationException("Library not found", ex);
             }
             return songs;
         }

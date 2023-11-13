@@ -127,5 +127,22 @@ namespace DataAccessFakes
             }
             return rows;
         }
+        public int UpdateFirstName(string Email, string FirstName)
+        {
+            int rows = 0;
+
+            foreach (var fakeUser in fakeUsers)
+            {
+                if (fakeUser.Email == Email)
+                {
+                    FirstName = fakeUser.FirstName;
+                }
+            }
+            if (rows != 1) // no one found
+            {
+                throw new ApplicationException("Invalid first name.");
+            }
+            return rows;
+        }
     }
 }
