@@ -181,7 +181,7 @@ namespace LogicLayer
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Last Name not accepted ", ex);
+                throw new ApplicationException("Image not accepted ", ex);
             }
             return result;
         }

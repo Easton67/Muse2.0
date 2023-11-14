@@ -89,6 +89,7 @@ namespace Muse2
                 var NewFirstName = txtFirstName.Text;
                 var NewLastName = txtLastName.Text;
                 var NewProfileName = txtProfileName.Text;
+                bool isBadUpdate = false;
 
                 if (!NewFirstName.IsValidFirstName())
                 {
@@ -120,7 +121,7 @@ namespace Muse2
                 {
                     MessageBox.Show("Invalid first name." + " " + ex.Message);
                     txtFirstName.Text = _firstName;
-
+                    isBadUpdate = true;
                 }
                 try
                 {
@@ -130,6 +131,7 @@ namespace Muse2
                 {
                     MessageBox.Show("Invalid last name." + " " + ex.Message);
                     txtLastName.Text = _lastName;
+                    isBadUpdate = true;
                 }
                 try
                 {
@@ -139,11 +141,17 @@ namespace Muse2
                 {
                     MessageBox.Show("Invalid profile name." + " " + ex.Message);
                     txtFirstName.Text = _firstName;
+                    isBadUpdate = true;
                 }
-
-                btnEdit.Content = "Edit";
-                MessageBox.Show("Your account details have been updated", "Success!",
-                MessageBoxButton.OK);
+                finally
+                {
+                    if (!isBadUpdate)
+                    {
+                        btnEdit.Content = "Edit";
+                        MessageBox.Show("Your account details have been updated", "Success!",
+                        MessageBoxButton.OK);
+                    }
+                }
             }
         }
         private void btnFavoritesEdit_Click(object sender, RoutedEventArgs e)
@@ -174,9 +182,9 @@ namespace Muse2
 
                 if (result == true)
                 {
-                    string selectedFilePath = openFileDialog.FileName;
-                    var AccountImage = new BitmapImage(new System.Uri(selectedFilePath));
-                    _userManager.UpdateAccountImage(_email, selectedFilePath);
+                    _accountImage = openFileDialog.FileName;
+                    var AccountImage = new BitmapImage(new System.Uri(_accountImage));
+                    _userManager.UpdateAccountImage(_email, _accountImage);
 
                     imgAccontImage.Source = AccountImage;
                 }
@@ -185,8 +193,6 @@ namespace Muse2
                     // user closes the file explorer before picking a photo
                     MessageBox.Show("Choose a photo to update your current account photo.");
                 }
-
-                _userManager.UpdateAccountImage(_email, NewAccountImage);
             }
             catch (Exception ex)
             {
