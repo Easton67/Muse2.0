@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="Song Information" Height="350" Width="600" Background="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Song Information" Height="350" Width="600" Background="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="125" />
@@ -21,7 +21,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Button Grid.Column="0" Width="90" x:Name="btnSongInfomation" Height="20" Content="Information" Margin="0,0,20,0"
-                HorizontalContentAlignment="Center" HorizontalAlignment="right" Background="White" Padding="11,1,11,1" >
+                HorizontalContentAlignment="Center" HorizontalAlignment="right" Background="#FFD5C9E3" Padding="11,1,11,1" >
             <Button.Resources> 
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"/>
@@ -57,10 +57,9 @@
         <Label  Grid.Row="3" Grid.Column="0" x:Name="lblAlbum" Content="Album" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
         <Label  Grid.Row="4" Grid.Column="0" x:Name="lblYear" Content="Year" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
         <Label  Grid.Row="5" Grid.Column="0" x:Name="lblTrackNumber" Content="Track Number" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtTitle" Height="30" HorizontalAlignment="Left" Width="400" Margin="7,0,0,0" />
-        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtArtist" Height="30" HorizontalAlignment="Left" Width="400" Margin="7,0,0,0" />
-        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtAlbum" Height="30" HorizontalAlignment="Left" Width="400" Margin="7,0,0,0" />
-        <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtYear" Height="30" HorizontalAlignment="Left" Width="400" Margin="7,0,0,0" />
-        <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtTrackNumber" Height="30" HorizontalAlignment="Left" Width="400" Margin="7,0,0,0" />
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtTitle" Height="30" HorizontalAlignment="Left" Width="400" Margin="7,0,0,0" FontSize="15" VerticalContentAlignment="Center" />
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtArtist" Height="30" HorizontalAlignment="Left" Width="400" Margin="7,0,0,0" FontSize="15" VerticalContentAlignment="Center" />
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtAlbum" Height="30" HorizontalAlignment="Left" Width="400" Margin="7,0,0,0" FontSize="15" VerticalContentAlignment="Center" />
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtYear" Height="30" HorizontalAlignment="Left" Width="400" Margin="7,0,0,0" FontSize="15" VerticalContentAlignment="Center" />
     </Grid>
 </Window>

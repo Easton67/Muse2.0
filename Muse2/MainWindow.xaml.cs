@@ -141,7 +141,21 @@ namespace Muse2
         private void updateUIForUserLogin()
         {
             // set the variables
-            var AccountImage = new System.Uri(loggedInUser.ImageFilePath);
+            try
+            {
+                var AccountImage = new System.Uri(loggedInUser.ImageFilePath);
+                // account image
+                defaultimgAccount.Visibility = Visibility.Hidden;
+                BitmapImage Account = new BitmapImage(AccountImage);
+                imgAccount.Visibility = Visibility.Visible;
+                imgAccount.Source = Account;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your profile image.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             try
             {
                 userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
@@ -181,12 +195,6 @@ namespace Muse2
             lblPassword.Visibility = Visibility.Hidden;
             btnLogin.Content = "Log Out";
             btnLogin.IsDefault = false;
-
-            // account image
-            defaultimgAccount.Visibility = Visibility.Hidden;
-            BitmapImage Account = new BitmapImage(AccountImage);
-            imgAccount.Visibility = Visibility.Visible;
-            imgAccount.Source = Account;
 
             // set menus for specific roles
             mnuViewProfile.Visibility = Visibility.Visible;
@@ -444,6 +452,20 @@ namespace Muse2
             {
                 int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
                 songNumber = selectedRowIndex;
+            }
+        }
+        private void mnuAddSongFromDataGrid_Click(object sender, RoutedEventArgs e)
+        {
+            var song = grdLibrary.SelectedItem as Song;
+
+            if (grdLibrary.SelectedItem != null)
+            {
+                var AddEditSong = new AddEditSongxaml(song);
+                AddEditSong.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Select a Song to view it.");
             }
         }
     }

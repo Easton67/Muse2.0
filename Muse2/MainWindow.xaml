@@ -156,6 +156,11 @@
                     <DataGridTextColumn Header="Year" Binding="{Binding YearReleased}" Width="75" CanUserResize="False"/>
                     <DataGridTextColumn Header="Plays" Binding="{Binding Plays}" Width="70" CanUserResize="False"/>
                 </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Edit Song Details" x:Name="mnuAddSongFromDataGrid" Click="mnuAddSongFromDataGrid_Click" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
             <DataGrid Grid.Column="0" x:Name="grdPlaylists" AutoGenerateColumns="false" BorderThickness="0,0,0,0" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" VerticalAlignment="Bottom" HorizontalAlignment="right" FontSize="12" CanUserResizeColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
