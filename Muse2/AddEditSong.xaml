@@ -70,15 +70,23 @@
         <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtYear" Height="30" HorizontalAlignment="Left" Width="40" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" InputScope="DateYear" HorizontalContentAlignment="Center" />
 
         <Button Grid.Row="5" Grid.Column="1" Width="90" x:Name="btnDeleteSong" Height="30" Content="Delete Song" Margin="0,0,25,0"
-                    HorizontalContentAlignment="Center" HorizontalAlignment="right" Background="#e193ba" Padding="11,1,11,1" Click="btnDeleteSong_Click" >
+                    HorizontalContentAlignment="Center" HorizontalAlignment="right" Background="#e193ba" Padding="11,1,11,1" Click="btnDeleteSong_Click" FontSize="12" >
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="4"/>
                     </Style>
                 </Button.Resources>
         </Button>
-        <Button Grid.Row="5" Grid.Column="0" Width="90" x:Name="btnAddArtwork" Height="30" Content="Add Artwork"
-                    HorizontalContentAlignment="Center" Background="White" Padding="11,1,11,1" Margin="10,0,0,0" Click="btnAddArtwork_Click" >
+        <Button Grid.Row="5" Grid.Column="1" Width="113" x:Name="btnRemoveArtwork" Height="30" Content="Remove Artwork" Margin="0,0,25,0" FontSize="12"
+                    HorizontalContentAlignment="Center" HorizontalAlignment="right" Background="#e193ba" Padding="11,1,11,1" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Grid.Row="5" Grid.Column="0" Width="90" x:Name="btnAddArtwork" Content="Add Artwork"
+                    HorizontalContentAlignment="Center" Background="White" Padding="11,1,11,1" Margin="10,0,0,0" Click="btnAddArtwork_Click" Height="30" >
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"/>

@@ -53,12 +53,14 @@ namespace Muse2
             txtArtist.Visibility = Visibility.Hidden;
             txtAlbum.Visibility = Visibility.Hidden;
             txtYear.Visibility = Visibility.Hidden;
+            btnDeleteSong.Visibility = Visibility.Hidden;
 
             // Artwork Tab
             lblSongArt.Visibility = Visibility.Hidden;
             imgSongImage.Visibility = Visibility.Hidden;
             btnAddArtwork.Visibility = Visibility.Hidden;
             lblLyrics.Visibility = Visibility.Hidden;
+            btnRemoveArtwork.Visibility = Visibility.Hidden;
 
             //Lyrics Tab
             lblLyrics.Visibility = Visibility.Hidden;
@@ -97,6 +99,7 @@ namespace Muse2
             lblSongArt.Visibility = Visibility.Visible;
             imgSongImage.Visibility = Visibility.Visible;
             btnAddArtwork.Visibility = Visibility.Visible;
+            btnRemoveArtwork.Visibility = Visibility.Visible;
 
             try
             {
@@ -111,9 +114,12 @@ namespace Muse2
         private void btnLyrics_Click(object sender, RoutedEventArgs e)
         {
             CleanWindow();
+            btnArtwork.Background = Brushes.Lavender;
             lblLyrics.Visibility = Visibility.Visible;
             txtLyrics.Visibility = Visibility.Visible;
+            txtLyrics.Text = song.Lyrics;
         }
+        // Tab specific buttons
         private void btnDeleteSong_Click(object sender, RoutedEventArgs e)
         {
 
