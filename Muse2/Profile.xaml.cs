@@ -39,9 +39,9 @@ namespace Muse2
             try
             {
                 var AccountImage = new BitmapImage(new System.Uri(_accountImage));
-                imgStatsAccont.Source = AccountImage;
-                imgAccontImage.Source = AccountImage;
-                imgFavoritesAccontImage.Source = AccountImage;
+                imgStatsAccount.Source = AccountImage;
+                imgAccountImage.Source = AccountImage;
+                imgFavoritesAccountImage.Source = AccountImage;
             }
             catch (Exception ex)
             {
@@ -112,7 +112,6 @@ namespace Muse2
                     txtFirstName.Focus();
                     return;
                 }
-
                 try
                 {
                     _userManager.UpdateFirstName(_email, NewFirstName);
@@ -165,7 +164,6 @@ namespace Muse2
                 btnFavoritesEdit.Content = "Edit";
             }
         }
-
         private void btnAccontImage_Click(object sender, RoutedEventArgs e)
         {
             UserManager _userManager = new UserManager();
@@ -186,7 +184,7 @@ namespace Muse2
                     var AccountImage = new BitmapImage(new System.Uri(_accountImage));
                     _userManager.UpdateAccountImage(_email, _accountImage);
 
-                    imgAccontImage.Source = AccountImage;
+                    imgAccountImage.Source = AccountImage;
                 }
                 else
                 {

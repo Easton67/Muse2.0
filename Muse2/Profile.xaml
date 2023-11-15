@@ -63,7 +63,7 @@
                     <WrapPanel HorizontalAlignment="Center" Margin="0,90,0,0" >
                         <StackPanel>
                             <Button x:Name="btnAccontImage" Width="300" Margin="0,-30,15,0" Click="btnAccontImage_Click">
-                                <Image x:Name="imgAccontImage" Source="/Resources/defaultAccount.png" />
+                                <Image x:Name="imgAccountImage" Source="/Resources/defaultAccount.png" />
                             </Button>
                         </StackPanel>
                         <StackPanel>
@@ -115,7 +115,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,100,0,0">
                             <StackPanel Orientation="Horizontal" Margin="32,-123,0,25">
-                                <Image x:Name="imgStatsAccont" Source="/Resources/defaultAccount.png" Width="75"/>
+                                <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75"/>
                                 <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45"/>
                             </StackPanel>
                             <Label x:Name="lblMinutesTotalListened" HorizontalAlignment="Center" FontSize="80" Margin="0,22,0,0">1469</Label>
@@ -140,7 +140,7 @@
                 FontSize="14" Padding="32,2,32,2">
                     <WrapPanel HorizontalAlignment="Center" Margin="0,90,0,0" >
                         <StackPanel>
-                            <Image x:Name="imgFavoritesAccontImage" Source="/Resources/defaultAccount.png" Width="300" Margin="0,-30,15,0"/>
+                            <Image x:Name="imgFavoritesAccountImage" Source="/Resources/defaultAccount.png" Width="300" Margin="0,-30,15,0"/>
                         </StackPanel>
                         <StackPanel>
                             <Label x:Name="lblFavoriteSong" Content="Favorite Song" Padding="0,5,5,5" />

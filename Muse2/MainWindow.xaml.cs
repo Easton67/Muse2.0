@@ -95,9 +95,13 @@ namespace Muse2
             mediaPlayer.Pause();
 
             // Hide role specific buttons and menu items
-            mnuViewProfile.Visibility = Visibility.Hidden;
-            mnuAdmin.Visibility = Visibility.Hidden;
-            mnuArtist.Visibility = Visibility.Hidden;
+            mnuFile.Visibility = Visibility.Collapsed;
+            mnuSong.Visibility = Visibility.Collapsed;
+            mnuAccount.Visibility = Visibility.Collapsed;
+            mnuFriends.Visibility = Visibility.Collapsed;
+            mnuControls.Visibility = Visibility.Collapsed;
+            mnuAdmin.Visibility = Visibility.Collapsed;
+            mnuArtist.Visibility = Visibility.Collapsed;
 
             // Hide all song controls
             lblSongTitle.Content = "";
@@ -164,6 +168,14 @@ namespace Muse2
                 BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
                 imgCoverArt.Source = CoverArt;
                 mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+                if (userSongs[0].Explicit == true)
+                {
+                    imgExplicit.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    imgExplicit.Visibility = Visibility.Hidden;
+                }
                 grdLibrary.ItemsSource = userSongs;
                 lblSongTitle.Content = userSongs[songNumber].Title;
                 lblSongArtist.Content = userSongs[songNumber].Artist;
@@ -197,6 +209,11 @@ namespace Muse2
             btnLogin.IsDefault = false;
 
             // set menus for specific roles
+            mnuFile.Visibility = Visibility.Visible;
+            mnuSong.Visibility = Visibility.Visible;
+            mnuAccount.Visibility = Visibility.Visible;
+            mnuFriends.Visibility = Visibility.Visible;
+            mnuControls.Visibility = Visibility.Visible;
             mnuViewProfile.Visibility = Visibility.Visible;
             foreach (var role in loggedInUser.Roles)
             {
@@ -427,6 +444,10 @@ namespace Muse2
                 if (Song.Explicit == true)
                 {
                     imgExplicit.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    imgExplicit.Visibility = Visibility.Hidden;
                 }
                 BitmapImage CoverArt = new BitmapImage(new System.Uri(Song.ImageFilePath));
                 imgCoverArt.Source = CoverArt;
