@@ -289,10 +289,10 @@ namespace Muse2
             btnPause.Visibility = Visibility.Hidden;
             timer.Stop();
             mediaPlayer.Pause();
-            MainWindow home = new MainWindow();
-            Profile profileWindow = new Profile(loggedInUser, _songManager);
-            home.Hide();
-            profileWindow.Show();
+            var profileWindow = new Profile(loggedInUser, _songManager);
+            profileWindow.ShowDialog();
+            loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
+            updateUIForUserLogin();
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -499,6 +499,7 @@ namespace Muse2
             {
                 var AddEditSong = new AddEditSongxaml(song);
                 AddEditSong.ShowDialog();
+                songListRepopulation();            
             }
             else
             {

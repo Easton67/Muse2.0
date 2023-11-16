@@ -21,9 +21,9 @@ namespace LogicLayer
             _userAccessor = new UserAccessor();
         }
         // the optional constructor can accept any data provider
-        public UserManager(IUserAccessor employeeAccessor)
+        public UserManager(IUserAccessor userAccessor)
         {
-            _userAccessor = employeeAccessor;
+            _userAccessor = userAccessor;
         }
         public bool AuthenticateUser(string email, string password)
         {
@@ -39,6 +39,7 @@ namespace LogicLayer
             try
             {
                 userVM = _userAccessor.SelectUserVMByEmail(email);
+                userVM.Roles = _userAccessor.SelectRolesByUserID(userVM.UserID);
             }
             catch (Exception ex)
             {
@@ -46,7 +47,7 @@ namespace LogicLayer
             }
             return userVM;
         }
-        public List<string> GetRolesByUserID(int employeeID)
+        public List<string> GetRolesByUserID(int UserID)
         {
             List<string> roles = new List<string>();
 
@@ -55,7 +56,7 @@ namespace LogicLayer
 
             try
             {
-                roles = _userAccessor.SelectRolesByUserID(employeeID);
+                roles = _userAccessor.SelectRolesByUserID(UserID);
             }
             catch (Exception)
             {
@@ -167,7 +168,7 @@ namespace LogicLayer
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Prpfile Name not accepted ", ex);
+                throw new ApplicationException("Profile Name not accepted ", ex);
             }
             return result;
         }

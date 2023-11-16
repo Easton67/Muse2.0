@@ -60,7 +60,7 @@ namespace Muse2
         // Buttons
         private void btnLogo_Click(object sender, RoutedEventArgs e)
         {
-            Hide();
+            Close();
         }
         private void btnResetPassword_Click(object sender, RoutedEventArgs e)
         {
@@ -184,7 +184,9 @@ namespace Muse2
                     var AccountImage = new BitmapImage(new System.Uri(_accountImage));
                     _userManager.UpdateAccountImage(_email, _accountImage);
 
+                    MessageBox.Show("Your account details have been updated", "Success!");
                     imgAccountImage.Source = AccountImage;
+                    btnEdit.Content = "Add Changes";
                 }
                 else
                 {

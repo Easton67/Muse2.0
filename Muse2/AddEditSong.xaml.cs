@@ -159,7 +159,6 @@ namespace Muse2
                 MessageBox.Show("Invalid image." + " " + ex.Message);
             }
         }
-
         private void btnAddChanges_Click(object sender, RoutedEventArgs e)
         {
             SongManager _songManager = new SongManager();
