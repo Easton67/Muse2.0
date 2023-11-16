@@ -122,7 +122,35 @@ namespace DataAccessFakes
             }
             return songs;
         }
+        public int UpdateAlbumBySongID(int SongID, string Album)
+        {
+            throw new NotImplementedException();
+        }
+        public int UpdateArtistBySongID(int SongID, string Artist)
+        {
+            throw new NotImplementedException();
+        }
+        public int UpdateExplicitBySongID(int SongID, bool Explicit)
+        {
+            throw new NotImplementedException();
+        }
+        public int UpdateLyricsBySongID(int SongID, string Lyrics)
+        {
+            throw new NotImplementedException();
+        }
         public int UpdatePlaysBySongID(int SongID, int Plays)
+        {
+            throw new NotImplementedException();
+        }
+        public int UpdateSongImageBySongID(int SongID, string ImageFilePath)
+        {
+            throw new NotImplementedException();
+        }
+        public int UpdateTitleBySongID(int SongID, string Title)
+        {
+            throw new NotImplementedException();
+        }
+        public int UpdateYearBySongID(int SongID, int Year)
         {
             throw new NotImplementedException();
         }

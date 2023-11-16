@@ -141,7 +141,7 @@
                 <ColumnDefinition Width="1250*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" SelectionChanged="grdLibrary_SelectionChanged">
+            <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" SelectionChanged="grdLibrary_SelectionChanged" CanUserReorderColumns="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="" Width="25" MinWidth="25" MaxWidth="55">
                         <DataGridTemplateColumn.CellTemplate>

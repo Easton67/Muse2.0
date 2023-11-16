@@ -54,6 +54,8 @@ namespace Muse2
             txtAlbum.Visibility = Visibility.Hidden;
             txtYear.Visibility = Visibility.Hidden;
             btnDeleteSong.Visibility = Visibility.Hidden;
+            chkExplicit.Visibility = Visibility.Hidden;
+            lblExplicit.Visibility = Visibility.Hidden;
 
             // Artwork Tab
             lblSongArt.Visibility = Visibility.Hidden;
@@ -74,16 +76,20 @@ namespace Muse2
             lblArtist.Visibility = Visibility.Visible;
             lblAlbum.Visibility = Visibility.Visible;
             lblYear.Visibility = Visibility.Visible;
+            lblExplicit.Visibility = Visibility.Visible;
 
             txtTitle.Visibility = Visibility.Visible;
             txtArtist.Visibility = Visibility.Visible;
             txtAlbum.Visibility = Visibility.Visible;
             txtYear.Visibility = Visibility.Visible;
+            chkExplicit.Visibility = Visibility.Visible;
+            btnDeleteSong.Visibility = Visibility.Visible;
 
             txtTitle.Text = song.Title;
             txtArtist.Text = song.Artist;
             txtAlbum.Text = song.Album;
             txtYear.Text = song.YearReleased.ToString();
+            chkExplicit.IsChecked = song.Explicit;
         }
         // Navigation Buttons
         private void btnSongInfomation_Click(object sender, RoutedEventArgs e)
@@ -151,6 +157,28 @@ namespace Muse2
             catch (Exception ex)
             {
                 MessageBox.Show("Invalid image." + " " + ex.Message);
+            }
+        }
+
+        private void btnAddChanges_Click(object sender, RoutedEventArgs e)
+        {
+            SongManager _songManager = new SongManager();
+            var NewSongTitle = txtTitle.Text;
+
+            try
+            {
+
+                _songManager.UpdateTitleBySongID(song.SongID, NewSongTitle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Invalid song title." + " " + ex.Message);
+                txtTitle.Text = song.Title;
+            }
+            finally
+            {
+                MessageBox.Show("Your account details have been updated", "Success!",
+                MessageBoxButton.OK);
             }
         }
     }

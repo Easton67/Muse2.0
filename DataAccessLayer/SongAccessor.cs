@@ -69,7 +69,6 @@ namespace DataAccessLayer
             }
             return songs;
         }
-
         public List<Song> SelectSongsByUserID(int UserID)
         {
             List<Song> songs = new List<Song>();
@@ -165,6 +164,335 @@ namespace DataAccessLayer
                 if (rows == 0)
                 {
                     throw new ArgumentException("Could not update song's play count.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateTitleBySongID(int SongID, string Title)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_song_title";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewSongTitle", SqlDbType.VarChar);
+
+            // Parameter Values
+            cmd.Parameters["@SongID"].Value = SongID;
+            cmd.Parameters["@NewSongTitle"].Value = Title;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your song's title.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateArtistBySongID(int SongID, string Artist)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_song_artist";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewSongArtist", SqlDbType.VarChar);
+
+            // Parameter Values
+            cmd.Parameters["@SongID"].Value = SongID;
+            cmd.Parameters["@NewSongArtist"].Value = Artist;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your song's artist.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateAlbumBySongID(int SongID, string Album)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_song_album";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewSongAlbum", SqlDbType.VarChar);
+
+            // Parameter Values
+            cmd.Parameters["@SongID"].Value = SongID;
+            cmd.Parameters["@NewSongAlbum"].Value = Album;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your song's album.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateYearBySongID(int SongID, int YearReleased)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_song_release_year";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewYearReleased", SqlDbType.Int);
+
+            // Parameter Values
+            cmd.Parameters["@SongID"].Value = SongID;
+            cmd.Parameters["@NewYearReleased"].Value = YearReleased;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your song's year released.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateExplicitBySongID(int SongID, bool Explicit)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_song_explicit_status";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewStatus", SqlDbType.Bit);
+
+            // Parameter Values
+            cmd.Parameters["@SongID"].Value = SongID;
+            cmd.Parameters["@NewStatus"].Value = Explicit;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your song's parental advisory status.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateSongImageBySongID(int SongID, string ImageFilePath)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_song_image";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewImageFilePath", SqlDbType.Bit);
+
+            // Parameter Values
+            cmd.Parameters["@SongID"].Value = SongID;
+            cmd.Parameters["@NewImageFilePath"].Value = ImageFilePath;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your song's image.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateLyricsBySongID(int SongID, string Lyrics)
+        {
+            int rows = 0;
+
+            //connection
+            var conn = SqlConnectionProvider.GetConnection();
+
+            //command text
+            var cmdText = "sp_update_lyrics";
+
+            //command
+            var cmd = new SqlCommand(cmdText, conn);
+
+            //command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewLyrics", SqlDbType.Bit);
+
+            // Parameter Values
+            cmd.Parameters["@SongID"].Value = SongID;
+            cmd.Parameters["@NewLyrics"].Value = Lyrics;
+
+            try
+            {
+                // open the connection
+                conn.Open();
+
+                // an update is executed nonquery - returns an int
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your song's lyrics.");
                 }
             }
             catch (Exception ex)

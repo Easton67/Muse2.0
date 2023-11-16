@@ -70,6 +70,7 @@ namespace Muse2
                 if(SongCurrentPosition == SongLengthInSeconds)
                 {
                     UpdateSongPlayCount();
+                    songListRepopulation();
                     NextSongHelper();
                 }
             }
@@ -141,6 +142,21 @@ namespace Muse2
             // Reset the Playlists
             grdPlaylists.ItemsSource = null;
             grdPlaylists.Visibility = Visibility.Collapsed;
+        }
+        private void songListRepopulation()
+        {
+            try
+            {
+                userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+
+                grdLibrary.ItemsSource = userSongs;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your library. Please try logging in again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
         private void updateUIForUserLogin()
         {
