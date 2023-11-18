@@ -41,7 +41,7 @@
                 <MenuItem x:Name="mnuNext" Header="Next"/>
                 <MenuItem x:Name="mnuRewind" Header="Rewind"/>
             </MenuItem>
-            <MenuItem x:Name="mnuHelp" Header="Help">
+            <MenuItem x:Name="mnuHelp" Header="Help" Click="mnuHelp_Click">
                 <MenuItem x:Name="mnuSignUp" Header="Sign Up"/>
             </MenuItem>
                 <MenuItem x:Name="mnuArtist" Header="Artist">

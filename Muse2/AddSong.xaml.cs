@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,8 +25,10 @@ namespace Muse2
     /// </summary>
     public partial class AddSong : Window
     {
-        private Song song = null;
         private UserVM _loggedInUser = null;
+        private string _mp3File = "";
+        private string _imgFile = "";
+
         public AddSong(UserVM loggedInUser)
         {
             InitializeComponent();
@@ -45,10 +48,12 @@ namespace Muse2
             btnLyrics.Background = Brushes.White;
 
             // Song Info Tab
+            lblMp3File.Visibility = Visibility.Hidden;
             lblTitle.Visibility = Visibility.Hidden;
             lblArtist.Visibility = Visibility.Hidden;
             lblAlbum.Visibility = Visibility.Hidden;
             lblYear.Visibility = Visibility.Hidden;
+            txtMp3FilePath.Visibility = Visibility.Hidden;
             txtTitle.Visibility = Visibility.Hidden;
             txtArtist.Visibility = Visibility.Hidden;
             txtAlbum.Visibility = Visibility.Hidden;
@@ -72,6 +77,7 @@ namespace Muse2
         private void SongInformationHelper()
         {
             btnSongInfomation.Background = Brushes.Lavender;
+            lblMp3File.Visibility = Visibility.Visible;
             lblTitle.Visibility = Visibility.Visible;
             lblArtist.Visibility = Visibility.Visible;
             lblAlbum.Visibility = Visibility.Visible;
@@ -79,6 +85,7 @@ namespace Muse2
             lblExplicit.Visibility = Visibility.Visible;
             lblPlays.Visibility = Visibility.Visible;
 
+            txtMp3FilePath.Visibility = Visibility.Visible;
             txtTitle.Visibility = Visibility.Visible;
             txtArtist.Visibility = Visibility.Visible;
             txtAlbum.Visibility = Visibility.Visible;
@@ -107,7 +114,6 @@ namespace Muse2
         private void btnLyrics_Click(object sender, RoutedEventArgs e)
         {
             CleanWindow();
-            btnArtwork.Background = Brushes.White;
             btnLyrics.Background = Brushes.Lavender;
             lblLyrics.Visibility = Visibility.Visible;
             txtLyrics.Visibility = Visibility.Visible;
@@ -117,8 +123,8 @@ namespace Muse2
             var newSong = new Song()
             {
                 Title = txtTitle.Text,
-                ImageFilePath = "Testoing",
-                Mp3FilePath = "test",
+                ImageFilePath = _imgFile,
+                Mp3FilePath = _mp3File,
                 YearReleased = 2002,
                 Lyrics = txtLyrics.Text,
                 Explicit = (bool)chkExplicit.IsChecked,
@@ -156,8 +162,8 @@ namespace Muse2
 
                 if (result == true)
                 {
-                    string SongImage = openFileDialog.FileName;
-                    var songImage = new BitmapImage(new System.Uri(SongImage));
+                    _imgFile = openFileDialog.FileName;
+                    var songImage = new BitmapImage(new System.Uri(_imgFile));
 
                     imgSongImage.Source = songImage;
                 }
@@ -173,5 +179,38 @@ namespace Muse2
             }
         }
 
+        private void txtYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[0-9]");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void txtMp3FilePath_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+
+                openFileDialog.Title = "Open Mp3 File";
+                openFileDialog.Filter = "MP3 Files (*.mp3)|*.mp3|All Files (*.*)|*.*";
+
+                bool? result = openFileDialog.ShowDialog();
+
+                if (result == true)
+                {
+                    _mp3File = openFileDialog.FileName;
+                    txtMp3FilePath.Text = _mp3File;
+                }
+                else
+                {
+                    // user closes the file explorer before picking a photo
+                    MessageBox.Show("Choose an MP3 to add.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Invalid MP3 File." + " " + ex.Message);
+            }
+        }
     }
 }

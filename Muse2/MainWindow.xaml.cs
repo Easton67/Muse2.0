@@ -363,6 +363,44 @@ namespace Muse2
         {
             NextSongHelper();
         }
+        private void btnRewind_Click(object sender, RoutedEventArgs e)
+        {
+            // if the song is not at the start, rewind it
+            if (mediaPlayer.Position.ToString(@"mm\:ss") != "00:00")
+            {
+                mediaPlayer.Stop();
+                mediaPlayer.Play();
+                return;
+            }
+            if (btnPause.IsVisible)
+            {
+                if (songNumber <= 0)
+                {
+                    songNumber = userSongs.Count - 1;
+                    CurrentSongHelper();
+                    mediaPlayer.Play();
+                }
+                else
+                {
+                    songNumber--;
+                    CurrentSongHelper();
+                    mediaPlayer.Play();
+                }
+            }
+            else
+            {
+                if (songNumber <= 0)
+                {
+                    songNumber = userSongs.Count - 1;
+                    CurrentSongHelper();
+                }
+                else
+                {
+                    songNumber--;
+                    CurrentSongHelper();
+                }
+            }
+        }
         // Song control helpers
         private void UpdateSongPlayCount()
         {
@@ -439,44 +477,6 @@ namespace Muse2
                 }
             }
         }
-        private void btnRewind_Click(object sender, RoutedEventArgs e)
-        {
-            // if the song is not at the start, rewind it
-            if (mediaPlayer.Position.ToString(@"mm\:ss") != "00:00")
-            {
-                mediaPlayer.Stop();
-                mediaPlayer.Play();
-                return;
-            }
-            if (btnPause.IsVisible)
-            {
-                if (songNumber <= 0)
-                {
-                    songNumber = userSongs.Count - 1;
-                    CurrentSongHelper();
-                    mediaPlayer.Play();
-                }
-                else
-                {
-                    songNumber--;
-                    CurrentSongHelper();
-                    mediaPlayer.Play();
-                }
-            }
-            else
-            {
-                if (songNumber <= 0)
-                {
-                    songNumber = userSongs.Count - 1;
-                    CurrentSongHelper();
-                }
-                else
-                {
-                    songNumber--;
-                    CurrentSongHelper();
-                }
-            }
-        }
         private void grdLibrary_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (grdLibrary.SelectedItems.Count != 0)
@@ -532,12 +532,17 @@ namespace Muse2
                 MessageBox.Show("Select a Song to view it.");
             }
         }
-
         private void mnuAddSongToLibrary_Click(object sender, RoutedEventArgs e)
         {
             var AddSong = new AddSong(loggedInUser);
             AddSong.ShowDialog();
             grdLibrary.ItemsSource = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+        }
+
+        private void mnuHelp_Click(object sender, RoutedEventArgs e)
+        {
+            var SignUp = new SignUp();
+            SignUp.ShowDialog();
         }
     }
 }

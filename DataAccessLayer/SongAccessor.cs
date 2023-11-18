@@ -132,6 +132,9 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@Private", song.Private);
             cmd.Parameters.AddWithValue("@Plays", song.Plays);
             cmd.Parameters.AddWithValue("@UserID", song.UserID);
+            cmd.Parameters.AddWithValue("@ArtistID", song.Artist);
+            cmd.Parameters.AddWithValue("@AlbumID", song.Album);
+
             try
             {
                 conn.Open();
