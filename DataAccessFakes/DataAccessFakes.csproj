@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlbumAccessorFake.cs" />
+    <Compile Include="ArtistAccessorFake.cs" />
     <Compile Include="PlaylistAccessorFake.cs" />
     <Compile Include="SongAccessorFake.cs" />
     <Compile Include="UserAccessorFake.cs" />

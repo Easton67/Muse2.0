@@ -58,9 +58,9 @@ namespace LogicLayer
             {
                 roles = _userAccessor.SelectRolesByUserID(UserID);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw new ApplicationException("Roles not found", ex);
             }
 
             return roles;

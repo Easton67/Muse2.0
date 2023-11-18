@@ -18,20 +18,6 @@ namespace LogicLayer
         {
             _songAccessor = songAccessor;
         }
-        public List<Song> SelectSongsByProfileName(string ProfileName)
-        {
-            List<Song> songs = new List<Song>();
-
-            try
-            {
-                songs = _songAccessor.SelectSongsByProfileName(ProfileName);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Library not found", ex);
-            }
-            return songs;
-        }
         public List<Song> SelectSongsByUserID(int UserID)
         {
             List<Song> songs = new List<Song>();
@@ -46,6 +32,7 @@ namespace LogicLayer
             }
             return songs;
         }
+
         public bool UpdateAlbumBySongID(int SongID, string Album)
         {
             bool result = false;
@@ -85,20 +72,6 @@ namespace LogicLayer
             catch (Exception ex)
             {
                 throw new ApplicationException("Status change not accepted ", ex);
-            }
-            return result;
-        }
-        public bool UpdateLyricsBySongID(int SongID, string Lyrics)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _songAccessor.UpdateLyricsBySongID(SongID, Lyrics));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Lyrics not accepted ", ex);
             }
             return result;
         }
@@ -158,6 +131,26 @@ namespace LogicLayer
             catch (Exception ex)
             {
                 throw new ApplicationException("Song's title not found.", ex);
+            }
+            return result;
+        }
+
+        public bool UpdateLyricsBySongID(int SongID, string Lyrics)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool InsertSong(Song newSong)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _songAccessor.InsertSong(newSong));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not Added", ex);
             }
             return result;
         }

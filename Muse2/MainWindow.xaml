@@ -21,7 +21,7 @@
                 <MenuItem x:Name="mnuExitApplcation" Header="Exit Application" Click="mnuExitApplcation_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuSong" Header="Song">
-                <MenuItem x:Name="mnuAddSongToLibrary" Header="Add Song To Library"/>
+                <MenuItem x:Name="mnuAddSongToLibrary" Header="Add Song To Library" Click="mnuAddSongToLibrary_Click"/>
                 <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs"/>
             </MenuItem>
             <MenuItem x:Name="mnuAccount" Header="Account">

@@ -9,7 +9,6 @@ namespace DataAccessInterfaces
 {
     public interface ISongAccessor
     {
-        List<Song> SelectSongsByProfileName(string ProfileName);
         List<Song> SelectSongsByUserID(int UserID);
         int UpdatePlaysBySongID(int SongID, int Plays);
         int UpdateTitleBySongID(int SongID, string Title);
@@ -18,6 +17,6 @@ namespace DataAccessInterfaces
         int UpdateYearBySongID(int SongID, int Year);
         int UpdateExplicitBySongID(int SongID, bool Explicit);
         int UpdateSongImageBySongID(int SongID, string ImageFilePath);
-        int UpdateLyricsBySongID(int SongID, string Lyrics);
+        int InsertSong(Song song);
     }
 }

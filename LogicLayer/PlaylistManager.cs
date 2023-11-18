@@ -31,9 +31,9 @@ namespace LogicLayer
             {
                 playlists = _playlistAccessor.SelectPlaylistByUserID(userId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw new ApplicationException("Playlists not found", ex);
             }
             return playlists;
         }

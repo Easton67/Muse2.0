@@ -9,8 +9,8 @@ namespace LogicLayer
 {
     public interface ISongManager
     {
-        List<Song> SelectSongsByProfileName(string ProfileName);
         List<Song> SelectSongsByUserID(int UserID);
+        bool InsertSong(Song song);
         bool UpdatePlaysBySongID(int SongID, int Plays);
         bool UpdateTitleBySongID(int SongID, string Title);
         bool UpdateArtistBySongID(int SongID, string Artist);

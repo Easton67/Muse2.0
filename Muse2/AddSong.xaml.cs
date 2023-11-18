@@ -1,6 +1,9 @@
 ﻿using DataObjects;
+using LogicLayer;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,32 +15,29 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using LogicLayer;
-using System.Diagnostics;
-using Microsoft.Win32;
+using System.Xml.Linq;
 
 namespace Muse2
 {
     /// <summary>
-    /// Interaction logic for AddEditSongxaml.xaml
+    /// Interaction logic for AddSong.xaml
     /// </summary>
-    public partial class AddEditSongxaml : Window
+    public partial class AddSong : Window
     {
         private Song song = null;
-
-        public AddEditSongxaml(Song s)
+        private UserVM _loggedInUser = null;
+        public AddSong(UserVM loggedInUser)
         {
-            song = s;
-
             InitializeComponent();
+
+            _loggedInUser = loggedInUser;
         }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CleanWindow();
             SongInformationHelper();
-            // ArtworkHelper();
         }
-        // Reset Method
         private void CleanWindow()
         {
             btnSongInfomation.Background = Brushes.White;
@@ -53,9 +53,10 @@ namespace Muse2
             txtArtist.Visibility = Visibility.Hidden;
             txtAlbum.Visibility = Visibility.Hidden;
             txtYear.Visibility = Visibility.Hidden;
-            btnDeleteSong.Visibility = Visibility.Hidden;
             chkExplicit.Visibility = Visibility.Hidden;
             lblExplicit.Visibility = Visibility.Hidden;
+            lblPlays.Visibility = Visibility.Hidden;
+            txtPlays.Visibility = Visibility.Hidden;
 
             // Artwork Tab
             lblSongArt.Visibility = Visibility.Hidden;
@@ -68,7 +69,6 @@ namespace Muse2
             lblLyrics.Visibility = Visibility.Hidden;
             txtLyrics.Visibility = Visibility.Hidden;
         }
-        // Sets the window's initial state
         private void SongInformationHelper()
         {
             btnSongInfomation.Background = Brushes.Lavender;
@@ -77,26 +77,22 @@ namespace Muse2
             lblAlbum.Visibility = Visibility.Visible;
             lblYear.Visibility = Visibility.Visible;
             lblExplicit.Visibility = Visibility.Visible;
+            lblPlays.Visibility = Visibility.Visible;
 
             txtTitle.Visibility = Visibility.Visible;
             txtArtist.Visibility = Visibility.Visible;
             txtAlbum.Visibility = Visibility.Visible;
             txtYear.Visibility = Visibility.Visible;
+            txtPlays.Visibility = Visibility.Visible;
             chkExplicit.Visibility = Visibility.Visible;
-            btnDeleteSong.Visibility = Visibility.Visible;
-
-            txtTitle.Text = song.Title;
-            txtArtist.Text = song.Artist;
-            txtAlbum.Text = song.Album;
-            txtYear.Text = song.YearReleased.ToString();
-            chkExplicit.IsChecked = song.Explicit;
         }
-        // Navigation Buttons
+
         private void btnSongInfomation_Click(object sender, RoutedEventArgs e)
         {
             CleanWindow();
             SongInformationHelper();
         }
+
         private void btnArtwork_Click(object sender, RoutedEventArgs e)
         {
             CleanWindow();
@@ -106,27 +102,44 @@ namespace Muse2
             imgSongImage.Visibility = Visibility.Visible;
             btnAddArtwork.Visibility = Visibility.Visible;
             btnRemoveArtwork.Visibility = Visibility.Visible;
-
-            try
-            {
-                var SongImage = new BitmapImage(new System.Uri(song.ImageFilePath));
-                imgSongImage.Source = SongImage;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Unable to find your profile photo. ", ex.Message);
-            }
         }
+
         private void btnLyrics_Click(object sender, RoutedEventArgs e)
         {
             CleanWindow();
-            btnArtwork.Background = Brushes.Lavender;
+            btnArtwork.Background = Brushes.White;
+            btnLyrics.Background = Brushes.Lavender;
             lblLyrics.Visibility = Visibility.Visible;
             txtLyrics.Visibility = Visibility.Visible;
-            txtLyrics.Text = song.Lyrics;
         }
-        // Tab specific buttons
-        private void btnDeleteSong_Click(object sender, RoutedEventArgs e)
+        private void btnCreateSong_Click(object sender, RoutedEventArgs e)
+        {
+            var newSong = new Song()
+            {
+                Title = txtTitle.Text,
+                ImageFilePath = "Testoing",
+                Mp3FilePath = "test",
+                YearReleased = 2002,
+                Lyrics = txtLyrics.Text,
+                Explicit = (bool)chkExplicit.IsChecked,
+                Private = true,
+                Plays = 134,
+                UserID = _loggedInUser.UserID,
+                Album = txtAlbum.Text,
+                Artist = txtArtist.Text
+            };
+            try
+            {
+                var sm = new SongManager();
+                bool result = sm.InsertSong(newSong);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message);
+            }
+        }
+        private void btnRemoveArtwork_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -143,10 +156,10 @@ namespace Muse2
 
                 if (result == true)
                 {
-                    song.ImageFilePath = openFileDialog.FileName;
-                    var SongImage = new BitmapImage(new System.Uri(song.ImageFilePath));
+                    string SongImage = openFileDialog.FileName;
+                    var songImage = new BitmapImage(new System.Uri(SongImage));
 
-                    imgSongImage.Source = SongImage;
+                    imgSongImage.Source = songImage;
                 }
                 else
                 {
@@ -159,26 +172,6 @@ namespace Muse2
                 MessageBox.Show("Invalid image." + " " + ex.Message);
             }
         }
-        private void btnAddChanges_Click(object sender, RoutedEventArgs e)
-        {
-            SongManager _songManager = new SongManager();
-            var NewSongTitle = txtTitle.Text;
 
-            try
-            {
-
-                _songManager.UpdateTitleBySongID(song.SongID, NewSongTitle);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Invalid song title." + " " + ex.Message);
-                txtTitle.Text = song.Title;
-            }
-            finally
-            {
-                MessageBox.Show("Your account details have been updated", "Success!",
-                MessageBoxButton.OK);
-            }
-        }
     }
 }

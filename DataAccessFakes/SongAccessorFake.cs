@@ -26,7 +26,6 @@ namespace DataAccessFakes
                 Private = true,
                 Explicit = true,
                 Plays = 372,
-                CreatedBy = "Easton67",
                 UserID = 100000,
                 Artist = "Drake",
                 Album = "Scary Hours 2"
@@ -42,7 +41,6 @@ namespace DataAccessFakes
                 Private = true,
                 Explicit = false,
                 Plays = 81,
-                CreatedBy = "Easton67",
                 UserID = 100000,
                 Artist = "Elton John",
                 Album = "HonkyChateau"
@@ -59,7 +57,6 @@ namespace DataAccessFakes
                 Explicit = true,
                 Plays = 0,
                 UserID = 100001,
-                CreatedBy = "Drake",
                 Artist = "not here",
                 Album = "none"
             });
@@ -75,7 +72,6 @@ namespace DataAccessFakes
                 Explicit = true,
                 Plays = 0,
                 UserID = 100001,
-                CreatedBy = "Drake",
                 Artist = "not here",
                 Album = "none"
             });
@@ -91,24 +87,16 @@ namespace DataAccessFakes
                 Explicit = true,
                 Plays = 0,
                 UserID = 100001,
-                CreatedBy = "Drake",
                 Artist = "not here",
                 Album = "none"
             });
         }
-        public List<Song> SelectSongsByProfileName(string ProfileName)
-        {
-            List<Song> songs = new List<Song>();
 
-            foreach (Song song in fakeSongs)
-            {
-                if (song.CreatedBy == ProfileName)
-                {
-                    songs.Add(song);
-                }
-            }
-            return songs;
+        public int InsertSong(Song song)
+        {
+            throw new NotImplementedException();
         }
+
         public List<Song> SelectSongsByUserID(int UserID)
         {
             List<Song> songs = new List<Song>();

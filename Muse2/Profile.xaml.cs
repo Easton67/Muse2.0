@@ -167,7 +167,6 @@ namespace Muse2
         private void btnAccontImage_Click(object sender, RoutedEventArgs e)
         {
             UserManager _userManager = new UserManager();
-            var NewAccountImage = "";
 
             try
             {
@@ -184,7 +183,6 @@ namespace Muse2
                     var AccountImage = new BitmapImage(new System.Uri(_accountImage));
                     _userManager.UpdateAccountImage(_email, _accountImage);
 
-                    MessageBox.Show("Your account details have been updated", "Success!");
                     imgAccountImage.Source = AccountImage;
                     btnEdit.Content = "Add Changes";
                 }

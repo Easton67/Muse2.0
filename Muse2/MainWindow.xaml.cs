@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
 using System.Resources;
@@ -24,12 +25,6 @@ namespace Muse2
     /// </summary>  
     public partial class MainWindow : Window
     {
-        // ResourceManager _rm = new ResourceManager(
-        // "MuseProject.Resource1", Assembly.GetExecutingAssembly());
-        // string mp3DataPath = AppDomain.CurrentDomain.BaseDirectory + @"MuseConfig\SongFiles\";
-        // string albumImagePath = AppDomain.CurrentDomain.BaseDirectory + @"MuseConfig\AlbumArt\";
-        // string profileImagePath = AppDomain.CurrentDomain.BaseDirectory + @"MuseConfig\ProfileImages\";
-
         private DispatcherTimer timer;
         UserManager _userManager = null;
         UserVM loggedInUser = null;
@@ -178,23 +173,33 @@ namespace Muse2
             }
             try
             {
-                userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+                int userSongsCount = _songManager.SelectSongsByUserID(loggedInUser.UserID).Count();
 
-                // load the first song in the list
-                BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
-                imgCoverArt.Source = CoverArt;
-                mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
-                if (userSongs[0].Explicit == true)
+                if (userSongsCount > 0)
                 {
-                    imgExplicit.Visibility = Visibility.Visible;
+                    userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+
+                    // load the first song in the list
+                    BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
+                    imgCoverArt.Source = CoverArt;
+                    mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+                    if (userSongs[0].Explicit == true)
+                    {
+                        imgExplicit.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        imgExplicit.Visibility = Visibility.Hidden;
+                    }
+                    grdLibrary.ItemsSource = userSongs;
+                    lblSongTitle.Content = userSongs[songNumber].Title;
+                    lblSongArtist.Content = userSongs[songNumber].Artist;
                 }
                 else
                 {
-                    imgExplicit.Visibility = Visibility.Hidden;
+                    grdLibrary.ItemsSource = null;
+                    grdLibrary.Visibility = Visibility.Hidden;
                 }
-                grdLibrary.ItemsSource = userSongs;
-                lblSongTitle.Content = userSongs[songNumber].Title;
-                lblSongArtist.Content = userSongs[songNumber].Artist;
             }
             catch(Exception ex)
             {
@@ -369,8 +374,21 @@ namespace Muse2
             }
             catch (Exception ex)
             {
-                // you may never throw exceptions from the presentation layer
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Plays not updated",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        private void GetSongCover()
+        {
+            try
+            {
+                BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
+                imgCoverArt.Source = CoverArt;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover could not be found.",
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
@@ -387,9 +405,18 @@ namespace Muse2
             {
                 imgExplicit.Visibility = Visibility.Hidden;
             }
-            BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
-            imgCoverArt.Source = CoverArt;
-            mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+            GetSongCover();
+            try
+            {
+                mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be found. " +
+                "Please make sure your file is in the correct location.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
         private void NextSongHelper()
         {
@@ -465,9 +492,8 @@ namespace Muse2
                 {
                     imgExplicit.Visibility = Visibility.Hidden;
                 }
-                BitmapImage CoverArt = new BitmapImage(new System.Uri(Song.ImageFilePath));
-                imgCoverArt.Source = CoverArt;
-                mediaPlayer.Open(new Uri((Song.Mp3FilePath)));
+                GetSongCover();
+                CurrentSongHelper();
                 btnPlay.Visibility = Visibility.Hidden;
                 btnPause.Visibility = Visibility.Visible;
                 if (grdLibrary.SelectedItem != null)
@@ -505,6 +531,13 @@ namespace Muse2
             {
                 MessageBox.Show("Select a Song to view it.");
             }
+        }
+
+        private void mnuAddSongToLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            var AddSong = new AddSong(loggedInUser);
+            AddSong.ShowDialog();
+            grdLibrary.ItemsSource = _songManager.SelectSongsByUserID(loggedInUser.UserID);
         }
     }
 }
