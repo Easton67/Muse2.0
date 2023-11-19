@@ -125,7 +125,7 @@ namespace Muse2
                 Title = txtTitle.Text,
                 ImageFilePath = _imgFile,
                 Mp3FilePath = _mp3File,
-                YearReleased = 2002,
+                YearReleased = int.Parse(txtYear.Text),
                 Lyrics = txtLyrics.Text,
                 Explicit = (bool)chkExplicit.IsChecked,
                 Private = true,

@@ -195,7 +195,6 @@ namespace Muse2
             catch (Exception ex)
             {
                 MessageBox.Show("Invalid image." + " " + ex.Message);
-                txtFirstName.Text = _firstName;
             }
         }
     }

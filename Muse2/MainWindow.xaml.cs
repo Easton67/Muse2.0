@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
@@ -82,6 +83,7 @@ namespace Muse2
             _playlistManager = new PlaylistManager();
             updateUIForLogout();
         }
+        // UI Helpers
         private void updateUIForLogout()
         {
             txtEmail.Focus();
@@ -106,6 +108,7 @@ namespace Muse2
             lblCurrentTime.Visibility = Visibility.Hidden;
             lblSongLength.Visibility = Visibility.Hidden;
             imgCoverArt.Visibility = Visibility.Collapsed;
+            imgCoverArt.Source = null;
             btnRewind.Visibility = Visibility.Collapsed;
             btnPause.Visibility = Visibility.Collapsed;
             btnPlay.Visibility = Visibility.Collapsed;
@@ -153,70 +156,8 @@ namespace Muse2
                 return;
             }
         }
-        private void updateUIForUserLogin()
+        private void GetAccountAndRoles()
         {
-            // set the variables
-            try
-            {
-                var AccountImage = new System.Uri(loggedInUser.ImageFilePath);
-                // account image
-                defaultimgAccount.Visibility = Visibility.Hidden;
-                BitmapImage Account = new BitmapImage(AccountImage);
-                imgAccount.Visibility = Visibility.Visible;
-                imgAccount.Source = Account;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your profile image.",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            try
-            {
-                int userSongsCount = _songManager.SelectSongsByUserID(loggedInUser.UserID).Count();
-
-                if (userSongsCount > 0)
-                {
-                    userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
-
-                    // load the first song in the list
-                    BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
-                    imgCoverArt.Source = CoverArt;
-                    mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
-                    if (userSongs[0].Explicit == true)
-                    {
-                        imgExplicit.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        imgExplicit.Visibility = Visibility.Hidden;
-                    }
-                    grdLibrary.ItemsSource = userSongs;
-                    lblSongTitle.Content = userSongs[songNumber].Title;
-                    lblSongArtist.Content = userSongs[songNumber].Artist;
-                }
-                else
-                {
-                    grdLibrary.ItemsSource = null;
-                    grdLibrary.Visibility = Visibility.Hidden;
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your library. Please try logging in again.",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            // set song controls
-            lblCurrentTime.Visibility = Visibility.Visible;
-            lblSongLength.Visibility = Visibility.Visible;
-            imgCoverArt.Visibility = Visibility.Visible;
-            btnRewind.Visibility = Visibility.Visible;
-            btnPlay.Visibility = Visibility.Visible;
-            btnNext.Visibility = Visibility.Visible;
-            barSongLength.Visibility = Visibility.Visible;
-
             // set account
             txtEmail.Text = "";
             txtEmail.Visibility = Visibility.Hidden;
@@ -249,39 +190,105 @@ namespace Muse2
                     break;
                 }
             }
-
-            // set library
-            grdLibrary.Visibility = Visibility.Visible;
-
-            // set the playlists
+        }
+        private void updateUIForUserLogin()
+        {
             try
             {
-                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
-                if (playlists.Count > 0)
+                var AccountImage = new System.Uri(loggedInUser.ImageFilePath);
+                // account image
+                defaultimgAccount.Visibility = Visibility.Hidden;
+                BitmapImage Account = new BitmapImage(AccountImage);
+                imgAccount.Visibility = Visibility.Visible;
+                imgAccount.Source = Account;
+            }
+            catch (Exception)
+            {
+                imgAccount.Source = null;
+                imgAccount.Visibility = Visibility.Hidden;
+                defaultimgAccount.Visibility = Visibility.Visible;
+                GetAccountAndRoles();
+                return;
+            }
+            try
+            {
+                int userSongsCount = _songManager.SelectSongsByUserID(loggedInUser.UserID).Count();
+
+                if (userSongsCount > 0)
                 {
-                    grdPlaylists.Visibility = Visibility.Visible;
-                    grdPlaylists.ItemsSource = playlists;
+                    userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+
+                    // load the first song in the list
+                    BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
+                    imgCoverArt.Source = CoverArt;
+                    mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+                    if (userSongs[0].Explicit == true)
+                    {
+                        imgExplicit.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        imgExplicit.Visibility = Visibility.Hidden;
+                    }
+                    grdLibrary.ItemsSource = userSongs;
+                    lblSongTitle.Content = userSongs[songNumber].Title;
+                    lblSongArtist.Content = userSongs[songNumber].Artist;
+
+                    // set song controls
+                    lblCurrentTime.Visibility = Visibility.Visible;
+                    lblSongLength.Visibility = Visibility.Visible;
+                    imgCoverArt.Visibility = Visibility.Visible;
+                    btnRewind.Visibility = Visibility.Visible;
+                    btnPlay.Visibility = Visibility.Visible;
+                    btnNext.Visibility = Visibility.Visible;
+                    barSongLength.Visibility = Visibility.Visible;
+
+                    // set library
+                    grdLibrary.Visibility = Visibility.Visible;
+
+                    // set the playlists
+                    try
+                    {
+                        List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+                        if (playlists.Count > 0)
+                        {
+                            grdPlaylists.Visibility = Visibility.Visible;
+                            grdPlaylists.ItemsSource = playlists;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                else
+                {
+                    // Hide the library
+                    grdLibrary.ItemsSource = null;
+                    grdLibrary.Visibility = Visibility.Hidden;
+                    MessageBox.Show("Welcome to Muse!" + "\n\n" + "At the top, click the song menu, and click add a song to add it to Muse");
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your library. Please try logging in again.",
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            GetAccountAndRoles();
         }
         // Menu Items
         private void mnuViewProfile_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Stop();
-            btnPlay.Visibility = Visibility.Visible;
-            btnPause.Visibility = Visibility.Hidden;
             timer.Stop();
             mediaPlayer.Pause();
-            MainWindow home = new MainWindow();
-            Profile profileWindow = new Profile(loggedInUser, _songManager);
-            home.Hide();
-            profileWindow.Show();
+            var profileWindow = new Profile(loggedInUser, _songManager);
+            profileWindow.ShowDialog();
+            loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
+            updateUIForUserLogin();
         }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
@@ -290,8 +297,6 @@ namespace Muse2
         private void btnProfileName_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Stop();
-            btnPlay.Visibility = Visibility.Visible;
-            btnPause.Visibility = Visibility.Hidden;
             timer.Stop();
             mediaPlayer.Pause();
             var profileWindow = new Profile(loggedInUser, _songManager);
@@ -538,7 +543,6 @@ namespace Muse2
             AddSong.ShowDialog();
             grdLibrary.ItemsSource = _songManager.SelectSongsByUserID(loggedInUser.UserID);
         }
-
         private void mnuHelp_Click(object sender, RoutedEventArgs e)
         {
             var SignUp = new SignUp();

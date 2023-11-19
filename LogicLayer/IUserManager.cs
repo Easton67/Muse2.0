@@ -15,6 +15,7 @@ namespace LogicLayer
         bool AuthenticateUser(string email, string password);
         UserVM GetUserVMByEmail(string email);
         List<string> GetRolesByUserID(int employeeID);
+        bool InsertUser(User user, string password);
         bool ResetPassword(string email, string oldPassword, string newPassword);
         bool UpdateFirstName(string Email, string FirstName);
         bool UpdateLastName(string email, string LastName);

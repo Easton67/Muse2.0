@@ -184,5 +184,9 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public int InsertUser(User user, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

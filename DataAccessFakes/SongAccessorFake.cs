@@ -49,7 +49,7 @@ namespace DataAccessFakes
             {
                 SongID = 3,
                 Title = "test",
-                ImageFilePath = "",
+                ImageFilePath = "C:\\Users\\67Eas\\Downloads\\albumart\\HonkyChateau.jpg",
                 Mp3FilePath = "C:\\Users\\67Eas\\Downloads\\songs\\RocketMan.mp3",
                 YearReleased = 2023,
                 Lyrics = "Instrumental",
@@ -64,7 +64,7 @@ namespace DataAccessFakes
             {
                 SongID = 4,
                 Title = "test",
-                ImageFilePath = "",
+                ImageFilePath = "C:\\Users\\67Eas\\Downloads\\albumart\\HonkyChateau.jpg",
                 Mp3FilePath = "C:\\Users\\67Eas\\Downloads\\songs\\RocketMan.mp3",
                 YearReleased = 2023,
                 Lyrics = "Instrumental",
@@ -79,7 +79,7 @@ namespace DataAccessFakes
             {
                 SongID = 5,
                 Title = "test",
-                ImageFilePath = "",
+                ImageFilePath = "C:\\Users\\67Eas\\Downloads\\albumart\\HonkyChateau.jpg",
                 Mp3FilePath = "C:\\Users\\67Eas\\Downloads\\songs\\RocketMan.mp3",
                 YearReleased = 2023,
                 Lyrics = "Instrumental",
@@ -91,12 +91,10 @@ namespace DataAccessFakes
                 Album = "none"
             });
         }
-
         public int InsertSong(Song song)
         {
             throw new NotImplementedException();
         }
-
         public List<Song> SelectSongsByUserID(int UserID)
         {
             List<Song> songs = new List<Song>();

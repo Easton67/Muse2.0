@@ -63,31 +63,24 @@ namespace DataAccessLayer
         {
             UserVM userVM = new UserVM();
 
-            //connection
             var conn = SqlConnectionProvider.GetConnection();
 
-            //command text
             var cmdText = "sp_select_user_by_Email";
 
-            //command
             var cmd = new SqlCommand(cmdText, conn);
 
-            //command type
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // Add parameters
             cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100);
 
-            // Parameter Values
             cmd.Parameters["@Email"].Value = email;
 
             try
             {
-                // Open the connection
                 conn.Open();
 
-                //execute the command
                 var reader = cmd.ExecuteReader();
+                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
                 //process the results
                 if (reader.HasRows)
@@ -98,7 +91,7 @@ namespace DataAccessLayer
                         userVM.UserID = reader.GetInt32(0);
                         userVM.ProfileName = reader.GetString(1);
                         userVM.Email = reader.GetString(2);
-                        userVM.FirstName = reader.GetString(3);
+                        userVM.FirstName = reader.IsDBNull(4) ? "" : reader.GetString(4);
                         userVM.LastName = reader.IsDBNull(4) ? "" : reader.GetString(4);
                         userVM.ImageFilePath = reader.IsDBNull(5) ? "" : reader.GetString(5);
                         userVM.Active = reader.GetBoolean(6);
@@ -124,22 +117,16 @@ namespace DataAccessLayer
         {
             List<string> roles = new List<string>();
 
-            //connection
             var conn = SqlConnectionProvider.GetConnection();
 
-            //command text
             var cmdText = "sp_select_role_by_UserID";
 
-            //command
             var cmd = new SqlCommand(cmdText, conn);
 
-            //command type
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // Add parameters
             cmd.Parameters.Add("@UserID", SqlDbType.Int);
 
-            // Parameter Values
             cmd.Parameters["@UserID"].Value = userID;
 
             try
@@ -317,19 +304,14 @@ namespace DataAccessLayer
         {
             int rows = 0;
 
-            //connection
             var conn = SqlConnectionProvider.GetConnection();
 
-            //command text
             var cmdText = "sp_update_ProfileName";
 
-            //command
             var cmd = new SqlCommand(cmdText, conn);
 
-            //command type
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // Add parameters
             cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
             cmd.Parameters.Add("@NewProfileName", SqlDbType.NVarChar);
 
@@ -339,7 +321,6 @@ namespace DataAccessLayer
 
             try
             {
-                // open the connection
                 conn.Open();
 
                 // an update is executed nonquery - returns an int
@@ -396,6 +377,33 @@ namespace DataAccessLayer
                 {
                     throw new ArgumentException("Could not update account image.");
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int InsertUser(User user, string password)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_create_new_user";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PasswordHash", password);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
+            cmd.Parameters.AddWithValue("@ProfileName", user.ProfileName);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {

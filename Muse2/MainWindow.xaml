@@ -101,8 +101,7 @@
                     FontWeight="Bold" Width="50" 
                     HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-165,-8,0,0" Background="White" BorderThickness="0,0,0,0" Click="btnLogin_Click" VerticalContentAlignment="Top" VerticalAlignment="Center"/>
 
-            <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="2"
-                     Margin="2px" 
+            <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="2" 
                      Width="179"
                      HorizontalAlignment="Right" Text=""/>
 
@@ -122,8 +121,7 @@
                    HorizontalAlignment="Right"
                    Content="Password" Margin="0,0,123,0" Padding="5,0,5,5"/>
             
-            <PasswordBox x:Name="pwdPassword" Grid.Row="4" Grid.Column="2"
-                     Margin="2px" 
+            <PasswordBox x:Name="pwdPassword" Grid.Row="4" Grid.Column="2" 
                      Width="179"
                      HorizontalAlignment="Right" Password=""/>
             
@@ -141,7 +139,7 @@
                 <ColumnDefinition Width="1250*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" SelectionChanged="grdLibrary_SelectionChanged" CanUserReorderColumns="False">
+            <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" SelectionChanged="grdLibrary_SelectionChanged" CanUserReorderColumns="False" CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="" Width="25" MinWidth="25" MaxWidth="55">
                         <DataGridTemplateColumn.CellTemplate>

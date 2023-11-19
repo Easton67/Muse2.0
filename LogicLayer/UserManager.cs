@@ -91,6 +91,7 @@ namespace LogicLayer
             hashValue = s.ToString();
             return hashValue;
         }
+
         public UserVM LoginUser(string email, string password)
         {
             UserVM userVM = null;
@@ -183,6 +184,22 @@ namespace LogicLayer
             catch (Exception ex)
             {
                 throw new ApplicationException("Image not accepted ", ex);
+            }
+            return result;
+        }
+        public bool InsertUser(User user, string password)
+        {
+            bool result = false;
+
+            password = HashSha256(password);
+
+            try
+            {
+                result = (1 == _userAccessor.InsertUser(user, password));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("User not Created", ex);
             }
             return result;
         }
