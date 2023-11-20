@@ -48,6 +48,7 @@ namespace Muse2
             btnLyrics.Background = Brushes.White;
 
             // Song Info Tab
+            btnAddMp3.Visibility = Visibility.Hidden;
             lblMp3File.Visibility = Visibility.Hidden;
             lblTitle.Visibility = Visibility.Hidden;
             lblArtist.Visibility = Visibility.Hidden;
@@ -77,6 +78,7 @@ namespace Muse2
         private void SongInformationHelper()
         {
             btnSongInfomation.Background = Brushes.Lavender;
+            btnAddMp3.Visibility = Visibility.Visible;
             lblMp3File.Visibility = Visibility.Visible;
             lblTitle.Visibility = Visibility.Visible;
             lblArtist.Visibility = Visibility.Visible;
@@ -129,7 +131,7 @@ namespace Muse2
                 Lyrics = txtLyrics.Text,
                 Explicit = (bool)chkExplicit.IsChecked,
                 Private = true,
-                Plays = 134,
+                Plays = int.Parse(txtPlays.Text),
                 UserID = _loggedInUser.UserID,
                 Album = txtAlbum.Text,
                 Artist = txtArtist.Text
@@ -147,7 +149,7 @@ namespace Muse2
         }
         private void btnRemoveArtwork_Click(object sender, RoutedEventArgs e)
         {
-
+            imgSongImage.Source = null;
         }
         private void btnAddArtwork_Click(object sender, RoutedEventArgs e)
         {
@@ -184,8 +186,13 @@ namespace Muse2
             Regex regex = new Regex("[0-9]");
             e.Handled = !regex.IsMatch(e.Text);
         }
+        private void lblPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[0-9]");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
 
-        private void txtMp3FilePath_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void btnAddMp3_Click(object sender, RoutedEventArgs e)
         {
             try
             {

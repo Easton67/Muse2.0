@@ -74,7 +74,6 @@ namespace Muse2
             {
                 lblSongLength.Content = "00:00";
             }
-
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -342,7 +341,7 @@ namespace Muse2
                     MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                     pwdPassword.SelectAll();
-                    txtEmail.Clear();
+                    pwdPassword.Clear();
                     txtEmail.Focus();
                     return;
                 }
@@ -429,8 +428,11 @@ namespace Muse2
         {
             try
             {
-                BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
-                imgCoverArt.Source = CoverArt;
+                if (userSongs[songNumber].ImageFilePath != "")
+                {
+                    BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
+                    imgCoverArt.Source = CoverArt;
+                }
             }
             catch(Exception ex)
             {

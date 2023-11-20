@@ -44,7 +44,7 @@ namespace DataAccessLayer
                     {
                         SongID = reader.GetInt32(0),
                         Title = reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? "\"C:\\Users\\67Eas\\Downloads\\Fruit-O-Pedia\\Fruit-O-Pedia\\FruitPresentationViews\\bin\\Debug\\fruitData\\raspberries.png\"" : reader.GetString(2),
+                        ImageFilePath = reader.IsDBNull(2) ? "" : reader.GetString(2),
                         Mp3FilePath = reader.GetString(3),
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
