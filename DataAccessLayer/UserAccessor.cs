@@ -399,6 +399,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@PasswordHash", password);
             cmd.Parameters.AddWithValue("@Email", user.Email);
             cmd.Parameters.AddWithValue("@ProfileName", user.ProfileName);
+            cmd.Parameters.AddWithValue("@ImageFilePath", user.ImageFilePath);
 
             try
             {

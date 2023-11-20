@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="Sign Up" Height="600" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Sign Up" Height="600" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -18,7 +18,18 @@
         <Label x:Name="lblHeader" Grid.Row="0" Content="Sign Up" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="35"/>
         <Label x:Name="lblProfileName"  Grid.Row="1" Content="Profile Name"  HorizontalContentAlignment="Left" FontSize="25" Margin="0,0,110,0" HorizontalAlignment="Center" Padding="5,5,5,-1"/>
         <TextBox x:Name="txtProfileName" Grid.Row="1" Width="250" Height="30" VerticalAlignment="Center" FontSize="20" VerticalContentAlignment="Center" />
-        <Image x:Name="imgAcccountImage" Grid.Row="2" Height="100"/>
+        <Image x:Name="imgAcccountImage" Grid.Row="2" Grid.RowSpan="3" Height="300" Width="300"/>
+        
+        
+        
+        <Button x:Name="btnOpenFile" Grid.Row="4" Content="Open File" Width="170" Height="45" Background="#D5C9E3" FontSize="25" Click="btnOpenFile_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
 
 
         <Label x:Name="lblEmail"  Grid.Row="2" Content="Email"  HorizontalContentAlignment="Left" FontSize="25" Margin="0,0,193,0" HorizontalAlignment="Center" Padding="5,5,5,-1"/>
@@ -28,6 +39,13 @@
         <Label x:Name="lblConfirmPassword" Grid.Row="4" Content="Confirm Password"  HorizontalContentAlignment="Left" FontSize="25" Margin="0,0,50,0" HorizontalAlignment="Center" Padding="5,5,5,-1"/>
         <PasswordBox x:Name="pwdConfirmPassword" Grid.Row="4" Width="250" Height="30" VerticalAlignment="Center" FontSize="20"/>
         <Button x:Name="btnConfirmSignUp" Grid.Row="5" Content="Confirm" Width="170" Height="45" Background="#D5C9E3" FontSize="25" Click="btnConfirmSignUp_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="btnNext" Grid.Row="5" Content="Next" Width="170" Height="45" Background="#D5C9E3" FontSize="25" Click="btnNext_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"/>
