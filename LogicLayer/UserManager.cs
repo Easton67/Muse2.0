@@ -91,7 +91,6 @@ namespace LogicLayer
             hashValue = s.ToString();
             return hashValue;
         }
-
         public UserVM LoginUser(string email, string password)
         {
             UserVM userVM = null;
@@ -156,20 +155,6 @@ namespace LogicLayer
             catch (Exception ex)
             {
                 throw new ApplicationException("Last Name not accepted ", ex);
-            }
-            return result;
-        }
-        public bool UpdateProfileName(string Email, string ProfileName)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _userAccessor.UpdateProfileName(Email, ProfileName));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Profile Name not accepted ", ex);
             }
             return result;
         }

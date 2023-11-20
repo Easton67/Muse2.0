@@ -268,7 +268,6 @@ namespace Muse2
                     // Hide the library
                     grdLibrary.ItemsSource = null;
                     grdLibrary.Visibility = Visibility.Hidden;
-                    MessageBox.Show("Welcome to Muse!" + "\n\n" + "At the top, click the song menu, and click add a song to add it to Muse");
                 }
             }
             catch(Exception ex)
@@ -293,6 +292,10 @@ namespace Muse2
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
+        {
+
         }
         private void btnProfileName_Click(object sender, RoutedEventArgs e)
         {

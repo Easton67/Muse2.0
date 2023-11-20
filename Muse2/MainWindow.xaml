@@ -43,6 +43,7 @@
             </MenuItem>
             <MenuItem x:Name="mnuHelp" Header="Help" Click="mnuHelp_Click">
                 <MenuItem x:Name="mnuSignUp" Header="Sign Up"/>
+                <MenuItem x:Name="mnuResetPassword" Header="Reset Password" Click="mnuResetPassword_Click" />
             </MenuItem>
                 <MenuItem x:Name="mnuArtist" Header="Artist">
                 <MenuItem x:Name="mnuViewPage" Header="View Page"/>

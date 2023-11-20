@@ -63,7 +63,7 @@ namespace Muse2
                     btnOpenFile.Visibility = Visibility.Visible;
                     btnNext.Visibility = Visibility.Hidden;
                     btnConfirmSignUp.Visibility = Visibility.Visible;
-                    lblHeader.Content = "Optional Account Information";
+                    lblHeader.Content = "Choose a Profile Picture";
 
                     lblProfileName.Visibility = Visibility.Hidden;
                     lblEmail.Visibility = Visibility.Hidden;
@@ -103,7 +103,6 @@ namespace Muse2
                 UserManager um = new UserManager();
                 um.InsertUser(newUser, _password);
                 MessageBox.Show("Account Created!");
-                MessageBox.Show(newUser.ToString());
                 this.Close();
             }
             catch (Exception ex)

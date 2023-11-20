@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessInterfaces
+namespace DataAccessLayer
 {
-    public class AlbumAccessor
+    internal class AlbumAccessor
     {
-
     }
 }

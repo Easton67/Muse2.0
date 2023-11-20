@@ -157,20 +157,5 @@ namespace LogicLayerTests
             // assert
             Assert.AreEqual(expectedResult, actualResult);
         }
-        [TestMethod]
-        public void TestUpdateProfileNameWorksCorrectly()
-        {
-            // arrange
-            string Email = "Liam@gmail.com";
-            string ProfileName = "Easton68";
-            bool expectedResult = true;
-            bool actualResult = false;
-
-            // act
-            actualResult = _userManager.UpdateFirstName(Email, ProfileName);
-
-            // assert
-            Assert.AreEqual(expectedResult, actualResult);
-        }
     }
 }

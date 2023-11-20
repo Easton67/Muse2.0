@@ -19,7 +19,6 @@ namespace LogicLayer
         bool ResetPassword(string email, string oldPassword, string newPassword);
         bool UpdateFirstName(string Email, string FirstName);
         bool UpdateLastName(string email, string LastName);
-        bool UpdateProfileName(string email, string LastName);
         bool UpdateAccountImage(string email, string accountImage);
     }
 }

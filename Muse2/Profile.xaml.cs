@@ -64,7 +64,8 @@ namespace Muse2
         }
         private void btnResetPassword_Click(object sender, RoutedEventArgs e)
         {
-
+            var resetPassword = new ResetPassword(_email);
+            resetPassword.ShowDialog();
         }
         private void btnDeleteAccount_Click(object sender, RoutedEventArgs e)
         {
@@ -82,13 +83,11 @@ namespace Muse2
                 txtProfileName.IsReadOnly = false;
                 txtFirstName.IsEnabled = true;
                 txtLastName.IsEnabled = true;
-                txtProfileName.IsEnabled = true;
             }
             else
             {
                 var NewFirstName = txtFirstName.Text;
                 var NewLastName = txtLastName.Text;
-                var NewProfileName = txtProfileName.Text;
                 bool isBadUpdate = false;
 
                 if (!NewFirstName.IsValidFirstName())
@@ -101,13 +100,6 @@ namespace Muse2
                 if (!NewLastName.IsValidLastName())
                 {
                     MessageBox.Show("That is not a valid last name", "Invalid last name",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    txtFirstName.Focus();
-                    return;
-                }
-                if (!NewProfileName.IsValidProfileName())
-                {
-                    MessageBox.Show("That is not a valid profile name", "Invalid profile name",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                     txtFirstName.Focus();
                     return;
@@ -130,16 +122,6 @@ namespace Muse2
                 {
                     MessageBox.Show("Invalid last name." + " " + ex.Message);
                     txtLastName.Text = _lastName;
-                    isBadUpdate = true;
-                }
-                try
-                {
-                     _userManager.UpdateProfileName(_email, NewProfileName);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Invalid profile name." + " " + ex.Message);
-                    txtFirstName.Text = _firstName;
                     isBadUpdate = true;
                 }
                 finally

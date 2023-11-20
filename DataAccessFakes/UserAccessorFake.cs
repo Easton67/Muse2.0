@@ -161,25 +161,6 @@ namespace DataAccessFakes
             }
             return rows;
         }
-        public int UpdateProfileName(string Email, string ProfileName)
-        {
-            int rows = 0;
-
-            for (int i = 0; i < fakeUsers.Count; i++)
-            {
-                if (fakeUsers[i].Email == Email)
-                {
-                    fakeUsers[i].ProfileName = ProfileName;
-                    rows += 1;
-                    break;
-                }
-            }
-            if (rows != 1) // no one found
-            {
-                throw new ApplicationException("Invalid profile name.");
-            }
-            return rows;
-        }
         public int UpdateAccountImage(string email, string accountImage)
         {
             throw new NotImplementedException();

@@ -61,17 +61,5 @@ namespace DataObjects
 
             return isValid;
         }
-        public static bool IsValidProfileName(this string ProfileName)
-        {
-            bool isValid = false;
-
-            // what the db has as its max
-            if (ProfileName.Length <= 200)
-            {
-                isValid = true;
-            }
-
-            return isValid;
-        }
     }
 }
