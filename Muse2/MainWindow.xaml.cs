@@ -34,6 +34,7 @@ namespace Muse2
         public int songNumber = 0;
         private MediaPlayer mediaPlayer = new MediaPlayer();
         List<Song> userSongs = null;
+        private ContextMenu contextMenu;
 
         public MainWindow()
         {
@@ -101,6 +102,7 @@ namespace Muse2
             mnuArtist.Visibility = Visibility.Collapsed;
 
             // Hide all song controls
+            btnViewSong.Visibility = Visibility.Hidden;
             lblSongTitle.Content = "";
             lblSongArtist.Content = "";
             imgExplicit.Visibility = Visibility.Hidden;
@@ -218,6 +220,7 @@ namespace Muse2
                     userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
 
                     // load the first song in the list
+                    btnViewSong.Visibility = Visibility.Visible;
                     BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
                     imgCoverArt.Source = CoverArt;
                     mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
@@ -249,6 +252,37 @@ namespace Muse2
                     try
                     {
                         List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+
+                        contextMenu = new ContextMenu();
+
+                        List<string> playlistTitles = new List<string>();
+
+                        // Add playlist title to a new list of just the title
+                        foreach (Playlist playlist in playlists)
+                        {
+                            string playlistTitle = playlist.Title;
+                            playlistTitles.Add(playlistTitle);
+                        }
+
+                        MenuItem editSong = new MenuItem();
+                        MenuItem addSong = new MenuItem();
+                        editSong.Header = "Edit Song Details";
+                        addSong.Header = "Add Song To Playlist:";
+                        editSong.Click += mnuAddSongFromDataGrid_Click;
+                        contextMenu.Items.Add(editSong); 
+                        contextMenu.Items.Add(addSong);
+
+                        // Add the list of playlist titles to the context menu
+                        foreach (string menuItemText in playlistTitles)
+                        {
+                            MenuItem menuItem = new MenuItem();
+                            menuItem.Header = menuItemText;
+                            menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
+                            contextMenu.Items.Add(menuItem);
+                        }
+
+                        grdLibrary.ContextMenu = contextMenu;
+
                         if (playlists.Count > 0)
                         {
                             grdPlaylists.Visibility = Visibility.Visible;
@@ -352,6 +386,13 @@ namespace Muse2
             }
         }
         // Song Controls
+        private void btnViewSong_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var song = userSongs[songNumber] as Song;
+
+            var ViewSong = new ViewSong(song);
+            ViewSong.ShowDialog();
+        }
         private void btnPause_Click(object sender, RoutedEventArgs e)
         {
             btnPlay.Visibility = Visibility.Visible;
@@ -527,6 +568,10 @@ namespace Muse2
                 songNumber = selectedRowIndex;
             }
         }
+        
+        
+        
+        
         private void mnuAddSongFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
             var song = grdLibrary.SelectedItem as Song;
@@ -542,24 +587,44 @@ namespace Muse2
                 MessageBox.Show("Select a Song to view it.");
             }
         }
+
+
+
         private void mnuAddSongToLibrary_Click(object sender, RoutedEventArgs e)
         {
             var AddSong = new AddSong(loggedInUser);
             AddSong.ShowDialog();
             grdLibrary.ItemsSource = _songManager.SelectSongsByUserID(loggedInUser.UserID);
         }
+
+
+
+
         private void mnuHelp_Click(object sender, RoutedEventArgs e)
         {
             var SignUp = new SignUp();
             SignUp.ShowDialog();
         }
-
-        private void Button_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void mnuEditSongFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
-            var song = userSongs[songNumber] as Song;
+            var song = grdLibrary.SelectedItem as Song;
 
-            var ViewSong = new ViewSong(song);
-            ViewSong.ShowDialog();
+            if (grdLibrary.SelectedItem != null)
+            {
+                var AddEditSong = new AddEditSongxaml(song);
+                AddEditSong.ShowDialog();
+                songListRepopulation();
+            }
+            else
+            {
+                MessageBox.Show("Select a Song to view it.");
+            }
         }
+
+        private void mnuAddSongToPlaylistFromDataGrid_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
