@@ -553,5 +553,13 @@ namespace Muse2
             var SignUp = new SignUp();
             SignUp.ShowDialog();
         }
+
+        private void Button_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var song = userSongs[songNumber] as Song;
+
+            var ViewSong = new ViewSong(song);
+            ViewSong.ShowDialog();
+        }
     }
 }

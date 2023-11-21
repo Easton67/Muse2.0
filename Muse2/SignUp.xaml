@@ -16,7 +16,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Label x:Name="lblHeader" Grid.Row="0" Content="Sign Up" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="35" Margin="0,-17,0,0"/>
-        <Label x:Name="lblSubHeader" Grid.Row="0" Content="optional" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Margin="0,60,0,0"/>
+        <Label x:Name="lblSubHeader" Grid.Row="0" Content="optional" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Margin="0,51,0,0" Visibility="Hidden"/>
         <Label x:Name="lblProfileName"  Grid.Row="1" Content="Profile Name"  HorizontalContentAlignment="Left" FontSize="25" Margin="0,0,110,0" HorizontalAlignment="Center" Padding="5,5,5,-1"/>
         <TextBox x:Name="txtProfileName" Grid.Row="1" Width="250" Height="30" VerticalAlignment="Center" FontSize="20" VerticalContentAlignment="Center" />
         <Image x:Name="imgAcccountImage" Grid.Row="1" Grid.RowSpan="3" Height="300" Width="300" HorizontalAlignment="Center"/>

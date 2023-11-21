@@ -78,12 +78,11 @@
             <Button x:Name="btnRewind"  Grid.Row="1" Grid.Column="1" Width="25" Margin="0,0,5,0" HorizontalAlignment="Left"  Background="White" BorderThickness="0,0,0,0" Click="btnRewind_Click" >
                 <Image Source="/Resources/rewind.png"/>
             </Button>
-            <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="1" Width="75" Source="/defaultAlbumImage.png" HorizontalAlignment="Left" Margin="34,0,0,0" />
+            <Button Grid.Row="0" Grid.Column="1" Width="75" HorizontalAlignment="Left" Margin="34,0,0,0" Background="White" BorderThickness="0,0,0,0" MouseDoubleClick="Button_MouseDoubleClick" Padding="0,0,0,0" >
+                <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="1" Width="75" Source="/defaultAlbumImage.png" />
+            </Button>
             <ProgressBar x:Name="barSongLength" Grid.Row="1" Grid.Column="1" Height="10" Width="auto" Foreground="#FFD5C9E3" Margin="31,0,31,0"/>
-            <!-- 
-            <Image x:Name="imgShuffle" Grid.Row="2" Grid.Column="1" Width="25" Source="/shuffle.png" HorizontalAlignment="Left" Margin="30,0,0,0" VerticalAlignment="Top"/>
-            <Image x:Name="imgQueue" Grid.Row="2" Grid.Column="1" Width="25" Source="/queue.png" HorizontalAlignment="Right" Margin="0,0,30,0" VerticalAlignment="Top"/>
-            -->
+
             <Button x:Name="btnNext" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Width="25" Background="White" BorderThickness="0,0,0,0"  Click="btnNext_Click" >
                 <Image Source="/Resources/next.png"/>
             </Button>
@@ -96,7 +95,7 @@
             <!-- Col2 -->
             <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="2" Width="100" Source="/Resources/defaultAccount.png" HorizontalAlignment="Center"/>
             <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" HorizontalAlignment="Center"/>
-
+            
             <Button x:Name="btnLogin" Content="Log In"
                     Grid.Row="1" Grid.Column="2" 
                     FontWeight="Bold" Width="50" 

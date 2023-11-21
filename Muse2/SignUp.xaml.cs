@@ -65,6 +65,7 @@ namespace Muse2
                     btnConfirmSignUp.Visibility = Visibility.Visible;
                     lblHeader.Content = "Choose a Profile Picture";
 
+                    lblSubHeader.Visibility = Visibility.Visible;
                     lblProfileName.Visibility = Visibility.Hidden;
                     lblEmail.Visibility = Visibility.Hidden;
                     lblPassword.Visibility = Visibility.Hidden;
