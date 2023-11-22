@@ -265,12 +265,16 @@ namespace Muse2
                         }
 
                         MenuItem editSong = new MenuItem();
-                        MenuItem addSong = new MenuItem();
                         editSong.Header = "Edit Song Details";
-                        addSong.Header = "Add Song To Playlist:";
                         editSong.Click += mnuAddSongFromDataGrid_Click;
-                        contextMenu.Items.Add(editSong); 
-                        contextMenu.Items.Add(addSong);
+                        contextMenu.Items.Add(editSong);
+
+                        if(playlists.Count > 0)
+                        {
+                            MenuItem addSong = new MenuItem();
+                            addSong.Header = "Add Song To Playlist:";
+                            contextMenu.Items.Add(addSong);
+                        }
 
                         // Add the list of playlist titles to the context menu
                         foreach (string menuItemText in playlistTitles)
@@ -291,7 +295,7 @@ namespace Muse2
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists. Please try again.",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
@@ -568,10 +572,6 @@ namespace Muse2
                 songNumber = selectedRowIndex;
             }
         }
-        
-        
-        
-        
         private void mnuAddSongFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
             var song = grdLibrary.SelectedItem as Song;
@@ -587,19 +587,12 @@ namespace Muse2
                 MessageBox.Show("Select a Song to view it.");
             }
         }
-
-
-
         private void mnuAddSongToLibrary_Click(object sender, RoutedEventArgs e)
         {
             var AddSong = new AddSong(loggedInUser);
             AddSong.ShowDialog();
             grdLibrary.ItemsSource = _songManager.SelectSongsByUserID(loggedInUser.UserID);
         }
-
-
-
-
         private void mnuHelp_Click(object sender, RoutedEventArgs e)
         {
             var SignUp = new SignUp();
@@ -620,11 +613,36 @@ namespace Muse2
                 MessageBox.Show("Select a Song to view it.");
             }
         }
-
         private void mnuAddSongToPlaylistFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
+            // Get the index of the clicked menu item
+            if (sender is MenuItem menuItem)
+            {
+                int index = ((ContextMenu)menuItem.Parent).Items.IndexOf(menuItem);
 
+                try
+                {
+                    List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+                    int songID = userSongs[songNumber].SongID;
+                    int playlistID = playlists[index - 2].PlaylistID;
+
+                    MessageBox.Show(playlistID.ToString());
+
+                    try
+                    {
+                        _playlistManager.InsertSongIntoPlaylist(songID, playlistID);
+                        MessageBox.Show(playlistID.ToString());
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Song was not added. Please try again.");
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Song was not added. Please try again.");
+                }
+            }
         }
-
     }
 }

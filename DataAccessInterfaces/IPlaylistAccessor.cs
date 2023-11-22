@@ -10,5 +10,6 @@ namespace DataAccessInterfaces
     public interface IPlaylistAccessor
     {
         List<Playlist> SelectPlaylistByUserID(int userId);
+        int InsertSongIntoPlaylist(int songID, int playlistID);
     }
 }

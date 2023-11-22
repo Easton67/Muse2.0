@@ -23,6 +23,21 @@ namespace LogicLayer
             _playlistAccessor = playlistAccessor;
         }
 
+        public bool InsertSongIntoPlaylist(int songID, int playlistID)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _playlistAccessor.InsertSongIntoPlaylist(songID, playlistID));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not Added", ex);
+            }
+            return result;
+        }
+
         public List<Playlist> SelectPlaylistByUserID(int userId)
         {
             List<Playlist> playlists = new List<Playlist>();

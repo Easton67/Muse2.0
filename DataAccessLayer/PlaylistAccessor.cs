@@ -65,5 +65,34 @@ namespace DataAccessLayer
             }
             return playlists;
         }
+
+        public int InsertSongIntoPlaylist(int songID, int playlistID)
+        {
+            int rows = 0;
+            Song song = new Song();
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_song_into_playlist";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@SongID", songID);
+            cmd.Parameters.AddWithValue("@PlaylistID", playlistID);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
     }
 }

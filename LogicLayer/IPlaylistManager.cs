@@ -10,5 +10,6 @@ namespace LogicLayer
     public interface IPlaylistManager
     {
         List<Playlist> SelectPlaylistByUserID(int userId);
+        bool InsertSongIntoPlaylist(int songID, int playlistID);
     }
 }

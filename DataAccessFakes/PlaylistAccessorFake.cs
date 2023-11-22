@@ -11,7 +11,6 @@ namespace DataAccessFakes
     public class PlaylistAccessorFake : IPlaylistAccessor
     {
         private List<Playlist> fakePlaylists = new List<Playlist>();
-
         public PlaylistAccessorFake()
         {
             fakePlaylists.Add(new Playlist()
@@ -39,7 +38,10 @@ namespace DataAccessFakes
                 UserID = 100002
             });
         }
-
+        public int InsertSongIntoPlaylist(int songID, int playlistID)
+        {
+            throw new NotImplementedException();
+        }
         public List<Playlist> SelectPlaylistByUserID(int userId)
         {
             return fakePlaylists.FindAll(p => p.UserID == userId);
