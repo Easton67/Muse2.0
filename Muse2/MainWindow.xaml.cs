@@ -137,6 +137,9 @@ namespace Muse2
             // Reset the Library
             grdLibrary.Visibility = Visibility.Collapsed;
             grdLibrary.ItemsSource = null;
+            lblDataGridHeader.Visibility = Visibility.Hidden;
+            lblDataGridSubHeader.Visibility = Visibility.Hidden;
+            btnAllSongs.Visibility = Visibility.Hidden;
 
             // Reset the Playlists
             grdPlaylists.ItemsSource = null;
@@ -217,7 +220,7 @@ namespace Muse2
                 if (userSongsCount > 0)
                 {
                     userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
-
+                    
                     // load the first song in the list
                     btnViewSong.Visibility = Visibility.Visible;
                     BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
@@ -246,6 +249,8 @@ namespace Muse2
 
                     // set library
                     grdLibrary.Visibility = Visibility.Visible;
+                    lblDataGridHeader.Visibility = Visibility.Visible;
+                    btnAllSongs.Visibility = Visibility.Visible;
 
                     // set the playlists
                     try
@@ -612,6 +617,7 @@ namespace Muse2
                 MessageBox.Show("Select a Song to view it.");
             }
         }
+        // Playlist manipulations
         private void mnuAddSongToPlaylistFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
             // Get the index of the clicked menu item
@@ -653,8 +659,16 @@ namespace Muse2
                     {
                         int playlistID = (100000 + grdPlaylists.Items.IndexOf(grdPlaylists.SelectedItem));
                         int userID = loggedInUser.UserID;
+                        string playlistName = ((Playlist)grdPlaylists.SelectedItem).Title;
+                        string playlistDescription = ((Playlist)grdPlaylists.SelectedItem).Description;
                         userSongs = _songManager.SelectSongsByPlaylistID(userID, playlistID);
                         grdLibrary.ItemsSource = userSongs;
+
+                        // Change the header and subheader of the playlist I'm currently on
+                        lblDataGridHeader.Visibility = Visibility.Visible;
+                        lblDataGridHeader.Content = playlistName;
+                        lblDataGridSubHeader.Visibility = Visibility.Visible;
+                        lblDataGridSubHeader.Content = playlistDescription;
                     }
                 }
                 catch (Exception ex)
@@ -666,6 +680,20 @@ namespace Muse2
             else
             {
                 MessageBox.Show("Select a playlist to view all your songs you have added to it.");
+            }
+        }
+        private void btnAllSongs_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+                grdLibrary.ItemsSource = userSongs;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to find library. Please try again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                grdLibrary.ItemsSource = null;
             }
         }
     }
