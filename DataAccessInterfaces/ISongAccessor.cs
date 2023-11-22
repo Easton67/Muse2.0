@@ -18,5 +18,6 @@ namespace DataAccessInterfaces
         int UpdateExplicitBySongID(int SongID, bool Explicit);
         int UpdateSongImageBySongID(int SongID, string ImageFilePath);
         int InsertSong(Song song);
+        List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID);
     }
 }

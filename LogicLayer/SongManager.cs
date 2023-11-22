@@ -32,7 +32,20 @@ namespace LogicLayer
             }
             return songs;
         }
+        public List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID)
+        {
+            List<Song> songs = new List<Song>();
 
+            try
+            {
+                songs = _songAccessor.SelectSongsByPlaylistID(UserID, PlaylistID);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Playlist not found", ex);
+            }
+            return songs;
+        }
         public bool UpdateAlbumBySongID(int SongID, string Album)
         {
             bool result = false;
@@ -134,12 +147,10 @@ namespace LogicLayer
             }
             return result;
         }
-
         public bool UpdateLyricsBySongID(int SongID, string Lyrics)
         {
             throw new NotImplementedException();
         }
-
         public bool InsertSong(Song newSong)
         {
             bool result = false;

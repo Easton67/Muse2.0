@@ -95,6 +95,10 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID)
+        {
+            throw new NotImplementedException();
+        }
         public List<Song> SelectSongsByUserID(int UserID)
         {
             List<Song> songs = new List<Song>();

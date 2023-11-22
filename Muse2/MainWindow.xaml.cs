@@ -117,7 +117,7 @@ namespace Muse2
             barSongLength.Visibility = Visibility.Collapsed;
 
             // Default the login and hide it
-            txtEmail.Text = "Liam@gmail.com";
+            txtEmail.Text = "Drake@gmail.com";
             txtEmail.Visibility = Visibility.Visible;
             lblEmail.Visibility = Visibility.Visible;
             btnProfileName.Content = "";
@@ -147,8 +147,7 @@ namespace Muse2
             try
             {
                 userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
-
-                grdLibrary.ItemsSource = userSongs;
+                grdLibrary.ItemsSource = userSongs;            
             }
             catch (Exception ex)
             {
@@ -626,22 +625,47 @@ namespace Muse2
                     int songID = userSongs[songNumber].SongID;
                     int playlistID = playlists[index - 2].PlaylistID;
 
-                    MessageBox.Show(playlistID.ToString());
-
                     try
                     {
                         _playlistManager.InsertSongIntoPlaylist(songID, playlistID);
-                        MessageBox.Show(playlistID.ToString());
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Song was not added. Please try again.");
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song was not added. Please try again.",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Song was not added. Please try again.");
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song was not added. Please try again.",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+        private void grdPlaylists_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (grdPlaylists.SelectedItems.Count != 0)
+            {
+                try
+                {
+                    if (grdPlaylists.SelectedItem != null)
+                    {
+                        int playlistID = (100000 + grdPlaylists.Items.IndexOf(grdPlaylists.SelectedItem));
+                        int userID = loggedInUser.UserID;
+                        userSongs = _songManager.SelectSongsByPlaylistID(userID, playlistID);
+                        grdLibrary.ItemsSource = userSongs;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to view playlist. Please try again.",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a playlist to view all your songs you have added to it.");
             }
         }
     }

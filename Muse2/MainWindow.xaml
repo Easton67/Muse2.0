@@ -139,11 +139,12 @@
                 <ColumnDefinition Width="1250*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+
             <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" 
                       VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" 
                       SelectionChanged="grdLibrary_SelectionChanged" CanUserReorderColumns="False" CanUserSortColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="" Width="25" MinWidth="25" MaxWidth="55">
+                    <DataGridTemplateColumn Width="25" MinWidth="25" MaxWidth="55">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding ImageFilePath}" MaxWidth="55" MinWidth="25" MaxHeight="55" MinHeight="25" />
@@ -163,7 +164,7 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>
-            <DataGrid Grid.Column="0" x:Name="grdPlaylists" AutoGenerateColumns="false" BorderThickness="0,0,0,0" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" VerticalAlignment="Bottom" HorizontalAlignment="right" FontSize="12" CanUserResizeColumns="False" CanUserResizeRows="False">
+            <DataGrid Grid.Column="0" x:Name="grdPlaylists" AutoGenerateColumns="false" BorderThickness="0,0,0,0" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" VerticalAlignment="Bottom" HorizontalAlignment="right" FontSize="12" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="grdPlaylists_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Playlists" Binding="{Binding Title}" Width="100" CanUserResize="True" IsReadOnly="True"/>
                 </DataGrid.Columns>

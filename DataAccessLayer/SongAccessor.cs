@@ -68,6 +68,62 @@ namespace DataAccessLayer
             }
             return songs;
         }
+
+        public List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID)
+        {
+            List<Song> songs = new List<Song>();
+
+            var conn = SqlConnectionProvider.GetConnection();
+
+            var cmdText = "sp_select_songs_by_PlaylistID";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@PlaylistID", SqlDbType.Int);
+
+            cmd.Parameters["@UserID"].Value = UserID;
+            cmd.Parameters["@PlaylistID"].Value = PlaylistID;
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var song = new Song
+                    {
+                        SongID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ImageFilePath = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                        Mp3FilePath = reader.GetString(3),
+                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
+                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
+                        Explicit = reader.GetBoolean(6),
+                        Private = reader.GetBoolean(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        UserID = reader.GetInt32(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.GetString(11)
+                    };
+                    songs.Add(song);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return songs;
+        }
+
         public int UpdatePlaysBySongID(int SongID, int Plays)
         {
             int rows = 0;
