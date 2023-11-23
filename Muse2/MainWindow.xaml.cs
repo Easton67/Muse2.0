@@ -162,6 +162,65 @@ namespace Muse2
                 return;
             }
         }
+        private void playlistListRepopulation()
+        {
+            // set the playlists
+            try
+            {
+                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+
+                contextMenu = new ContextMenu();
+
+                List<string> playlistTitles = new List<string>();
+
+                // Add playlist title to a new list of just the title
+                foreach (Playlist playlist in playlists)
+                {
+                    string playlistTitle = playlist.Title;
+                    playlistTitles.Add(playlistTitle);
+                }
+
+                MenuItem editSong = new MenuItem();
+                editSong.Header = "Edit Song Details";
+                editSong.Click += mnuAddSongFromDataGrid_Click;
+                contextMenu.Items.Add(editSong);
+
+                MenuItem newPlaylist = new MenuItem();
+                newPlaylist.Header = "New Playlist";
+                newPlaylist.Click += mnuCreateNewPlaylist_Click;
+                contextMenu.Items.Add(newPlaylist);
+
+                if (playlists.Count > 0)
+                {
+                    MenuItem addSong = new MenuItem();
+                    addSong.Header = "Add Song To Playlist:";
+                    contextMenu.Items.Add(addSong);
+                }
+
+                // Add the list of playlist titles to the context menu
+                foreach (string menuItemText in playlistTitles)
+                {
+                    MenuItem menuItem = new MenuItem();
+                    menuItem.Header = menuItemText;
+                    menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
+                    contextMenu.Items.Add(menuItem);
+                }
+
+                grdLibrary.ContextMenu = contextMenu;
+
+                if (playlists.Count > 0)
+                {
+                    grdPlaylists.Visibility = Visibility.Visible;
+                    grdPlaylists.ItemsSource = playlists;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists. Please try again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
         private void GetAccountAndRoles()
         {
             // set account
@@ -223,7 +282,7 @@ namespace Muse2
                 if (userSongsCount > 0)
                 {
                     userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
-                    
+
                     // load the first song in the list
                     btnViewSong.Visibility = Visibility.Visible;
                     BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
@@ -255,62 +314,7 @@ namespace Muse2
                     lblDataGridHeader.Visibility = Visibility.Visible;
                     btnAllSongs.Visibility = Visibility.Visible;
 
-                    // set the playlists
-                    try
-                    {
-                        List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
-
-                        contextMenu = new ContextMenu();
-
-                        List<string> playlistTitles = new List<string>();
-
-                        // Add playlist title to a new list of just the title
-                        foreach (Playlist playlist in playlists)
-                        {
-                            string playlistTitle = playlist.Title;
-                            playlistTitles.Add(playlistTitle);
-                        }
-
-                        MenuItem editSong = new MenuItem();
-                        editSong.Header = "Edit Song Details";
-                        editSong.Click += mnuAddSongFromDataGrid_Click;
-                        contextMenu.Items.Add(editSong);
-
-                        MenuItem newPlaylist = new MenuItem();
-                        newPlaylist.Header = "New Playlist";
-                        newPlaylist.Click += mnuCreateNewPlaylist_Click;
-                        contextMenu.Items.Add(newPlaylist);
-
-                        if (playlists.Count > 0)
-                        {
-                            MenuItem addSong = new MenuItem();
-                            addSong.Header = "Add Song To Playlist:";
-                            contextMenu.Items.Add(addSong);
-                        }
-
-                        // Add the list of playlist titles to the context menu
-                        foreach (string menuItemText in playlistTitles)
-                        {
-                            MenuItem menuItem = new MenuItem();
-                            menuItem.Header = menuItemText;
-                            menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
-                            contextMenu.Items.Add(menuItem);
-                        }
-
-                        grdLibrary.ContextMenu = contextMenu;
-
-                        if (playlists.Count > 0)
-                        {
-                            grdPlaylists.Visibility = Visibility.Visible;
-                            grdPlaylists.ItemsSource = playlists;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists. Please try again.",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
+                    playlistListRepopulation();
                 }
                 else
                 {
@@ -721,6 +725,7 @@ namespace Muse2
             try
             {
                 grdPlaylists.ItemsSource = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+                playlistListRepopulation();
             }
             catch (Exception ex)
             {

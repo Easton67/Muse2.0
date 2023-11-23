@@ -2,7 +2,10 @@
 using LogicLayer;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -18,6 +21,8 @@ namespace Muse2
         private string _lastName;
         private string _profileName;
         private string _email;
+        private int _userID;
+        List<Song> userSongs = null;
 
         public Profile(UserVM loggedInUser, SongManager _songManager)
         {
@@ -26,6 +31,7 @@ namespace Muse2
             _lastName = loggedInUser.LastName;
             _profileName = loggedInUser.ProfileName;
             _email = loggedInUser.Email;
+            _userID = loggedInUser.UserID;
 
             InitializeComponent();
         }
@@ -36,6 +42,30 @@ namespace Muse2
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            SongManager _songManager = new SongManager();
+
+            try
+            {
+                userSongs = _songManager.SelectSongsByUserID(_userID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Songs not found.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Order the songs by plays in descending order
+            var topSongs = userSongs.OrderByDescending(song => song.Plays).Take(5).ToList();
+
+            // Create labels for only the songs with the top 5 plays
+            foreach (var song in topSongs)
+            {
+                string labelText = $"{song.Title}: {song.Plays} plays";
+                Label label = new Label { Content = labelText };
+                labelStackPanel.Children.Add(label);
+            }
+
             try
             {
                 var AccountImage = new BitmapImage(new System.Uri(_accountImage));

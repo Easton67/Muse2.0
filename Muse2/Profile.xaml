@@ -104,6 +104,11 @@
                 <TabItem Header="Stats"
                     FontSize="14" Padding="32,2,32,2">
                     <WrapPanel HorizontalAlignment="Center" >
+
+                        <StackPanel x:Name="labelStackPanel">
+
+                        </StackPanel>
+                        <!--
                         <StackPanel HorizontalAlignment="Left" >
                             <Image x:Name="imgTopSongs" Source="/Resources/defaultAlbumImage.png" Width="200" HorizontalAlignment="Left" Margin="-325,150,0,0"/>
                             <Label x:Name="lblMostPlayedSong" Margin="-428,20,0,0" Content="Most Played Songs" Width="260" FontWeight="UltraBlack" FontSize="25" />
@@ -113,6 +118,8 @@
                             <Label x:Name="lblSong4" Margin="-428,10,0,0" Content="4. " Width="260" FontWeight="UltraBlack" FontSize="20" />
                             <Label x:Name="lblSong5" Margin="-428,10,0,0" Content="5. " Width="260" FontWeight="UltraBlack" FontSize="20" />
                         </StackPanel>
+                        -->
+                        
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,100,0,0">
                             <StackPanel Orientation="Horizontal" Margin="32,-123,0,25">
                                 <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75"/>

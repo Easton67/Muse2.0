@@ -76,6 +76,7 @@ namespace Muse2
                     var playlistImage = new BitmapImage(new System.Uri(_imgFile));
 
                     imgPlaylistCover.Source = playlistImage;
+                    txtPlaylistFilePath.Text = _imgFile;
                 }
                 else
                 {
