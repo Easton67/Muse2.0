@@ -45,7 +45,7 @@
                 <MenuItem x:Name="mnuSignUp" Header="Sign Up"/>
                 <MenuItem x:Name="mnuResetPassword" Header="Reset Password" Click="mnuResetPassword_Click" />
             </MenuItem>
-                <MenuItem x:Name="mnuArtist" Header="Artist">
+            <MenuItem x:Name="mnuArtist" Header="Artist">
                 <MenuItem x:Name="mnuViewPage" Header="View Page"/>
                 <MenuItem x:Name="mnuPostSong" Header="Post Song"/>
                 <MenuItem x:Name="mnuPostAlbum" Header="Post Album"/>
@@ -67,6 +67,9 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            <Button x:Name="btnPlaylistImageEdit" Height="75" Width="75" Grid.Row="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="33,0,0,0">
+                <Image x:Name="imgPlaylistPicture" Source="/Resources/defaultAlbumImage.png"/>
+            </Button>
             <!-- Col0 -->
             <Image x:Name="imgLogo" Grid.Row="0" Width="200" HorizontalAlignment="Left" Margin="50,0,0,0" Source="/Resources/museLogo.png"/>
             <!-- Col1 -->
@@ -78,7 +81,7 @@
             <Button x:Name="btnRewind"  Grid.Row="1" Grid.Column="1" Width="25" Margin="0,0,5,0" HorizontalAlignment="Left"  Background="White" BorderThickness="0,0,0,0" Click="btnRewind_Click" >
                 <Image Source="/Resources/rewind.png"/>
             </Button>
-            <Button x:Name="btnViewSong" Grid.Row="0" Grid.Column="1" Width="75" HorizontalAlignment="Left" Margin="34,0,0,0" Background="White" BorderThickness="0,0,0,0"  Padding="0,0,0,0" MouseDoubleClick="btnViewSong_MouseDoubleClick" >
+            <Button x:Name="btnViewSong" Grid.Row="0" Grid.Column="1" Width="75" Height="75" HorizontalAlignment="Left" Margin="34,0,0,0" Background="White" BorderThickness="0,0,0,0"  Padding="0,0,0,0" MouseDoubleClick="btnViewSong_MouseDoubleClick" >
                 <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="1" Width="75" Source="/defaultAlbumImage.png" />
             </Button>
             <ProgressBar x:Name="barSongLength" Grid.Row="1" Grid.Column="1" Height="10" Width="auto" Foreground="#FFD5C9E3" Margin="31,0,31,0"/>
@@ -95,7 +98,7 @@
             <!-- Col2 -->
             <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="2" Width="100" Source="/Resources/defaultAccount.png" HorizontalAlignment="Center"/>
             <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" HorizontalAlignment="Center"/>
-            
+
             <Button x:Name="btnLogin" Content="Log In"
                     Grid.Row="1" Grid.Column="2" 
                     FontWeight="Bold" Width="50" 
@@ -120,11 +123,11 @@
                    HorizontalContentAlignment="Center"
                    HorizontalAlignment="Right"
                    Content="Password" Margin="0,0,123,0" Padding="5,0,5,5"/>
-            
+
             <PasswordBox x:Name="pwdPassword" Grid.Row="4" Grid.Column="2" 
                      Width="179"
                      HorizontalAlignment="Right" Password=""/>
-            
+
             <Label x:Name="lblCurrentTime" Grid.Row="2" Grid.Column="1"
                    Content="" FontWeight="Bold" HorizontalAlignment="Left" Margin="25,-8,0,0" />
 
@@ -142,7 +145,7 @@
             <Label x:Name="lblDataGridHeader" Content="Library" FontSize="25" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,-11,0,0"/>
             <Label x:Name="lblDataGridSubHeader" Content="Description" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,22,0,0"/>
             <Button x:Name="btnAllSongs" Content="All Songs" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" 
-                    Padding="5,5,5,5" Margin="0,0,25,10" Background="Lavender" BorderThickness="1,1,1,1" 
+                    Padding="5,5,5,5" Margin="0,-33,30,0" Background="Lavender" BorderThickness="1,1,1,1" 
                     BorderBrush="Black" Click="btnAllSongs_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -176,10 +179,15 @@
             </DataGrid>
             <DataGrid Grid.Column="0" x:Name="grdPlaylists" AutoGenerateColumns="false" BorderThickness="0,0,0,0" FontWeight="UltraBlack" HorizontalGridLinesBrush="White" 
                       VerticalAlignment="Bottom" HorizontalAlignment="right" FontSize="12" CanUserResizeColumns="False" CanUserResizeRows="False" 
-                      MouseDoubleClick="grdPlaylists_MouseDoubleClick" CanUserSortColumns="False" CanUserReorderColumns="False">
+                      MouseDoubleClick="grdPlaylists_MouseDoubleClick" IsReadOnly="True" SelectionMode="Single" CanUserSortColumns="False" CanUserReorderColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Playlists" Binding="{Binding Title}" Width="100" CanUserResize="True" IsReadOnly="True"/>
                 </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="New Playlist" x:Name="mnuCreateNewPlaylist" Click="mnuCreateNewPlaylist_Click" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
         </Grid>
     </Grid>

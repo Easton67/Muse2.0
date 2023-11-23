@@ -117,7 +117,7 @@ namespace Muse2
             barSongLength.Visibility = Visibility.Collapsed;
 
             // Default the login and hide it
-            txtEmail.Text = "Drake@gmail.com";
+            txtEmail.Text = "Liam@gmail.com";
             txtEmail.Visibility = Visibility.Visible;
             lblEmail.Visibility = Visibility.Visible;
             btnProfileName.Content = "";
@@ -143,7 +143,10 @@ namespace Muse2
 
             // Reset the Playlists
             grdPlaylists.ItemsSource = null;
-            grdPlaylists.Visibility = Visibility.Collapsed;
+            btnPlaylistImageEdit.Visibility = Visibility.Hidden;
+            imgPlaylistPicture.Visibility = Visibility.Hidden;
+            imgPlaylistPicture.Source = null;
+            grdPlaylists.Visibility = Visibility.Hidden;
         }
         private void songListRepopulation()
         {
@@ -273,7 +276,12 @@ namespace Muse2
                         editSong.Click += mnuAddSongFromDataGrid_Click;
                         contextMenu.Items.Add(editSong);
 
-                        if(playlists.Count > 0)
+                        MenuItem newPlaylist = new MenuItem();
+                        newPlaylist.Header = "New Playlist";
+                        newPlaylist.Click += mnuCreateNewPlaylist_Click;
+                        contextMenu.Items.Add(newPlaylist);
+
+                        if (playlists.Count > 0)
                         {
                             MenuItem addSong = new MenuItem();
                             addSong.Header = "Add Song To Playlist:";
@@ -629,7 +637,7 @@ namespace Muse2
                 {
                     List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
                     int songID = userSongs[songNumber].SongID;
-                    int playlistID = playlists[index - 2].PlaylistID;
+                    int playlistID = playlists[index - 3].PlaylistID;
 
                     try
                     {
@@ -639,7 +647,6 @@ namespace Muse2
                     {
                         MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song was not added. Please try again.",
                         MessageBoxButton.OK, MessageBoxImage.Error);
-
                     }
                 }
                 catch (Exception ex)
@@ -651,13 +658,13 @@ namespace Muse2
         }
         private void grdPlaylists_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (grdPlaylists.SelectedItems.Count != 0)
+            if (grdPlaylists.SelectedItem != null)
             {
-                try
+                if (grdPlaylists.SelectedItems.Count != 0)
                 {
-                    if (grdPlaylists.SelectedItem != null)
+                    try
                     {
-                        int playlistID = (100000 + grdPlaylists.Items.IndexOf(grdPlaylists.SelectedItem));
+                        int playlistID = ((Playlist)grdPlaylists.SelectedItem).PlaylistID;
                         int userID = loggedInUser.UserID;
                         string playlistName = ((Playlist)grdPlaylists.SelectedItem).Title;
                         string playlistDescription = ((Playlist)grdPlaylists.SelectedItem).Description;
@@ -665,16 +672,22 @@ namespace Muse2
                         grdLibrary.ItemsSource = userSongs;
 
                         // Change the header and subheader of the playlist I'm currently on
+
+                        btnPlaylistImageEdit.Visibility = Visibility.Visible;
+                        imgPlaylistPicture.Visibility = Visibility.Visible;
+                        var playlistImageFilePath = ((Playlist)grdPlaylists.SelectedItem).ImageFilePath;
+                        BitmapImage playlistImageBitmap = new BitmapImage(new System.Uri(playlistImageFilePath));
+                        imgPlaylistPicture.Source = playlistImageBitmap;
                         lblDataGridHeader.Visibility = Visibility.Visible;
                         lblDataGridHeader.Content = playlistName;
                         lblDataGridSubHeader.Visibility = Visibility.Visible;
                         lblDataGridSubHeader.Content = playlistDescription;
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to view playlist. Please try again.",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to view playlist. Please try again.",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             else
@@ -687,13 +700,69 @@ namespace Muse2
             try
             {
                 userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+                lblDataGridHeader.Content = "Library";
+                lblDataGridSubHeader.Content = "";
                 grdLibrary.ItemsSource = userSongs;
+                btnPlaylistImageEdit.Visibility = Visibility.Hidden;
+                imgPlaylistPicture.Visibility = Visibility.Hidden;
+                imgPlaylistPicture.Source = null;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to find library. Please try again.",
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 grdLibrary.ItemsSource = null;
+            }
+        }
+        private void mnuCreateNewPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            var addPlaylist = new AddPlaylist(loggedInUser);
+            addPlaylist.ShowDialog();
+            try
+            {
+                grdPlaylists.ItemsSource = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+           
+        }
+        private void btnPlaylistImageEdit_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            UserManager _userManager = new UserManager();
+
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+
+                openFileDialog.Title = "Open File";
+                openFileDialog.Filter = "Image Files (*.jpg;*.jpeg;*.png;)|*.jpg;*.jpeg;*.png;|All Files (*.*)|*.*";
+
+                bool? result = openFileDialog.ShowDialog();
+
+                if (result == true)
+                {
+                    /*
+                    _accountImage = openFileDialog.FileName;
+                    var AccountImage = new BitmapImage(new System.Uri(_accountImage));
+                    _userManager.UpdateAccountImage(_email, _accountImage);
+
+                    imgAccountImage.Source = AccountImage;
+                    */
+                }
+                else
+                {
+                    // user closes the file explorer before picking a photo
+                    MessageBox.Show("Choose a photo to update your current account photo.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to update playlist image. Please try again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

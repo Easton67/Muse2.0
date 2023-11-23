@@ -11,5 +11,6 @@ namespace DataAccessInterfaces
     {
         List<Playlist> SelectPlaylistByUserID(int userId);
         int InsertSongIntoPlaylist(int songID, int playlistID);
+        int CreatePlaylist(Playlist newPlaylist);
     }
 }

@@ -4,6 +4,7 @@ using DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,6 +52,20 @@ namespace LogicLayer
                 throw new ApplicationException("Playlists not found", ex);
             }
             return playlists;
+        }
+        public bool CreatePlaylist(Playlist newPlaylist)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _playlistAccessor.CreatePlaylist(newPlaylist));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not Added", ex);
+            }
+            return result;
         }
     }
 }

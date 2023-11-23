@@ -38,6 +38,10 @@ namespace DataAccessFakes
                 UserID = 100002
             });
         }
+        public int CreatePlaylist(Playlist newPlaylist)
+        {
+            throw new NotImplementedException();
+        }
         public int InsertSongIntoPlaylist(int songID, int playlistID)
         {
             throw new NotImplementedException();

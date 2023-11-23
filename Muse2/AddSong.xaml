@@ -12,17 +12,17 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Button Grid.Column="0" Width="90" x:Name="btnSongInfomation" Height="20" Content="Information" Margin="0,0,10,0"
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button Grid.Column="0" Width="90" x:Name="btnSongInfomation" Height="20" Content="Information" Margin="0,0,10,0"
                 HorizontalContentAlignment="Center" HorizontalAlignment="right" Background="#FFD5C9E3" Padding="11,1,11,1" Click="btnSongInfomation_Click" >
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -47,7 +47,7 @@
                 </Button.Resources>
             </Button>
         <Button Grid.Column="1" Width="100" x:Name="btnCreateSong" Height="20" Content="Create Song"
-                        HorizontalContentAlignment="Center" HorizontalAlignment="Right" Background="#FF88D9E6" Padding="11,1,11,1" Margin="0,0,25,0" Click="btnCreateSong_Click" >
+                HorizontalContentAlignment="Center" HorizontalAlignment="Right" Background="#FF88D9E6" Padding="11,1,11,1" Margin="0,0,25,0" Click="btnCreateSong_Click" >
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"/>
@@ -56,15 +56,13 @@
         </Button>
             <Label Grid.Row="2" Grid.Column="0" x:Name="lblTitle" Content="Title" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
             <Label Grid.Row="2" Grid.Column="0" x:Name="lblSongArt" Content="Song Art" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
-            <Label Grid.Row="2" Grid.Column="0" x:Name="lblLyrics" Content="Lyrics" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
-
-            <Image x:Name="imgSongImage" Grid.Row="1" Grid.Column="1" Grid.RowSpan="7" Width="300" HorizontalAlignment="Left" Margin="30,0,0,0" Source="/defaultAlbumImage.png"/>
-            <TextBox Name="txtLyrics" Grid.Row="1" Grid.Column="1" Grid.RowSpan="7" Width="320" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" 
+        <Label Grid.Row="2" Grid.Column="0" x:Name="lblLyrics" Content="Lyrics" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
+        <Image x:Name="imgSongImage" Grid.Row="1" Grid.Column="1" Grid.RowSpan="7" Width="300" HorizontalAlignment="Left" Margin="30,0,0,0" Source="/defaultAlbumImage.png"/>
+        <TextBox Name="txtLyrics" Grid.Row="1" Grid.Column="1" Grid.RowSpan="7" Width="320" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" 
                  HorizontalScrollBarVisibility="Auto"
                  Margin="5,20,0,0"
                  MinLines="5" MinHeight="100" HorizontalAlignment="Left" FontSize="14"/>
-
-            <Label Grid.Row="1" Grid.Column="0" x:Name="lblMp3File" Content="Mp3" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
+        <Label Grid.Row="1" Grid.Column="0" x:Name="lblMp3File" Content="Mp3" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
             <Button Grid.Row="1" Grid.Column="1" Width="90" x:Name="btnAddMp3" Content="Add Mp3"
                 HorizontalContentAlignment="Center" Background="White" Padding="11,1,11,1" Height="30" Click="btnAddMp3_Click" HorizontalAlignment="Right" Margin="0,0,30,0" >
                 <Button.Resources>
@@ -78,7 +76,6 @@
             <Label Grid.Row="5" Grid.Column="0" x:Name="lblYear" Content="Year" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5" />
             <Label Grid.Row="6" Grid.Column="0" x:Name="lblExplicit" Content="Explicit" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5" />
             <Label Grid.Row="7" Grid.Column="0" x:Name="lblPlays" Content="Plays" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5" PreviewTextInput="lblPlays_PreviewTextInput" />
-
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtMp3FilePath" Height="30" HorizontalAlignment="Left" Width="330" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" IsEnabled="False" IsReadOnly="True" />
             <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtTitle" Height="30" HorizontalAlignment="Left" Width="330" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" />
             <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtArtist" Height="30" HorizontalAlignment="Left" Width="330" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" />

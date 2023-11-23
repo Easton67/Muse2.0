@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using DataAccessInterfaces;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace DataAccessLayer
 {
@@ -47,7 +48,7 @@ namespace DataAccessLayer
                     {
                         PlaylistID = reader.GetInt32(0),
                         Title = reader.IsDBNull(1) ? "Playlist" : reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                        ImageFilePath = reader.IsDBNull(2) ? "/defaultAlbumImage.png" : reader.GetString(2),
                         Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
                         UserID = reader.GetInt32(4),
                     };
@@ -65,11 +66,9 @@ namespace DataAccessLayer
             }
             return playlists;
         }
-
         public int InsertSongIntoPlaylist(int songID, int playlistID)
         {
             int rows = 0;
-            Song song = new Song();
 
             var conn = SqlConnectionProvider.GetConnection();
             var cmdText = "sp_insert_song_into_playlist";
@@ -78,6 +77,35 @@ namespace DataAccessLayer
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@SongID", songID);
             cmd.Parameters.AddWithValue("@PlaylistID", playlistID);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int CreatePlaylist(Playlist newPlaylist)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_create_playlist";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Title", newPlaylist.Title);
+            cmd.Parameters.AddWithValue("@ImageFilePath", newPlaylist.ImageFilePath);
+            cmd.Parameters.AddWithValue("@Description", newPlaylist.Description);
+            cmd.Parameters.AddWithValue("@UserID", newPlaylist.UserID);
 
             try
             {
