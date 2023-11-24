@@ -4,10 +4,12 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Label = System.Windows.Controls.Label;
 
 namespace Muse2
 {
@@ -47,23 +49,32 @@ namespace Muse2
             try
             {
                 userSongs = _songManager.SelectSongsByUserID(_userID);
+
+                // Order the songs by plays in descending order to show the most played top 5.
+                List<Song> topSongs = userSongs.OrderByDescending(song => song.Plays).Take(5).ToList();
+
+                // Create labels for only the songs with the top 5 plays
+                int i = 0;
+                foreach (var song in topSongs)
+                {
+                    // set the top song as the image for the most played song
+                    imgTopSongs.Source = new BitmapImage(new System.Uri(topSongs[0].ImageFilePath));
+                    string labelText = $"{i + 1}. {song.Title}";
+                    Label lblTopSongs = new Label { Content = labelText };
+                    lblTopSongs.Margin = new Thickness(-428, 10, 0, 0);
+                    lblTopSongs.Padding = new Thickness(10, 5, 10, 5);
+                    lblTopSongs.FontSize = 20;
+                    lblTopSongs.Width = 260;
+                    lblTopSongs.FontWeight = FontWeights.Bold;
+                    labelStackPanel.Children.Add(lblTopSongs);
+                    i += 1;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Songs not found.",
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
-            }
-
-            // Order the songs by plays in descending order
-            var topSongs = userSongs.OrderByDescending(song => song.Plays).Take(5).ToList();
-
-            // Create labels for only the songs with the top 5 plays
-            foreach (var song in topSongs)
-            {
-                string labelText = $"{song.Title}: {song.Plays} plays";
-                Label label = new Label { Content = labelText };
-                labelStackPanel.Children.Add(label);
             }
 
             try

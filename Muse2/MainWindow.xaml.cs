@@ -153,7 +153,12 @@ namespace Muse2
             try
             {
                 userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
-                grdLibrary.ItemsSource = userSongs;            
+                grdLibrary.ItemsSource = userSongs;
+                
+                if(userSongs != null)
+                {
+                    grdLibrary.Visibility = Visibility.Visible;
+                }
             }
             catch (Exception ex)
             {
@@ -489,7 +494,7 @@ namespace Muse2
         {
             try
             {
-                if (userSongs[songNumber].ImageFilePath != "")
+                 if (userSongs[songNumber].ImageFilePath != "")
                 {
                     BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
                     imgCoverArt.Source = CoverArt;
@@ -511,7 +516,7 @@ namespace Muse2
                 imgExplicit.Visibility = Visibility.Visible;
             }
             else
-            {
+            {   
                 imgExplicit.Visibility = Visibility.Hidden;
             }
             GetSongCover();
@@ -649,8 +654,7 @@ namespace Muse2
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song was not added. Please try again.",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("You have already added this song to your playlist");
                     }
                 }
                 catch (Exception ex)
