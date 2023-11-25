@@ -35,7 +35,6 @@ namespace Muse2
 
             _loggedInUser = loggedInUser;
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CleanWindow();
@@ -95,13 +94,11 @@ namespace Muse2
             txtPlays.Visibility = Visibility.Visible;
             chkExplicit.Visibility = Visibility.Visible;
         }
-
         private void btnSongInfomation_Click(object sender, RoutedEventArgs e)
         {
             CleanWindow();
             SongInformationHelper();
         }
-
         private void btnArtwork_Click(object sender, RoutedEventArgs e)
         {
             CleanWindow();
@@ -112,7 +109,6 @@ namespace Muse2
             btnAddArtwork.Visibility = Visibility.Visible;
             btnRemoveArtwork.Visibility = Visibility.Visible;
         }
-
         private void btnLyrics_Click(object sender, RoutedEventArgs e)
         {
             CleanWindow();
@@ -180,18 +176,17 @@ namespace Muse2
                 MessageBox.Show("Invalid image." + " " + ex.Message);
             }
         }
-
         private void txtYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[0-9]");
-            e.Handled = !regex.IsMatch(e.Text);
+            // Regex for only four numeric characters
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
         private void lblPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[0-9]");
             e.Handled = !regex.IsMatch(e.Text);
         }
-
         private void btnAddMp3_Click(object sender, RoutedEventArgs e)
         {
             try

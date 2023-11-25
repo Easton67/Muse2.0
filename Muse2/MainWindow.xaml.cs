@@ -83,7 +83,7 @@ namespace Muse2
             _playlistManager = new PlaylistManager();
             updateUIForLogout();
         }
-        // UI Helpers
+        #region UI Helpers
         private void updateUIForLogout()
         {
             txtEmail.Focus();
@@ -336,6 +336,7 @@ namespace Muse2
             }
             GetAccountAndRoles();
         }
+        #endregion
         // Menu Items
         private void mnuViewProfile_Click(object sender, RoutedEventArgs e)
         {
@@ -494,7 +495,7 @@ namespace Muse2
         {
             try
             {
-                 if (userSongs[songNumber].ImageFilePath != "")
+                if (userSongs[songNumber].ImageFilePath != "")
                 {
                     BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
                     imgCoverArt.Source = CoverArt;
@@ -531,7 +532,7 @@ namespace Muse2
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-        }
+        } 
         private void NextSongHelper()
         {
             if (songNumber < userSongs.Count - 1)
@@ -587,9 +588,15 @@ namespace Muse2
         }
         private void grdLibrary_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (userSongs[songNumber].Album == "")
+            {
+                mnuViewAlbum.Visibility = Visibility.Collapsed;
+            }
+
             if (grdLibrary.SelectedItem != null)
             {
                 int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
+
                 songNumber = selectedRowIndex;
             }
         }
@@ -612,7 +619,7 @@ namespace Muse2
         {
             var AddSong = new AddSong(loggedInUser);
             AddSong.ShowDialog();
-            grdLibrary.ItemsSource = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+            songListRepopulation();
         }
         private void mnuHelp_Click(object sender, RoutedEventArgs e)
         {
@@ -737,7 +744,6 @@ namespace Muse2
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-           
         }
         private void btnPlaylistImageEdit_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -773,6 +779,10 @@ namespace Muse2
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to update playlist image. Please try again.",
                 MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        private void mnuViewAlbum_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

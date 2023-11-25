@@ -80,13 +80,15 @@
             <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtTitle" Height="30" HorizontalAlignment="Left" Width="330" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" />
             <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtArtist" Height="30" HorizontalAlignment="Left" Width="330" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" />
             <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtAlbum" Height="30" HorizontalAlignment="Left" Width="330" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" />
-            <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtYear" Height="30" HorizontalAlignment="Left" Width="40" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" InputScope="DateYear" HorizontalContentAlignment="Center" PreviewTextInput="txtYear_PreviewTextInput" />
+            <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtYear" Height="30" HorizontalAlignment="Left" Width="40" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" 
+                     HorizontalContentAlignment="Center" PreviewTextInput="txtYear_PreviewTextInput" MaxLength="4" />
             <CheckBox x:Name="chkExplicit" Grid.Row="6" Grid.Column="1" Margin="17,18,0,0" >
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
                 </CheckBox.LayoutTransform>
             </CheckBox>
-            <TextBox Grid.Row="7" Grid.Column="1" x:Name="txtPlays" Height="30" HorizontalAlignment="Left" Width="40" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" InputScope="DateYear" HorizontalContentAlignment="Center" />
+            <TextBox Grid.Row="7" Grid.Column="1" x:Name="txtPlays" Height="30" HorizontalAlignment="Left" Width="40" Margin="7,0,0,0" 
+                 FontSize="13" VerticalContentAlignment="Center" InputScope="DateYear" HorizontalContentAlignment="Center" MaxLength="4" />
             <Button Grid.Row="8" Grid.Column="1" Width="113" x:Name="btnRemoveArtwork" Height="30" Content="Remove Artwork" Margin="0,0,25,0" FontSize="12"
                     HorizontalContentAlignment="Center" HorizontalAlignment="right" Background="#e193ba" Padding="11,1,11,1" Click="btnRemoveArtwork_Click" >
                 <Button.Resources>

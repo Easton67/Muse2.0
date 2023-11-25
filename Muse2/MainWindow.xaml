@@ -172,6 +172,7 @@
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
+                        <MenuItem Header="View Album" x:Name="mnuViewAlbum" Click="mnuViewAlbum_Click"/>
                         <MenuItem Header="Edit Song Details" x:Name="mnuEditSongFromDataGrid" Click="mnuEditSongFromDataGrid_Click" />
                         <MenuItem Header="Add Song To Playlist" x:Name="mnuAddSongToPlaylistFromDataGrid" Click="mnuAddSongToPlaylistFromDataGrid_Click" />
                     </ContextMenu>

@@ -10,6 +10,8 @@ namespace DataAccessInterfaces
     public interface ISongAccessor
     {
         List<Song> SelectSongsByUserID(int UserID);
+
+        // DEAD
         int UpdatePlaysBySongID(int SongID, int Plays);
         int UpdateTitleBySongID(int SongID, string Title);
         int UpdateArtistBySongID(int SongID, string Artist);

@@ -18,12 +18,10 @@ namespace LogicLayer
         {
             _playlistAccessor = new PlaylistAccessor();
         }
-
         public PlaylistManager(IPlaylistAccessor playlistAccessor)
         {
             _playlistAccessor = playlistAccessor;
         }
-
         public bool InsertSongIntoPlaylist(int songID, int playlistID)
         {
             bool result = false;
@@ -38,7 +36,6 @@ namespace LogicLayer
             }
             return result;
         }
-
         public List<Playlist> SelectPlaylistByUserID(int userId)
         {
             List<Playlist> playlists = new List<Playlist>();

@@ -13,6 +13,9 @@ namespace DataAccessInterfaces
         UserVM SelectUserVMByEmail(string email);
         List<string> SelectRolesByUserID(int UserID);
         int InsertUser(User user, string password);
+
+
+        // DEAD
         int UpdatePasswordHash(string email, string oldPasswordHash, string newPasswordHash);
         int UpdateFirstName(string Email, string NewFirstName);
         int UpdateLastName(string email, string LastName);

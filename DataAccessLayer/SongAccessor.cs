@@ -53,7 +53,7 @@ namespace DataAccessLayer
                         Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
                         UserID = reader.GetInt32(9),
                         Artist = reader.GetString(10),
-                        Album = reader.GetString(11)
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11)
                     };
                     songs.Add(song);
                 }
@@ -68,7 +68,6 @@ namespace DataAccessLayer
             }
             return songs;
         }
-
         public List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID)
         {
             List<Song> songs = new List<Song>();
@@ -108,7 +107,7 @@ namespace DataAccessLayer
                         Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
                         UserID = reader.GetInt32(9),
                         Artist = reader.GetString(10),
-                        Album = reader.GetString(11)
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11)
                     };
                     songs.Add(song);
                 }
@@ -188,7 +187,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@Plays", song.Plays);
             cmd.Parameters.AddWithValue("@UserID", song.UserID);
             cmd.Parameters.AddWithValue("@ArtistID", song.Artist);
-            cmd.Parameters.AddWithValue("@AlbumID", song.Album);
+            cmd.Parameters.AddWithValue("@AlbumTitle", song.Album);
 
             try
             {
@@ -205,6 +204,16 @@ namespace DataAccessLayer
             }
             return rows;
         }
+
+        //public int UpdateSong(Song oldSong, Song newSong)
+        //{
+        //    int rows = 0;
+        //    var conn = SqlConnectionProvider.GetConnection();
+        //    var cmdText = "sp_update_song";
+        //    var cmd = new SqlCommand(cmdText, conn);
+        //}
+
+        // DEAD
         public int UpdateTitleBySongID(int SongID, string Title)
         {
             int rows = 0;

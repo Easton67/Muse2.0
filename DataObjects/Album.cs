@@ -15,6 +15,7 @@ namespace DataObjects
         public bool Explicit { get; set; }
         public bool Private { get; set; }
         public int Plays { get; set; }
+        public Artist Artist { get; set; }
     }
     public class AlbumVM : Album
     {
