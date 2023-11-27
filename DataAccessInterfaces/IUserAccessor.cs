@@ -13,6 +13,7 @@ namespace DataAccessInterfaces
         UserVM SelectUserVMByEmail(string email);
         List<string> SelectRolesByUserID(int UserID);
         int InsertUser(User user, string password);
+        List<User> SelectAllUsers();
 
 
         // DEAD

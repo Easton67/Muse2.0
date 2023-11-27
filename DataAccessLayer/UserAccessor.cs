@@ -113,6 +113,50 @@ namespace DataAccessLayer
             }
             return userVM;
         }
+        public List<User> SelectAllUsers()
+        {
+            List<User> allUsers = new List<User>();
+
+            var conn = SqlConnectionProvider.GetConnection();
+
+            var cmdText = "sp_select_all_users";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var user = new User
+                    {
+                        UserID = reader.GetInt32(0),
+                        ProfileName = reader.GetString(1),
+                        Email = reader.GetString(2),
+                        FirstName = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                        LastName = reader.IsDBNull(4) ? "" : reader.GetString(4),
+                        ImageFilePath = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                        Active = reader.GetBoolean(6),
+                        Private = reader.GetBoolean(7),
+                    };
+                    allUsers.Add(user);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return allUsers;
+        }
         public List<string> SelectRolesByUserID(int userID)
         {
             List<string> roles = new List<string>();

@@ -130,6 +130,38 @@ namespace LogicLayer
             }
             return result;
         }
+        public bool InsertUser(User user, string password)
+        {
+            bool result = false;
+
+            password = HashSha256(password);
+
+            try
+            {
+                result = (1 == _userAccessor.InsertUser(user, password));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("User not Created", ex);
+            }
+            return result;
+        }
+        public List<User> SelectAllUsers()
+        {
+            List<User> allUsers = new List<User>();
+
+            try
+            {
+                allUsers = _userAccessor.SelectAllUsers();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Users not found.", ex);
+            }
+            return allUsers;
+        }
+
+        // DEAD
         public bool UpdateFirstName(string Email, string FirstName)
         {
             bool result = false;
@@ -169,22 +201,6 @@ namespace LogicLayer
             catch (Exception ex)
             {
                 throw new ApplicationException("Image not accepted ", ex);
-            }
-            return result;
-        }
-        public bool InsertUser(User user, string password)
-        {
-            bool result = false;
-
-            password = HashSha256(password);
-
-            try
-            {
-                result = (1 == _userAccessor.InsertUser(user, password));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("User not Created", ex);
             }
             return result;
         }

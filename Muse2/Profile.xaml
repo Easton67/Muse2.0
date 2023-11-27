@@ -16,40 +16,10 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Padding="20px, 0px">
             <MenuItem x:Name="mnuFile" Header="File">
-                <MenuItem x:Name="mnuNewPlaylist" Header="New Playlist"/>
                 <MenuItem x:Name="mnuExitApplcation" Header="Exit Application" Click="mnuExitApplcation_Click"/>
             </MenuItem>
-            <MenuItem x:Name="mnuSong" Header="Song">
-                <MenuItem x:Name="mnuAddSongToLibrary" Header="Add Song To Library"/>
-                <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs"/>
-            </MenuItem>
-            <MenuItem x:Name="mnuAccount" Header="Account">
-                <MenuItem x:Name="mnuViewProfile" Header="View Profile"/>
-            </MenuItem>
-            <MenuItem x:Name="mnuFriends" Header="Friends">
-                <MenuItem x:Name="mnuAddFriend" Header="Add a Friend"/>
-                <MenuItem x:Name="mnuViewAllFriends" Header="View All Friends"/>
-            </MenuItem>
-            <MenuItem x:Name="mnuControls" Header="Controls">
-                <MenuItem x:Name="mnuPlay" Header="Play"/>
-                <MenuItem x:Name="mnuPause" Header="Pause"/>
-                <MenuItem x:Name="mnuShuffle" Header="Shuffle">
-                    <MenuItem x:Name="mnuShuffleOn" Header="On"/>
-                    <MenuItem x:Name="mnuShuffleOff" Header="Off"/>
-                </MenuItem>
-                <MenuItem x:Name="mnuNext" Header="Next"/>
-                <MenuItem x:Name="mnuRewind" Header="Rewind"/>
-            </MenuItem>
             <MenuItem x:Name="mnuHelp" Header="Help">
-                <MenuItem x:Name="mnuSignUp" Header="Sign Up"/>
-            </MenuItem>
-            <MenuItem x:Name="mnuArtist" Header="Artist">
-                <MenuItem x:Name="mnuViewPage" Header="View Page"/>
-                <MenuItem x:Name="mnuPostSong" Header="Post Song"/>
-                <MenuItem x:Name="mnuPostAlbum" Header="Post Album"/>
-            </MenuItem>
-            <MenuItem x:Name="mnuAdmin" Header="Admin">
-                <MenuItem x:Name="mnuViewAllUsers" Header="View All Users"/>
+                <MenuItem x:Name="mnuResetPassword" Header="Reset Password" Click="mnuResetPassword_Click" />
             </MenuItem>
         </Menu>
         <Button x:Name="btnLogo" Grid.Row="1" Width="150" HorizontalAlignment="Right" BorderThickness="0,0,0,0" Background="White" Margin="0,0,10,0" Click="btnLogo_Click">
@@ -103,30 +73,20 @@
                 </TabItem>
                 <TabItem Header="Stats"
                     FontSize="14" Padding="32,2,32,2">
-                    <WrapPanel HorizontalAlignment="Center" >
-                        <StackPanel x:Name="labelStackPanel" Orientation="Vertical" VerticalAlignment="Center" Margin="0,-115,0,0" >
-                            <Image x:Name="imgTopSongs" Source="/Resources/defaultAlbumImage.png" Width="200" HorizontalAlignment="Left" Margin="-334,45,0,3"/>
+                    <WrapPanel HorizontalAlignment="Right" Margin="0,0,500,0" >
+                        <StackPanel Orientation="Horizontal" Margin="32,0,0,300">
+                            <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75"/>
+                            <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45"/>
+                        </StackPanel>
+
+                        <StackPanel x:Name="labelStackPanel" Orientation="Vertical" VerticalAlignment="Center" IsManipulationEnabled="True" Margin="0,100,0,0" >
+                            <Image x:Name="imgTopSongs" Source="/Resources/defaultAlbumImage.png" Width="200" HorizontalAlignment="Left" Margin="-334,0,0,3"/>
                             <Label x:Name="lblMostPlayedSong" Margin="-428,20,0,0" Content="Most Played Songs" Width="260" FontWeight="UltraBlack" FontSize="25" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,100,0,0">
-                            <StackPanel Orientation="Horizontal" Margin="32,-104,0,25">
-                                <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75"/>
-                                <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45"/>
-                            </StackPanel>
+                            
                             <Label x:Name="lblMinutesTotalListened" HorizontalAlignment="Center" FontSize="80" Margin="0,22,0,0">1469</Label>
                             <Label x:Name="lblMinutesListned" HorizontalAlignment="Center" FontSize="20" BorderThickness="0,4,0,65" Margin="0,2,0,0">minutes listened</Label>
-                            <Image x:Name="imgMostPlayedAlbum" Source="/Resources/defaultAlbumImage.png" Width="200" VerticalAlignment="Bottom"/>
-                            <Label x:Name="lblMostPlayedAlbum" Content=""  Width="260" FontSize="25" HorizontalAlignment="Center" HorizontalContentAlignment="Center"></Label>
-                            <Label HorizontalAlignment="Center" FontSize="20" FontWeight="UltraBlack" Content="Most Played Album"/>
-                        </StackPanel>
-                        <StackPanel>
-                            <Image x:Name="imgTopArtist" Source="/Resources/defaultAlbumImage.png" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,150,-325,0"/>
-                            <Label x:Name="lblMostPlayedArtist" Margin="0,20,-452,0" Content="Most Played Artists" Width="260" FontWeight="UltraBlack" FontSize="25"></Label>
-                            <Label x:Name="lblArtist1" Margin="0,10,-452,0" Content="1. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
-                            <Label x:Name="lblArtist2" Margin="0,10,-452,0" Content="2. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
-                            <Label x:Name="lblArtist3" Margin="0,10,-452,0" Content="3. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
-                            <Label x:Name="lblArtist4" Margin="0,10,-452,0" Content="4. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
-                            <Label x:Name="lblArtist5" Margin="0,10,-452,0" Content="5. " Width="260" FontWeight="UltraBlack" FontSize="20"></Label>
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>
@@ -155,11 +115,6 @@
                             </StackPanel>
                         </StackPanel>
                     </WrapPanel>
-                </TabItem>
-                <TabItem x:Name="tabReviews"
-                Header="Reviews"
-                FontSize="14" Padding="32,2,32,2">
-                    <Label Content="Reviews" />
                 </TabItem>
             </TabControl>
         </StackPanel>

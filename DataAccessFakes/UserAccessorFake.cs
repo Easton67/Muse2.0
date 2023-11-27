@@ -123,6 +123,16 @@ namespace DataAccessFakes
             }
             return rows;
         }
+        public int InsertUser(User user, string password)
+        {
+            throw new NotImplementedException();
+        }
+        public List<User> SelectAllUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        // DEAD
         public int UpdateFirstName(string Email, string FirstName)
         {
             int rows = 0;
@@ -165,9 +175,6 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
-        public int InsertUser(User user, string password)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

@@ -17,41 +17,33 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Padding="20px, 0px">
             <MenuItem x:Name="mnuFile" Header="File">
-                <MenuItem x:Name="mnuNewPlaylist" Header="New Playlist"/>
                 <MenuItem x:Name="mnuExitApplcation" Header="Exit Application" Click="mnuExitApplcation_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuSong" Header="Song">
                 <MenuItem x:Name="mnuAddSongToLibrary" Header="Add Song To Library" Click="mnuAddSongToLibrary_Click"/>
-                <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs"/>
+                <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs" Click="mnuViewAllSongs_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="mnuAlbum" Header="Album">
+                <MenuItem x:Name="mnuCreateNewAlbum" Header="Create new Album" Click="mnuCreateNewAlbum_Click" />
+            </MenuItem>
+            <MenuItem x:Name="mnuPlaylist" Header="Playlist">
+                <MenuItem x:Name="mnuNewPlaylist" Header="Create new Playlist" Click="mnuNewPlaylist_Click" />
             </MenuItem>
             <MenuItem x:Name="mnuAccount" Header="Account">
                 <MenuItem x:Name="mnuViewProfile" Header="View Profile" Click="mnuViewProfile_Click"/>
             </MenuItem>
-            <MenuItem x:Name="mnuFriends" Header="Friends">
-                <MenuItem x:Name="mnuAddFriend" Header="Add a Friend"/>
-                <MenuItem x:Name="mnuViewAllFriends" Header="View All Friends"/>
-            </MenuItem>
             <MenuItem x:Name="mnuControls" Header="Controls">
-                <MenuItem x:Name="mnuPlay" Header="Play"/>
-                <MenuItem x:Name="mnuPause" Header="Pause"/>
-                <MenuItem x:Name="mnuShuffle" Header="Shuffle">
-                    <MenuItem x:Name="mnuShuffleOn" Header="On"/>
-                    <MenuItem x:Name="mnuShuffleOff" Header="Off"/>
-                </MenuItem>
-                <MenuItem x:Name="mnuNext" Header="Next"/>
-                <MenuItem x:Name="mnuRewind" Header="Rewind"/>
+                <MenuItem x:Name="mnuPlay" Header="Play" Click="mnuPlay_Click"/>
+                <MenuItem x:Name="mnuPause" Header="Pause" Click="mnuPause_Click"/>
+                <MenuItem x:Name="mnuNext" Header="Next" Click="mnuNext_Click"/>
+                <MenuItem x:Name="mnuRewind" Header="Rewind" Click="mnuRewind_Click"/>
             </MenuItem>
-            <MenuItem x:Name="mnuHelp" Header="Help" Click="mnuHelp_Click">
-                <MenuItem x:Name="mnuSignUp" Header="Sign Up"/>
+            <MenuItem x:Name="mnuHelp" Header="Help">
+                <MenuItem x:Name="mnuSignUp" Header="Sign Up" Click="mnuSignUp_Click"/>
                 <MenuItem x:Name="mnuResetPassword" Header="Reset Password" Click="mnuResetPassword_Click" />
             </MenuItem>
-            <MenuItem x:Name="mnuArtist" Header="Artist">
-                <MenuItem x:Name="mnuViewPage" Header="View Page"/>
-                <MenuItem x:Name="mnuPostSong" Header="Post Song"/>
-                <MenuItem x:Name="mnuPostAlbum" Header="Post Album"/>
-            </MenuItem>
             <MenuItem x:Name="mnuAdmin" Header="Admin">
-                <MenuItem x:Name="mnuViewAllUsers" Header="View All Users"/>
+                <MenuItem x:Name="mnuViewAllUsers" Header="View All Users" Click="mnuViewAllUsers_Click"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
@@ -153,6 +145,25 @@
                     </Style>
                 </Button.Resources>
             </Button>
+            <DataGrid Grid.Column="0" x:Name="grdUsers" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" 
+                      VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" CanUserReorderColumns="False"
+                      CanUserSortColumns="False" Margin="0,54,0,0">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="25" MinWidth="25" MaxWidth="55">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImageFilePath}" MaxWidth="55" MinWidth="25" MaxHeight="55" MinHeight="25" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="UserID" Binding="{Binding UserID}" Width="50"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="300"/>
+                    <DataGridTextColumn Header="Profile Name" Binding="{Binding ProfileName}" Width="150"/>
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="150"/>
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="150" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Active" Binding="{Binding Active}" Width="70" CanUserResize="False"/>
+                </DataGrid.Columns>
+            </DataGrid>
             <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" 
                       VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" 
                       SelectionChanged="grdLibrary_SelectionChanged" CanUserReorderColumns="False" CanUserSortColumns="False" Margin="0,54,0,0">

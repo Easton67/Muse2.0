@@ -46,6 +46,22 @@ namespace LogicLayer
             }
             return songs;
         }
+        public bool InsertSong(Song newSong)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _songAccessor.InsertSong(newSong));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not Added", ex);
+            }
+            return result;
+        }
+
+        // DEAD
         public bool UpdateAlbumBySongID(int SongID, string Album)
         {
             bool result = false;
@@ -150,20 +166,6 @@ namespace LogicLayer
         public bool UpdateLyricsBySongID(int SongID, string Lyrics)
         {
             throw new NotImplementedException();
-        }
-        public bool InsertSong(Song newSong)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _songAccessor.InsertSong(newSong));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Song not Added", ex);
-            }
-            return result;
         }
     }
 }

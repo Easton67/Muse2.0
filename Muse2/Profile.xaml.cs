@@ -38,6 +38,11 @@ namespace Muse2
             InitializeComponent();
         }
         // Menu Items
+        private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
+        {
+            var resetPassword = new ResetPassword(_email);
+            resetPassword.ShowDialog();
+        }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
