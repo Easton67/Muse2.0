@@ -60,47 +60,17 @@ namespace LogicLayer
             }
             return result;
         }
-
-        // DEAD
-        public bool UpdateAlbumBySongID(int SongID, string Album)
+        public bool UpdateSong(Song oldSong, Song newSong)
         {
             bool result = false;
 
             try
             {
-                result = (1 == _songAccessor.UpdateAlbumBySongID(SongID, Album));
+                result = (1 == _songAccessor.UpdateSong(oldSong, newSong));
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Album not accepted ", ex);
-            }
-            return result;
-        }
-        public bool UpdateArtistBySongID(int SongID, string Artist)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _songAccessor.UpdateArtistBySongID(SongID, Artist));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Artist not accepted ", ex);
-            }
-            return result;
-        }
-        public bool UpdateExplicitBySongID(int SongID, bool Explicit)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _songAccessor.UpdateExplicitBySongID(SongID, Explicit));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Status change not accepted ", ex);
+                throw new ApplicationException("Song not Added", ex);
             }
             return result;
         }
@@ -114,58 +84,9 @@ namespace LogicLayer
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Song's plays not found.", ex);
-            }
-
-            return result;
-        }
-        public bool UpdateSongImageBySongID(int SongID, string ImageFilePath)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _songAccessor.UpdateSongImageBySongID(SongID, ImageFilePath));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Song's image not found.", ex);
-            }
-
-            return result;
-        }
-        public bool UpdateTitleBySongID(int SongID, string Title)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _songAccessor.UpdateTitleBySongID(SongID, Title));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Song's title not found.", ex);
-            }
-
-            return result;
-        }
-        public bool UpdateYearBySongID(int SongID, int YearReleased)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _songAccessor.UpdateYearBySongID(SongID, YearReleased));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Song's title not found.", ex);
+                throw new ApplicationException("Plays not updated.", ex);
             }
             return result;
-        }
-        public bool UpdateLyricsBySongID(int SongID, string Lyrics)
-        {
-            throw new NotImplementedException();
         }
     }
 }

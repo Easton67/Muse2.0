@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using LogicLayer;
 using System.Diagnostics;
 using Microsoft.Win32;
+using System.Text.RegularExpressions;
 
 namespace Muse2
 {
@@ -23,19 +24,23 @@ namespace Muse2
     /// </summary>
     public partial class AddEditSongxaml : Window
     {
-        private Song song = null;
+        private Song _song = null; 
+        private UserVM _loggedInUser = null;
+        private string _imgFile = "";
 
-        public AddEditSongxaml(Song s)
+        public AddEditSongxaml(Song song, UserVM loggedInUser)
         {
-            song = s;
-
             InitializeComponent();
+
+            _song = song;
+
+            _loggedInUser = loggedInUser;
+
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CleanWindow();
             SongInformationHelper();
-            // ArtworkHelper();
         }
         // Reset Method
         private void CleanWindow()
@@ -89,11 +94,15 @@ namespace Muse2
             chkExplicit.Visibility = Visibility.Visible;
             btnDeleteSong.Visibility = Visibility.Visible;
 
-            txtTitle.Text = song.Title;
-            txtArtist.Text = song.Artist;
-            txtAlbum.Text = song.Album;
-            txtYear.Text = song.YearReleased.ToString();
-            chkExplicit.IsChecked = song.Explicit;
+            // Set the current song's details
+            txtTitle.Text = _song.Title;
+            txtArtist.Text = _song.Artist;
+            txtAlbum.Text = _song.Album;
+            txtYear.Text = _song.YearReleased.ToString();
+            chkExplicit.IsChecked = _song.Explicit;
+            txtPlays.Text = _song.Plays.ToString();
+            txtLyrics.Text = _song.Lyrics;
+
         }
         // Navigation Buttons
         private void btnSongInfomation_Click(object sender, RoutedEventArgs e)
@@ -113,7 +122,7 @@ namespace Muse2
 
             try
             {
-                var SongImage = new BitmapImage(new System.Uri(song.ImageFilePath));
+                var SongImage = new BitmapImage(new System.Uri(_song.ImageFilePath));
                 imgSongImage.Source = SongImage;
             }
             catch (Exception ex)
@@ -128,7 +137,7 @@ namespace Muse2
             btnLyrics.Background = Brushes.Lavender;
             lblLyrics.Visibility = Visibility.Visible;
             txtLyrics.Visibility = Visibility.Visible;
-            txtLyrics.Text = song.Lyrics;
+            txtLyrics.Text = _song.Lyrics;
         }
         // Tab specific buttons
         private void btnDeleteSong_Click(object sender, RoutedEventArgs e)
@@ -148,8 +157,8 @@ namespace Muse2
 
                 if (result == true)
                 {
-                    song.ImageFilePath = openFileDialog.FileName;
-                    var SongImage = new BitmapImage(new System.Uri(song.ImageFilePath));
+                    _imgFile = openFileDialog.FileName;
+                    var SongImage = new BitmapImage(new System.Uri(_imgFile));
 
                     imgSongImage.Source = SongImage;
                 }
@@ -167,22 +176,46 @@ namespace Muse2
         private void btnAddChanges_Click(object sender, RoutedEventArgs e)
         {
             SongManager _songManager = new SongManager();
-            var NewSongTitle = txtTitle.Text;
+
+
+            var oldSong = this._song;
+
+            var newSong = new Song()
+            {
+                SongID = oldSong.SongID,
+                Title = txtTitle.Text,
+                ImageFilePath = _imgFile,
+                Mp3FilePath = oldSong.Mp3FilePath,
+                YearReleased = int.Parse(txtYear.Text),
+                Lyrics = txtLyrics.Text,
+                Explicit = (bool)chkExplicit.IsChecked,
+                Private = true,
+                Plays = int.Parse(txtPlays.Text),
+                UserID = _loggedInUser.UserID,
+                Album = oldSong.Album,
+                Artist = oldSong.Artist,
+            };
 
             try
             {
-                _songManager.UpdateTitleBySongID(song.SongID, NewSongTitle);
+                 _songManager.UpdateSong(oldSong, newSong);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Invalid song title." + " " + ex.Message);
-                txtTitle.Text = song.Title;
+                MessageBox.Show("Unable to update your song." + " " + ex.Message);
             }
-            finally
-            {
-                MessageBox.Show("Your account details have been updated", "Success!",
-                MessageBoxButton.OK);
-            }
+        }
+
+        private void txtYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[0-9]");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void lblPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[0-9]");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

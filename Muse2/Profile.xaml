@@ -78,7 +78,6 @@
                             <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75"/>
                             <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45"/>
                         </StackPanel>
-
                         <StackPanel x:Name="labelStackPanel" Orientation="Vertical" VerticalAlignment="Center" IsManipulationEnabled="True" Margin="0,100,0,0" >
                             <Image x:Name="imgTopSongs" Source="/Resources/defaultAlbumImage.png" Width="200" HorizontalAlignment="Left" Margin="-334,0,0,3"/>
                             <Label x:Name="lblMostPlayedSong" Margin="-428,20,0,0" Content="Most Played Songs" Width="260" FontWeight="UltraBlack" FontSize="25" />

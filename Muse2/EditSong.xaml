@@ -67,18 +67,18 @@
         <Label Grid.Row="3" Grid.Column="0" x:Name="lblAlbum" Content="Album" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
         <Label Grid.Row="4" Grid.Column="0" x:Name="lblYear" Content="Year" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5" />
         <Label Grid.Row="5" Grid.Column="0" x:Name="lblExplicit" Content="Explicit" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5" />
-        <Label Grid.Row="6" Grid.Column="0" x:Name="lblPlays" Content="Plays" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5" />
+        <Label Grid.Row="6" Grid.Column="0" x:Name="lblPlays" Content="Plays" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5" PreviewTextInput="lblPlays_PreviewTextInput" />
 
         <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtTitle" Height="30" HorizontalAlignment="Left" Width="330" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" />
         <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtArtist" Height="30" HorizontalAlignment="Left" Width="330" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" />
         <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtAlbum" Height="30" HorizontalAlignment="Left" Width="330" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" />
-        <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtYear" Height="30" HorizontalAlignment="Left" Width="40" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" InputScope="DateYear" HorizontalContentAlignment="Center" />
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtYear" Height="30" HorizontalAlignment="Left" Width="40" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" InputScope="DateYear" HorizontalContentAlignment="Center" MaxLength="4" PreviewTextInput="txtYear_PreviewTextInput" />
         <CheckBox x:Name="chkExplicit" Grid.Row="5" Grid.Column="1" Margin="17,9,0,7" >
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
             </CheckBox.LayoutTransform>
         </CheckBox>
-        <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtPlays" Height="30" HorizontalAlignment="Left" Width="40" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" InputScope="DateYear" HorizontalContentAlignment="Center" />
+        <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtPlays" Height="30" HorizontalAlignment="Left" Width="40" Margin="7,0,0,0" FontSize="13" VerticalContentAlignment="Center" InputScope="DateYear" HorizontalContentAlignment="Center" MaxLength="4" />
 
         <Button Grid.Row="7" Grid.Column="1" Width="90" x:Name="btnDeleteSong" Height="30" Content="Delete Song" Margin="0,0,25,0"
                     HorizontalContentAlignment="Center" HorizontalAlignment="right" Background="#e193ba" Padding="11,1,11,1" Click="btnDeleteSong_Click" FontSize="12" >

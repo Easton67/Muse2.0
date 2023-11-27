@@ -751,9 +751,9 @@ namespace Muse2
 
             if (grdLibrary.SelectedItem != null)
             {
-                var AddEditSong = new AddEditSongxaml(song);
+                var AddEditSong = new AddEditSongxaml(song, loggedInUser);
                 AddEditSong.ShowDialog();
-                songListRepopulation();            
+                songListRepopulation();
             }
             else
             {
@@ -772,8 +772,8 @@ namespace Muse2
 
             if (grdLibrary.SelectedItem != null)
             {
-                var AddEditSong = new AddEditSongxaml(song);
-                AddEditSong.ShowDialog();
+                var EditSong = new AddEditSongxaml(song, loggedInUser);
+                EditSong.ShowDialog();
                 songListRepopulation();
             }
             else

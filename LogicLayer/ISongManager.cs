@@ -12,13 +12,7 @@ namespace LogicLayer
         List<Song> SelectSongsByUserID(int UserID);
         List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID);
         bool InsertSong(Song song);
+        bool UpdateSong(Song oldSong, Song newSong);
         bool UpdatePlaysBySongID(int SongID, int Plays);
-        bool UpdateTitleBySongID(int SongID, string Title);
-        bool UpdateArtistBySongID(int SongID, string Artist);
-        bool UpdateAlbumBySongID(int SongID, string Album);
-        bool UpdateYearBySongID(int SongID, int YearReleased);
-        bool UpdateExplicitBySongID(int SongID, bool Explicit);
-        bool UpdateSongImageBySongID(int SongID, string ImageFilePath);
-        bool UpdateLyricsBySongID(int SongID, string Lyrics);
     }
 }

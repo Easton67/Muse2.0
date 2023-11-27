@@ -250,6 +250,37 @@ namespace DataAccessLayer
 
             return rows;
         }
+
+        public int InsertUser(User user, string password)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_create_new_user";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PasswordHash", password);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
+            cmd.Parameters.AddWithValue("@ProfileName", user.ProfileName);
+            cmd.Parameters.AddWithValue("@ImageFilePath", user.ImageFilePath);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+
+        // DEAD
         public int UpdateFirstName(string Email, string FirstName)
         {
             int rows = 0;
@@ -380,34 +411,6 @@ namespace DataAccessLayer
                 {
                     throw new ArgumentException("Could not update account image.");
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
-        public int InsertUser(User user, string password)
-        {
-            int rows = 0;
-
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_create_new_user";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PasswordHash", password);
-            cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@ProfileName", user.ProfileName);
-            cmd.Parameters.AddWithValue("@ImageFilePath", user.ImageFilePath);
-
-            try
-            {
-                conn.Open();
-                rows = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
