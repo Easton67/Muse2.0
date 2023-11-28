@@ -18,6 +18,7 @@ namespace Muse2
     /// </summary>
     public partial class Profile : Window
     {
+        
         private string _accountImage;
         private string _firstName;
         private string _lastName;
@@ -119,67 +120,66 @@ namespace Muse2
         }
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            UserManager _userManager = new UserManager();
+            //if (btnEdit.Content.ToString() == "Edit")
+            //{
+            //    btnEdit.Content = "Add Changes";
+            //    txtFirstName.IsReadOnly = false;
+            //    txtLastName.IsReadOnly = false;
+            //    txtProfileName.IsReadOnly = false;
+            //    txtFirstName.IsEnabled = true;
+            //    txtLastName.IsEnabled = true;
+            //}
+            //else
+            //{
+            //    var NewFirstName = txtFirstName.Text;
+            //    var NewLastName = txtLastName.Text;
+            //    bool isBadUpdate = false;
 
-            if (btnEdit.Content.ToString() == "Edit")
-            {
-                btnEdit.Content = "Add Changes";
-                txtFirstName.IsReadOnly = false;
-                txtLastName.IsReadOnly = false;
-                txtProfileName.IsReadOnly = false;
-                txtFirstName.IsEnabled = true;
-                txtLastName.IsEnabled = true;
-            }
-            else
-            {
-                var NewFirstName = txtFirstName.Text;
-                var NewLastName = txtLastName.Text;
-                bool isBadUpdate = false;
+            //    if (!NewFirstName.IsValidFirstName())
+            //    {
+            //        MessageBox.Show("That is not a valid first name", "Invalid first name",
+            //        MessageBoxButton.OK, MessageBoxImage.Error);
+            //        txtFirstName.Focus();
+            //        return;
+            //    }
+            //    if (!NewLastName.IsValidLastName())
+            //    {
+            //        MessageBox.Show("That is not a valid last name", "Invalid last name",
+            //        MessageBoxButton.OK, MessageBoxImage.Error);
+            //        txtFirstName.Focus();
+            //        return;
+            //    }
 
-                if (!NewFirstName.IsValidFirstName())
-                {
-                    MessageBox.Show("That is not a valid first name", "Invalid first name",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    txtFirstName.Focus();
-                    return;
-                }
-                if (!NewLastName.IsValidLastName())
-                {
-                    MessageBox.Show("That is not a valid last name", "Invalid last name",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    txtFirstName.Focus();
-                    return;
-                }
-                try
-                {
-                    _userManager.UpdateFirstName(_email, NewFirstName);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Invalid first name." + " " + ex.Message);
-                    txtFirstName.Text = _firstName;
-                    isBadUpdate = true;
-                }
-                try
-                {
-                    _userManager.UpdateLastName(_email, NewLastName);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Invalid last name." + " " + ex.Message);
-                    txtLastName.Text = _lastName;
-                    isBadUpdate = true;
-                }
-                finally
-                {
-                    if (!isBadUpdate)
-                    {
-                        btnEdit.Content = "Edit";
-                        MessageBox.Show("Your account details have been updated", "Success!",
-                        MessageBoxButton.OK);
-                    }
-                }
-            }
+            //    UserManager _userManager = new UserManager();
+
+            //    var oldUser = _userManager;
+
+            //    var newUser = new UserManager()
+            //    {
+            //        UserID = _userManager.UserID,
+            //        FirstName = txtFirstName.Text,
+            //        LastName = txtLastName.Text,
+            //        ImageFilePath = _imgFile
+            //    };
+
+            //    try
+            //    {
+            //        _userManager.UpdateUser(oldUser, newUser);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show("Unable to update your song." + " " + ex.Message);
+            //    }
+            //    finally
+            //    {
+            //        if (!isBadUpdate)
+            //        {
+            //            btnEdit.Content = "Edit";
+            //            MessageBox.Show("Your account details have been updated", "Success!",
+            //            MessageBoxButton.OK);
+            //        }
+            //    }
+            //}
         }
         private void btnFavoritesEdit_Click(object sender, RoutedEventArgs e)
         {

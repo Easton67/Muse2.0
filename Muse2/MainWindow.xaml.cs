@@ -275,16 +275,21 @@ namespace Muse2
                     MenuItem addSong = new MenuItem();
                     addSong.Header = "Add Song To Playlist:";
                     contextMenu.Items.Add(addSong);
+
+                    // Add the list of playlist titles to the context menu
+                    foreach (string menuItemText in playlistTitles)
+                    {
+                        MenuItem menuItem = new MenuItem();
+                        menuItem.Header = menuItemText;
+                        menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
+                        addSong.Items.Add(menuItem);
+                    }
                 }
 
-                // Add the list of playlist titles to the context menu
-                foreach (string menuItemText in playlistTitles)
-                {
-                    MenuItem menuItem = new MenuItem();
-                    menuItem.Header = menuItemText;
-                    menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
-                    contextMenu.Items.Add(menuItem);
-                }
+                MenuItem deleteSong = new MenuItem();
+                deleteSong.Header = "Delete Song";
+                deleteSong.Click += mnuDeleteSong_Click;
+                contextMenu.Items.Add(deleteSong);
 
                 grdLibrary.ContextMenu = contextMenu;
 
@@ -733,10 +738,10 @@ namespace Muse2
         }
         private void grdLibrary_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (userSongs[songNumber].Album == "")
-            {
-                mnuViewAlbum.Visibility = Visibility.Collapsed;
-            }
+            //if (userSongs[songNumber].Album == "")
+            //{
+            //    mnuViewAlbum.Visibility = Visibility.Collapsed;
+            //}
 
             if (grdLibrary.SelectedItem != null)
             {
@@ -785,29 +790,33 @@ namespace Muse2
         private void mnuAddSongToPlaylistFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
             // Get the index of the clicked menu item
-            if (sender is MenuItem menuItem)
+            if (sender is MenuItem addToPlaylist)
             {
-                int index = ((ContextMenu)menuItem.Parent).Items.IndexOf(menuItem);
-
-                try
+                if (addToPlaylist.Parent is ItemsControl playlistName)
                 {
-                    List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
-                    int songID = userSongs[songNumber].SongID;
-                    int playlistID = playlists[index - 3].PlaylistID;
+                    // Get the index from the sub item, not the parent item
+                    int index = playlistName.ItemContainerGenerator.IndexFromContainer(addToPlaylist);
 
                     try
                     {
-                        _playlistManager.InsertSongIntoPlaylist(songID, playlistID);
+                        List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+                        int songID = userSongs[songNumber].SongID;
+                        int playlistID = playlists[index].PlaylistID;
+
+                        try
+                        {
+                            _playlistManager.InsertSongIntoPlaylist(songID, playlistID);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("You have already added this song to your playlist");
+                        }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("You have already added this song to your playlist");
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song was not added. Please try again.",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song was not added. Please try again.",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -925,6 +934,52 @@ namespace Muse2
         {
 
         }
+        private void btnPlaylistImageEdit_MouseDoubleClick_1(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            try
+            {
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private void mnuDeleteSong_Click(object sender, RoutedEventArgs e)
+        {
+            var song = grdLibrary.SelectedItem as Song;
+
+            if (grdLibrary.SelectedItem != null)
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    $"Are you sure you want to delete '{song.Title}'?",
+                    "Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                if(result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        _songManager.DeleteSong(song.SongID);
+                        MessageBox.Show("Song successfully deleted");
+                        // Reload your library
+                        songListRepopulation();
+                        // Simulate skipping to the next song, so it isn't showing up in the media player
+                        NextSongHelper();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a Song to view it.");
+            }
+        }
     }
 }

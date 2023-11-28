@@ -160,22 +160,22 @@ namespace LogicLayer
             }
             return allUsers;
         }
-
-        // DEAD
-        public bool UpdateFirstName(string Email, string FirstName)
+        public bool UpdateUser(User oldUser, User newUser)
         {
             bool result = false;
 
             try
             {
-                result = (1 == _userAccessor.UpdateFirstName(Email, FirstName));
+                result = (1 == _userAccessor.UpdateUser(oldUser, newUser));
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("First Name not accepted ", ex);
+                throw new ApplicationException("Unable to update profile ", ex);
             }
             return result;
         }
+
+        // DEAD
         public bool UpdateLastName(string Email, string LastName)
         {
             bool result = false;

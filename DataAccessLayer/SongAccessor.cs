@@ -9,6 +9,41 @@ namespace DataAccessLayer
 {
     public class SongAccessor : ISongAccessor
     {
+        public int InsertSong(Song song)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_song";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Title", song.Title);
+            cmd.Parameters.AddWithValue("@ImageFilePath", song.ImageFilePath);
+            cmd.Parameters.AddWithValue("@Mp3FilePath", song.Mp3FilePath);
+            cmd.Parameters.AddWithValue("@YearReleased", song.YearReleased);
+            cmd.Parameters.AddWithValue("@Lyrics", song.Lyrics);
+            cmd.Parameters.AddWithValue("@Explicit", song.Explicit);
+            cmd.Parameters.AddWithValue("@Private", song.Private);
+            cmd.Parameters.AddWithValue("@Plays", song.Plays);
+            cmd.Parameters.AddWithValue("@UserID", song.UserID);
+            cmd.Parameters.AddWithValue("@ArtistID", song.Artist);
+            cmd.Parameters.AddWithValue("@AlbumTitle", song.Album);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
         public List<Song> SelectSongsByUserID(int UserID)
         {
             List<Song> songs = new List<Song>();
@@ -168,41 +203,6 @@ namespace DataAccessLayer
             }
             return rows;
         }
-        public int InsertSong(Song song)
-        {
-            int rows = 0;
-
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_insert_song";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Title", song.Title);
-            cmd.Parameters.AddWithValue("@ImageFilePath", song.ImageFilePath);
-            cmd.Parameters.AddWithValue("@Mp3FilePath", song.Mp3FilePath);
-            cmd.Parameters.AddWithValue("@YearReleased", song.YearReleased);
-            cmd.Parameters.AddWithValue("@Lyrics", song.Lyrics);
-            cmd.Parameters.AddWithValue("@Explicit", song.Explicit);
-            cmd.Parameters.AddWithValue("@Private", song.Private);
-            cmd.Parameters.AddWithValue("@Plays", song.Plays);
-            cmd.Parameters.AddWithValue("@UserID", song.UserID);
-            cmd.Parameters.AddWithValue("@ArtistID", song.Artist);
-            cmd.Parameters.AddWithValue("@AlbumTitle", song.Album);
-
-            try
-            {
-                conn.Open();
-                rows = cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
         public int UpdateSong(Song oldSong, Song newSong)
         {
             int rows = 0;
@@ -255,6 +255,39 @@ namespace DataAccessLayer
                 if (rows == 0)
                 {
                     throw new ArgumentException("Could not update your song.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int DeleteSong(int SongID)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_delete_song";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters["@SongID"].Value = SongID;
+
+            try
+            {
+                conn.Open();
+
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not remove this song.");
                 }
             }
             catch (Exception ex)

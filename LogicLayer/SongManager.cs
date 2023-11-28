@@ -88,5 +88,19 @@ namespace LogicLayer
             }
             return result;
         }
+        public bool DeleteSong(int SongID)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _songAccessor.DeleteSong(SongID));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not deleted.", ex);
+            }
+            return result;
+        }
     }
 }

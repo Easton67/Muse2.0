@@ -177,7 +177,6 @@ namespace Muse2
         {
             SongManager _songManager = new SongManager();
 
-
             var oldSong = this._song;
 
             var newSong = new Song()
@@ -192,8 +191,8 @@ namespace Muse2
                 Private = true,
                 Plays = int.Parse(txtPlays.Text),
                 UserID = _loggedInUser.UserID,
-                Album = oldSong.Album,
-                Artist = oldSong.Artist,
+                Album = txtAlbum.Text,
+                Artist = txtArtist.Text
             };
 
             try

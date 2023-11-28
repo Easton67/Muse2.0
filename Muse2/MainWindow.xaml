@@ -59,7 +59,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnPlaylistImageEdit" Height="75" Width="75" Grid.Row="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="33,0,0,0">
+            <Button x:Name="btnPlaylistImageEdit" Height="75" Width="75" Grid.Row="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="33,0,0,0" MouseDoubleClick="btnPlaylistImageEdit_MouseDoubleClick_1">
                 <Image x:Name="imgPlaylistPicture" Source="/Resources/defaultAlbumImage.png"/>
             </Button>
             <!-- Col0 -->
@@ -186,6 +186,7 @@
                         <MenuItem Header="View Album" x:Name="mnuViewAlbum" Click="mnuViewAlbum_Click"/>
                         <MenuItem Header="Edit Song Details" x:Name="mnuEditSongFromDataGrid" Click="mnuEditSongFromDataGrid_Click" />
                         <MenuItem Header="Add Song To Playlist" x:Name="mnuAddSongToPlaylistFromDataGrid" Click="mnuAddSongToPlaylistFromDataGrid_Click" />
+                        <MenuItem Header="Delete Song" x:Name="mnuDeleteSong" Click="mnuDeleteSong_Click"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>

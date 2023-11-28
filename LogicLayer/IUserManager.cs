@@ -9,18 +9,18 @@ namespace LogicLayer
 {
     public interface IUserManager
     {
+        bool InsertUser(User user, string password);
         UserVM LoginUser(string email, string password);
         // public helper methods
-        string HashSha256(string source);
-        bool AuthenticateUser(string email, string password);
         UserVM GetUserVMByEmail(string email);
         List<string> GetRolesByUserID(int employeeID);
-        bool InsertUser(User user, string password);
-        bool ResetPassword(string email, string oldPassword, string newPassword);
         List<User> SelectAllUsers();
+        string HashSha256(string source);
+        bool AuthenticateUser(string email, string password);
+        bool ResetPassword(string email, string oldPassword, string newPassword);
+        bool UpdateUser(User oldUser, User newUser);
 
-
-
+        // DEAD
         bool UpdateFirstName(string Email, string FirstName);
         bool UpdateLastName(string email, string LastName);
         bool UpdateAccountImage(string email, string accountImage);

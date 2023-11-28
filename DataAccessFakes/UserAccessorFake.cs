@@ -54,6 +54,10 @@ namespace DataAccessFakes
             fakeUsers[0].Roles.Add("TestRole1");
             fakeUsers[0].Roles.Add("TestRole2");
         }
+        public int InsertUser(User user, string password)
+        {
+            throw new NotImplementedException();
+        }
         public int AuthenticateUserWithEmailAndPasswordHash(string email, string passwordHash)
         {
             int numAuthenticated = 0;
@@ -101,6 +105,10 @@ namespace DataAccessFakes
 
             return roles;
         }
+        public List<User> SelectAllUsers()
+        {
+            throw new NotImplementedException();
+        }
         public int UpdatePasswordHash(string email, string oldPasswordHash, string newPasswordHash)
         {
             int rows = 0;
@@ -123,11 +131,7 @@ namespace DataAccessFakes
             }
             return rows;
         }
-        public int InsertUser(User user, string password)
-        {
-            throw new NotImplementedException();
-        }
-        public List<User> SelectAllUsers()
+        public int UpdateUser(User oldUser, User newUser)
         {
             throw new NotImplementedException();
         }
@@ -175,6 +179,7 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+
 
     }
 }

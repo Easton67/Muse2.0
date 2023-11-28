@@ -250,7 +250,6 @@ namespace DataAccessLayer
 
             return rows;
         }
-
         public int InsertUser(User user, string password)
         {
             int rows = 0;
@@ -268,6 +267,52 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateUser(User oldUser, User newUser) 
+        {
+            int rows = 0;
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_update_update";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewFirstName", SqlDbType.VarChar);
+            cmd.Parameters.Add("@OldFirstName", SqlDbType.VarChar);
+            cmd.Parameters.Add("@NewLastName", SqlDbType.VarChar);
+            cmd.Parameters.Add("@OldLastName", SqlDbType.VarChar);
+            cmd.Parameters.Add("@NewImageFilePath", SqlDbType.VarChar);
+            cmd.Parameters.Add("@OldImageFilePath", SqlDbType.VarChar);
+
+            cmd.Parameters["@UserID"].Value = newUser.UserID;
+            cmd.Parameters["@NewFirstName"].Value = newUser.FirstName;
+            cmd.Parameters["@OldFirstName"].Value = oldUser.FirstName;
+            cmd.Parameters["@NewLastName"].Value = newUser.LastName;
+            cmd.Parameters["@OldLastName"].Value = oldUser.LastName;
+            cmd.Parameters["@NewImageFilePath"].Value = newUser.ImageFilePath;
+            cmd.Parameters["@OldImageFilePath"].Value = oldUser.ImageFilePath;
+
+            try
+            {
+                conn.Open();
+
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your profile.");
+                }
             }
             catch (Exception ex)
             {

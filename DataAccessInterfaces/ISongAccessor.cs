@@ -9,10 +9,11 @@ namespace DataAccessInterfaces
 {
     public interface ISongAccessor
     {
-        List<Song> SelectSongsByUserID(int UserID);
         int InsertSong(Song song);
+        List<Song> SelectSongsByUserID(int UserID);
         List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID);
         int UpdateSong(Song oldSong, Song newSong);
         int UpdatePlaysBySongID(int songID, int plays);
+        int DeleteSong(int SongID);
     }
 }

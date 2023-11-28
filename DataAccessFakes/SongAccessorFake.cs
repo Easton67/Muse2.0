@@ -128,5 +128,9 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public int DeleteSong(int SongID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
