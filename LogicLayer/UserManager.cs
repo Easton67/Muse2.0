@@ -174,35 +174,5 @@ namespace LogicLayer
             }
             return result;
         }
-
-        // DEAD
-        public bool UpdateLastName(string Email, string LastName)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _userAccessor.UpdateLastName(Email, LastName));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Last Name not accepted ", ex);
-            }
-            return result;
-        }
-        public bool UpdateAccountImage(string Email, string AccountImage)
-        {
-            bool result = false;
-
-            try
-            {
-                result = (1 == _userAccessor.UpdateAccountImage(Email, AccountImage));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Image not accepted ", ex);
-            }
-            return result;
-        }
     }
 }

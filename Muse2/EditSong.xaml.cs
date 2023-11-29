@@ -33,9 +33,9 @@ namespace Muse2
             InitializeComponent();
 
             _song = song;
+            _imgFile = _song.ImageFilePath;
 
             _loggedInUser = loggedInUser;
-
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -142,7 +142,35 @@ namespace Muse2
         // Tab specific buttons
         private void btnDeleteSong_Click(object sender, RoutedEventArgs e)
         {
+            SongManager _songManager = new SongManager();
+            try
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    $"Are you sure you want to delete '{_song.Title}'?",
+                    "Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        _songManager.DeleteSong(_song.SongID);
+                        MessageBox.Show("Song successfully deleted");
+                        Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to delete song." + " " + ex.Message);
+            }
         }
         private void btnAddArtwork_Click(object sender, RoutedEventArgs e)
         {
@@ -198,19 +226,19 @@ namespace Muse2
             try
             {
                  _songManager.UpdateSong(oldSong, newSong);
+                MessageBox.Show("Song Successfully updted!");
+                Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Unable to update your song." + " " + ex.Message);
             }
         }
-
         private void txtYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[0-9]");
             e.Handled = !regex.IsMatch(e.Text);
         }
-
         private void lblPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[0-9]");

@@ -18,30 +18,23 @@ namespace Muse2
     /// </summary>
     public partial class Profile : Window
     {
-        
-        private string _accountImage;
-        private string _firstName;
-        private string _lastName;
-        private string _profileName;
-        private string _email;
-        private int _userID;
+
+
+        private UserVM _loggedInUser = null;
+        private string _imgFile = "";
         List<Song> userSongs = null;
 
         public Profile(UserVM loggedInUser, SongManager _songManager)
         {
-            _accountImage = loggedInUser.ImageFilePath;
-            _firstName = loggedInUser.FirstName;
-            _lastName = loggedInUser.LastName;
-            _profileName = loggedInUser.ProfileName;
-            _email = loggedInUser.Email;
-            _userID = loggedInUser.UserID;
-
             InitializeComponent();
+
+            _loggedInUser = loggedInUser;
+
         }
         // Menu Items
         private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
         {
-            var resetPassword = new ResetPassword(_email);
+            var resetPassword = new ResetPassword(_loggedInUser.Email);
             resetPassword.ShowDialog();
         }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
@@ -54,7 +47,7 @@ namespace Muse2
 
             try
             {
-                userSongs = _songManager.SelectSongsByUserID(_userID);
+                userSongs = _songManager.SelectSongsByUserID(_loggedInUser.UserID);
 
                 // Order the songs by plays in descending order to show the most played top 5.
                 List<Song> topSongs = userSongs.OrderByDescending(song => song.Plays).Take(5).ToList();
@@ -85,7 +78,7 @@ namespace Muse2
 
             try
             {
-                var AccountImage = new BitmapImage(new System.Uri(_accountImage));
+                var AccountImage = new BitmapImage(new System.Uri(_loggedInUser.ImageFilePath));
                 imgStatsAccount.Source = AccountImage;
                 imgAccountImage.Source = AccountImage;
                 imgFavoritesAccountImage.Source = AccountImage;
@@ -94,10 +87,10 @@ namespace Muse2
             {
                 MessageBox.Show("Unable to find your profile photo. ", ex.Message);
             }
-            txtFirstName.Text = _firstName;
-            txtLastName.Text = _lastName;
-            txtEmail.Text = _email;
-            txtProfileName.Text = _profileName;
+            txtFirstName.Text = _loggedInUser.FirstName;
+            txtLastName.Text = _loggedInUser.LastName;
+            txtEmail.Text = _loggedInUser.Email;
+            txtProfileName.Text = _loggedInUser.ProfileName;
 
             txtFirstName.IsReadOnly = true;
             txtLastName.IsReadOnly = true;
@@ -111,7 +104,7 @@ namespace Muse2
         }
         private void btnResetPassword_Click(object sender, RoutedEventArgs e)
         {
-            var resetPassword = new ResetPassword(_email);
+            var resetPassword = new ResetPassword(_loggedInUser.Email);
             resetPassword.ShowDialog();
         }
         private void btnDeleteAccount_Click(object sender, RoutedEventArgs e)
@@ -120,66 +113,67 @@ namespace Muse2
         }
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            //if (btnEdit.Content.ToString() == "Edit")
-            //{
-            //    btnEdit.Content = "Add Changes";
-            //    txtFirstName.IsReadOnly = false;
-            //    txtLastName.IsReadOnly = false;
-            //    txtProfileName.IsReadOnly = false;
-            //    txtFirstName.IsEnabled = true;
-            //    txtLastName.IsEnabled = true;
-            //}
-            //else
-            //{
-            //    var NewFirstName = txtFirstName.Text;
-            //    var NewLastName = txtLastName.Text;
-            //    bool isBadUpdate = false;
+            if (btnEdit.Content.ToString() == "Edit")
+            {
+                btnEdit.Content = "Add Changes";
+                txtFirstName.IsReadOnly = false;
+                txtLastName.IsReadOnly = false;
+                txtProfileName.IsReadOnly = false;
+                txtFirstName.IsEnabled = true;
+                txtLastName.IsEnabled = true;
+            }
+            else
+            {
+                string NewFirstName = txtFirstName.Text;
+                string NewLastName = txtLastName.Text;
 
-            //    if (!NewFirstName.IsValidFirstName())
-            //    {
-            //        MessageBox.Show("That is not a valid first name", "Invalid first name",
-            //        MessageBoxButton.OK, MessageBoxImage.Error);
-            //        txtFirstName.Focus();
-            //        return;
-            //    }
-            //    if (!NewLastName.IsValidLastName())
-            //    {
-            //        MessageBox.Show("That is not a valid last name", "Invalid last name",
-            //        MessageBoxButton.OK, MessageBoxImage.Error);
-            //        txtFirstName.Focus();
-            //        return;
-            //    }
+                if (!NewFirstName.IsValidFirstName())
+                {
+                    MessageBox.Show("That is not a valid first name", "Invalid first name",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    txtFirstName.Focus();
+                    return;
+                }
+                if (!NewLastName.IsValidLastName())
+                {
+                    MessageBox.Show("That is not a valid last name", "Invalid last name",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    txtFirstName.Focus();
+                    return;
+                }
 
-            //    UserManager _userManager = new UserManager();
+                UserManager _userManager = new UserManager();
 
-            //    var oldUser = _userManager;
+                var oldUser = this._loggedInUser;
 
-            //    var newUser = new UserManager()
-            //    {
-            //        UserID = _userManager.UserID,
-            //        FirstName = txtFirstName.Text,
-            //        LastName = txtLastName.Text,
-            //        ImageFilePath = _imgFile
-            //    };
+                var newUser = new UserVM()
+                {
+                    UserID = _loggedInUser.UserID,
+                    ProfileName = _loggedInUser.ProfileName,
+                    Email = _loggedInUser.Email,
+                    FirstName = NewFirstName,
+                    LastName = NewLastName,
+                    ImageFilePath = _imgFile,
+                    Active = true,
+                    Private = false,
+                    Roles = _loggedInUser.Roles
+                };
 
-            //    try
-            //    {
-            //        _userManager.UpdateUser(oldUser, newUser);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Unable to update your song." + " " + ex.Message);
-            //    }
-            //    finally
-            //    {
-            //        if (!isBadUpdate)
-            //        {
-            //            btnEdit.Content = "Edit";
-            //            MessageBox.Show("Your account details have been updated", "Success!",
-            //            MessageBoxButton.OK);
-            //        }
-            //    }
-            //}
+                try
+                {
+                    _userManager.UpdateUser(oldUser, newUser);
+                    btnEdit.Content = "Edit";
+                    MessageBox.Show("Your account details have been updated", "Success!",
+                    MessageBoxButton.OK);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Unable to update your profile." + " " + ex.Message);
+                    txtFirstName.Text = "";
+                    txtLastName.Text = "";
+                    txtFirstName.Focus();
+                }
+            }
         }
         private void btnFavoritesEdit_Click(object sender, RoutedEventArgs e)
         {
@@ -207,9 +201,8 @@ namespace Muse2
 
                 if (result == true)
                 {
-                    _accountImage = openFileDialog.FileName;
-                    var AccountImage = new BitmapImage(new System.Uri(_accountImage));
-                    _userManager.UpdateAccountImage(_email, _accountImage);
+                    _imgFile = openFileDialog.FileName;
+                    var AccountImage = new BitmapImage(new System.Uri(_imgFile));
 
                     imgAccountImage.Source = AccountImage;
                     btnEdit.Content = "Add Changes";

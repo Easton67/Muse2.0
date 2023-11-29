@@ -29,6 +29,10 @@ namespace LogicLayer
             try
             {
                 result = (1 == _playlistAccessor.InsertSongIntoPlaylist(songID, playlistID));
+                if(result == false)
+                {
+                    throw new ArgumentException("Song may already exist");
+                }
             }
             catch (Exception ex)
             {

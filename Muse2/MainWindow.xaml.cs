@@ -11,6 +11,7 @@ using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -31,10 +32,12 @@ namespace Muse2
         UserVM loggedInUser = null;
         SongManager _songManager = null;
         PlaylistManager _playlistManager = null;
-        public int songNumber = 0;
+        private int songNumber = 0;
+        private int userNumber = 0;
         private MediaPlayer mediaPlayer = new MediaPlayer();
         List<Song> userSongs = null;
         private ContextMenu contextMenu;
+        private string baseDirectory = AppContext.BaseDirectory;
 
         public MainWindow()
         {
@@ -43,6 +46,9 @@ namespace Muse2
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += SongTimer;
+
+
+            // MessageBox.Show(AppContext.BaseDirectory);
         }
         private void SongTimer(object sender, EventArgs e)
         {
@@ -64,7 +70,7 @@ namespace Muse2
                 barSongLength.Minimum = 00.00;
                 barSongLength.Value = SongCurrentPosition;
 
-                if(SongCurrentPosition == SongLengthInSeconds)
+                if (SongCurrentPosition == SongLengthInSeconds)
                 {
                     UpdateSongPlayCount();
                     songListRepopulation();
@@ -92,7 +98,7 @@ namespace Muse2
             // Turn off song if playing
             mediaPlayer.Pause();
 
-            // Hide role specific buttons and menu items
+            // Hide role specific  items
             mnuAlbum.Visibility = Visibility.Collapsed;
             mnuFile.Visibility = Visibility.Collapsed;
             mnuSong.Visibility = Visibility.Collapsed;
@@ -101,6 +107,7 @@ namespace Muse2
             mnuAdmin.Visibility = Visibility.Collapsed;
             mnuPlaylist.Visibility = Visibility.Collapsed;
             grdUsers.Visibility = Visibility.Collapsed;
+            panelSelectedUser.Visibility = Visibility.Hidden;
 
             // Hide all song controls
             btnViewSong.Visibility = Visibility.Hidden;
@@ -213,6 +220,19 @@ namespace Muse2
                     // Hide the library
                     grdLibrary.ItemsSource = null;
                     grdLibrary.Visibility = Visibility.Hidden;
+
+                    // Prompt the user to add a song
+                    MessageBoxResult result = MessageBox.Show(
+                   $"Welcome to Muse! To get started, add one of your songs to your library'?",
+                   "Confirmation",
+                   MessageBoxButton.YesNo,
+                   MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var AddSong = new AddSong(loggedInUser);
+                        AddSong.ShowDialog();
+                        songListRepopulation();
+                    }
                 }
             }
             catch (Exception ex)
@@ -229,8 +249,8 @@ namespace Muse2
             {
                 userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
                 grdLibrary.ItemsSource = userSongs;
-                
-                if(userSongs != null)
+
+                if (userSongs != null)
                 {
                     grdLibrary.Visibility = Visibility.Visible;
                 }
@@ -420,10 +440,17 @@ namespace Muse2
             profileWindow.ShowDialog();
             loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
             updateUIForUserLogin();
+            grdUsers.Visibility = Visibility.Hidden;
         }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void mnuAddSongToLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            var AddSong = new AddSong(loggedInUser);
+            AddSong.ShowDialog();
+            songListRepopulation();
         }
         private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
         {
@@ -460,7 +487,7 @@ namespace Muse2
             SignUp.ShowDialog();
         }
         private void mnuViewAllUsers_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             // Hide everything on the page so users can be displayed
             btnViewSong.Visibility = Visibility.Hidden;
             lblSongTitle.Content = "";
@@ -480,6 +507,8 @@ namespace Muse2
             lblDataGridSubHeader.Visibility = Visibility.Hidden;
             btnAllSongs.Visibility = Visibility.Hidden;
 
+            panelSelectedUser.Visibility = Visibility.Visible;
+
             try
             {
                 List<User> allUsers = _userManager.SelectAllUsers();
@@ -493,9 +522,6 @@ namespace Muse2
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-
-
         }
         #endregion
         private void btnProfileName_Click(object sender, RoutedEventArgs e)
@@ -506,7 +532,6 @@ namespace Muse2
             var profileWindow = new Profile(loggedInUser, _songManager);
             profileWindow.ShowDialog();
             loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
-            updateUIForUserLogin();
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -569,7 +594,7 @@ namespace Muse2
             mediaPlayer.Pause();
         }
         private void btnPlay_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             btnPlay.Visibility = Visibility.Hidden;
             btnPause.Visibility = Visibility.Visible;
             mediaPlayer.Play();
@@ -650,7 +675,7 @@ namespace Muse2
                     imgCoverArt.Source = CoverArt;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover could not be found.",
                 MessageBoxButton.OK, MessageBoxImage.Error);
@@ -666,7 +691,7 @@ namespace Muse2
                 imgExplicit.Visibility = Visibility.Visible;
             }
             else
-            {   
+            {
                 imgExplicit.Visibility = Visibility.Hidden;
             }
             GetSongCover();
@@ -674,14 +699,14 @@ namespace Muse2
             {
                 mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be found. " +
                 "Please make sure your file is in the correct location.",
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-        } 
+        }
         private void NextSongHelper()
         {
             if (songNumber < userSongs.Count - 1)
@@ -764,12 +789,6 @@ namespace Muse2
             {
                 MessageBox.Show("Select a Song to view it.");
             }
-        }
-        private void mnuAddSongToLibrary_Click(object sender, RoutedEventArgs e)
-        {
-            var AddSong = new AddSong(loggedInUser);
-            AddSong.ShowDialog();
-            songListRepopulation();
         }
         private void mnuEditSongFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
@@ -957,7 +976,7 @@ namespace Muse2
                     "Confirmation",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
-                if(result == MessageBoxResult.Yes)
+                if (result == MessageBoxResult.Yes)
                 {
                     try
                     {
@@ -979,6 +998,61 @@ namespace Muse2
             else
             {
                 MessageBox.Show("Select a Song to view it.");
+            }
+        }
+        #region Admin Functionality
+        private void txtUserLastName_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var oldUser = this.loggedInUser;
+
+            // var newUser = 
+        }
+        private void txtUserFirstName_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+        private void txtUserEmail_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+        private void txtUserProfileName_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+        #endregion
+
+        private void grdUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (grdUsers.SelectedItem != null)
+            {
+                int selectedRowIndex = grdLibrary.Items.IndexOf(grdUsers.SelectedItem);
+
+                userNumber = selectedRowIndex;
+            }
+        }
+
+        private void grdUsers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (grdUsers.SelectedItems.Count != 0)
+            {
+                var User = grdUsers.SelectedItem as User;
+
+                try
+                {
+                    ImageBrush imageBrush = (ImageBrush)btnUserProfileImage.Background;
+                    BitmapImage profileImage = new BitmapImage(new Uri(User.ImageFilePath, UriKind.Relative));
+                    imageBrush.ImageSource = profileImage;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, $"Unable to find the account image for \"{User.ProfileName}\". Please fix this.",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                txtUserFirstName.Text = User.FirstName;
+                txtUserLastName.Text = User.LastName;
+                txtUserEmail.Text = User.Email;
+                txtUserProfileName.Text = User.ProfileName;
             }
         }
     }

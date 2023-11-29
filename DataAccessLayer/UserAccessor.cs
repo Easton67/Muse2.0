@@ -91,7 +91,7 @@ namespace DataAccessLayer
                         userVM.UserID = reader.GetInt32(0);
                         userVM.ProfileName = reader.GetString(1);
                         userVM.Email = reader.GetString(2);
-                        userVM.FirstName = reader.IsDBNull(4) ? "" : reader.GetString(4);
+                        userVM.FirstName = reader.IsDBNull(3) ? "" : reader.GetString(3);
                         userVM.LastName = reader.IsDBNull(4) ? "" : reader.GetString(4);
                         userVM.ImageFilePath = reader.IsDBNull(5) ? "" : reader.GetString(5);
                         userVM.Active = reader.GetBoolean(6);
@@ -282,26 +282,18 @@ namespace DataAccessLayer
         {
             int rows = 0;
             var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_update_update";
+            var cmdText = "sp_update_user";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
             // Add parameters
-            cmd.Parameters.Add("@UserID", SqlDbType.Int);
-            cmd.Parameters.Add("@NewFirstName", SqlDbType.VarChar);
-            cmd.Parameters.Add("@OldFirstName", SqlDbType.VarChar);
-            cmd.Parameters.Add("@NewLastName", SqlDbType.VarChar);
-            cmd.Parameters.Add("@OldLastName", SqlDbType.VarChar);
-            cmd.Parameters.Add("@NewImageFilePath", SqlDbType.VarChar);
-            cmd.Parameters.Add("@OldImageFilePath", SqlDbType.VarChar);
-
-            cmd.Parameters["@UserID"].Value = newUser.UserID;
-            cmd.Parameters["@NewFirstName"].Value = newUser.FirstName;
-            cmd.Parameters["@OldFirstName"].Value = oldUser.FirstName;
-            cmd.Parameters["@NewLastName"].Value = newUser.LastName;
-            cmd.Parameters["@OldLastName"].Value = oldUser.LastName;
-            cmd.Parameters["@NewImageFilePath"].Value = newUser.ImageFilePath;
-            cmd.Parameters["@OldImageFilePath"].Value = oldUser.ImageFilePath;
+            cmd.Parameters.AddWithValue("@UserID", newUser.UserID);
+            cmd.Parameters.AddWithValue("@NewFirstName", newUser.FirstName);
+            cmd.Parameters.AddWithValue("@NewLastName", newUser.LastName);
+            cmd.Parameters.AddWithValue("@NewImageFilePath", newUser.ImageFilePath);
+            cmd.Parameters.AddWithValue("@OldFirstName", oldUser.FirstName);
+            cmd.Parameters.AddWithValue("@OldLastName", oldUser.LastName);
+            cmd.Parameters.AddWithValue("@OldImageFilePath", oldUser.ImageFilePath);
 
             try
             {
@@ -312,149 +304,6 @@ namespace DataAccessLayer
                 if (rows == 0)
                 {
                     throw new ArgumentException("Could not update your profile.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
-
-        // DEAD
-        public int UpdateFirstName(string Email, string FirstName)
-        {
-            int rows = 0;
-
-            //connection
-            var conn = SqlConnectionProvider.GetConnection();
-
-            //command text
-            var cmdText = "sp_update_FirstName";
-
-            //command
-            var cmd = new SqlCommand(cmdText, conn);
-
-            //command type
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
-            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewFirstName", SqlDbType.NVarChar);
-
-            // Parameter Values
-            cmd.Parameters["@Email"].Value = Email;
-            cmd.Parameters["@NewFirstName"].Value = FirstName;
-
-            try
-            {
-                // open the connection
-                conn.Open();
-
-                // an update is executed nonquery - returns an int
-                rows = cmd.ExecuteNonQuery();
-
-                if (rows == 0)
-                {
-                    throw new ArgumentException("Could not update first name.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
-        public int UpdateLastName(string Email, string LastName)
-        {
-            int rows = 0;
-
-            //connection
-            var conn = SqlConnectionProvider.GetConnection();
-
-            //command text
-            var cmdText = "sp_update_LastName";
-
-            //command
-            var cmd = new SqlCommand(cmdText, conn);
-
-            //command type
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
-            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewLastName", SqlDbType.NVarChar);
-
-            // Parameter Values
-            cmd.Parameters["@Email"].Value = Email;
-            cmd.Parameters["@NewLastName"].Value = LastName;
-
-            try
-            {
-                // open the connection
-                conn.Open();
-
-                // an update is executed nonquery - returns an int
-                rows = cmd.ExecuteNonQuery();
-
-                if (rows == 0)
-                {
-                    throw new ArgumentException("Could not update last name.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
-        public int UpdateAccountImage(string Email, string AccountImage)
-        {
-            int rows = 0;
-
-            //connection
-            var conn = SqlConnectionProvider.GetConnection();
-
-            //command text
-            var cmdText = "sp_update_AccountImage";
-
-            //command
-            var cmd = new SqlCommand(cmdText, conn);
-
-            //command type
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
-            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewAccountImage", SqlDbType.NVarChar);
-
-            // Parameter Values
-            cmd.Parameters["@Email"].Value = Email;
-            cmd.Parameters["@NewAccountImage"].Value = AccountImage;
-
-            try
-            {
-                // open the connection
-                conn.Open();
-
-                // an update is executed nonquery - returns an int
-                rows = cmd.ExecuteNonQuery();
-
-                if (rows == 0)
-                {
-                    throw new ArgumentException("Could not update account image.");
                 }
             }
             catch (Exception ex)

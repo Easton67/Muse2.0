@@ -135,51 +135,5 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
-
-        // DEAD
-        public int UpdateFirstName(string Email, string FirstName)
-        {
-            int rows = 0;
-
-            for (int i = 0; i < fakeUsers.Count; i++)
-            {
-                if (fakeUsers[i].Email == Email)
-                {
-                    fakeUsers[i].FirstName = FirstName;
-                    rows += 1;
-                    break;
-                }
-            }
-            if (rows != 1) // no one found
-            {
-                throw new ApplicationException("Invalid first name.");
-            }
-            return rows;
-        }
-        public int UpdateLastName(string Email, string LastName)
-        {
-            int rows = 0;
-
-            for (int i = 0; i < fakeUsers.Count; i++)
-            {
-                if (fakeUsers[i].Email == Email)
-                {
-                    fakeUsers[i].LastName = LastName;
-                    rows += 1;
-                    break;
-                }
-            }
-            if (rows != 1) // no one found
-            {
-                throw new ApplicationException("Invalid last name.");
-            }
-            return rows;
-        }
-        public int UpdateAccountImage(string email, string accountImage)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }

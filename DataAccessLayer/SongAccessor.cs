@@ -213,15 +213,15 @@ namespace DataAccessLayer
 
             // Add parameters
             cmd.Parameters.Add("@SongID", SqlDbType.Int);
-            cmd.Parameters.Add("@NewTitle", SqlDbType.VarChar);
-            cmd.Parameters.Add("@NewImageFilePath", SqlDbType.VarChar);
+            cmd.Parameters.Add("@NewTitle", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@NewImageFilePath", SqlDbType.NVarChar);
             cmd.Parameters.Add("@NewYearReleased", SqlDbType.Int);
-            cmd.Parameters.Add("@NewLyrics", SqlDbType.VarChar);
+            cmd.Parameters.Add("@NewLyrics", SqlDbType.NVarChar);
             cmd.Parameters.Add("@NewExplicit", SqlDbType.Bit);
             cmd.Parameters.Add("@NewPrivate", SqlDbType.Bit);
             cmd.Parameters.Add("@NewPlays", SqlDbType.Int);
-            cmd.Parameters.Add("@OldTitle", SqlDbType.VarChar);
-            cmd.Parameters.Add("@OldImageFilePath", SqlDbType.VarChar);
+            cmd.Parameters.Add("@OldTitle", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@OldImageFilePath", SqlDbType.NVarChar);
             cmd.Parameters.Add("@OldYearReleased", SqlDbType.Int);
             cmd.Parameters.Add("@OldLyrics", SqlDbType.Text);
             cmd.Parameters.Add("@OldExplicit", SqlDbType.Bit);

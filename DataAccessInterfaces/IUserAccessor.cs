@@ -17,11 +17,6 @@ namespace DataAccessInterfaces
         List<string> SelectRolesByUserID(int UserID);
         List<User> SelectAllUsers();
         int UpdateUser(User oldUser, User newUser);
-       
-        // DEAD
         int UpdatePasswordHash(string email, string oldPasswordHash, string newPasswordHash);
-        int UpdateFirstName(string Email, string NewFirstName);
-        int UpdateLastName(string email, string LastName);
-        int UpdateAccountImage(string email, string accountImage);
     }
 }

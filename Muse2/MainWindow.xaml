@@ -5,7 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="Muse" Height="900" Width="1500" MinWidth="810" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+        Title="Muse" Height="900" Width="1500" MinWidth="810" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/Resources/museLogo.png">
+    <!--<Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0.73"/>
+            <GradientStop Color="#FFF79EF0" Offset="1"/>
+            <GradientStop Color="#FE060406" Offset="0.363"/>
+            <GradientStop Color="#FEAA6DA5" Offset="0.067"/>
+            <GradientStop Color="#FEAA6DA5" Offset="0.067"/>
+        </LinearGradientBrush>
+    </Window.Background>-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -72,6 +81,11 @@
             <Label x:Name="lblSongArtist" Content="Artist" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Margin="0,21,0,0" FontSize="15" />
             <Button x:Name="btnRewind"  Grid.Row="1" Grid.Column="1" Width="25" Margin="0,0,5,0" HorizontalAlignment="Left"  Background="White" BorderThickness="0,0,0,0" Click="btnRewind_Click" >
                 <Image Source="/Resources/rewind.png"/>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </Button.Resources>
             </Button>
             <Button x:Name="btnViewSong" Grid.Row="0" Grid.Column="1" Width="75" Height="75" HorizontalAlignment="Left" Margin="34,0,0,0" Background="White" BorderThickness="0,0,0,0"  Padding="0,0,0,0" MouseDoubleClick="btnViewSong_MouseDoubleClick" >
                 <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="1" Width="75" Source="/defaultAlbumImage.png" />
@@ -80,12 +94,27 @@
 
             <Button x:Name="btnNext" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Width="25" Background="White" BorderThickness="0,0,0,0"  Click="btnNext_Click" >
                 <Image Source="/Resources/next.png"/>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </Button.Resources>
             </Button>
             <Button x:Name="btnPause" Grid.Row="2" Grid.Column="1" Width="25" HorizontalAlignment="Center"   Background="White" BorderThickness="0,0,0,0"  Margin="0,0,0,0" Click="btnPause_Click" >
                 <Image Source="/Resources/pause.png"/>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </Button.Resources>
             </Button>
             <Button x:Name="btnPlay" Grid.Row="2" Grid.Column="1" Width="25" HorizontalAlignment="Center"  Background="White" BorderThickness="0,0,0,0"  Click="btnPlay_Click">
                 <Image Source="/Resources/play.png"/>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </Button.Resources>
             </Button>
             <!-- Col2 -->
             <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="2" Width="100" Source="/Resources/defaultAccount.png" HorizontalAlignment="Center"/>
@@ -93,32 +122,44 @@
 
             <Button x:Name="btnLogin" Content="Log In"
                     Grid.Row="1" Grid.Column="2" 
-                    FontWeight="Bold" Width="50" 
-                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-165,-8,0,0" Background="White" BorderThickness="0,0,0,0" Click="btnLogin_Click" VerticalContentAlignment="Top" VerticalAlignment="Center"/>
+                    FontWeight="Bold" Width="60" 
+                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-165,0,0,0" Background="White" BorderThickness="0,0,0,0" Click="btnLogin_Click" 
+                    VerticalContentAlignment="Top" VerticalAlignment="Center" Height="23" Padding="1,2,1,1">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
 
             <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="2" 
                      Width="179"
-                     HorizontalAlignment="Right" Text=""/>
+                     HorizontalAlignment="Right" Margin="0,0,10,0"/>
 
             <Label x:Name="lblEmail" Grid.Row="1" Grid.Column="2"
                    FontWeight="Bold" VerticalAlignment="Top"
                    HorizontalContentAlignment="Center"
-                   Content="Email" HorizontalAlignment="Right" Margin="0,-5,145,0" />
+                   Content="Email" HorizontalAlignment="Right" Margin="0,0,144,0" Height="23" Padding="5,2,5,5" />
 
-            <Button x:Name="btnProfileName"  Grid.Row="1" Grid.Column="2" FontWeight="Bold"
-                   HorizontalContentAlignment="Center"
-                   HorizontalAlignment="Center" Margin="25,0,-139,-2" Padding="5,0,5,5" VerticalAlignment="Top" Background="White" BorderThickness="0,0,0,0" Click="btnProfileName_Click">
+            <Button x:Name="btnProfileName" Content="User" Grid.Row="1" Grid.Column="2" FontWeight="Bold"
+                   HorizontalContentAlignment="Center" Width="60"
+                   HorizontalAlignment="Center" Margin="46,0,-139,0" Padding="5,0,5,3" VerticalAlignment="Center" Background="White" BorderThickness="0,0,0,0" Click="btnProfileName_Click" Height="23">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
             </Button>
 
             <Label x:Name="lblPassword" Grid.Row="3" Grid.Column="2"
                    FontWeight="Bold" VerticalAlignment="Bottom"
                    HorizontalContentAlignment="Center"
                    HorizontalAlignment="Right"
-                   Content="Password" Margin="0,0,123,0" Padding="5,0,5,5"/>
+                   Content="Password" Margin="0,0,130,0" Padding="5,0,5,5"/>
 
             <PasswordBox x:Name="pwdPassword" Grid.Row="4" Grid.Column="2" 
                      Width="179"
-                     HorizontalAlignment="Right" Password=""/>
+                     HorizontalAlignment="Right" Password="" Margin="0,0,10,0"/>
 
             <Label x:Name="lblCurrentTime" Grid.Row="2" Grid.Column="1"
                    Content="" FontWeight="Bold" HorizontalAlignment="Left" Margin="25,-8,0,0" />
@@ -147,7 +188,7 @@
             </Button>
             <DataGrid Grid.Column="0" x:Name="grdUsers" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" 
                       VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" CanUserReorderColumns="False"
-                      CanUserSortColumns="False" Margin="0,54,0,0">
+                      CanUserSortColumns="False" Margin="0,54,0,0" SelectionChanged="grdUsers_SelectionChanged" MouseDoubleClick="grdUsers_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Width="25" MinWidth="25" MaxWidth="55">
                         <DataGridTemplateColumn.CellTemplate>
@@ -161,9 +202,36 @@
                     <DataGridTextColumn Header="Profile Name" Binding="{Binding ProfileName}" Width="150"/>
                     <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="150"/>
                     <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="150" CanUserResize="False"/>
-                    <DataGridTextColumn Header="Active" Binding="{Binding Active}" Width="70" CanUserResize="False"/>
+                    <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="70" CanUserResize="False" />
                 </DataGrid.Columns>
             </DataGrid>
+            <WrapPanel x:Name="panelSelectedUser" HorizontalAlignment="Right" Orientation="Vertical" Margin="0,55,0,0" Background="#FFB4ACC8" Width="226">
+                <Button x:Name="btnUserProfileImage" HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Padding="5,5,5,5" Margin="0,20,30,0" Grid.Row="0" Grid.Column="2" Width="100" Height="100" 
+                        BorderThickness="0,0,0,0">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="100"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Resources/defaultAccount.png" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center"/>
+                    </Button.Background>
+                </Button>
+                <Label x:Name="lblUserFirstName" Content="First Name" FontWeight="Bold" Padding="10,5,5,5" Margin="0,20,10,0"/>
+                <TextBox x:Name="txtUserFirstName" Width="179"
+                HorizontalAlignment="Right" Margin="0,0,10,0" Height="22.8186267360994" IsEnabled="False" 
+                         MouseDoubleClick="txtUserFirstName_MouseDoubleClick" />
+                <Label x:Name="lblUserLastName" Content="Last Name" FontWeight="Bold" Padding="10,5,5,5" />
+                <TextBox x:Name="txtUserLastName" Width="179"
+                HorizontalAlignment="Right" Height="22.8186267360994" Margin="9,0,10,0" IsEnabled="False" MouseDoubleClick="txtUserLastName_MouseDoubleClick"/>
+                <Label x:Name="lblUserEmail" Content="Email" FontWeight="Bold" Padding="10,5,5,5" />
+                <TextBox x:Name="txtUserEmail" Width="179"
+                HorizontalAlignment="Right" Height="22.8186267360994" Margin="0,0,10,0" IsEnabled="False" MouseDoubleClick="txtUserEmail_MouseDoubleClick" />
+                <Label x:Name="lblUserProfileName" Content="Profile Name" FontWeight="Bold" Padding="10,5,5,5" />
+                <TextBox x:Name="txtUserProfileName" Width="179"
+                HorizontalAlignment="Right" Height="22.8186267360994" Margin="0,0,10,15" IsEnabled="False" MouseDoubleClick="txtUserProfileName_MouseDoubleClick" />
+            </WrapPanel>
             <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" 
                       VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" 
                       SelectionChanged="grdLibrary_SelectionChanged" CanUserReorderColumns="False" CanUserSortColumns="False" Margin="0,54,0,0">

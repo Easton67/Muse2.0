@@ -19,10 +19,5 @@ namespace LogicLayer
         bool AuthenticateUser(string email, string password);
         bool ResetPassword(string email, string oldPassword, string newPassword);
         bool UpdateUser(User oldUser, User newUser);
-
-        // DEAD
-        bool UpdateFirstName(string Email, string FirstName);
-        bool UpdateLastName(string email, string LastName);
-        bool UpdateAccountImage(string email, string accountImage);
     }
 }

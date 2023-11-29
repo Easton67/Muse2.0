@@ -127,35 +127,5 @@ namespace LogicLayerTests
             // assert
             Assert.AreEqual(expectedResult, actualResult);
         }
-        [TestMethod]
-        public void TestUpdateFirstNameWorksCorrectly()
-        {
-            // arrange
-            string Email = "Liam@gmail.com";
-            string FirstName = "Liyum";
-            bool expectedResult = true;
-            bool actualResult = false;
-
-            // act
-            actualResult = _userManager.UpdateFirstName(Email, FirstName);
-
-            // assert
-            Assert.AreEqual(expectedResult, actualResult);
-        }
-        [TestMethod]
-        public void TestUpdateLastNameWorksCorrectly()
-        {
-            // arrange
-            string Email = "Liam@gmail.com";
-            string LastName = "Eassston";
-            bool expectedResult = true;
-            bool actualResult = false;
-
-            // act
-            actualResult = _userManager.UpdateFirstName(Email, LastName);
-
-            // assert
-            Assert.AreEqual(expectedResult, actualResult);
-        }
     }
 }
