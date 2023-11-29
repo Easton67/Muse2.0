@@ -6,15 +6,23 @@
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
         Title="Muse" Height="900" Width="1500" MinWidth="810" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/Resources/museLogo.png">
-    <!--<Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="Black" Offset="0.73"/>
-            <GradientStop Color="#FFF79EF0" Offset="1"/>
-            <GradientStop Color="#FE060406" Offset="0.363"/>
-            <GradientStop Color="#FEAA6DA5" Offset="0.067"/>
-            <GradientStop Color="#FEAA6DA5" Offset="0.067"/>
-        </LinearGradientBrush>
-    </Window.Background>-->
+
+    <!--// Toying around with the idea of adding color, but didn't have time to change all font to white-->
+    <!--
+    
+        <Window.Background>
+            <ImageBrush ImageSource="/museBackground.jpg" TileMode="None" Stretch="UniformToFill"/>
+        </Window.Background>
+    
+        <Window.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="0.73"/>
+                <GradientStop Color="#FFF79EF0" Offset="1"/>
+                <GradientStop Color="#FE060406" Offset="0.363"/>
+                <GradientStop Color="#FEAA6DA5" Offset="0.067"/>
+                <GradientStop Color="#FEAA6DA5" Offset="0.067"/>
+            </LinearGradientBrush>
+        </Window.Background>-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -215,22 +223,26 @@
                         </Style>
                     </Button.Resources>
                     <Button.Background>
-                        <ImageBrush ImageSource="/Resources/defaultAccount.png" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center"/>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/defaultAccount.png"/>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblUserFirstName" Content="First Name" FontWeight="Bold" Padding="10,5,5,5" Margin="0,20,10,0"/>
+                <Label x:Name="lblUserID" Content="UserID" FontWeight="Bold" Padding="11,5,5,5" Margin="0,20,10,0"/>
+                <TextBox x:Name="txtUserID" Width="70"
+                HorizontalAlignment="Left" Margin="10,0,10,0" Height="22" IsEnabled="False" />
+                <Label x:Name="lblUserFirstName" Content="First Name" FontWeight="Bold" Padding="10,0,5,5" Margin="0,20,10,0"/>
                 <TextBox x:Name="txtUserFirstName" Width="179"
-                HorizontalAlignment="Right" Margin="0,0,10,0" Height="22.8186267360994" IsEnabled="False" 
+                HorizontalAlignment="Right" Margin="0,0,10,0" Height="22" IsEnabled="False" 
                          MouseDoubleClick="txtUserFirstName_MouseDoubleClick" />
                 <Label x:Name="lblUserLastName" Content="Last Name" FontWeight="Bold" Padding="10,5,5,5" />
                 <TextBox x:Name="txtUserLastName" Width="179"
-                HorizontalAlignment="Right" Height="22.8186267360994" Margin="9,0,10,0" IsEnabled="False" MouseDoubleClick="txtUserLastName_MouseDoubleClick"/>
+                HorizontalAlignment="Right" Height="22" Margin="9,0,10,0" IsEnabled="False" MouseDoubleClick="txtUserLastName_MouseDoubleClick"/>
                 <Label x:Name="lblUserEmail" Content="Email" FontWeight="Bold" Padding="10,5,5,5" />
                 <TextBox x:Name="txtUserEmail" Width="179"
-                HorizontalAlignment="Right" Height="22.8186267360994" Margin="0,0,10,0" IsEnabled="False" MouseDoubleClick="txtUserEmail_MouseDoubleClick" />
+                HorizontalAlignment="Right" Height="22" Margin="0,0,10,0" IsEnabled="False" MouseDoubleClick="txtUserEmail_MouseDoubleClick" />
                 <Label x:Name="lblUserProfileName" Content="Profile Name" FontWeight="Bold" Padding="10,5,5,5" />
                 <TextBox x:Name="txtUserProfileName" Width="179"
-                HorizontalAlignment="Right" Height="22.8186267360994" Margin="0,0,10,15" IsEnabled="False" MouseDoubleClick="txtUserProfileName_MouseDoubleClick" />
+                HorizontalAlignment="Right" Height="22" Margin="0,0,10,15" IsEnabled="False" MouseDoubleClick="txtUserProfileName_MouseDoubleClick" />
+            
             </WrapPanel>
             <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" 
                       VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" 

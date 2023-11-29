@@ -28,13 +28,15 @@ namespace Muse2
     public partial class MainWindow : Window
     {
         private DispatcherTimer timer;
+        private int secondsPassed = 0;
+        private MediaPlayer mediaPlayer = new MediaPlayer();
+
         UserManager _userManager = null;
         UserVM loggedInUser = null;
         SongManager _songManager = null;
         PlaylistManager _playlistManager = null;
         private int songNumber = 0;
         private int userNumber = 0;
-        private MediaPlayer mediaPlayer = new MediaPlayer();
         List<Song> userSongs = null;
         private ContextMenu contextMenu;
         private string baseDirectory = AppContext.BaseDirectory;
@@ -76,6 +78,28 @@ namespace Muse2
                     songListRepopulation();
                     NextSongHelper();
                 }
+
+                if (SongCurrentPosition > 0)
+                {
+                    secondsPassed++;
+
+                    if(secondsPassed % 60 == 0)
+                    {
+                        try
+                        {
+                            UserVM updatedUM = _userManager.GetUserVMByEmail(loggedInUser.Email);
+                            int newMinutesListened = updatedUM.MinutesListened + 1;
+                            _userManager.UpdateMinutesListened(loggedInUser.UserID, newMinutesListened);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Minutes Listened could not be updated.",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+                }
+
             }
             else
             {
@@ -1020,7 +1044,6 @@ namespace Muse2
 
         }
         #endregion
-
         private void grdUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (grdUsers.SelectedItem != null)
@@ -1030,7 +1053,6 @@ namespace Muse2
                 userNumber = selectedRowIndex;
             }
         }
-
         private void grdUsers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (grdUsers.SelectedItems.Count != 0)
@@ -1049,6 +1071,7 @@ namespace Muse2
                     MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+                txtUserID.Text = User.UserID.ToString();
                 txtUserFirstName.Text = User.FirstName;
                 txtUserLastName.Text = User.LastName;
                 txtUserEmail.Text = User.Email;

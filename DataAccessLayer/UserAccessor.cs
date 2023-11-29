@@ -13,6 +13,34 @@ namespace DataAccessLayer
 {
     public class UserAccessor : IUserAccessor
     {
+        public int InsertUser(User user, string password)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_create_new_user";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PasswordHash", password);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
+            cmd.Parameters.AddWithValue("@ProfileName", user.ProfileName);
+            cmd.Parameters.AddWithValue("@ImageFilePath", user.ImageFilePath);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
         public int AuthenticateUserWithEmailAndPasswordHash(string email, string passwordHash)
         {
             int rows = 0;
@@ -95,7 +123,7 @@ namespace DataAccessLayer
                         userVM.LastName = reader.IsDBNull(4) ? "" : reader.GetString(4);
                         userVM.ImageFilePath = reader.IsDBNull(5) ? "" : reader.GetString(5);
                         userVM.Active = reader.GetBoolean(6);
-                        userVM.Private = reader.GetBoolean(7);
+                        userVM.MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7);
                     }
                     else
                     {
@@ -142,7 +170,7 @@ namespace DataAccessLayer
                         LastName = reader.IsDBNull(4) ? "" : reader.GetString(4),
                         ImageFilePath = reader.IsDBNull(5) ? "" : reader.GetString(5),
                         Active = reader.GetBoolean(6),
-                        Private = reader.GetBoolean(7),
+                        MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
                     };
                     allUsers.Add(user);
                 }
@@ -198,6 +226,77 @@ namespace DataAccessLayer
             }
             return roles;
         }
+        public int UpdateUser(User oldUser, User newUser)
+        {
+            int rows = 0;
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_update_user";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.AddWithValue("@UserID", newUser.UserID);
+            cmd.Parameters.AddWithValue("@NewFirstName", newUser.FirstName);
+            cmd.Parameters.AddWithValue("@NewLastName", newUser.LastName);
+            cmd.Parameters.AddWithValue("@NewImageFilePath", newUser.ImageFilePath);
+            cmd.Parameters.AddWithValue("@OldFirstName", oldUser.FirstName);
+            cmd.Parameters.AddWithValue("@OldLastName", oldUser.LastName);
+            cmd.Parameters.AddWithValue("@OldImageFilePath", oldUser.ImageFilePath);
+
+            try
+            {
+                conn.Open();
+
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your profile.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateMinutesListened(int userID, int minutesListened)
+        {
+            int rows = 0;
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_update_minutesListened";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+            cmd.Parameters.AddWithValue("@UserID", userID);
+            cmd.Parameters.AddWithValue("@NewMinutesListened", minutesListened);
+
+            try
+            {
+                conn.Open();
+
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your minutes listened.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
         public int UpdatePasswordHash(string email, string oldPasswordHash, string newPasswordHash)
         {
             int rows = 0;
@@ -248,72 +347,6 @@ namespace DataAccessLayer
                 conn.Close();
             }
 
-            return rows;
-        }
-        public int InsertUser(User user, string password)
-        {
-            int rows = 0;
-
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_create_new_user";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PasswordHash", password);
-            cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@ProfileName", user.ProfileName);
-            cmd.Parameters.AddWithValue("@ImageFilePath", user.ImageFilePath);
-
-            try
-            {
-                conn.Open();
-                rows = cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
-        public int UpdateUser(User oldUser, User newUser) 
-        {
-            int rows = 0;
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_update_user";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
-            cmd.Parameters.AddWithValue("@UserID", newUser.UserID);
-            cmd.Parameters.AddWithValue("@NewFirstName", newUser.FirstName);
-            cmd.Parameters.AddWithValue("@NewLastName", newUser.LastName);
-            cmd.Parameters.AddWithValue("@NewImageFilePath", newUser.ImageFilePath);
-            cmd.Parameters.AddWithValue("@OldFirstName", oldUser.FirstName);
-            cmd.Parameters.AddWithValue("@OldLastName", oldUser.LastName);
-            cmd.Parameters.AddWithValue("@OldImageFilePath", oldUser.ImageFilePath);
-
-            try
-            {
-                conn.Open();
-
-                rows = cmd.ExecuteNonQuery();
-
-                if (rows == 0)
-                {
-                    throw new ArgumentException("Could not update your profile.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
             return rows;
         }
     }

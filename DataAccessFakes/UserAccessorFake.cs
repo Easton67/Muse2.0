@@ -21,7 +21,7 @@ namespace DataAccessFakes
                 ProfileName = "Easton67",
                 Email = "Liam@gmail.com",
                 Active = true,
-                Private = true,
+                MinutesListened = 0,
                 Roles = new List<string>()
             });
             fakeUsers.Add(new UserVM()
@@ -32,7 +32,7 @@ namespace DataAccessFakes
                 ProfileName = "Jester",
                 Email = "jess@company.com",
                 Active = true,
-                Private = true,
+                MinutesListened = 0,
                 Roles = new List<string>()
             });
             fakeUsers.Add(new UserVM()
@@ -43,7 +43,7 @@ namespace DataAccessFakes
                 ProfileName = "Bessy",
                 Email = "Bess@company.com",
                 Active = true,
-                Private = true,
+                MinutesListened = 0,
                 Roles = new List<string>()
             });
 
@@ -132,6 +132,10 @@ namespace DataAccessFakes
             return rows;
         }
         public int UpdateUser(User oldUser, User newUser)
+        {
+            throw new NotImplementedException();
+        }
+        public int UpdateMinutesListened(int userID, int minutesListened)
         {
             throw new NotImplementedException();
         }

@@ -15,7 +15,7 @@ namespace DataObjects
         public string LastName { get; set; }
         public string ImageFilePath { get; set; }
         public bool Active { get; set; }
-        public bool Private { get; set; }
+        public int MinutesListened { get; set; }
     }
 
     public class UserVM : User

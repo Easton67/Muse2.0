@@ -68,6 +68,17 @@ namespace Muse2
                     labelStackPanel.Children.Add(lblTopSongs);
                     i += 1;
                 }
+
+                try
+                {
+                    lblMinutesTotalListened.Content = _loggedInUser.MinutesListened;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Minutes Listened could not be found.",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -155,7 +166,7 @@ namespace Muse2
                     LastName = NewLastName,
                     ImageFilePath = _imgFile,
                     Active = true,
-                    Private = false,
+                    MinutesListened = 0,
                     Roles = _loggedInUser.Roles
                 };
 

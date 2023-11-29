@@ -174,5 +174,20 @@ namespace LogicLayer
             }
             return result;
         }
+        public bool UpdateMinutesListened(int userID, int minutesListened)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _userAccessor.UpdateMinutesListened(userID, minutesListened));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to update the minutes listened ", ex);
+            }
+            return result;
+        }
+
     }
 }
