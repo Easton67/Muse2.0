@@ -28,7 +28,7 @@ namespace Muse2
     public partial class MainWindow : Window
     {
         private DispatcherTimer timer;
-        private int secondsPassed = 0;
+        private int minutesPassed = 0;
         private MediaPlayer mediaPlayer = new MediaPlayer();
 
         UserManager _userManager = null;
@@ -81,9 +81,9 @@ namespace Muse2
 
                 if (SongCurrentPosition > 0)
                 {
-                    secondsPassed++;
+                    minutesPassed++;
 
-                    if(secondsPassed % 60 == 0)
+                    if(minutesPassed % 60 == 0)
                     {
                         try
                         {
