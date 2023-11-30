@@ -9,8 +9,9 @@ namespace DataAccessInterfaces
 {
     public interface IPlaylistAccessor
     {
-        List<Playlist> SelectPlaylistByUserID(int userId);
-        int InsertSongIntoPlaylist(int songID, int playlistID);
         int CreatePlaylist(Playlist newPlaylist);
+        int InsertSongIntoPlaylist(int songID, int playlistID);
+        List<Playlist> SelectPlaylistByUserID(int userId);
+        int DeletePlaylist(int playlistID);
     }
 }

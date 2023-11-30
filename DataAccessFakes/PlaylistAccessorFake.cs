@@ -50,5 +50,9 @@ namespace DataAccessFakes
         {
             return fakePlaylists.FindAll(p => p.UserID == userId);
         }
+        public int DeleteSong(int playlistID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

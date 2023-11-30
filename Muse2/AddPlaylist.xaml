@@ -24,15 +24,15 @@
             <Image x:Name="imgPlaylistCover" Source="/defaultAlbumImage.png" Width="150" Height="150"/>
         </Button>
         <Label x:Name="lblPlaylistFilePath" Grid.Row="0" Grid.Column="1" Content="Playlist Image" FontSize="15" Margin="3,0,0,0" VerticalContentAlignment="Bottom"/>
-        <TextBox x:Name="txtPlaylistFilePath" Grid.Row="1" Grid.Column="1" Height="30" FontSize="13" Width="320" HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" IsReadOnly="True" ToolTip="Double click the image to add your own image."/>
+        <TextBox x:Name="txtPlaylistFilePath" Grid.Row="1" Text="Double click the playlist image to add your own"  Grid.Column="1" Height="30" FontSize="13" Width="320" HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" IsReadOnly="True" ToolTip="Double click the image to add your own image." IsEnabled="False"/>
         <Label x:Name="lblPlaylistTitle" Grid.Row="2" Grid.Column="1" Content="Playlist Title" FontSize="15"  Margin="4,0,0,0" VerticalContentAlignment="Bottom"/>
         <TextBox x:Name="txtPlaylistTitle" Grid.Row="3" Grid.Column="1" FontSize="13" Width="320" Height="30" HorizontalAlignment="Left" Margin="8,0,0,0" 
                  VerticalAlignment="Top" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblPlaylistDescription" Grid.Row="4" Grid.Column="0" Content="Playlist Description" Margin="28,0,0,0" HorizontalAlignment="Left" 
-               VerticalAlignment="Center" FontSize="15"/>
-        <TextBox Name="txtPlaylistDescription" Grid.Row="5" Grid.Column="0" Width="185" Grid.RowSpan="2" TextWrapping="Wrap" 
+        <Label x:Name="lblPlaylistDescription" Grid.Row="4" Grid.Column="1" Content="Playlist Description" Margin="11,0,0,0" HorizontalAlignment="Left" 
+               VerticalAlignment="Center" FontSize="15" Padding="0,5,5,5"/>
+        <TextBox Name="txtPlaylistDescription" Grid.Row="5" Grid.Column="1" Width="217" Grid.RowSpan="2" TextWrapping="Wrap" 
                  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                 Margin="30,10,0,10" MinLines="5" HorizontalAlignment="Left" FontSize="14" VerticalAlignment="Top"/>
+                 Margin="9,10,0,10" MinLines="5" HorizontalAlignment="Left" FontSize="14" VerticalAlignment="Top" Height="142"/>
         <Button x:Name="btnCreate" Grid.Row="5" Grid.Column="1" Content="Create" Width="50" Height="28" 
                 HorizontalAlignment="Right" Margin="0,0,30,12" VerticalAlignment="Bottom" Click="btnCreate_Click" Background="#FF88D9E6">
             <Button.Resources>

@@ -14,6 +14,62 @@ namespace DataAccessLayer
 {
     public class PlaylistAccessor : IPlaylistAccessor
     {
+        public int CreatePlaylist(Playlist newPlaylist)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_create_playlist";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Title", newPlaylist.Title);
+            cmd.Parameters.AddWithValue("@ImageFilePath", newPlaylist.ImageFilePath);
+            cmd.Parameters.AddWithValue("@Description", newPlaylist.Description);
+            cmd.Parameters.AddWithValue("@UserID", newPlaylist.UserID);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int InsertSongIntoPlaylist(int songID, int playlistID)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_song_into_playlist";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@SongID", songID);
+            cmd.Parameters.AddWithValue("@PlaylistID", playlistID);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
         public List<Playlist> SelectPlaylistByUserID(int userId)
         {
             List<Playlist> playlists = new List<Playlist>();
@@ -66,51 +122,28 @@ namespace DataAccessLayer
             }
             return playlists;
         }
-        public int InsertSongIntoPlaylist(int songID, int playlistID)
+        public int DeletePlaylist(int playlistID)
         {
             int rows = 0;
 
             var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_insert_song_into_playlist";
+            var cmdText = "sp_delete_playlist";
             var cmd = new SqlCommand(cmdText, conn);
-
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@SongID", songID);
-            cmd.Parameters.AddWithValue("@PlaylistID", playlistID);
+
+            cmd.Parameters.Add("@PlaylistID", SqlDbType.Int);
+            cmd.Parameters["@PlaylistID"].Value = playlistID;
 
             try
             {
                 conn.Open();
+
                 rows = cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
-        public int CreatePlaylist(Playlist newPlaylist)
-        {
-            int rows = 0;
 
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_create_playlist";
-            var cmd = new SqlCommand(cmdText, conn);
-
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Title", newPlaylist.Title);
-            cmd.Parameters.AddWithValue("@ImageFilePath", newPlaylist.ImageFilePath);
-            cmd.Parameters.AddWithValue("@Description", newPlaylist.Description);
-            cmd.Parameters.AddWithValue("@UserID", newPlaylist.UserID);
-
-            try
-            {
-                conn.Open();
-                rows = cmd.ExecuteNonQuery();
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not remove this playlist.");
+                }
             }
             catch (Exception ex)
             {

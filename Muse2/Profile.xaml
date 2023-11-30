@@ -73,18 +73,18 @@
                 </TabItem>
                 <TabItem Header="Stats"
                     FontSize="14" Padding="32,2,32,2">
-                    <WrapPanel HorizontalAlignment="Right" Margin="0,0,500,0" >
-                        <StackPanel Orientation="Horizontal" Margin="32,0,0,300">
-                            <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75"/>
-                            <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45"/>
+                    <WrapPanel HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,-180,426">
+                            <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75" VerticalAlignment="Top"/>
+                            <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45" Margin="0,0,0,100" Padding="5,5,5,5"/>
                         </StackPanel>
                         <StackPanel x:Name="labelStackPanel" Orientation="Vertical" VerticalAlignment="Center" IsManipulationEnabled="True" Margin="0,100,0,0" >
-                            <Image x:Name="imgTopSongs" Source="/Resources/defaultAlbumImage.png" Width="200" HorizontalAlignment="Left" Margin="-334,0,0,3"/>
-                            <Label x:Name="lblMostPlayedSong" Margin="-428,20,0,0" Content="Most Played Songs" Width="260" FontWeight="UltraBlack" FontSize="25" />
+                            <Image x:Name="imgTopSongs" Source="/Resources/defaultAlbumImage.png" Width="200" HorizontalAlignment="Left"/>
+                            <Label x:Name="lblMostPlayedSong" Content="Most Played Songs" Width="260" FontWeight="UltraBlack" FontSize="25" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,100,0,0">
-                            
-                            <Label x:Name="lblMinutesTotalListened" HorizontalAlignment="Center" FontSize="80" Margin="0,22,0,0">1469</Label>
+                            <!--Test number put in just to see how it looks on this page-->
+                            <Label x:Name="lblMinutesTotalListened" HorizontalAlignment="Center" FontSize="80" Margin="0,22,0,0">3000</Label>
                             <Label x:Name="lblMinutesListned" HorizontalAlignment="Center" FontSize="20" BorderThickness="0,4,0,65" Margin="0,2,0,0">minutes listened</Label>
                         </StackPanel>
                     </WrapPanel>

@@ -49,17 +49,5 @@ namespace DataObjects
 
             return isValid;
         }
-        public static bool IsValidLastName(this string LastName)
-        {
-            bool isValid = false;
-
-            // what the db has as its max
-            if (LastName.Length <= 50)
-            {
-                isValid = true;
-            }
-
-            return isValid;
-        }
     }
 }

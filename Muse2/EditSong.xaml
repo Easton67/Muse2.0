@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="Song Information" Height="350" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded" Background="#FFE8E6EA" >
+        Title="Song Details" Height="350" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded" Background="#FFE8E6EA" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="125" />

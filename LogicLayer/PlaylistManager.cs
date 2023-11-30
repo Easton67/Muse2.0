@@ -22,6 +22,20 @@ namespace LogicLayer
         {
             _playlistAccessor = playlistAccessor;
         }
+        public bool CreatePlaylist(Playlist newPlaylist)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _playlistAccessor.CreatePlaylist(newPlaylist));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not Added", ex);
+            }
+            return result;
+        }
         public bool InsertSongIntoPlaylist(int songID, int playlistID)
         {
             bool result = false;
@@ -54,17 +68,17 @@ namespace LogicLayer
             }
             return playlists;
         }
-        public bool CreatePlaylist(Playlist newPlaylist)
+        public bool DeletePlaylist(int playlistID)
         {
             bool result = false;
 
             try
             {
-                result = (1 == _playlistAccessor.CreatePlaylist(newPlaylist));
+                result = (1 == _playlistAccessor.DeletePlaylist(playlistID));
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Song not Added", ex);
+                throw new ApplicationException("Playlist not deleted.", ex);
             }
             return result;
         }

@@ -8,13 +8,13 @@
         Title="Muse" Height="900" Width="1500" MinWidth="810" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/Resources/museLogo.png">
 
     <!--// Toying around with the idea of adding color, but didn't have time to change all font to white-->
-    <!--
     
-        <Window.Background>
+    
+        <!--<Window.Background>
             <ImageBrush ImageSource="/museBackground.jpg" TileMode="None" Stretch="UniformToFill"/>
-        </Window.Background>
+        </Window.Background>-->
     
-        <Window.Background>
+        <!--<Window.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="Black" Offset="0.73"/>
                 <GradientStop Color="#FFF79EF0" Offset="1"/>
@@ -213,10 +213,10 @@
                     <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="70" CanUserResize="False" />
                 </DataGrid.Columns>
             </DataGrid>
-            <WrapPanel x:Name="panelSelectedUser" HorizontalAlignment="Right" Orientation="Vertical" Margin="0,55,0,0" Background="#FFB4ACC8" Width="226">
+            <WrapPanel x:Name="panelSelectedUser" HorizontalAlignment="Right" Orientation="Vertical" Margin="0,0,21,0" Background="#FFB4ACC8" Width="219">
                 <Button x:Name="btnUserProfileImage" HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Padding="5,5,5,5" Margin="0,20,30,0" Grid.Row="0" Grid.Column="2" Width="100" Height="100" 
-                        BorderThickness="0,0,0,0">
+                    Padding="5,5,5,5" Margin="0,20,57,0" Grid.Row="0" Grid.Column="2" Width="100" Height="100" 
+                        BorderThickness="0,0,0,0" MouseDoubleClick="btnUserProfileImage_MouseDoubleClick">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="100"/>
@@ -226,23 +226,39 @@
                         <ImageBrush Stretch="UniformToFill" ImageSource="/defaultAccount.png"/>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblUserID" Content="UserID" FontWeight="Bold" Padding="11,5,5,5" Margin="0,20,10,0"/>
+                <Label x:Name="lblUserID" Content="UserID" FontWeight="Bold" Padding="11,5,5,5" Margin="4,20,10,0"/>
                 <TextBox x:Name="txtUserID" Width="70"
-                HorizontalAlignment="Left" Margin="10,0,10,0" Height="22" IsEnabled="False" />
+                HorizontalAlignment="Left" Margin="13,0,10,0" Height="22" IsEnabled="False" />
                 <Label x:Name="lblUserFirstName" Content="First Name" FontWeight="Bold" Padding="10,0,5,5" Margin="0,20,10,0"/>
                 <TextBox x:Name="txtUserFirstName" Width="179"
-                HorizontalAlignment="Right" Margin="0,0,10,0" Height="22" IsEnabled="False" 
-                         MouseDoubleClick="txtUserFirstName_MouseDoubleClick" />
+                HorizontalAlignment="Right" Margin="0,0,30,0" Height="22" IsEnabled="False" />
                 <Label x:Name="lblUserLastName" Content="Last Name" FontWeight="Bold" Padding="10,5,5,5" />
                 <TextBox x:Name="txtUserLastName" Width="179"
-                HorizontalAlignment="Right" Height="22" Margin="9,0,10,0" IsEnabled="False" MouseDoubleClick="txtUserLastName_MouseDoubleClick"/>
+                HorizontalAlignment="Right" Height="22" Margin="9,0,30,0" IsEnabled="False"/>
                 <Label x:Name="lblUserEmail" Content="Email" FontWeight="Bold" Padding="10,5,5,5" />
                 <TextBox x:Name="txtUserEmail" Width="179"
-                HorizontalAlignment="Right" Height="22" Margin="0,0,10,0" IsEnabled="False" MouseDoubleClick="txtUserEmail_MouseDoubleClick" />
+                HorizontalAlignment="Right" Height="22" Margin="0,0,30,0" IsEnabled="False" />
                 <Label x:Name="lblUserProfileName" Content="Profile Name" FontWeight="Bold" Padding="10,5,5,5" />
                 <TextBox x:Name="txtUserProfileName" Width="179"
-                HorizontalAlignment="Right" Height="22" Margin="0,0,10,15" IsEnabled="False" MouseDoubleClick="txtUserProfileName_MouseDoubleClick" />
-            
+                HorizontalAlignment="Right" Height="22" Margin="0,0,30,0" IsEnabled="False" />
+                <Label x:Name="lblActive" Content="Active" FontWeight="Bold" Padding="10,6,5,5" />
+                <CheckBox x:Name="chkUserActive" Margin="13,0,0,0" />
+                <StackPanel Orientation="Horizontal" Width="228">
+                    <Button x:Name="btnUserEdit" Content="Edit" Width="47" Height="28" HorizontalAlignment="Left" Margin="11,12,39,10" Click="btnUserEdit_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="btnUserSaveChanges" Content="Save Changes" Width="104" Height="28" HorizontalAlignment="Right" Margin="10,12,0,10" Click="btnUserSaveChanges_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
             </WrapPanel>
             <DataGrid Grid.Column="0" x:Name="grdLibrary" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" 
                       VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="grdLibrary_MouseDoubleClick" 
@@ -279,6 +295,7 @@
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="New Playlist" x:Name="mnuCreateNewPlaylist" Click="mnuCreateNewPlaylist_Click" />
+                        <MenuItem Header="Delete Playlist" x:Name="mnuRemovePlaylist" Click="mnuRemovePlaylist_Click" />
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>

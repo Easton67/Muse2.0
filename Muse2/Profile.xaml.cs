@@ -18,8 +18,6 @@ namespace Muse2
     /// </summary>
     public partial class Profile : Window
     {
-
-
         private UserVM _loggedInUser = null;
         private string _imgFile = "";
         List<Song> userSongs = null;
@@ -29,7 +27,6 @@ namespace Muse2
             InitializeComponent();
 
             _loggedInUser = loggedInUser;
-
         }
         // Menu Items
         private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
@@ -60,7 +57,7 @@ namespace Muse2
                     imgTopSongs.Source = new BitmapImage(new System.Uri(topSongs[0].ImageFilePath));
                     string labelText = $"{i + 1}. {song.Title}";
                     Label lblTopSongs = new Label { Content = labelText };
-                    lblTopSongs.Margin = new Thickness(-428, 10, 0, 0);
+                    lblTopSongs.Margin = new Thickness(0, 10, 0, 0);
                     lblTopSongs.Padding = new Thickness(10, 5, 10, 5);
                     lblTopSongs.FontSize = 20;
                     lblTopSongs.Width = 260;

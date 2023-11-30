@@ -9,6 +9,7 @@ namespace DataAccessLayer
 {
     public class SongAccessor : ISongAccessor
     {
+        private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
         public int InsertSong(Song song)
         {
             int rows = 0;
@@ -78,7 +79,7 @@ namespace DataAccessLayer
                     {
                         SongID = reader.GetInt32(0),
                         Title = reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : reader.GetString(2),
                         Mp3FilePath = reader.GetString(3),
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
@@ -132,7 +133,7 @@ namespace DataAccessLayer
                     {
                         SongID = reader.GetInt32(0),
                         Title = reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : reader.GetString(2),
                         Mp3FilePath = reader.GetString(3),
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),

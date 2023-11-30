@@ -31,7 +31,6 @@ namespace Muse2
 
             _loggedInUser = loggedInUser;
         }
-
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
             var newPlaylist = new Playlist()
@@ -53,12 +52,6 @@ namespace Muse2
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message);
             }
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void btnPlaylistCover_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try

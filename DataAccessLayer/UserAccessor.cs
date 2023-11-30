@@ -57,7 +57,6 @@ namespace DataAccessLayer
             // set the command text
             cmd.CommandType = CommandType.StoredProcedure;
 
-
             // Add parameters
             cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100);
             cmd.Parameters.Add("@PasswordHash", SqlDbType.NVarChar, 100);
