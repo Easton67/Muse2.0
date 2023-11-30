@@ -139,5 +139,9 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public int UpdateActiveUser(int userID, bool oldActive, bool newActive)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -349,5 +349,42 @@ namespace DataAccessLayer
 
             return rows;
         }
+        public int UpdateActiveUser(int UserID, bool oldActive, bool newActive)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var commandText = "sp_update_active_user";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Add parameters
+
+            cmd.Parameters.AddWithValue("@UserID", UserID);
+            cmd.Parameters.AddWithValue("@NewActive", newActive);
+            cmd.Parameters.AddWithValue("@OldActive", oldActive);
+            
+            try
+            {
+                conn.Open();
+
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Unable to update active status");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return rows;
+        }
     }
 }

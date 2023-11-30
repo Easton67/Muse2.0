@@ -99,7 +99,6 @@ namespace Muse2
                         }
                     }
                 }
-
             }
             else
             {
@@ -555,7 +554,20 @@ namespace Muse2
             mediaPlayer.Pause();
             var profileWindow = new Profile(loggedInUser, _songManager);
             profileWindow.ShowDialog();
-            loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
+            try
+            {
+                loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
+                if (loggedInUser.Active == false)
+                {
+                    updateUIForLogout();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "User could not be updated",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -580,6 +592,7 @@ namespace Muse2
                     pwdPassword.Focus();
                     return;
                 }
+
                 // try to log in the user
                 try
                 {

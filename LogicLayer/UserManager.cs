@@ -188,6 +188,20 @@ namespace LogicLayer
             }
             return result;
         }
+        public bool UpdateActiveUser(int userID, bool oldActive, bool newActive)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _userAccessor.UpdateActiveUser(userID, oldActive, newActive));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Unable deactivate or reactivate the account ", ex);
+            }
+            return result;
+        }
 
     }
 }

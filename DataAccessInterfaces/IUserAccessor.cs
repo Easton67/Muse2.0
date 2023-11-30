@@ -19,5 +19,7 @@ namespace DataAccessInterfaces
         int UpdateUser(User oldUser, User newUser);
         int UpdateMinutesListened(int userID, int minutesListened);
         int UpdatePasswordHash(string email, string oldPasswordHash, string newPasswordHash);
+        int UpdateActiveUser(int userID, bool oldActive, bool newActive);
+
     }
 }

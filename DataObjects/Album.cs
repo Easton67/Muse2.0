@@ -12,9 +12,6 @@ namespace DataObjects
         public string Title { get; set; }
         public string ImageFilePath { get; set; }
         public string Description { get; set; }
-        public bool Explicit { get; set; }
-        public bool Private { get; set; }
-        public int Plays { get; set; }
         public Artist Artist { get; set; }
     }
     public class AlbumVM : Album

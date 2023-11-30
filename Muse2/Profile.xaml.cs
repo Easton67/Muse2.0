@@ -108,7 +108,7 @@ namespace Muse2
             txtEmail.IsReadOnly = true;
             txtProfileName.IsReadOnly = true;
         }
-        // Buttons
+        #region Profile Buttons
         private void btnLogo_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -120,7 +120,40 @@ namespace Muse2
         }
         private void btnDeleteAccount_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    $"Are you sure you want to deactivate your account?",
+                    "Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        UserManager _userManager = new UserManager();
 
+                        bool newActive = false;
+
+                        // Passsing in false as the new value for newActive
+                        _userManager.UpdateActiveUser(_loggedInUser.UserID, _loggedInUser.Active, newActive);
+                        MessageBox.Show("Your account has been deactivated. \n\n Please contact the admin to have your account reactivated. \n\n Goodbye, and thank you for using Muse :)");
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not deactivate your account. Please try again",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, $"Unable to deactivate your account. ",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
@@ -186,6 +219,7 @@ namespace Muse2
                 }
             }
         }
+        #endregion
         private void btnFavoritesEdit_Click(object sender, RoutedEventArgs e)
         {
             if (btnFavoritesEdit.Content.ToString() == "Edit")

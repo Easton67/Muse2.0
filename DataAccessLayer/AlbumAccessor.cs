@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    internal class AlbumAccessor
+    public class AlbumAccessor
     {
+
     }
 }
