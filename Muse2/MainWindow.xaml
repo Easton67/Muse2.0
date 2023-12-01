@@ -14,15 +14,15 @@
             <ImageBrush ImageSource="/museBackground.jpg" TileMode="None" Stretch="UniformToFill"/>
         </Window.Background>-->
     
-        <!--<Window.Background>
+        <Window.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="0.73"/>
+                <GradientStop Color="#FF525252" Offset="1"/>
                 <GradientStop Color="#FFF79EF0" Offset="1"/>
-                <GradientStop Color="#FE060406" Offset="0.363"/>
-                <GradientStop Color="#FEAA6DA5" Offset="0.067"/>
-                <GradientStop Color="#FEAA6DA5" Offset="0.067"/>
+                <GradientStop Color="Black" Offset="0.51"/>
+                <GradientStop Color="#FEAA6DA5" Offset="0.12"/>
+                <GradientStop Color="#FEAA6DA5" Offset="0.22"/>
             </LinearGradientBrush>
-        </Window.Background>-->
+        </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -76,7 +76,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnPlaylistImageEdit" Height="75" Width="75" Grid.Row="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="33,0,0,0" MouseDoubleClick="btnPlaylistImageEdit_MouseDoubleClick_1">
+            <Button x:Name="btnPlaylistImageEdit" Height="75" Width="75" Grid.Row="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="33,0,0,0" MouseDoubleClick="btnPlaylistImageEdit_MouseDoubleClick" >
                 <Image x:Name="imgPlaylistPicture" Source="/Resources/defaultAlbumImage.png"/>
             </Button>
             <!-- Col0 -->
@@ -283,6 +283,7 @@
                         <MenuItem Header="Edit Song Details" x:Name="mnuEditSongFromDataGrid" Click="mnuEditSongFromDataGrid_Click" />
                         <MenuItem Header="Add Song To Playlist" x:Name="mnuAddSongToPlaylistFromDataGrid" Click="mnuAddSongToPlaylistFromDataGrid_Click" />
                         <MenuItem Header="Delete Song" x:Name="mnuDeleteSong" Click="mnuDeleteSong_Click"/>
+                        <MenuItem Header="Remove Song From Playlist" x:Name="mnuRemoveSongFromPlaylist" Click="mnuRemoveSongFromPlaylist_Click" Visibility="Hidden"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>

@@ -13,5 +13,6 @@ namespace DataAccessInterfaces
         int InsertSongIntoPlaylist(int songID, int playlistID);
         List<Playlist> SelectPlaylistByUserID(int userId);
         int DeletePlaylist(int playlistID);
+        int RemoveSongFromPlaylist(int songID);
     }
 }

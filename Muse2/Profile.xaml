@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1500" MinWidth="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="900" Width="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -32,7 +32,7 @@
                     FontSize="14" Padding="32,2,32,2">
                     <WrapPanel HorizontalAlignment="Center" Margin="0,90,0,0" >
                         <StackPanel>
-                            <Button x:Name="btnAccontImage" Width="300" Margin="0,-30,15,0" Click="btnAccontImage_Click">
+                            <Button x:Name="btnAccontImage" Width="300" Margin="0,-30,15,0" Click="btnAccontImage_Click" IsEnabled="False">
                                 <Image x:Name="imgAccountImage" Source="/Resources/defaultAccount.png" />
                             </Button>
                         </StackPanel>

@@ -82,5 +82,19 @@ namespace LogicLayer
             }
             return result;
         }
+        public bool RemoveSongFromPlaylist(int songID)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _playlistAccessor.RemoveSongFromPlaylist(songID));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not removed.", ex);
+            }
+            return result;
+        }
     }
 }

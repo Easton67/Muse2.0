@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataAccessFakes
 {
-    internal class ArtistAccessorFake
+    public class ArtistAccessorFake
     {
+
     }
 }

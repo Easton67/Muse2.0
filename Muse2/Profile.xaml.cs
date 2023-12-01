@@ -156,6 +156,7 @@ namespace Muse2
         {
             if (btnEdit.Content.ToString() == "Edit")
             {
+                btnAccontImage.IsEnabled = true;
                 btnEdit.Content = "Add Changes";
                 txtFirstName.IsReadOnly = false;
                 txtLastName.IsReadOnly = false;
@@ -204,7 +205,7 @@ namespace Muse2
                 {
                     _userManager.UpdateUser(oldUser, newUser);
                     btnEdit.Content = "Edit";
-                    MessageBox.Show("Your account details have been updated", "Success!",
+                    MessageBox.Show("Your account details have been updated.\n\nYour account will be updated the next time you log in.", "Success!",
                     MessageBoxButton.OK);
                 }
                 catch (Exception ex)
@@ -230,6 +231,7 @@ namespace Muse2
         }
         private void btnAccontImage_Click(object sender, RoutedEventArgs e)
         {
+
             UserManager _userManager = new UserManager();
 
             try

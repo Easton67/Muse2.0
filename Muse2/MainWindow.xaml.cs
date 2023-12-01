@@ -313,6 +313,11 @@ namespace Muse2
 
                 if (playlists.Count > 0)
                 {
+                    MenuItem deleteSong = new MenuItem();
+                    deleteSong.Header = "Delete Song";
+                    deleteSong.Click += mnuDeleteSong_Click;
+                    contextMenu.Items.Add(deleteSong);
+
                     MenuItem addSong = new MenuItem();
                     addSong.Header = "Add Song To Playlist:";
                     contextMenu.Items.Add(addSong);
@@ -327,11 +332,6 @@ namespace Muse2
                     }
                 }
 
-                MenuItem deleteSong = new MenuItem();
-                deleteSong.Header = "Delete Song";
-                deleteSong.Click += mnuDeleteSong_Click;
-                contextMenu.Items.Add(deleteSong);
-
                 grdLibrary.ContextMenu = contextMenu;
 
                 if (playlists.Count > 0)
@@ -345,6 +345,35 @@ namespace Muse2
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists. Please try again.",
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
+        }
+        private void playlistSongsRepopulation()
+        {
+            try
+            {
+                int playlistID = ((Playlist)grdPlaylists.SelectedItem).PlaylistID;
+                int userID = loggedInUser.UserID;
+                string playlistName = ((Playlist)grdPlaylists.SelectedItem).Title;
+                string playlistDescription = ((Playlist)grdPlaylists.SelectedItem).Description;
+                userSongs = _songManager.SelectSongsByPlaylistID(userID, playlistID);
+                grdLibrary.ItemsSource = userSongs;
+
+                // Change the header and subheader of the playlist I'm currently on
+
+                btnPlaylistImageEdit.Visibility = Visibility.Visible;
+                imgPlaylistPicture.Visibility = Visibility.Visible;
+                var playlistImageFilePath = ((Playlist)grdPlaylists.SelectedItem).ImageFilePath;
+                BitmapImage playlistImageBitmap = new BitmapImage(new System.Uri(playlistImageFilePath));
+                imgPlaylistPicture.Source = playlistImageBitmap;
+                lblDataGridHeader.Visibility = Visibility.Visible;
+                lblDataGridHeader.Content = playlistName;
+                lblDataGridSubHeader.Visibility = Visibility.Visible;
+                lblDataGridSubHeader.Content = playlistDescription;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to view playlist. Please try again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void GetAccountAndRoles()
@@ -465,7 +494,7 @@ namespace Muse2
         }
         private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
         {
-            var resetPassword = new ResetPassword(_loggedInUser.Email);
+            var resetPassword = new ResetPassword(loggedInUser.Email);
             resetPassword.ShowDialog();
         }
         private void mnuCreateNewAlbum_Click(object sender, RoutedEventArgs e)
@@ -516,21 +545,7 @@ namespace Muse2
             mediaPlayer.Pause();
             var profileWindow = new Profile(loggedInUser, _songManager);
             profileWindow.ShowDialog();
-            loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
-            try
-            {
-                loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
-                if (loggedInUser.Active == false)
-                {
-                    updateUIForLogout();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "User could not be updated",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            updateUIForUserLogin();
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -764,10 +779,30 @@ namespace Muse2
         }
         private void grdLibrary_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //if (userSongs[songNumber].Album == "")
-            //{
-            //    mnuViewAlbum.Visibility = Visibility.Collapsed;
-            //}
+            if (btnPlaylistImageEdit.Visibility == Visibility.Visible)
+            {
+                MenuItem removeSongFromPlaylist = new MenuItem();
+                removeSongFromPlaylist.Header = "Remove Song From Playlist";
+                removeSongFromPlaylist.Click += mnuRemoveSongFromPlaylist_Click;
+
+                bool removeSongFromPlaylistMenuExists = false;
+                foreach (var item in contextMenu.Items)
+                {
+                    if (item is MenuItem menuItem && menuItem.Header?.ToString() == "Remove Song From Playlist")
+                    {
+                        removeSongFromPlaylistMenuExists = true;
+                        break;
+                    }
+                }
+
+                // If the MenuItem doesn't exist, add it
+                if (!removeSongFromPlaylistMenuExists)
+                {
+                    contextMenu.Items.Add(removeSongFromPlaylist);
+                }
+
+                removeSongFromPlaylist.Visibility = Visibility.Visible;
+            }
 
             if (grdLibrary.SelectedItem != null)
             {
@@ -847,38 +882,17 @@ namespace Muse2
             {
                 if (grdPlaylists.SelectedItems.Count != 0)
                 {
-                    try
-                    {
-                        int playlistID = ((Playlist)grdPlaylists.SelectedItem).PlaylistID;
-                        int userID = loggedInUser.UserID;
-                        string playlistName = ((Playlist)grdPlaylists.SelectedItem).Title;
-                        string playlistDescription = ((Playlist)grdPlaylists.SelectedItem).Description;
-                        userSongs = _songManager.SelectSongsByPlaylistID(userID, playlistID);
-                        grdLibrary.ItemsSource = userSongs;
-
-                        // Change the header and subheader of the playlist I'm currently on
-
-                        btnPlaylistImageEdit.Visibility = Visibility.Visible;
-                        imgPlaylistPicture.Visibility = Visibility.Visible;
-                        var playlistImageFilePath = ((Playlist)grdPlaylists.SelectedItem).ImageFilePath;
-                        BitmapImage playlistImageBitmap = new BitmapImage(new System.Uri(playlistImageFilePath));
-                        imgPlaylistPicture.Source = playlistImageBitmap;
-                        lblDataGridHeader.Visibility = Visibility.Visible;
-                        lblDataGridHeader.Content = playlistName;
-                        lblDataGridSubHeader.Visibility = Visibility.Visible;
-                        lblDataGridSubHeader.Content = playlistDescription;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to view playlist. Please try again.",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    playlistSongsRepopulation();
                 }
             }
             else
             {
                 MessageBox.Show("Select a playlist to view all your songs you have added to it.");
             }
+        }
+        private void btnPlaylistImageEdit_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
         private void btnAllSongs_Click(object sender, RoutedEventArgs e)
         {
@@ -915,53 +929,6 @@ namespace Muse2
                 return;
             }
         }
-        private void btnPlaylistImageEdit_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            UserManager _userManager = new UserManager();
-
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-
-                openFileDialog.Title = "Open File";
-                openFileDialog.Filter = "Image Files (*.jpg;*.jpeg;*.png;)|*.jpg;*.jpeg;*.png;|All Files (*.*)|*.*";
-
-                bool? result = openFileDialog.ShowDialog();
-
-                if (result == true)
-                {
-                    /*
-                    _accountImage = openFileDialog.FileName;
-                    var AccountImage = new BitmapImage(new System.Uri(_accountImage));
-                    _userManager.UpdateAccountImage(_email, _accountImage);
-
-                    imgAccountImage.Source = AccountImage;
-                    */
-                }
-                else
-                {
-                    // user closes the file explorer before picking a photo
-                    MessageBox.Show("Choose a photo to update your current account photo.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to update playlist image. Please try again.",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        private void btnPlaylistImageEdit_MouseDoubleClick_1(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         private void mnuRemovePlaylist_Click(object sender, RoutedEventArgs e)
         {
             var playlist = grdPlaylists.SelectedItem as Playlist;
@@ -979,6 +946,15 @@ namespace Muse2
                     {
                         _playlistManager.DeletePlaylist(playlist.PlaylistID);
                         MessageBox.Show("Playlist successfully deleted");
+                        // Reload your library or playlist
+                        if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
+                        {
+                            songListRepopulation();
+                        }
+                        else
+                        {
+                            playlistSongsRepopulation();
+                        }
                         playlistListRepopulation();
                     }
                     catch (Exception ex)
@@ -991,6 +967,36 @@ namespace Muse2
             }
         }
         #endregion
+        private void mnuRemoveSongFromPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            var song = grdLibrary.SelectedItem as Song;
+
+            if (grdLibrary.SelectedItem != null)
+            {
+                try
+                {
+                    _playlistManager.RemoveSongFromPlaylist(song.SongID);
+                    // Reload your library or playlist
+                    if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
+                    {
+                        songListRepopulation();
+                        // Simulate skipping to the next song, so it isn't showing up in the media player
+                        NextSongHelper();
+                    }
+                    else
+                    {
+                        playlistSongsRepopulation();
+                        NextSongHelper();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not remove this song. Please try again",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+        } 
         private void mnuViewAlbum_Click(object sender, RoutedEventArgs e)
         {
 
@@ -1012,10 +1018,18 @@ namespace Muse2
                     {
                         _songManager.DeleteSong(song.SongID);
                         MessageBox.Show("Song successfully deleted");
-                        // Reload your library
-                        songListRepopulation();
-                        // Simulate skipping to the next song, so it isn't showing up in the media player
-                        NextSongHelper();
+
+                        // Reload your library or playlist
+                        if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
+                        {
+                            songListRepopulation();
+                            // Simulate skipping to the next song, so it isn't showing up in the media player
+                            NextSongHelper();
+                        }
+                        else
+                        {
+                            playlistSongsRepopulation();
+                        }
                     }
                     catch (Exception ex)
                     {
