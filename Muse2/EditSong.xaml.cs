@@ -216,7 +216,6 @@ namespace Muse2
                 YearReleased = int.Parse(txtYear.Text),
                 Lyrics = txtLyrics.Text,
                 Explicit = (bool)chkExplicit.IsChecked,
-                Private = true,
                 Plays = int.Parse(txtPlays.Text),
                 UserID = _loggedInUser.UserID,
                 Album = txtAlbum.Text,

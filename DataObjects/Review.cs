@@ -14,5 +14,8 @@ namespace DataObjects
         public int UserID { get; set; }
         public int SongID { get; set; }
         public int AlbumID { get; set; }
+        public Song ReviewedSong { get; set; }
+
+
     }
 }

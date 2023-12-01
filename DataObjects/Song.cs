@@ -14,7 +14,6 @@ namespace DataObjects
         public string Mp3FilePath { get; set; }
         public int YearReleased { get; set; }
         public string Lyrics { get; set; }
-        public bool Private { get; set; }
         public bool Explicit { get; set; }
         public int Plays { get; set; }
         public int UserID { get; set; }

@@ -24,7 +24,6 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@YearReleased", song.YearReleased);
             cmd.Parameters.AddWithValue("@Lyrics", song.Lyrics);
             cmd.Parameters.AddWithValue("@Explicit", song.Explicit);
-            cmd.Parameters.AddWithValue("@Private", song.Private);
             cmd.Parameters.AddWithValue("@Plays", song.Plays);
             cmd.Parameters.AddWithValue("@UserID", song.UserID);
             cmd.Parameters.AddWithValue("@ArtistID", song.Artist);
@@ -84,11 +83,10 @@ namespace DataAccessLayer
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
                         Explicit = reader.GetBoolean(6),
-                        Private = reader.GetBoolean(7),
-                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
-                        UserID = reader.GetInt32(9),
-                        Artist = reader.GetString(10),
-                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11)
+                        Plays = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
+                        UserID = reader.GetInt32(8),
+                        Artist = reader.GetString(9),
+                        Album = reader.IsDBNull(10) ? "" : reader.GetString(10)
                     };
                     songs.Add(song);
                 }
@@ -138,11 +136,10 @@ namespace DataAccessLayer
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
                         Explicit = reader.GetBoolean(6),
-                        Private = reader.GetBoolean(7),
-                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
-                        UserID = reader.GetInt32(9),
-                        Artist = reader.GetString(10),
-                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11)
+                        Plays = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
+                        UserID = reader.GetInt32(8),
+                        Artist = reader.GetString(9),
+                        Album = reader.IsDBNull(10) ? "" : reader.GetString(10)
                     };
                     songs.Add(song);
                 }
@@ -219,14 +216,12 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@NewYearReleased", SqlDbType.Int);
             cmd.Parameters.Add("@NewLyrics", SqlDbType.NVarChar);
             cmd.Parameters.Add("@NewExplicit", SqlDbType.Bit);
-            cmd.Parameters.Add("@NewPrivate", SqlDbType.Bit);
             cmd.Parameters.Add("@NewPlays", SqlDbType.Int);
             cmd.Parameters.Add("@OldTitle", SqlDbType.NVarChar);
             cmd.Parameters.Add("@OldImageFilePath", SqlDbType.NVarChar);
             cmd.Parameters.Add("@OldYearReleased", SqlDbType.Int);
             cmd.Parameters.Add("@OldLyrics", SqlDbType.Text);
             cmd.Parameters.Add("@OldExplicit", SqlDbType.Bit);
-            cmd.Parameters.Add("@OldPrivate", SqlDbType.Bit);
             cmd.Parameters.Add("@OldPlays", SqlDbType.Int);
 
             cmd.Parameters["@SongID"].Value = newSong.SongID;
@@ -235,14 +230,12 @@ namespace DataAccessLayer
             cmd.Parameters["@NewYearReleased"].Value = newSong.YearReleased;
             cmd.Parameters["@NewLyrics"].Value = newSong.Lyrics;
             cmd.Parameters["@NewExplicit"].Value = newSong.Explicit;
-            cmd.Parameters["@NewPrivate"].Value = newSong.Private;
             cmd.Parameters["@NewPlays"].Value = newSong.Plays;
             cmd.Parameters["@OldTitle"].Value = oldSong.Title;
             cmd.Parameters["@OldImageFilePath"].Value = oldSong.ImageFilePath;
             cmd.Parameters["@OldYearReleased"].Value = oldSong.YearReleased;
             cmd.Parameters["@OldLyrics"].Value = oldSong.Lyrics;
             cmd.Parameters["@OldExplicit"].Value = oldSong.Explicit;
-            cmd.Parameters["@OldPrivate"].Value = oldSong.Private;
             cmd.Parameters["@OldPlays"].Value = oldSong.Plays;
 
             try

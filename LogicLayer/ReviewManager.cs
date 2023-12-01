@@ -31,20 +31,6 @@ namespace LogicLayer
             }
             return result;
         }
-        public List<Review> SelectReviewByReviewID(int reviewID)
-        {
-            List<Review> reviews = new List<Review>();
-
-            try
-            {
-                reviews = _reviewAccessor.SelectReviewByReviewID(reviewID);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Review not Added", ex);
-            }
-            return reviews;
-        }
         public bool UpdateReview(Review oldReview, Review newReview)
         {
             bool result = false;
@@ -73,6 +59,21 @@ namespace LogicLayer
                 throw new ApplicationException("Review not deleted", ex);
             }
             return result;
+        }
+
+        public List<Review> SelectReviewsByUserID(int userID)
+        {
+            List<Review> reviews = new List<Review>();
+
+            try
+            {
+                reviews = _reviewAccessor.SelectReviewsByUserID(userID);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Review not Added", ex);
+            }
+            return reviews;
         }
     }
 }

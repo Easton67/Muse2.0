@@ -21,6 +21,8 @@ namespace Muse2
         private UserVM _loggedInUser = null;
         private string _imgFile = "";
         List<Song> userSongs = null;
+        List<Review> reviews = null;
+        private ReviewManager _reviewManager = new ReviewManager();
 
         public Profile(UserVM loggedInUser, SongManager _songManager)
         {
@@ -41,6 +43,25 @@ namespace Muse2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SongManager _songManager = new SongManager();
+
+            try
+            {
+                reviews = _reviewManager.SelectReviewsByUserID(_loggedInUser.UserID);
+                foreach (Review review in reviews)
+                {
+                    MessageBox.Show($"{reviews.Title}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your reviews.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
+
+            icReviews.ItemsSource = reviews;
 
             try
             {

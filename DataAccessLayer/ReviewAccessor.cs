@@ -44,16 +44,16 @@ namespace DataAccessLayer
             }
             return rows;
         }
-        public List<Review> SelectReviewByReviewID(int reviewID)
+        public List<Review> SelectReviewsByUserID(int userID)
         {
             List<Review> reviews = new List<Review>();
 
             var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_select_review_by_ReviewID";
+            var cmdText = "sp_select_reviews_by_UserID";
             var cmd = new SqlCommand(cmdText, conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@ReviewID", reviewID);
+            cmd.Parameters.AddWithValue("@UserID", userID);
 
             try
             {
@@ -63,15 +63,24 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    var song = new Song
+                    {
+                        SongID = reader.GetInt32(4),
+                        Title = reader.GetString(5),
+                        YearReleased = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
+                        ImageFilePath = reader.IsDBNull(7) ? "" : reader.GetString(7),
+                    };
+
                     var review = new Review
                     {
                         ReviewID = reader.GetInt32(0),
                         Rating = reader.IsDBNull(1) ? 0 : reader.GetInt32(1),
                         Message = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                        SongID = reader.GetInt32(3),
-                        UserID = reader.GetInt32(4),
-                        AlbumID = (int)(reader.IsDBNull(5) ? (int?)null : reader.GetInt32(5)),
+                        UserID = reader.GetInt32(3),
+                        SongID = reader.GetInt32(4),
+                        ReviewedSong = song
                     };
+
                     reviews.Add(review);
                 }
                 return reviews;

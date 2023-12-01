@@ -858,17 +858,23 @@ namespace Muse2
                     {
                         _songManager.DeleteSong(song.SongID);
                         MessageBox.Show("Song successfully deleted");
-
-                        // Reload your library or playlist
-                        if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
+                        if(userSongs.Count() == 0)
                         {
-                            songListRepopulation();
-                            // Simulate skipping to the next song, so it isn't showing up in the media player
-                            NextSongHelper();
+                            grdLibrary.ItemsSource = null;
                         }
                         else
                         {
-                            playlistSongsRepopulation();
+                            // Reload your library or playlist
+                            if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
+                            {
+                                songListRepopulation();
+                                // Simulate skipping to the next song, so it isn't showing up in the media player
+                                NextSongHelper();
+                            }
+                            else
+                            {
+                                playlistSongsRepopulation();
+                            }
                         }
                     }
                     catch (Exception ex)

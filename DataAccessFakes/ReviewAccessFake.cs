@@ -23,7 +23,7 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
-        public List<Review> SelectReviewByReviewID(int reviewID)
+        public List<Review> SelectReviewsByUserID(int userID)
         {
             throw new NotImplementedException();
         }

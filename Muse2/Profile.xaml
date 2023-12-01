@@ -90,8 +90,28 @@
                     </WrapPanel>
                 </TabItem>
                 <TabItem x:Name="tabReviews" Header="Reviews" FontSize="14" Padding="32,2,32,2">
-                    <WrapPanel HorizontalAlignment="Left" Margin="0,40,0,0" >
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+                    <WrapPanel HorizontalAlignment="Left" Margin="15,40,0,0" >
+                        <ItemsControl x:Name="icReviews">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{Binding Title}" />
+                                            <TextBlock Text="{Binding YearReleased}" />
+                                            <TextBlock Text="{Binding ImageFilePath}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl >
+
+
+                            <!--<StackPanel Orientation="Vertical" VerticalAlignment="Top">
                             <StackPanel Orientation="Horizontal">
                                 <Image x:Name="imgAlbumArt" Source="/Resources/defaultAlbumImage.png" Width="110" VerticalAlignment="Top" Margin="0,0,12,0"/>
                                 <StackPanel Orientation="Vertical">
@@ -104,8 +124,8 @@
                             <TextBox Name="txtDescription" Width="320" TextWrapping="Wrap" AcceptsReturn="True" 
                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                  Margin="5,20,0,0" MinLines="5" MinHeight="100" HorizontalAlignment="Left" 
-                                 FontSize="14" Height="150"/>
-                        </StackPanel>
+                                 FontSize="14" Height="150" IsReadOnly="True"/>
+                        </StackPanel>-->
                     </WrapPanel>
                 </TabItem>
             </TabControl>

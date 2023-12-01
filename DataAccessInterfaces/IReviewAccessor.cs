@@ -10,7 +10,7 @@ namespace DataAccessInterfaces
     public interface IReviewAccessor
     {
         int CreateReview(Review review);
-        List<Review> SelectReviewByReviewID(int reviewID);
+        List<Review> SelectReviewsByUserID(int userID);
         int UpdateReview(Review oldReview, Review newReview);
         int DeleteReview(int reviewID);
 
