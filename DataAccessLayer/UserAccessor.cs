@@ -13,6 +13,7 @@ namespace DataAccessLayer
 {
     public class UserAccessor : IUserAccessor
     {
+        private string defaultAccountImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\defaultAccount.png";
         public int InsertUser(User user, string password)
         {
             int rows = 0;
@@ -120,7 +121,7 @@ namespace DataAccessLayer
                         userVM.Email = reader.GetString(2);
                         userVM.FirstName = reader.IsDBNull(3) ? "" : reader.GetString(3);
                         userVM.LastName = reader.IsDBNull(4) ? "" : reader.GetString(4);
-                        userVM.ImageFilePath = reader.IsDBNull(5) ? "" : reader.GetString(5);
+                        userVM.ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : reader.GetString(5);
                         userVM.Active = reader.GetBoolean(6);
                         userVM.MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7);
                     }
@@ -167,7 +168,7 @@ namespace DataAccessLayer
                         Email = reader.GetString(2),
                         FirstName = reader.IsDBNull(3) ? "" : reader.GetString(3),
                         LastName = reader.IsDBNull(4) ? "" : reader.GetString(4),
-                        ImageFilePath = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                        ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : reader.GetString(5),
                         Active = reader.GetBoolean(6),
                         MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
                     };

@@ -89,29 +89,22 @@
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>
-                <TabItem x:Name="tabFavorites"
-                Header="Favorites"
-                FontSize="14" Padding="32,2,32,2">
-                    <WrapPanel HorizontalAlignment="Center" Margin="0,90,0,0" >
-                        <StackPanel>
-                            <Image x:Name="imgFavoritesAccountImage" Source="/Resources/defaultAccount.png" Width="300" Margin="0,-30,15,0"/>
-                        </StackPanel>
-                        <StackPanel>
-                            <Label x:Name="lblFavoriteSong" Content="Favorite Song" Padding="0,5,5,5" />
-                            <TextBox x:Name="txtFavoriteSong" Margin="0,0,0,30"  Width="300" />
-                            <Label x:Name="lblFavoriteArtist" Content="Favorite Artist" Padding="0,5,5,5" Margin="0,0,0,0"/>
-                            <TextBox x:Name="txtFavoriteArtist" Margin="0,0,0,30"  Width="300" />
-                            <Label x:Name="lblFavoriteAlbum" Content="Favorite Album" Padding="0,5,5,5" Margin="0,0,0,0"/>
-                            <TextBox x:Name="txtFavoriteAlbum" Margin="0,0,0,5"  Width="300" />
-                            <StackPanel Orientation="Horizontal" Margin="4,150,-50,0" Height="40">
-                                <Button x:Name="btnFavoritesEdit" Content="Edit" Margin="-50,0,50,0" Padding="20,1,20,1" Background="#FF88D9E6" Click="btnFavoritesEdit_Click"  Width="125" >
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="5"/>
-                                        </Style>
-                                    </Button.Resources>
-                                </Button>
+                <TabItem x:Name="tabReviews" Header="Reviews" FontSize="14" Padding="32,2,32,2">
+                    <WrapPanel HorizontalAlignment="Left" Margin="0,40,0,0" >
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+                            <StackPanel Orientation="Horizontal">
+                                <Image x:Name="imgAlbumArt" Source="/Resources/defaultAlbumImage.png" Width="110" VerticalAlignment="Top" Margin="0,0,12,0"/>
+                                <StackPanel Orientation="Vertical">
+                                    <Label x:Name="lblAlbumTitle" Content="Title"/>
+                                    <Label x:Name="lblArtistName" Content="Artist"/>
+                                    <Label x:Name="lblYearReleased" Content="Year Released"/>
+                                    <Label x:Name="lblRating" Content="8 out of 10"/>
+                                </StackPanel>
                             </StackPanel>
+                            <TextBox Name="txtDescription" Width="320" TextWrapping="Wrap" AcceptsReturn="True" 
+                                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                 Margin="5,20,0,0" MinLines="5" MinHeight="100" HorizontalAlignment="Left" 
+                                 FontSize="14" Height="150"/>
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>

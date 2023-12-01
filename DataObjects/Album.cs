@@ -12,10 +12,10 @@ namespace DataObjects
         public string Title { get; set; }
         public string ImageFilePath { get; set; }
         public string Description { get; set; }
-        public Artist Artist { get; set; }
+        //public Artist Artist { get; set; }
     }
-    public class AlbumVM : Album
-    {
-        public List<Song> AlbumSongs { get; set; }
-    }
+    //    public class AlbumVM : Album
+    //    {
+    //        public List<Song> AlbumSongs { get; set; }
+    //    }
 }

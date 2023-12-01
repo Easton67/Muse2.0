@@ -13,7 +13,6 @@ namespace LogicLayer
     public class PlaylistManager : IPlaylistManager
     {
         private IPlaylistAccessor _playlistAccessor = null;
-
         public PlaylistManager()
         {
             _playlistAccessor = new PlaylistAccessor();

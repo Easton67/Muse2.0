@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IAlbumAccessor.cs" />
     <Compile Include="IArtistAccessor.cs" />
+    <Compile Include="IReviewAccessor.cs" />
     <Compile Include="IPlaylistAccessor.cs" />
     <Compile Include="ISongAccessor.cs" />
     <Compile Include="IUserAccessor.cs" />

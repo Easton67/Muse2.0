@@ -44,6 +44,7 @@
     <Compile Include="AlbumAccessor.cs" />
     <Compile Include="ArtistAccessor.cs" />
     <Compile Include="PlaylistAccessor.cs" />
+    <Compile Include="ReviewAccessor.cs" />
     <Compile Include="SongAccessor.cs" />
     <Compile Include="UserAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

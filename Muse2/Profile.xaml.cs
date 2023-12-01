@@ -89,7 +89,6 @@ namespace Muse2
                 var AccountImage = new BitmapImage(new System.Uri(_loggedInUser.ImageFilePath));
                 imgStatsAccount.Source = AccountImage;
                 imgAccountImage.Source = AccountImage;
-                imgFavoritesAccountImage.Source = AccountImage;
             }
             catch (Exception ex)
             {
@@ -218,17 +217,6 @@ namespace Muse2
             }
         }
         #endregion
-        private void btnFavoritesEdit_Click(object sender, RoutedEventArgs e)
-        {
-            if (btnFavoritesEdit.Content.ToString() == "Edit")
-            {
-                btnFavoritesEdit.Content = "Add Changes";
-            }
-            else
-            {
-                btnFavoritesEdit.Content = "Edit";
-            }
-        }
         private void btnAccontImage_Click(object sender, RoutedEventArgs e)
         {
 

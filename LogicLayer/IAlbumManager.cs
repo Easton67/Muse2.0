@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessInterfaces
+namespace LogicLayer
 {
-    public interface IAlbumAccessor
+    public interface IAlbumManager
     {
-        int CreateAlbum(Album album);
+        bool CreateAlbum(Album album);
         List<Album> SelectAlbumByAlbumID(int AlbumID);
-        int UpdateAlbum(Album oldAlbum, Album newAlbum);
-        int DeleteAlbum(int albumId);
-
+        bool UpdateAlbum(Album oldAlbum, Album newAlbum);
+        bool DeleteAlbum(int albumId);
     }
 }

@@ -8,26 +8,26 @@ using System.Threading.Tasks;
 
 namespace DataAccessFakes
 {
-    public class AlbumAccessorFake : IAlbumAccessor
+    public class ReviewAccessFake : IReviewAccessor
     {
-        private List<Album> fakeAlbums = new List<Album>();
-        public AlbumAccessorFake()
+        private List<Review> fakeReviews = new List<Review>();
+        public ReviewAccessFake()
         {
-            
+
         }
-        public int CreateAlbum(Album album)
-        {
-            throw new NotImplementedException();
-        }
-        public int DeleteAlbum(int albumId)
+        public int CreateReview(Review review)
         {
             throw new NotImplementedException();
         }
-        public List<Album> SelectAlbumByAlbumID(int AlbumID)
+        public int DeleteReview(int reviewID)
         {
             throw new NotImplementedException();
         }
-        public int UpdateAlbum(Album oldAlbum, Album newAlbum)
+        public List<Review> SelectReviewByReviewID(int reviewID)
+        {
+            throw new NotImplementedException();
+        }
+        public int UpdateReview(Review oldReview, Review newReview)
         {
             throw new NotImplementedException();
         }

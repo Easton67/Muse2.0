@@ -841,6 +841,49 @@ namespace Muse2
                 MessageBox.Show("Select a Song to view it.");
             }
         }
+        private void mnuDeleteSong_Click(object sender, RoutedEventArgs e)
+        {
+            var song = grdLibrary.SelectedItem as Song;
+
+            if (grdLibrary.SelectedItem != null)
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    $"Are you sure you want to delete '{song.Title}'?",
+                    "Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        _songManager.DeleteSong(song.SongID);
+                        MessageBox.Show("Song successfully deleted");
+
+                        // Reload your library or playlist
+                        if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
+                        {
+                            songListRepopulation();
+                            // Simulate skipping to the next song, so it isn't showing up in the media player
+                            NextSongHelper();
+                        }
+                        else
+                        {
+                            playlistSongsRepopulation();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a Song to view it.");
+            }
+        }
         #endregion
         #region Playlist Manipulation
         private void mnuAddSongToPlaylistFromDataGrid_Click(object sender, RoutedEventArgs e)
@@ -889,10 +932,6 @@ namespace Muse2
             {
                 MessageBox.Show("Select a playlist to view all your songs you have added to it.");
             }
-        }
-        private void btnPlaylistImageEdit_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
         }
         private void btnAllSongs_Click(object sender, RoutedEventArgs e)
         {
@@ -966,7 +1005,6 @@ namespace Muse2
                 }
             }
         }
-        #endregion
         private void mnuRemoveSongFromPlaylist_Click(object sender, RoutedEventArgs e)
         {
             var song = grdLibrary.SelectedItem as Song;
@@ -996,53 +1034,11 @@ namespace Muse2
                     return;
                 }
             }
-        } 
+        }
+        #endregion
         private void mnuViewAlbum_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-        private void mnuDeleteSong_Click(object sender, RoutedEventArgs e)
-        {
-            var song = grdLibrary.SelectedItem as Song;
-
-            if (grdLibrary.SelectedItem != null)
-            {
-                MessageBoxResult result = MessageBox.Show(
-                    $"Are you sure you want to delete '{song.Title}'?",
-                    "Confirmation",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    try
-                    {
-                        _songManager.DeleteSong(song.SongID);
-                        MessageBox.Show("Song successfully deleted");
-
-                        // Reload your library or playlist
-                        if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
-                        {
-                            songListRepopulation();
-                            // Simulate skipping to the next song, so it isn't showing up in the media player
-                            NextSongHelper();
-                        }
-                        else
-                        {
-                            playlistSongsRepopulation();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Select a Song to view it.");
-            }
         }
         #region Admin Functionality
         private void grdUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1184,5 +1180,9 @@ namespace Muse2
             }
         }
         #endregion
+        private void btnPlaylistImageEdit_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
