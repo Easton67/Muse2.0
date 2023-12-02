@@ -68,7 +68,10 @@ namespace DataAccessLayer
                         SongID = reader.GetInt32(4),
                         Title = reader.GetString(5),
                         YearReleased = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
-                        ImageFilePath = reader.IsDBNull(7) ? "" : reader.GetString(7),
+                        Artist = reader.GetString(7),
+                        ImageFilePath = reader.IsDBNull(8) ? "" : reader.GetString(8),
+                        Mp3FilePath = reader.GetString(9),
+                        Explicit = reader.GetBoolean(10),
                     };
 
                     var review = new Review

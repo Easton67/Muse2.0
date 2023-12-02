@@ -3,6 +3,7 @@ using LogicLayer;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Windows;
@@ -22,7 +23,7 @@ namespace Muse2
         private string _imgFile = "";
         List<Song> userSongs = null;
         List<Review> reviews = null;
-        private ReviewManager _reviewManager = new ReviewManager();
+        private ReviewManager _reviewManager = new ReviewManager(); 
 
         public Profile(UserVM loggedInUser, SongManager _songManager)
         {
@@ -43,25 +44,18 @@ namespace Muse2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SongManager _songManager = new SongManager();
-
             try
             {
                 reviews = _reviewManager.SelectReviewsByUserID(_loggedInUser.UserID);
-                foreach (Review review in reviews)
-                {
-                    MessageBox.Show($"{reviews.Title}");
-                }
-            }
+
+                icReviews.ItemsSource = reviews;
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your reviews.",
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-
-
-            icReviews.ItemsSource = reviews;
 
             try
             {
