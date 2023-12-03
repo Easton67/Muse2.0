@@ -20,14 +20,12 @@ namespace DataAccessLayer
             var conn = SqlConnectionProvider.GetConnection();
             var cmdText = "sp_create_review";
             var cmd = new SqlCommand(cmdText, conn);
-
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@ReviewID", review.ReviewID);
+
             cmd.Parameters.AddWithValue("@Rating", review.Rating);
             cmd.Parameters.AddWithValue("@Message", review.Message);
             cmd.Parameters.AddWithValue("@UserID", review.UserID);
             cmd.Parameters.AddWithValue("@SongID", review.SongID);
-            cmd.Parameters.AddWithValue("@AlbumID", review.AlbumID);
 
             try
             {
@@ -111,12 +109,10 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@NewMessage", newReview.Message);
             cmd.Parameters.AddWithValue("@NewUserID", newReview.UserID);
             cmd.Parameters.AddWithValue("@NewSongID", newReview.SongID);
-            cmd.Parameters.AddWithValue("@OldAlbumID", oldReview.AlbumID); 
             cmd.Parameters.AddWithValue("@OldRating", oldReview.Rating);
             cmd.Parameters.AddWithValue("@OldMessage", oldReview.Message);
             cmd.Parameters.AddWithValue("@OldUserID", oldReview.UserID);
             cmd.Parameters.AddWithValue("@OldSongID", oldReview.SongID);
-            cmd.Parameters.AddWithValue("@OldAlbumID", oldReview.AlbumID);
 
             try
             {

@@ -58,5 +58,9 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public int UpdatePlaylist(Playlist oldPlaylist, Playlist newPlaylist)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

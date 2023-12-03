@@ -106,7 +106,7 @@ namespace DataAccessLayer
                         Title = reader.IsDBNull(1) ? "Playlist" : reader.GetString(1),
                         ImageFilePath = reader.IsDBNull(2) ? "/defaultAlbumImage.png" : reader.GetString(2),
                         Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                        UserID = reader.GetInt32(4),
+                        UserID = reader.GetInt32(4)
                     };
                     playlists.Add(playlist);
                 }
@@ -143,6 +143,43 @@ namespace DataAccessLayer
                 if (rows == 0)
                 {
                     throw new ArgumentException("Could not remove this playlist.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdatePlaylist(Playlist oldPlaylist, Playlist newPlaylist)
+        {
+            int rows = 0;
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_update_playlist";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@PlaylistID", oldPlaylist.PlaylistID);
+            cmd.Parameters.AddWithValue("@NewTitle", newPlaylist.Title);
+            cmd.Parameters.AddWithValue("@NewImageFilePath", newPlaylist.ImageFilePath);
+            cmd.Parameters.AddWithValue("@NewDescription", newPlaylist.Description);
+            cmd.Parameters.AddWithValue("@OldTitle", oldPlaylist.Title);
+            cmd.Parameters.AddWithValue("@OldImageFilePath", oldPlaylist.ImageFilePath);
+            cmd.Parameters.AddWithValue("@OldDescription", oldPlaylist.Description);
+
+            try
+            {
+                conn.Open();
+
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not update your playlist.");
                 }
             }
             catch (Exception ex)

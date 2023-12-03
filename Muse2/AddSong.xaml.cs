@@ -4,6 +4,8 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,6 +30,7 @@ namespace Muse2
         private UserVM _loggedInUser = null;
         private string _mp3File = "";
         private string _imgFile = "";
+        private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
         public AddSong(UserVM loggedInUser)
         {
@@ -122,7 +125,7 @@ namespace Muse2
             {
                 Title = txtTitle.Text,
                 ImageFilePath = _imgFile,
-                Mp3FilePath = _mp3File,
+                Mp3FilePath = txtMp3FilePath.Text,
                 YearReleased = int.Parse(txtYear.Text),
                 Lyrics = txtLyrics.Text,
                 Explicit = (bool)chkExplicit.IsChecked,
@@ -160,9 +163,23 @@ namespace Muse2
                 if (result == true)
                 {
                     _imgFile = openFileDialog.FileName;
+
+                    string destinationFolder = baseDirectory + "\\MuseConfig\\AlbumArt";
+
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        Directory.CreateDirectory(destinationFolder);
+                    }
+
+                    // Copy the selected image file to AlbumArt
+                    string newImageFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(_imgFile));
+                    File.Copy(_imgFile, newImageFilePath, true);
+
                     var songImage = new BitmapImage(new System.Uri(_imgFile));
 
                     imgSongImage.Source = songImage;
+
+                    _imgFile = newImageFilePath;
                 }
                 else
                 {
@@ -177,14 +194,13 @@ namespace Muse2
         }
         private void txtYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Regex for only four numeric characters
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
         private void lblPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[0-9]");
-            e.Handled = !regex.IsMatch(e.Text);
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
         private void btnAddMp3_Click(object sender, RoutedEventArgs e)
         {
@@ -200,17 +216,33 @@ namespace Muse2
                 if (result == true)
                 {
                     _mp3File = openFileDialog.FileName;
-                    txtMp3FilePath.Text = _mp3File;
+
+                    string destinationFolder = baseDirectory + "\\MuseConfig\\SongFiles";
+
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        Directory.CreateDirectory(destinationFolder);
+                    }
+
+                    // Copy the selected MP3 file to SongFiles
+                    string newFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(_mp3File));
+                    File.Copy(_mp3File, newFilePath, true);
+
+                    _mp3File = System.IO.Path.GetFileName(newFilePath);
+
+                    txtMp3FilePath.Text = baseDirectory + "\\MuseConfig\\SongFiles\\" + _mp3File;
                 }
                 else
                 {
-                    // user closes the file explorer before picking a photo
                     MessageBox.Show("Choose an MP3 to add.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Invalid MP3 File." + " " + ex.Message);
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to create your song. " +
+                "Please make sure your file is correct.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
     }

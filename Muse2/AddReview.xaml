@@ -1,0 +1,48 @@
+﻿<Window x:Class="Muse2.AddReview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Muse2"
+        mc:Ignorable="d"
+        Title="Create a Review" Height="600" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded" Background="#FFE8E6EA" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="210" />
+            <RowDefinition />
+            <RowDefinition Height="105" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="7,-17,0,0">
+            <StackPanel>
+                <Image x:Name="imgSongImage" Source="/defaultAlbumImage.png" Width="175" Height="175" Margin="10,28,0,0"/>
+            </StackPanel>
+            <StackPanel Width="188" Margin="6,20,0,0">
+                <Label Grid.Row="0" x:Name="lblSongTitle" Content="lblSongTitle" HorizontalContentAlignment="Left" FontSize="17"/>
+                <Label Grid.Row="1" x:Name="lblArtist" Content="lblArtist" HorizontalContentAlignment="Left" FontSize="17"/>
+                <Label Grid.Row="2" x:Name="lblAlbumTitle" Content="lblAlbumTitle" HorizontalContentAlignment="Left" FontSize="17"/>
+                <Label Grid.Row="3" x:Name="lblYearReleased" Content="lblYearReleased" HorizontalContentAlignment="Left" FontSize="17"/>
+                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="-45,0,0,0">
+                    <TextBox  x:Name="txtRating" PreviewTextInput="txtRating_PreviewTextInput" MaxLength="1" Width="30" Height="30" FontSize="17" 
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="out of 5" Width="100" Height="50" FontSize="17" 
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="-15,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <TextBox Grid.Row="1" x:Name="txtReviewMessage" 
+                 TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" 
+                  MinLines="5" MinHeight="50" HorizontalAlignment="Center" FontSize="14" Width="350" Margin="5,5,5,5" />
+        <Button x:Name="btnCreateReview" Grid.Row="3" Content="Create" Width="95" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Padding="5,5,5,5" Background="Lavender" BorderThickness="1,1,1,1" 
+                    BorderBrush="Black" Click="btnCreateReview_Click" FontSize="17">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Window>

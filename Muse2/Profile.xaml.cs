@@ -47,9 +47,8 @@ namespace Muse2
             try
             {
                 reviews = _reviewManager.SelectReviewsByUserID(_loggedInUser.UserID);
-
                 icReviews.ItemsSource = reviews;
-
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your reviews.",

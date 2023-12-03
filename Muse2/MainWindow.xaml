@@ -14,7 +14,7 @@
             <ImageBrush ImageSource="/museBackground.jpg" TileMode="None" Stretch="UniformToFill"/>
         </Window.Background>-->
     
-        <!--<Window.Background>
+        <Window.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FF525252" Offset="1"/>
                 <GradientStop Color="#FFF79EF0" Offset="1"/>
@@ -22,7 +22,7 @@
                 <GradientStop Color="#FEAA6DA5" Offset="0.12"/>
                 <GradientStop Color="#FEAA6DA5" Offset="0.22"/>
             </LinearGradientBrush>
-        </Window.Background>-->
+        </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -183,8 +183,10 @@
                 <ColumnDefinition Width="1250*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label x:Name="lblDataGridHeader" Content="Library" FontSize="25" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,-11,0,0"/>
-            <Label x:Name="lblDataGridSubHeader" Content="Description" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,22,0,0"/>
+            <Label x:Name="lblDataGridHeader" Content="Library" FontSize="25" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,-11,0,0" MouseDoubleClick="lblDataGridHeader_MouseDoubleClick"/>
+            <TextBox x:Name="txtDataGridHeaderEdit" Text="Data Grid Header" FontSize="25" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,-6,0,0" KeyDown="txtDataGridHeaderEdit_KeyDown"/>
+            <Label x:Name="lblDataGridSubHeader" Content="Description" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,22,0,0" MouseDoubleClick="lblDataGridSubHeader_MouseDoubleClick"/>
+            <TextBox x:Name="txtDataGridSubHeaderEdit" Text="Data Grid Sub Header" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,28,0,0" KeyDown="txtDataGridSubHeaderEdit_KeyDown"/>
             <Button x:Name="btnAllSongs" Content="All Songs" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" 
                     Padding="5,5,5,5" Margin="0,-33,30,0" Background="Lavender" BorderThickness="1,1,1,1" 
                     BorderBrush="Black" Click="btnAllSongs_Click">
@@ -282,6 +284,7 @@
                         <MenuItem Header="View Album" x:Name="mnuViewAlbum" Click="mnuViewAlbum_Click"/>
                         <MenuItem Header="Edit Song Details" x:Name="mnuEditSongFromDataGrid" Click="mnuEditSongFromDataGrid_Click" />
                         <MenuItem Header="Add Song To Playlist" x:Name="mnuAddSongToPlaylistFromDataGrid" Click="mnuAddSongToPlaylistFromDataGrid_Click" />
+                        <MenuItem Header="Write a Review" x:Name="mnuCreateReview" Click="mnuCreateReview_Click" />
                         <MenuItem Header="Delete Song" x:Name="mnuDeleteSong" Click="mnuDeleteSong_Click"/>
                         <MenuItem Header="Remove Song From Playlist" x:Name="mnuRemoveSongFromPlaylist" Click="mnuRemoveSongFromPlaylist_Click" Visibility="Hidden"/>
                     </ContextMenu>

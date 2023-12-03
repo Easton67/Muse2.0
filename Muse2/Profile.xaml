@@ -90,61 +90,63 @@
                     </WrapPanel>
                 </TabItem>
                 <TabItem x:Name="tabReviews" Header="Reviews" FontSize="14" Padding="32,2,32,2">
-                    <ScrollViewer Margin="0,20,0,0" CanContentScroll="True">
-                        <WrapPanel HorizontalAlignment="Left" Margin="15,40,0,0" >
-                            <ItemsControl 
+                    <WrapPanel HorizontalAlignment="Left" Margin="15,40,0,0" >
+                        <ItemsControl 
                                 x:Name="icReviews" 
                                 Margin="0,20,0,0" >
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
                                             Width="300"
                                             Margin="0,0,10,10"
                                             Padding="5,5,0,0"
                                             BorderBrush="LightGray"
                                             BorderThickness="1">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="auto"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <StackPanel Grid.Column="0" Grid.Row="0" >
-                                                    <Image Grid.Column="0" Grid.Row="0" Source="{Binding ReviewedSong.ImageFilePath}" Margin="5,0,5,-10"/>
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="1" Grid.Row="0">
-                                                    <TextBlock Text="{Binding ReviewedSong.Title}" FontWeight="ExtraBlack" Margin="10,0,0,0" Padding="0,0,0,20"/>
-                                                    <TextBlock Text="{Binding ReviewedSong.Artist}" FontWeight="ExtraBlack" Margin="10,0,0,0" Padding="0,0,0,20"/>
-                                                    <TextBlock Text="{Binding ReviewedSong.YearReleased}" FontWeight="ExtraBlack" Margin="10,0,0,0" Padding="0,0,0,20"/>
-                                                    <TextBlock>
-                                                        <Run Text="{Binding Rating}" FontWeight="Bold" />
-                                                        <Run Text=" out of 10" />
-                                                    </TextBlock>
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" >
-                                                    <TextBox Width="280" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" 
+                                        <Border.ContextMenu>
+                                            <ContextMenu>
+                                                <!-- Add menu items as needed -->
+                                                <MenuItem Header="Edit" />
+                                                <MenuItem Header="Delete" />
+                                            </ContextMenu>
+                                        </Border.ContextMenu>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Grid.Row="0" >
+                                                <Image Grid.Column="0" Grid.Row="0" Source="{Binding ReviewedSong.ImageFilePath}" Margin="5,0,5,-10"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Grid.Row="0">
+                                                <TextBlock Text="{Binding ReviewedSong.Title}" FontWeight="ExtraBlack" Margin="10,0,0,0" Padding="0,0,0,20"/>
+                                                <TextBlock Text="{Binding ReviewedSong.Artist}" FontWeight="ExtraBlack" Margin="10,0,0,0" Padding="0,0,0,20"/>
+                                                <TextBlock Text="{Binding ReviewedSong.YearReleased}" FontWeight="ExtraBlack" Margin="10,0,0,0" Padding="0,0,0,20"/>
+                                                <TextBlock Text="{Binding Rating}" FontWeight="Bold" Margin="10,0,0,0" Padding="0,0,0,20"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" CanVerticallyScroll="True" >
+                                                <TextBox Width="280" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" 
                                                      Margin="5,20,0,5"
                                                      MinLines="5" MinHeight="100" HorizontalAlignment="Left" FontSize="14" Text="{Binding Message}" IsReadOnly="True"/>
-                                                </StackPanel>
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl >
-                        </WrapPanel>
-                    </ScrollViewer>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl >
+                    </WrapPanel>
                 </TabItem>
             </TabControl>
         </StackPanel>

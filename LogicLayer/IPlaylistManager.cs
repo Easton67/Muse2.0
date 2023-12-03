@@ -9,9 +9,10 @@ namespace LogicLayer
 {
     public interface IPlaylistManager
     {
-        List<Playlist> SelectPlaylistByUserID(int userId);
         bool InsertSongIntoPlaylist(int songID, int playlistID);
         bool CreatePlaylist(Playlist newPlaylist);
+        List<Playlist> SelectPlaylistByUserID(int userId);
+        bool UpdatePlaylist(Playlist oldPlaylist, Playlist newPlaylist);
         bool DeletePlaylist(int playlistID);
     }
 }

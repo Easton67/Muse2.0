@@ -67,6 +67,20 @@ namespace LogicLayer
             }
             return playlists;
         }
+        public bool UpdatePlaylist(Playlist oldPlaylist, Playlist newPlaylist)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _playlistAccessor.UpdatePlaylist(oldPlaylist, newPlaylist));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Playlist not updated.", ex);
+            }
+            return result;
+        }
         public bool DeletePlaylist(int playlistID)
         {
             bool result = false;
