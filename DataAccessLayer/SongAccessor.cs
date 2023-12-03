@@ -78,8 +78,8 @@ namespace DataAccessLayer
                     {
                         SongID = reader.GetInt32(0),
                         Title = reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : reader.GetString(2),
-                        Mp3FilePath = reader.GetString(3),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
+                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(3),
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
                         Explicit = reader.GetBoolean(6),
@@ -131,7 +131,7 @@ namespace DataAccessLayer
                     {
                         SongID = reader.GetInt32(0),
                         Title = reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : reader.GetString(2),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
                         Mp3FilePath = reader.GetString(3),
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),

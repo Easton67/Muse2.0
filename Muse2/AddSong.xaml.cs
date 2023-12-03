@@ -125,7 +125,7 @@ namespace Muse2
             {
                 Title = txtTitle.Text,
                 ImageFilePath = _imgFile,
-                Mp3FilePath = txtMp3FilePath.Text,
+                Mp3FilePath = _mp3File,
                 YearReleased = int.Parse(txtYear.Text),
                 Lyrics = txtLyrics.Text,
                 Explicit = (bool)chkExplicit.IsChecked,
@@ -179,7 +179,8 @@ namespace Muse2
 
                     imgSongImage.Source = songImage;
 
-                    _imgFile = newImageFilePath;
+                    // get just the file name since we handle the pathing down at the Data Access Layer
+                    _imgFile = System.IO.Path.GetFileName(newImageFilePath);
                 }
                 else
                 {

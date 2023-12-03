@@ -120,6 +120,7 @@ namespace Muse2
             mnuControls.Visibility = Visibility.Collapsed;
             mnuAdmin.Visibility = Visibility.Collapsed;
             mnuPlaylist.Visibility = Visibility.Collapsed;
+            mnuResetPassword.Visibility = Visibility.Collapsed;
             grdUsers.Visibility = Visibility.Collapsed;
             panelSelectedUser.Visibility = Visibility.Hidden;
 
@@ -400,6 +401,7 @@ namespace Muse2
             mnuAccount.Visibility = Visibility.Visible;
             mnuControls.Visibility = Visibility.Visible;
             mnuViewProfile.Visibility = Visibility.Visible;
+            mnuResetPassword.Visibility = Visibility.Visible;
             foreach (var role in loggedInUser.Roles)
             {
                 if (role.ToString() == "Admin")
@@ -714,6 +716,8 @@ namespace Muse2
             try
             {
                 mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+
+                MessageBox.Show(userSongs[songNumber].Mp3FilePath);
             }
             catch (Exception ex)
             {

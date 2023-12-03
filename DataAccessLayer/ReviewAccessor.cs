@@ -13,6 +13,7 @@ namespace DataAccessLayer
 {
     public class ReviewAccessor : IReviewAccessor
     {
+        private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
         public int CreateReview(Review review)
         {
             int rows = 0;
@@ -67,7 +68,7 @@ namespace DataAccessLayer
                         Title = reader.GetString(5),
                         YearReleased = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
                         Artist = reader.GetString(7),
-                        ImageFilePath = reader.IsDBNull(8) ? "" : reader.GetString(8),
+                        ImageFilePath = reader.IsDBNull(8) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(8),
                         Mp3FilePath = reader.GetString(9),
                         Explicit = reader.GetBoolean(10),
                     };

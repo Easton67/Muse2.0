@@ -57,7 +57,7 @@
             </MenuItem>
             <MenuItem x:Name="mnuHelp" Header="Help">
                 <MenuItem x:Name="mnuSignUp" Header="Sign Up" Click="mnuSignUp_Click"/>
-                <MenuItem x:Name="mnuResetPassword" Header="Reset Password" Click="mnuResetPassword_Click" />
+                <MenuItem x:Name="mnuResetPassword" Header="Reset Password" Click="mnuResetPassword_Click" Visibility="Collapsed"  />
             </MenuItem>
             <MenuItem x:Name="mnuAdmin" Header="Admin">
                 <MenuItem x:Name="mnuViewAllUsers" Header="View All Users" Click="mnuViewAllUsers_Click"/>

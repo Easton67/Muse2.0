@@ -16,6 +16,7 @@ using LogicLayer;
 using System.Diagnostics;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace Muse2
 {
@@ -27,6 +28,7 @@ namespace Muse2
         private Song _song = null; 
         private UserVM _loggedInUser = null;
         private string _imgFile = "";
+        private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
         public AddEditSongxaml(Song song, UserVM loggedInUser)
         {
@@ -186,13 +188,25 @@ namespace Muse2
                 if (result == true)
                 {
                     _imgFile = openFileDialog.FileName;
-                    var SongImage = new BitmapImage(new System.Uri(_imgFile));
 
-                    imgSongImage.Source = SongImage;
+                    string destinationFolder = baseDirectory + "\\MuseConfig\\AlbumArt";
+
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        Directory.CreateDirectory(destinationFolder);
+                    }
+
+                    string newImageFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(_imgFile));
+                    File.Copy(_imgFile, newImageFilePath, true);
+
+                    var songImage = new BitmapImage(new System.Uri(_imgFile));
+
+                    imgSongImage.Source = songImage;
+
+
                 }
                 else
                 {
-                    // user closes the file explorer before picking a photo
                     MessageBox.Show("Choose a photo to update your current account photo.");
                 }
             }
