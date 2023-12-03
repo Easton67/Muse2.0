@@ -1,26 +1,15 @@
-﻿using System;
+﻿using DataObjects;
+using LogicLayer;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Reflection.PortableExecutable;
-using System.Resources;
-using System.Runtime.CompilerServices;
-using System.Security.Principal;
-using System.Threading;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using DataObjects;
-using LogicLayer;
-using Microsoft.Win32;
 
 namespace Muse2
 {
@@ -1060,16 +1049,13 @@ namespace Muse2
                 try
                 {
                     _playlistManager.RemoveSongFromPlaylist(song.SongID);
-                    // Reload your library or playlist
-                    if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
+
+                    // handle if the last song of the playlist
+                    playlistSongsRepopulation();
+
+                    // if there is another song to skip to, run this
+                    if (grdLibrary.Items.Count != 0)
                     {
-                        songListRepopulation();
-                        // Simulate skipping to the next song, so it isn't showing up in the media player
-                        NextSongHelper();
-                    }
-                    else
-                    {
-                        playlistSongsRepopulation();
                         NextSongHelper();
                     }
                 }
@@ -1241,9 +1227,8 @@ namespace Muse2
                 {
                     playlistImg = openFileDialog.FileName;
                     var PlaylistImage = new BitmapImage(new System.Uri(playlistImg));
-                    UpdatePlaylistHelper();
-
                     imgPlaylistPicture.Source = PlaylistImage;
+                    UpdatePlaylistHelper();
                 }
                 else
                 {
@@ -1318,6 +1303,14 @@ namespace Muse2
                 };
 
                 _playlistManager.UpdatePlaylist(oldPlaylist, newPlaylist);
+
+                // kick the user back to the library so they can regrab the selected song.
+                userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+                lblDataGridHeader.Content = "Library";
+                lblDataGridSubHeader.Content = "";
+                grdLibrary.ItemsSource = userSongs;
+                btnPlaylistImageEdit.Visibility = Visibility.Hidden;
+                imgPlaylistPicture.Visibility = Visibility.Hidden;
             }
             catch (Exception ex)
             {
