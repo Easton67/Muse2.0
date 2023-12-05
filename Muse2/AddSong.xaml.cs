@@ -121,21 +121,21 @@ namespace Muse2
         }
         private void btnCreateSong_Click(object sender, RoutedEventArgs e)
         {
-            var newSong = new Song()
-            {
-                Title = txtTitle.Text,
-                ImageFilePath = _imgFile,
-                Mp3FilePath = _mp3File,
-                YearReleased = int.Parse(txtYear.Text),
-                Lyrics = txtLyrics.Text,
-                Explicit = (bool)chkExplicit.IsChecked,
-                Plays = int.Parse(txtPlays.Text),
-                UserID = _loggedInUser.UserID,
-                Album = txtAlbum.Text,
-                Artist = txtArtist.Text
-            };
             try
             {
+                var newSong = new Song()
+                {
+                    Title = txtTitle.Text,
+                    ImageFilePath = _imgFile,
+                    Mp3FilePath = _mp3File,
+                    YearReleased = int.Parse(txtYear.Text),
+                    Lyrics = txtLyrics.Text,
+                    Explicit = (bool)chkExplicit.IsChecked,
+                    Plays = int.Parse(txtPlays.Text),
+                    UserID = _loggedInUser.UserID,
+                    Album = txtAlbum.Text,
+                    Artist = txtArtist.Text
+                };
                 var sm = new SongManager();
                 bool result = sm.InsertSong(newSong);
                 this.Close();

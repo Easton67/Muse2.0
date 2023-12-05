@@ -168,7 +168,7 @@ namespace DataAccessLayer
                         Email = reader.GetString(2),
                         FirstName = reader.IsDBNull(3) ? "" : reader.GetString(3),
                         LastName = reader.IsDBNull(4) ? "" : reader.GetString(4),
-                        ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : reader.GetString(5),
+                        ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\" + reader.GetString(5),
                         Active = reader.GetBoolean(6),
                         MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
                     };

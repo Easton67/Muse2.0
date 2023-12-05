@@ -203,6 +203,7 @@ namespace Muse2
 
                     imgSongImage.Source = songImage;
 
+                    _imgFile = newImageFilePath;
 
                 }
                 else
@@ -220,12 +221,14 @@ namespace Muse2
             SongManager _songManager = new SongManager();
 
             var oldSong = this._song;
+            oldSong.ImageFilePath = System.IO.Path.GetFileName(oldSong.ImageFilePath);
+            oldSong.Mp3FilePath = System.IO.Path.GetFileName(oldSong.Mp3FilePath);
 
             var newSong = new Song()
             {
                 SongID = oldSong.SongID,
                 Title = txtTitle.Text,
-                ImageFilePath = _imgFile,
+                ImageFilePath = System.IO.Path.GetFileName(_imgFile),
                 Mp3FilePath = oldSong.Mp3FilePath,
                 YearReleased = int.Parse(txtYear.Text),
                 Lyrics = txtLyrics.Text,

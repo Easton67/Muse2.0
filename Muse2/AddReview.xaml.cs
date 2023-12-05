@@ -53,18 +53,18 @@ namespace Muse2
 
         private void btnCreateReview_Click(object sender, RoutedEventArgs e)
         {
-            ReviewManager _reviewManager = new ReviewManager();
-
-            var review = new Review()
-            {
-                Rating = int.Parse(txtRating.Text),
-                Message = txtReviewMessage.Text,
-                UserID = _loggedInUser.UserID,
-                SongID = _song.SongID
-            };
-
             try
             {
+                ReviewManager _reviewManager = new ReviewManager();
+
+                var review = new Review()
+                {
+                    Rating = int.Parse(txtRating.Text),
+                    Message = txtReviewMessage.Text,
+                    UserID = _loggedInUser.UserID,
+                    SongID = _song.SongID
+                };
+            
                 _reviewManager.CreateReview(review);
                 MessageBox.Show("You can view your reviews inside of your profile", "Success!");
                 Close();

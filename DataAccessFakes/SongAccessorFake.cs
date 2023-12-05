@@ -12,6 +12,7 @@ namespace DataAccessFakes
     public class SongAccessorFake : ISongAccessor
     {
         private List<Song> fakeSongs = new List<Song>();
+        private List<Playlist> fakePalylists = new List<Playlist>();
 
         public SongAccessorFake()
         {

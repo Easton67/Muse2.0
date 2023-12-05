@@ -202,6 +202,5 @@ namespace LogicLayer
             }
             return result;
         }
-
     }
 }

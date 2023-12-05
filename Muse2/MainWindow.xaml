@@ -29,8 +29,6 @@
             <RowDefinition Height="180"/>
             <RowDefinition Height="10"/>
             <RowDefinition />
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Padding="20px, 0px">
             <MenuItem x:Name="mnuFile" Header="File">
@@ -125,8 +123,8 @@
                 </Button.Resources>
             </Button>
             <!-- Col2 -->
-            <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="2" Width="100" Source="/Resources/defaultAccount.png" HorizontalAlignment="Center"/>
-            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" HorizontalAlignment="Center"/>
+            <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="2" Width="100" Height="100" Source="/defaultAccount.png" HorizontalAlignment="Center"/>
+            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" Height="100" HorizontalAlignment="Center"/>
 
             <Button x:Name="btnLogin" Content="Log In"
                     Grid.Row="1" Grid.Column="2" 
@@ -147,11 +145,11 @@
             <Label x:Name="lblEmail" Grid.Row="1" Grid.Column="2"
                    FontWeight="Bold" VerticalAlignment="Top"
                    HorizontalContentAlignment="Center"
-                   Content="Email" HorizontalAlignment="Right" Margin="0,0,144,0" Height="23" Padding="5,2,5,5" />
+                   Content="Email" HorizontalAlignment="Right" Margin="0,0,153,0" Height="23" Padding="5,2,5,5" />
 
             <Button x:Name="btnProfileName" Content="User" Grid.Row="1" Grid.Column="2" FontWeight="Bold"
-                   HorizontalContentAlignment="Center" Width="60"
-                   HorizontalAlignment="Center" Margin="46,0,-139,0" Padding="5,0,5,3" VerticalAlignment="Center" Background="White" BorderThickness="0,0,0,0" Click="btnProfileName_Click" Height="23">
+                   HorizontalContentAlignment="Center"
+                   HorizontalAlignment="Center" Margin="46,0,-127,0" Padding="5,0,5,3" VerticalAlignment="Center" Background="White" BorderThickness="0,0,0,0" Click="btnProfileName_Click" Height="23">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="4"/>

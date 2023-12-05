@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Windows;
@@ -23,7 +24,8 @@ namespace Muse2
         private string _imgFile = "";
         List<Song> userSongs = null;
         List<Review> reviews = null;
-        private ReviewManager _reviewManager = new ReviewManager(); 
+        private ReviewManager _reviewManager = new ReviewManager();
+        private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
         public Profile(UserVM loggedInUser, SongManager _songManager)
         {
@@ -179,43 +181,51 @@ namespace Muse2
             }
             else
             {
-                string NewFirstName = txtFirstName.Text;
-                string NewLastName = txtLastName.Text;
-
-                if (!NewFirstName.IsValidFirstName())
-                {
-                    MessageBox.Show("That is not a valid first name", "Invalid first name",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    txtFirstName.Focus();
-                    return;
-                }
-                if (!NewLastName.IsValidLastName())
-                {
-                    MessageBox.Show("That is not a valid last name", "Invalid last name",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    txtFirstName.Focus();
-                    return;
-                }
-
-                UserManager _userManager = new UserManager();
-
-                var oldUser = this._loggedInUser;
-
-                var newUser = new UserVM()
-                {
-                    UserID = _loggedInUser.UserID,
-                    ProfileName = _loggedInUser.ProfileName,
-                    Email = _loggedInUser.Email,
-                    FirstName = NewFirstName,
-                    LastName = NewLastName,
-                    ImageFilePath = _imgFile,
-                    Active = true,
-                    MinutesListened = 0,
-                    Roles = _loggedInUser.Roles
-                };
-
                 try
                 {
+                    string NewFirstName = txtFirstName.Text;
+                    string NewLastName = txtLastName.Text;
+
+                    if (!NewFirstName.IsValidFirstName())
+                    {
+                        MessageBox.Show("That is not a valid first name", "Invalid first name",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        txtFirstName.Focus();
+                        return;
+                    }
+                    if (!NewLastName.IsValidLastName())
+                    {
+                        MessageBox.Show("That is not a valid last name", "Invalid last name",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        txtFirstName.Focus();
+                        return;
+                    }
+
+                     UserManager _userManager = new UserManager();
+
+                    var oldUser = this._loggedInUser;
+
+                    oldUser.ImageFilePath =  System.IO.Path.GetFileName(oldUser.ImageFilePath);
+
+                    var newUser = new UserVM()
+                    {
+                        UserID = _loggedInUser.UserID,
+                        ProfileName = _loggedInUser.ProfileName,
+                        Email = _loggedInUser.Email,
+                        FirstName = NewFirstName,
+                        LastName = NewLastName,
+                        ImageFilePath = System.IO.Path.GetFileName(_imgFile),
+                        Active = true,
+                        MinutesListened = 0,
+                        Roles = _loggedInUser.Roles
+                    };
+
+                    // handle if image isnt changed in the edit
+                    if(newUser.ImageFilePath == "")
+                    {
+                        newUser.ImageFilePath = System.IO.Path.GetFileName(oldUser.ImageFilePath);
+                    }
+
                     _userManager.UpdateUser(oldUser, newUser);
                     btnEdit.Content = "Edit";
                     MessageBox.Show("Your account details have been updated.\n\nYour account will be updated the next time you log in.", "Success!",
@@ -233,9 +243,6 @@ namespace Muse2
         #endregion
         private void btnAccontImage_Click(object sender, RoutedEventArgs e)
         {
-
-            UserManager _userManager = new UserManager();
-
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -248,14 +255,26 @@ namespace Muse2
                 if (result == true)
                 {
                     _imgFile = openFileDialog.FileName;
-                    var AccountImage = new BitmapImage(new System.Uri(_imgFile));
 
-                    imgAccountImage.Source = AccountImage;
-                    btnEdit.Content = "Add Changes";
+                    string destinationFolder = baseDirectory + "\\MuseConfig\\AlbumArt";
+
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        Directory.CreateDirectory(destinationFolder);
+                    }
+
+                    string newImageFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(_imgFile));
+                    File.Copy(_imgFile, newImageFilePath, true);
+
+                    var songImage = new BitmapImage(new System.Uri(_imgFile));
+
+                    imgAccountImage.Source = songImage;
+
+                    _imgFile = newImageFilePath;
+
                 }
                 else
                 {
-                    // user closes the file explorer before picking a photo
                     MessageBox.Show("Choose a photo to update your current account photo.");
                 }
             }

@@ -17,7 +17,7 @@ namespace DataAccessFakes
             {
                 PlaylistID = 1,
                 Title = "Night",
-                ImageFilePath = "C:\\Users\\67Eas\\Downloads\\albumart\\scaryhours.jpeg\\",
+                ImageFilePath = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\AlbumArt",
                 Description = "Perfect playlist for once it gets dark out",
                 UserID = 100001
             });
@@ -25,16 +25,16 @@ namespace DataAccessFakes
             {
                 PlaylistID = 2,
                 Title = "Day",
-                ImageFilePath = "C:\\Users\\67Eas\\Downloads\\albumart\\scaryhours.jpeg\\",
+                ImageFilePath = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\AlbumArt",
                 Description = "Great for when its nice and sunny outside",
                 UserID = 100001
             });
             fakePlaylists.Add(new Playlist()
             {
                 PlaylistID = 3,
-                Title = "Test",
-                ImageFilePath = "C:\\Users\\67Eas\\Downloads\\albumart\\scaryhours.jpeg\\",
-                Description = "testing",
+                Title = "Gym",
+                ImageFilePath = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\AlbumArt",
+                Description = "Playlist for pushing weight",
                 UserID = 100002
             });
         }

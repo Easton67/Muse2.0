@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="MainWindow" Height="900" Width="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -74,18 +74,22 @@
                 <TabItem Header="Stats"
                     FontSize="14" Padding="32,2,32,2">
                     <WrapPanel HorizontalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,-180,426">
-                            <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75" VerticalAlignment="Top"/>
-                            <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45" Margin="0,0,0,100" Padding="5,5,5,5"/>
-                        </StackPanel>
-                        <StackPanel x:Name="labelStackPanel" Orientation="Vertical" VerticalAlignment="Center" IsManipulationEnabled="True" Margin="0,100,0,0" >
-                            <Image x:Name="imgTopSongs" Source="/Resources/defaultAlbumImage.png" Width="200" HorizontalAlignment="Left"/>
-                            <Label x:Name="lblMostPlayedSong" Content="Most Played Songs" Width="260" FontWeight="UltraBlack" FontSize="25" />
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,100,0,0">
-                            <!--Test number put in just to see how it looks on this page-->
-                            <Label x:Name="lblMinutesTotalListened" HorizontalAlignment="Center" FontSize="80" Margin="0,22,0,0">3000</Label>
-                            <Label x:Name="lblMinutesListned" HorizontalAlignment="Center" FontSize="20" BorderThickness="0,4,0,65" Margin="0,2,0,0">minutes listened</Label>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75" VerticalAlignment="Top"/>
+                                <Label x:Name="lblStats" Content="Stats" VerticalAlignment="Center" FontSize="45" Margin="0,0,0,100" Padding="5,5,5,5"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel x:Name="labelStackPanel" Orientation="Vertical" VerticalAlignment="Center" IsManipulationEnabled="True" Margin="0,100,245,0" >
+                                    <Image x:Name="imgTopSongs" Source="/Resources/defaultAlbumImage.png" Width="200" HorizontalAlignment="Left" Margin="0,-102,0,0"/>
+                                    <Label x:Name="lblMostPlayedSong" Content="Most Played Songs" Width="260" FontWeight="UltraBlack" FontSize="25" />
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,-2,0,0">
+                                    <!--Test number put in just to see how it looks on this page-->
+                                    <Label x:Name="lblMinutesTotalListened" HorizontalAlignment="Center" FontSize="80" Margin="0,22,0,0">3000</Label>
+                                    <Label x:Name="lblMinutesListned" HorizontalAlignment="Center" FontSize="20" BorderThickness="0,4,0,65" Margin="0,2,0,0">minutes listened</Label>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>
@@ -129,12 +133,15 @@
                                                 <TextBlock Text="{Binding ReviewedSong.Title}" FontWeight="ExtraBlack" Margin="10,0,0,0" Padding="0,0,0,20"/>
                                                 <TextBlock Text="{Binding ReviewedSong.Artist}" FontWeight="ExtraBlack" Margin="10,0,0,0" Padding="0,0,0,20"/>
                                                 <TextBlock Text="{Binding ReviewedSong.YearReleased}" FontWeight="ExtraBlack" Margin="10,0,0,0" Padding="0,0,0,20"/>
-                                                <TextBlock Text="{Binding Rating}" FontWeight="Bold" Margin="10,0,0,0" Padding="0,0,0,20"/>
+                                                <StackPanel Orientation="horizontal">
+                                                    <TextBlock Text="{Binding Rating}" FontWeight="Bold" Margin="10,0,0,0" Padding="0,0,0,20"/>
+                                                    <TextBlock Text="out of 5" FontWeight="Bold" Padding="0,0,0,20" Margin="5,0,0,0"/>
+                                                </StackPanel>
                                             </StackPanel>
                                             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" CanVerticallyScroll="True" >
                                                 <TextBox Width="280" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" 
-                                                     Margin="5,20,0,5"
-                                                     MinLines="5" MinHeight="100" HorizontalAlignment="Left" FontSize="14" Text="{Binding Message}" IsReadOnly="True"/>
+                                                     Margin="5,20,0,5" MinLines="5" MinHeight="100" HorizontalAlignment="Left" 
+                                                     FontSize="14" Text="{Binding Message}" IsReadOnly="True" ScrollViewer.CanContentScroll="True" Cursor="Arrow" SelectionBrush="{x:Null}"/>
                                             </StackPanel>
                                         </Grid>
                                     </Border>

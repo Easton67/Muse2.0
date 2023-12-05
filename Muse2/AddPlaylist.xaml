@@ -14,8 +14,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="55" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="55" />
+            <RowDefinition Height="49" />
+            <RowDefinition Height="57" />
             <RowDefinition Height="30" />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -24,8 +24,8 @@
             <Image x:Name="imgPlaylistCover" Source="/defaultAlbumImage.png" Width="150" Height="150"/>
         </Button>
         <Label x:Name="lblPlaylistFilePath" Grid.Row="0" Grid.Column="1" Content="Playlist Image" FontSize="15" Margin="3,0,0,0" VerticalContentAlignment="Bottom"/>
-        <TextBox x:Name="txtPlaylistFilePath" Grid.Row="1" Text="Double click the playlist image to add your own"  Grid.Column="1" Height="30" FontSize="13" Width="320" HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" IsReadOnly="True" ToolTip="Double click the image to add your own image." IsEnabled="False"/>
-        <Label x:Name="lblPlaylistTitle" Grid.Row="2" Grid.Column="1" Content="Playlist Title" FontSize="15"  Margin="4,0,0,0" VerticalContentAlignment="Bottom"/>
+        <TextBox x:Name="txtPlaylistFilePath" Grid.Row="1" Text="Double click the playlist image to add your own"  Grid.Column="1" Height="30" FontSize="13" Width="320" HorizontalAlignment="Left" Margin="8,12,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" IsReadOnly="True" ToolTip="Double click the image to add your own image." IsEnabled="False"/>
+        <Label x:Name="lblPlaylistTitle" Grid.Row="2" Grid.Column="1" Content="Playlist Title" FontSize="15"  Margin="4,0,0,19" VerticalContentAlignment="Bottom"/>
         <TextBox x:Name="txtPlaylistTitle" Grid.Row="3" Grid.Column="1" FontSize="13" Width="320" Height="30" HorizontalAlignment="Left" Margin="8,0,0,0" 
                  VerticalAlignment="Top" VerticalContentAlignment="Center"/>
         <Label x:Name="lblPlaylistDescription" Grid.Row="4" Grid.Column="1" Content="Playlist Description" Margin="11,0,0,0" HorizontalAlignment="Left" 

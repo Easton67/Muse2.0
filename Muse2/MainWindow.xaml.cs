@@ -3,6 +3,7 @@ using LogicLayer;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -549,7 +550,18 @@ namespace Muse2
             mediaPlayer.Pause();
             var profileWindow = new Profile(loggedInUser, _songManager);
             profileWindow.ShowDialog();
-            updateUIForUserLogin();
+            if(grdLibrary.Visibility == Visibility.Visible)
+            {
+                updateUIForUserLogin();
+            }
+            else if(grdUsers.Visibility == Visibility.Visible)
+            {
+                grdUsersRepopulation();
+            }
+            else
+            {
+                playlistListRepopulation();
+            }
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -716,8 +728,6 @@ namespace Muse2
             try
             {
                 mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
-
-                MessageBox.Show(userSongs[songNumber].Mp3FilePath);
             }
             catch (Exception ex)
             {
@@ -873,12 +883,15 @@ namespace Muse2
                             if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
                             {
                                 songListRepopulation();
-                                // Simulate skipping to the next song, so it isn't showing up in the media player
-                                NextSongHelper();
                             }
                             else
                             {
                                 playlistSongsRepopulation();
+                            }
+                            // Simulate skipping to the next song, so it isn't showing up in the media player
+                            if (grdLibrary.Items.Count != 0)
+                            {
+                                NextSongHelper();
                             }
                         }
                     }
@@ -930,6 +943,54 @@ namespace Muse2
                 }
             }
         }
+        private void btnPlaylistImageEdit_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+
+                openFileDialog.Title = "Open File";
+                openFileDialog.Filter = "Image Files (*.jpg;*.jpeg;*.png;)|*.jpg;*.jpeg;*.png;|All Files (*.*)|*.*";
+
+                bool? result = openFileDialog.ShowDialog();
+
+                if (result == true)
+                {
+                    playlistImg = openFileDialog.FileName;
+                    var PlaylistImage = new BitmapImage(new System.Uri(playlistImg));
+                    imgPlaylistPicture.Source = PlaylistImage;
+
+
+                    string destinationFolder = baseDirectory + "\\MuseConfig\\PlaylistImages";
+
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        Directory.CreateDirectory(destinationFolder);
+                    }
+
+                    string newImageFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(playlistImg));
+                    File.Copy(playlistImg, newImageFilePath, true);
+
+                    var songImage = new BitmapImage(new System.Uri(playlistImg));
+
+                    imgPlaylistPicture.Source = songImage;
+
+                    playlistImg = newImageFilePath;
+
+                    UpdatePlaylistHelper();
+
+                }
+                else
+                {
+                    // user closes the file explorer before picking a photo
+                    MessageBox.Show("Choose a photo to update your current account photo.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Invalid image." + " " + ex.Message);
+            }
+        }
         private void grdPlaylists_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             txtDataGridHeaderEdit.Visibility = Visibility.Hidden;
@@ -952,9 +1013,17 @@ namespace Muse2
 
                         btnPlaylistImageEdit.Visibility = Visibility.Visible;
                         imgPlaylistPicture.Visibility = Visibility.Visible;
-                        var playlistImageFilePath = ((Playlist)grdPlaylists.SelectedItem).ImageFilePath;
-                        BitmapImage playlistImageBitmap = new BitmapImage(new System.Uri(playlistImageFilePath));
-                        imgPlaylistPicture.Source = playlistImageBitmap;
+                        try
+                        {
+                            var playlistImageFilePath = ((Playlist)grdPlaylists.SelectedItem).ImageFilePath;
+                            BitmapImage playlistImageBitmap = new BitmapImage(new System.Uri(playlistImageFilePath));
+                            imgPlaylistPicture.Source = playlistImageBitmap;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to find playlist image.",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                         lblDataGridHeader.Visibility = Visibility.Visible;
                         lblDataGridHeader.Content = playlistName;
                         lblDataGridSubHeader.Visibility = Visibility.Visible;
@@ -1071,6 +1140,75 @@ namespace Muse2
                 }
             }
         }
+        private void UpdatePlaylistHelper()
+        {
+            try
+            {
+                if (playlistImg == "")
+                {
+                    playlistImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
+                }
+
+                var oldPlaylist = new Playlist()
+                {
+                    PlaylistID = ((Playlist)grdPlaylists.SelectedItem).PlaylistID,
+                    Title = ((Playlist)grdPlaylists.SelectedItem).Title,
+                    ImageFilePath = System.IO.Path.GetFileName(((Playlist)grdPlaylists.SelectedItem).ImageFilePath),
+                    Description = ((Playlist)grdPlaylists.SelectedItem).Description,
+                    UserID = loggedInUser.UserID
+                };
+
+                var newPlaylist = new Playlist()
+                {
+                    PlaylistID = ((Playlist)grdPlaylists.SelectedItem).PlaylistID,
+                    Title = lblDataGridHeader.Content.ToString(),
+                    ImageFilePath = System.IO.Path.GetFileName(playlistImg),
+                    Description = lblDataGridSubHeader.Content.ToString(),
+                    UserID = loggedInUser.UserID,
+                };
+
+                _playlistManager.UpdatePlaylist(oldPlaylist, newPlaylist);
+
+                // kick the user back to the library so they can regrab the selected song.
+                userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+                lblDataGridHeader.Content = "Library";
+                lblDataGridSubHeader.Content = "";
+                grdLibrary.ItemsSource = userSongs;
+                btnPlaylistImageEdit.Visibility = Visibility.Hidden;
+                imgPlaylistPicture.Visibility = Visibility.Hidden;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not update your playlist.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        private void txtDataGridSubHeaderEdit_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if the key the user pressed was enter
+            if (e.Key == Key.Return || e.Key == Key.Enter)
+            {
+                lblDataGridSubHeader.Content = txtDataGridSubHeaderEdit.Text;
+                txtDataGridSubHeaderEdit.Visibility = Visibility.Hidden;
+                lblDataGridSubHeader.Visibility = Visibility.Visible;
+
+                UpdatePlaylistHelper();
+                playlistListRepopulation();
+            }
+        }
+        private void txtDataGridHeaderEdit_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return || e.Key == Key.Enter)
+            {
+                lblDataGridHeader.Content = txtDataGridHeaderEdit.Text;
+                txtDataGridHeaderEdit.Visibility = Visibility.Hidden;
+                lblDataGridHeader.Visibility = Visibility.Visible;
+
+                UpdatePlaylistHelper();
+                playlistListRepopulation();
+            }
+        }
         #endregion
         private void mnuViewAlbum_Click(object sender, RoutedEventArgs e)
         {
@@ -1095,7 +1233,7 @@ namespace Muse2
                 try
                 {
                     ImageBrush imageBrush = (ImageBrush)btnUserProfileImage.Background;
-                    BitmapImage profileImage = new BitmapImage(new Uri(User.ImageFilePath, UriKind.Relative));
+                    BitmapImage profileImage = new BitmapImage(new Uri(User.ImageFilePath));
                     imageBrush.ImageSource = profileImage;
                 }
                 catch (Exception ex)
@@ -1109,6 +1247,7 @@ namespace Muse2
                 txtUserLastName.Text = User.LastName;
                 txtUserEmail.Text = User.Email;
                 txtUserProfileName.Text = User.ProfileName;
+                chkUserActive.IsChecked = User.Active;
             }
         }
         private void btnUserEdit_Click(object sender, RoutedEventArgs e)
@@ -1116,7 +1255,6 @@ namespace Muse2
             btnUserProfileImage.IsEnabled = true;
             txtUserFirstName.IsEnabled = true;
             txtUserLastName.IsEnabled = true;
-            txtUserProfileName.IsEnabled = true;
         }
         private void grdUsersRepopulation()
         {
@@ -1156,6 +1294,7 @@ namespace Muse2
 
             UserManager _userManager = new UserManager();
             string userEmail = txtUserEmail.Text;
+
             UserVM oldUser = _userManager.GetUserVMByEmail(userEmail);
 
             var newUser = new UserVM()
@@ -1166,10 +1305,15 @@ namespace Muse2
                 FirstName = NewFirstName,
                 LastName = NewLastName,
                 ImageFilePath = userImg,
-                Active = (bool)chkUserActive.IsChecked,
+                Active = (bool)chkUserActive.IsChecked, 
                 MinutesListened = 0,
                 Roles = loggedInUser.Roles
             };
+
+            if (userImg == "")
+            {
+                newUser.ImageFilePath = oldUser.ImageFilePath;
+            }
 
             try
             {
@@ -1216,50 +1360,24 @@ namespace Muse2
             }
         }
         #endregion
-        private void btnPlaylistImageEdit_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void lblDataGridHeader_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            try
+            if (lblDataGridHeader.Content != "Library")
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-
-                openFileDialog.Title = "Open File";
-                openFileDialog.Filter = "Image Files (*.jpg;*.jpeg;*.png;)|*.jpg;*.jpeg;*.png;|All Files (*.*)|*.*";
-
-                bool? result = openFileDialog.ShowDialog();
-
-                if (result == true)
+                if (txtDataGridSubHeaderEdit.Visibility == Visibility.Hidden)
                 {
-                    playlistImg = openFileDialog.FileName;
-                    var PlaylistImage = new BitmapImage(new System.Uri(playlistImg));
-                    imgPlaylistPicture.Source = PlaylistImage;
-                    UpdatePlaylistHelper();
+                    lblDataGridHeader.Visibility = Visibility.Hidden;
+                    txtDataGridHeaderEdit.Visibility = Visibility.Visible;
+                    txtDataGridHeaderEdit.Text = "";
+                    txtDataGridHeaderEdit.Focus();
                 }
                 else
                 {
-                    // user closes the file explorer before picking a photo
-                    MessageBox.Show("Choose a photo to update your current account photo.");
+                    txtDataGridSubHeaderEdit.Visibility = Visibility.Hidden;
+                    lblDataGridSubHeader.Visibility = Visibility.Visible;
+                    txtDataGridHeaderEdit.Text = "";
+                    txtDataGridHeaderEdit.Focus();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Invalid image." + " " + ex.Message);
-            }
-        }
-        private void lblDataGridHeader_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (txtDataGridSubHeaderEdit.Visibility == Visibility.Hidden)
-            {
-                lblDataGridHeader.Visibility = Visibility.Hidden;
-                txtDataGridHeaderEdit.Visibility = Visibility.Visible;
-                txtDataGridHeaderEdit.Text = "";
-                txtDataGridHeaderEdit.Focus();
-            }
-            else
-            {
-                txtDataGridSubHeaderEdit.Visibility = Visibility.Hidden;
-                lblDataGridSubHeader.Visibility = Visibility.Visible;
-                txtDataGridHeaderEdit.Text = "";
-                txtDataGridHeaderEdit.Focus();
             }
         }
         private void lblDataGridSubHeader_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -1277,75 +1395,6 @@ namespace Muse2
                 lblDataGridHeader.Visibility = Visibility.Visible;
                 txtDataGridSubHeaderEdit.Text = "";
                 txtDataGridSubHeaderEdit.Focus();
-            }
-        }
-        private void UpdatePlaylistHelper()
-        {
-            try
-            {
-                if(playlistImg == "")
-                {
-                    playlistImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
-                }
-
-                var oldPlaylist = new Playlist()
-                {
-                    PlaylistID = ((Playlist)grdPlaylists.SelectedItem).PlaylistID,
-                    Title = ((Playlist)grdPlaylists.SelectedItem).Title,
-                    ImageFilePath = ((Playlist)grdPlaylists.SelectedItem).ImageFilePath,
-                    Description = ((Playlist)grdPlaylists.SelectedItem).Description,
-                    UserID = loggedInUser.UserID
-                };
-
-                var newPlaylist = new Playlist()
-                {
-                    PlaylistID = ((Playlist)grdPlaylists.SelectedItem).PlaylistID,
-                    Title = lblDataGridHeader.Content.ToString(),
-                    ImageFilePath = playlistImg,
-                    Description = lblDataGridSubHeader.Content.ToString(),
-                    UserID = loggedInUser.UserID,
-                };
-
-                _playlistManager.UpdatePlaylist(oldPlaylist, newPlaylist);
-
-                // kick the user back to the library so they can regrab the selected song.
-                userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
-                lblDataGridHeader.Content = "Library";
-                lblDataGridSubHeader.Content = "";
-                grdLibrary.ItemsSource = userSongs;
-                btnPlaylistImageEdit.Visibility = Visibility.Hidden;
-                imgPlaylistPicture.Visibility = Visibility.Hidden;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not update your playlist.",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        private void txtDataGridSubHeaderEdit_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Check if the key the user pressed was enter
-            if (e.Key == Key.Return || e.Key == Key.Enter)
-            {
-                lblDataGridSubHeader.Content = txtDataGridSubHeaderEdit.Text;
-                txtDataGridSubHeaderEdit.Visibility = Visibility.Hidden;
-                lblDataGridSubHeader.Visibility = Visibility.Visible;
-
-                UpdatePlaylistHelper();
-                playlistListRepopulation();
-            }
-        }
-        private void txtDataGridHeaderEdit_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return || e.Key == Key.Enter)
-            {
-                lblDataGridHeader.Content = txtDataGridHeaderEdit.Text;
-                txtDataGridHeaderEdit.Visibility = Visibility.Hidden;
-                lblDataGridHeader.Visibility = Visibility.Visible;
-
-                UpdatePlaylistHelper();
-                playlistListRepopulation();
             }
         }
         private void mnuCreateReview_Click(object sender, RoutedEventArgs e)

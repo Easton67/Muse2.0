@@ -14,6 +14,7 @@ namespace DataAccessLayer
 {
     public class PlaylistAccessor : IPlaylistAccessor
     {
+        private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
         public int CreatePlaylist(Playlist newPlaylist)
         {
             int rows = 0;
@@ -104,7 +105,7 @@ namespace DataAccessLayer
                     {
                         PlaylistID = reader.GetInt32(0),
                         Title = reader.IsDBNull(1) ? "Playlist" : reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? "/defaultAlbumImage.png" : reader.GetString(2),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages\\" + reader.GetString(2),
                         Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
                         UserID = reader.GetInt32(4)
                     };

@@ -13,11 +13,59 @@ namespace DataAccessFakes
         private List<Review> fakeReviews = new List<Review>();
         public ReviewAccessFake()
         {
-
+            fakeReviews.Add(new Review()
+            {
+                ReviewID = 1,
+                Rating = 1,
+                Message = "this song sucks",
+                UserID = 100001,
+                SongID = 1
+            });
+            fakeReviews.Add(new Review()
+            {
+                ReviewID = 2,
+                Rating = 2,
+                Message = "this song is pretty bad",
+                UserID = 100001,
+                SongID = 2
+            });
+            fakeReviews.Add(new Review()
+            {
+                ReviewID = 3,
+                Rating = 3,
+                Message = "this song is decent",
+                UserID = 100001,
+                SongID = 3
+            });
+            fakeReviews.Add(new Review()
+            {
+                ReviewID = 4,
+                Rating = 4,
+                Message = "this song is pretty good",
+                UserID = 100000,
+                SongID = 4
+            });
+            fakeReviews.Add(new Review()
+            {
+                ReviewID = 5,
+                Rating = 5,
+                Message = "this song is amazing",
+                UserID = 100000,
+                SongID = 5
+            });
         }
         public int CreateReview(Review review)
         {
-            throw new NotImplementedException();
+            fakeReviews.Add(new Review()
+            {
+                ReviewID = 6,
+                Rating = 5,
+                Message = "this song is amazing",
+                UserID = 100001,
+                SongID = 6
+            });
+
+            return fakeReviews.Count;
         }
         public int DeleteReview(int reviewID)
         {
@@ -25,7 +73,7 @@ namespace DataAccessFakes
         }
         public List<Review> SelectReviewsByUserID(int userID)
         {
-            throw new NotImplementedException();
+            return fakeReviews.FindAll(r => r.UserID == userID);
         }
         public int UpdateReview(Review oldReview, Review newReview)
         {
