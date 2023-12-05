@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -82,6 +83,7 @@ namespace Muse2
                             UserVM updatedUM = _userManager.GetUserVMByEmail(loggedInUser.Email);
                             int newMinutesListened = updatedUM.MinutesListened + 1;
                             _userManager.UpdateMinutesListened(loggedInUser.UserID, newMinutesListened);
+                            loggedInUser = updatedUM;
                         }
                         catch (Exception ex)
                         {
@@ -114,7 +116,7 @@ namespace Muse2
             mediaPlayer.Pause();
 
             // Hide role specific  items
-            mnuAlbum.Visibility = Visibility.Collapsed;
+            //mnuAlbum.Visibility = Visibility.Collapsed;
             mnuFile.Visibility = Visibility.Collapsed;
             mnuSong.Visibility = Visibility.Collapsed;
             mnuAccount.Visibility = Visibility.Collapsed;
@@ -395,7 +397,7 @@ namespace Muse2
             btnLogin.IsDefault = false;
 
             // set menus for specific roles
-            mnuAlbum.Visibility = Visibility.Visible;
+            //mnuAlbum.Visibility = Visibility.Visible;
             mnuPlaylist.Visibility = Visibility.Visible;
             mnuFile.Visibility = Visibility.Visible;
             mnuSong.Visibility = Visibility.Visible;
@@ -542,6 +544,10 @@ namespace Muse2
 
             grdUsersRepopulation();
         }
+        //private void mnuViewAlbum_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
         #endregion
         private void btnProfileName_Click(object sender, RoutedEventArgs e)
         {
@@ -694,7 +700,7 @@ namespace Muse2
         {
             try
             {
-                if (userSongs[songNumber].ImageFilePath != "")
+                if (userSongs[songNumber].ImageFilePath != null)
                 {
                     BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
                     imgCoverArt.Source = CoverArt;
@@ -975,10 +981,9 @@ namespace Muse2
 
                     imgPlaylistPicture.Source = songImage;
 
-                    playlistImg = newImageFilePath;
+                    playlistImg = System.IO.Path.GetFileName(newImageFilePath);
 
                     UpdatePlaylistHelper();
-
                 }
                 else
                 {
@@ -1143,7 +1148,7 @@ namespace Muse2
         private void UpdatePlaylistHelper()
         {
             try
-            {
+             {
                 if (playlistImg == "")
                 {
                     playlistImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
@@ -1162,7 +1167,7 @@ namespace Muse2
                 {
                     PlaylistID = ((Playlist)grdPlaylists.SelectedItem).PlaylistID,
                     Title = lblDataGridHeader.Content.ToString(),
-                    ImageFilePath = System.IO.Path.GetFileName(playlistImg),
+                    ImageFilePath = playlistImg,
                     Description = lblDataGridSubHeader.Content.ToString(),
                     UserID = loggedInUser.UserID,
                 };
@@ -1176,6 +1181,8 @@ namespace Muse2
                 grdLibrary.ItemsSource = userSongs;
                 btnPlaylistImageEdit.Visibility = Visibility.Hidden;
                 imgPlaylistPicture.Visibility = Visibility.Hidden;
+
+                playlistListRepopulation();
             }
             catch (Exception ex)
             {
@@ -1210,10 +1217,6 @@ namespace Muse2
             }
         }
         #endregion
-        private void mnuViewAlbum_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         #region Admin Functionality
         private void grdUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1235,6 +1238,16 @@ namespace Muse2
                     ImageBrush imageBrush = (ImageBrush)btnUserProfileImage.Background;
                     BitmapImage profileImage = new BitmapImage(new Uri(User.ImageFilePath));
                     imageBrush.ImageSource = profileImage;
+
+                    grdUsersRepopulation();
+
+                    txtUserID.Text = User.UserID.ToString();
+                    txtUserFirstName.Text = User.FirstName;
+                    txtUserLastName.Text = User.LastName;
+                    txtUserEmail.Text = User.Email;
+                    txtUserProfileName.Text = User.ProfileName;
+                    chkUserActive.IsChecked = User.Active;
+                    txtMinutesListened.Text = User.MinutesListened.ToString();
                 }
                 catch (Exception ex)
                 {
@@ -1242,12 +1255,6 @@ namespace Muse2
                     MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                txtUserID.Text = User.UserID.ToString();
-                txtUserFirstName.Text = User.FirstName;
-                txtUserLastName.Text = User.LastName;
-                txtUserEmail.Text = User.Email;
-                txtUserProfileName.Text = User.ProfileName;
-                chkUserActive.IsChecked = User.Active;
             }
         }
         private void btnUserEdit_Click(object sender, RoutedEventArgs e)
@@ -1255,6 +1262,8 @@ namespace Muse2
             btnUserProfileImage.IsEnabled = true;
             txtUserFirstName.IsEnabled = true;
             txtUserLastName.IsEnabled = true;
+            chkUserActive.IsEnabled = true;
+            txtMinutesListened.IsEnabled = true;
         }
         private void grdUsersRepopulation()
         {
@@ -1264,6 +1273,11 @@ namespace Muse2
                 lblDataGridHeader.Content = "All Users";
                 grdUsers.Visibility = Visibility.Visible;
                 grdUsers.ItemsSource = allUsers;
+
+                txtUserFirstName.IsEnabled = false;
+                txtUserLastName.IsEnabled = false;
+                chkUserActive.IsEnabled = false;
+                txtMinutesListened.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -1300,14 +1314,14 @@ namespace Muse2
             var newUser = new UserVM()
             {
                 UserID = int.Parse(txtUserID.Text),
-                ProfileName = loggedInUser.ProfileName,
-                Email = loggedInUser.Email,
+                ProfileName = txtUserProfileName.Text,
+                Email = txtUserEmail.Text,
                 FirstName = NewFirstName,
                 LastName = NewLastName,
                 ImageFilePath = userImg,
                 Active = (bool)chkUserActive.IsChecked, 
-                MinutesListened = 0,
-                Roles = loggedInUser.Roles
+                MinutesListened = int.Parse(txtMinutesListened.Text),
+                Roles = oldUser.Roles
             };
 
             if (userImg == "")
@@ -1329,8 +1343,6 @@ namespace Muse2
         }
         private void btnUserProfileImage_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            UserManager _userManager = new UserManager();
-
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -1342,10 +1354,23 @@ namespace Muse2
 
                 if (result == true)
                 {
+                    userImg = openFileDialog.FileName;
+
+                    string destinationFolder = baseDirectory + "\\MuseConfig\\ProfileImages";
+
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        Directory.CreateDirectory(destinationFolder);
+                    }
+
+                    string newImageFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(userImg));
+                    File.Copy(userImg, newImageFilePath, true);
+
                     // Create the new imagebrush
                     ImageBrush imageBrush = (ImageBrush)btnUserProfileImage.Background;
-                    userImg = openFileDialog.FileName;
-                    var AccountImage = new BitmapImage(new System.Uri(userImg));
+
+                    // put the full file path instead of just the file name into the bitmap image.
+                    var AccountImage = new BitmapImage(new System.Uri(newImageFilePath));
                     imageBrush.ImageSource = AccountImage;
                 }
                 else
@@ -1408,8 +1433,13 @@ namespace Muse2
             }
             else
             {
-                MessageBox.Show("Select a song.");
+                MessageBox.Show("Select a song song.");
             }
+        }
+        private void txtMinutesListened_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex numericRegex = new Regex("[^0-9]+");
+            e.Handled = numericRegex.IsMatch(e.Text);
         }
     }
 }

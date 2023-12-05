@@ -31,6 +31,7 @@ namespace Muse2
         private string _mp3File = "";
         private string _imgFile = "";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        Regex numericRegex = new Regex("[^0-9]+");
 
         public AddSong(UserVM loggedInUser)
         {
@@ -195,13 +196,10 @@ namespace Muse2
         }
         private void txtYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            e.Handled = numericRegex.IsMatch(e.Text);
         }
         private void lblPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
         }
         private void btnAddMp3_Click(object sender, RoutedEventArgs e)
         {
@@ -245,6 +243,11 @@ namespace Muse2
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void txtPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = numericRegex.IsMatch(e.Text);
         }
     }
 }

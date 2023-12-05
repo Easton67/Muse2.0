@@ -59,8 +59,8 @@ namespace DataAccessFakes
             fakeReviews.Add(new Review()
             {
                 ReviewID = 6,
-                Rating = 5,
-                Message = "this song is amazing",
+                Rating = 4,
+                Message = "this song is pretty good",
                 UserID = 100001,
                 SongID = 6
             });

@@ -5,7 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="900" Width="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" MinWidth="800">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF525252" Offset="1"/>
+            <GradientStop Color="#FFF79EF0" Offset="1"/>
+            <GradientStop Color="Black" Offset="0.51"/>
+            <GradientStop Color="#FEAA6DA5" Offset="0.12"/>
+            <GradientStop Color="#FEAA6DA5" Offset="0.22"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -22,7 +31,9 @@
                 <MenuItem x:Name="mnuResetPassword" Header="Reset Password" Click="mnuResetPassword_Click" />
             </MenuItem>
         </Menu>
-        <Button x:Name="btnLogo" Grid.Row="1" Width="150" HorizontalAlignment="Right" BorderThickness="0,0,0,0" Background="White" Margin="0,0,10,0" Click="btnLogo_Click">
+        <Button x:Name="btnLogo" Grid.Row="1" Width="150" HorizontalAlignment="Right" 
+                BorderThickness="0,0,0,0" Margin="0,0,10,0" Click="btnLogo_Click" 
+                Background="Transparent">
             <Image Grid.Row="1" Source="/Resources/museLogo.png"/>
         </Button>
         <StackPanel x:Name="tabContainer" Grid.Row="2">
@@ -30,9 +41,9 @@
                 <TabItem x:Name="tabProfile"
                     Header="Profile"
                     FontSize="14" Padding="32,2,32,2">
-                    <WrapPanel HorizontalAlignment="Center" Margin="0,90,0,0" >
+                    <WrapPanel HorizontalAlignment="Center" Margin="0,90,0,0" Height="500" >
                         <StackPanel>
-                            <Button x:Name="btnAccontImage" Width="300" Margin="0,-30,15,0" Click="btnAccontImage_Click" IsEnabled="False">
+                            <Button x:Name="btnAccontImage" Width="300" Margin="0,-30,15,0" Click="btnAccontImage_Click" IsEnabled="False" Background="{x:Null}">
                                 <Image x:Name="imgAccountImage" Source="/Resources/defaultAccount.png" />
                             </Button>
                         </StackPanel>
@@ -73,7 +84,7 @@
                 </TabItem>
                 <TabItem Header="Stats"
                     FontSize="14" Padding="32,2,32,2">
-                    <WrapPanel HorizontalAlignment="Center">
+                    <WrapPanel HorizontalAlignment="Center" Height="649">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Image x:Name="imgStatsAccount" Source="/Resources/defaultAccount.png" Width="75" VerticalAlignment="Top"/>
@@ -106,13 +117,6 @@
                                             Padding="5,5,0,0"
                                             BorderBrush="LightGray"
                                             BorderThickness="1">
-                                        <Border.ContextMenu>
-                                            <ContextMenu>
-                                                <!-- Add menu items as needed -->
-                                                <MenuItem Header="Edit" />
-                                                <MenuItem Header="Delete" />
-                                            </ContextMenu>
-                                        </Border.ContextMenu>
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>

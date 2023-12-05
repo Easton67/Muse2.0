@@ -181,6 +181,7 @@ namespace Muse2
             }
             else
             {
+                btnAccontImage.IsEnabled = false;
                 try
                 {
                     string NewFirstName = txtFirstName.Text;

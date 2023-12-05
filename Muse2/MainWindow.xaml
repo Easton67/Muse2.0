@@ -38,9 +38,10 @@
                 <MenuItem x:Name="mnuAddSongToLibrary" Header="Add Song To Library" Click="mnuAddSongToLibrary_Click"/>
                 <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs" Click="mnuViewAllSongs_Click"/>
             </MenuItem>
-            <MenuItem x:Name="mnuAlbum" Header="Album">
+            <!--Commented out since it was not implemented yet.-->
+            <!--<MenuItem x:Name="mnuAlbum" Header="Album">
                 <MenuItem x:Name="mnuCreateNewAlbum" Header="Create new Album" Click="mnuCreateNewAlbum_Click" />
-            </MenuItem>
+            </MenuItem>-->
             <MenuItem x:Name="mnuPlaylist" Header="Playlist">
                 <MenuItem x:Name="mnuNewPlaylist" Header="Create new Playlist" Click="mnuNewPlaylist_Click" />
             </MenuItem>
@@ -241,8 +242,12 @@
                 <Label x:Name="lblUserProfileName" Content="Profile Name" FontWeight="Bold" Padding="10,5,5,5" />
                 <TextBox x:Name="txtUserProfileName" Width="179"
                 HorizontalAlignment="Right" Height="22" Margin="0,0,30,0" IsEnabled="False" />
+                <Label x:Name="lblMinutesListened" Content="Minutes Listened" FontWeight="Bold" Padding="10,6,5,5" />
+                <TextBox x:Name="txtMinutesListened" Width="75"
+                HorizontalAlignment="left" Height="22" Margin="11,0,30,0" IsEnabled="False" MaxLength="7" InputScope="Number" />
                 <Label x:Name="lblActive" Content="Active" FontWeight="Bold" Padding="10,6,5,5" />
                 <CheckBox x:Name="chkUserActive" Margin="13,0,0,0" />
+                
                 <StackPanel Orientation="Horizontal" Width="228">
                     <Button x:Name="btnUserEdit" Content="Edit" Width="47" Height="28" HorizontalAlignment="Left" Margin="11,12,39,10" Click="btnUserEdit_Click">
                         <Button.Resources>
@@ -279,7 +284,7 @@
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="View Album" x:Name="mnuViewAlbum" Click="mnuViewAlbum_Click"/>
+                        <!--<MenuItem Header="View Album" x:Name="mnuViewAlbum" Click="mnuViewAlbum_Click"/>-->
                         <MenuItem Header="Edit Song Details" x:Name="mnuEditSongFromDataGrid" Click="mnuEditSongFromDataGrid_Click" />
                         <MenuItem Header="Add Song To Playlist" x:Name="mnuAddSongToPlaylistFromDataGrid" Click="mnuAddSongToPlaylistFromDataGrid_Click" />
                         <MenuItem Header="Write a Review" x:Name="mnuCreateReview" Click="mnuCreateReview_Click" />

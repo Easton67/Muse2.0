@@ -29,6 +29,7 @@ namespace Muse2
         private UserVM _loggedInUser = null;
         private string _imgFile = "";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        Regex numericRegex = new Regex("[^0-9]+");
 
         public AddEditSongxaml(Song song, UserVM loggedInUser)
         {
@@ -252,13 +253,12 @@ namespace Muse2
         }
         private void txtYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[0-9]");
-            e.Handled = !regex.IsMatch(e.Text);
+            e.Handled = numericRegex.IsMatch(e.Text);
         }
-        private void lblPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
+
+        private void txtPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[0-9]");
-            e.Handled = regex.IsMatch(e.Text);
+            e.Handled = numericRegex.IsMatch(e.Text);
         }
     }
 }
