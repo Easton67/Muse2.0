@@ -242,6 +242,10 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@OldFirstName", oldUser.FirstName);
             cmd.Parameters.AddWithValue("@OldLastName", oldUser.LastName);
             cmd.Parameters.AddWithValue("@OldImageFilePath", oldUser.ImageFilePath);
+            cmd.Parameters.AddWithValue("@OldMinutesListened", oldUser.MinutesListened);
+            cmd.Parameters.AddWithValue("@NewMinutesListened", newUser.MinutesListened);
+            cmd.Parameters.AddWithValue("@OldActive", oldUser.Active);
+            cmd.Parameters.AddWithValue("@NewActive", newUser.Active);
 
             try
             {

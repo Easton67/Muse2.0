@@ -558,7 +558,22 @@ namespace Muse2
             profileWindow.ShowDialog();
             if(grdLibrary.Visibility == Visibility.Visible)
             {
-                updateUIForUserLogin();
+                UserVM updatedUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
+                try
+                {
+                    var AccountImage = new BitmapImage(new System.Uri(updatedUser.ImageFilePath));
+                    defaultimgAccount.Visibility = Visibility.Hidden;
+                    imgAccount.Visibility = Visibility.Visible;
+                    imgAccount.Source = AccountImage;
+                }
+                catch (Exception)
+                {
+                    imgAccount.Source = null;
+                    imgAccount.Visibility = Visibility.Hidden;
+                    defaultimgAccount.Visibility = Visibility.Visible;
+                    GetAccountAndRoles();
+                    return;
+                }
             }
             else if(grdUsers.Visibility == Visibility.Visible)
             {

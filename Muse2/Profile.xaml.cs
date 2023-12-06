@@ -181,7 +181,10 @@ namespace Muse2
             }
             else
             {
+                // Disabled state
                 btnAccontImage.IsEnabled = false;
+                txtFirstName.IsEnabled = false;
+                txtLastName.IsEnabled = false;
                 try
                 {
                     string NewFirstName = txtFirstName.Text;
@@ -229,7 +232,7 @@ namespace Muse2
 
                     _userManager.UpdateUser(oldUser, newUser);
                     btnEdit.Content = "Edit";
-                    MessageBox.Show("Your account details have been updated.\n\nYour account will be updated the next time you log in.", "Success!",
+                    MessageBox.Show("Your account details have been updated.", "Success!",
                     MessageBoxButton.OK);
                 }
                 catch (Exception ex)
@@ -257,7 +260,7 @@ namespace Muse2
                 {
                     _imgFile = openFileDialog.FileName;
 
-                    string destinationFolder = baseDirectory + "\\MuseConfig\\AlbumArt";
+                    string destinationFolder = baseDirectory + "\\MuseConfig\\ProfileImages";
 
                     if (!Directory.Exists(destinationFolder))
                     {

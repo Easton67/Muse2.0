@@ -244,7 +244,7 @@
                 HorizontalAlignment="Right" Height="22" Margin="0,0,30,0" IsEnabled="False" />
                 <Label x:Name="lblMinutesListened" Content="Minutes Listened" FontWeight="Bold" Padding="10,6,5,5" />
                 <TextBox x:Name="txtMinutesListened" Width="75"
-                HorizontalAlignment="left" Height="22" Margin="11,0,30,0" IsEnabled="False" MaxLength="7" InputScope="Number" />
+                HorizontalAlignment="left" Height="22" Margin="11,0,30,0" IsEnabled="False" MaxLength="7" InputScope="Number" PreviewTextInput="txtMinutesListened_PreviewTextInput" />
                 <Label x:Name="lblActive" Content="Active" FontWeight="Bold" Padding="10,6,5,5" />
                 <CheckBox x:Name="chkUserActive" Margin="13,0,0,0" />
                 
