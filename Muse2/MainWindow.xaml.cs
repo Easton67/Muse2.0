@@ -188,12 +188,10 @@ namespace Muse2
                 imgAccount.Visibility = Visibility.Visible;
                 imgAccount.Source = Account;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                imgAccount.Source = null;
-                imgAccount.Visibility = Visibility.Hidden;
-                defaultimgAccount.Visibility = Visibility.Visible;
-                GetAccountAndRoles();
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your profile photo. Please try logging in again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             try
@@ -245,14 +243,15 @@ namespace Muse2
 
                     // Prompt the user to add a song
                     MessageBoxResult result = MessageBox.Show(
-                   $"Welcome to Muse! To get started, add one of your songs to your library'?",
-                   "Confirmation",
+                   $"Would you like to add a song to get started'?",
+                   "Welcome to Muse!",
                    MessageBoxButton.YesNo,
                    MessageBoxImage.Question);
                     if (result == MessageBoxResult.Yes)
                     {
                         var AddSong = new AddSong(loggedInUser);
                         AddSong.ShowDialog();
+                        updateUIForUserLogin();
                         songListRepopulation();
                     }
                 }
@@ -748,6 +747,10 @@ namespace Muse2
             GetSongCover();
             try
             {
+                if(imgPlaylistPicture.Visibility == Visibility.Visible)
+                {
+                    mediaPlayer.Open(new Uri((baseDirectory + "\\MuseConfig\\SongFiles\\" + userSongs[songNumber].Mp3FilePath)));
+                }
                 mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
             }
             catch (Exception ex)

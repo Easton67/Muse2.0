@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +23,10 @@ namespace Muse2
     /// </summary>
     public partial class SignUp : Window
     {
-        private string _accountImage;
+        private string _accountImage = "";
         private string _email;
         private string _password;
+        private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
         public SignUp()
         {
@@ -93,11 +95,17 @@ namespace Muse2
         private void btnConfirmSignUp_Click(object sender, RoutedEventArgs e)
         {
             // Create the user
+
+            if (_accountImage.IsDefaultImage())
+            {
+                _accountImage = baseDirectory + "\\MuseConfig\\ProfileImages\\defaultAccount.png";
+            }
+
             var newUser = new User()
             {
                 ProfileName = txtProfileName.Text,
                 Email = txtEmail.Text,
-                ImageFilePath = _accountImage
+                ImageFilePath = System.IO.Path.GetFileName(_accountImage)
             };
             try
             {
@@ -134,12 +142,26 @@ namespace Muse2
                 if (result == true)
                 {
                     _accountImage = openFileDialog.FileName;
-                    var AccountImage = new BitmapImage(new System.Uri(_accountImage));
-                    imgAcccountImage.Source = AccountImage;
+
+                    string destinationFolder = baseDirectory + "\\MuseConfig\\ProfileImages";
+
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        Directory.CreateDirectory(destinationFolder);
+                    }
+
+                    string newImageFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(_accountImage));
+                    File.Copy(_accountImage, newImageFilePath, true);
+
+                    var songImage = new BitmapImage(new System.Uri(_accountImage));
+
+                    imgAcccountImage.Source = songImage;
+
+                    _accountImage = newImageFilePath;
+
                 }
                 else
                 {
-                    // user closes the file explorer before picking a photo
                     MessageBox.Show("Choose a photo to update your current account photo.");
                 }
             }

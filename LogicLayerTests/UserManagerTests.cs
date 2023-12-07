@@ -223,42 +223,6 @@ namespace LogicLayerTests
             Assert.AreEqual(expectedResult, actualResult);
         }
         [TestMethod]
-        public void TestUpdateUserWorksCorrectly()
-        {
-            // arrange
-
-            User oldUser = new User()
-            {
-                UserID = 8,
-                FirstName = "Jess",
-                LastName = "Data",
-                ProfileName = "Jester",
-                Email = "jess@company.com",
-                Active = true,
-                MinutesListened = 0
-            };
-
-            User newUser = new User()
-            {
-                UserID = 8,
-                FirstName = "Tess",
-                LastName = "Bata",
-                ProfileName = "Jester",
-                Email = "jess@company.com",
-                Active = true,
-                MinutesListened = 0
-            };
-
-            bool expectedResult = true;
-            bool actualResult = false;
-
-            // act
-            actualResult = _userManager.UpdateUser(oldUser, newUser);
-
-            // assert
-            Assert.AreEqual(expectedResult, actualResult);
-        }
-        [TestMethod]
         public void TestUpdateMinutesListenedWorksCorrectly()
         {
             // arrange

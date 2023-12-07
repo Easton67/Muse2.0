@@ -1,0 +1,122 @@
+	/* sp_select_songs_by_ProfileName */
+
+print '' print '*** creating sp_select_songs_by_ProfileName ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_songs_by_ProfileName]
+(
+	@CreatedBy			[nvarchar](200)
+)
+AS	
+	BEGIN
+		SELECT	[Song].[SongID], [Song].[Title],[Song].[ImageFilePath],[Song].[Mp3FilePath],[Song].[YearReleased],[Song].[Lyrics],[Song].[Explicit],
+		[Song].[Private],[Song].[Plays],[CreatedBy],[SongArtist].[ArtistID],[Album].[Title] AS AlbumTitle
+		FROM	[Song] JOIN [User] ON [Song].[CreatedBy] = [User].[ProfileName]
+					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
+					   LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
+					   LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
+		WHERE 	@CreatedBy = [User].[ProfileName]
+	END
+GO
+
+/* Review Table */
+
+print '' print '*** creating Review table ***'
+GO
+CREATE TABLE [dbo].[Review] (
+	[ReviewID] [int] IDENTITY(100000,1)     NOT NULL,
+	[Rating] [int],							
+	[Message] [text],
+	[DateReviewed] [date]					NOT NULL,
+	[UserID] [int]							NOT NULL,
+	[SongID] [int]							NOT NULL,
+	[AlbumID] [int]							NULL
+	CONSTRAINT [fk_Review_UserID] FOREIGN KEY([UserID])
+		REFERENCES [dbo].[User]([UserID]),
+	
+	CONSTRAINT [fk_Review_SongID] FOREIGN KEY([SongID])
+		REFERENCES [dbo].[Song]([SongID]),
+		
+	CONSTRAINT [fk_Review_AlbumID] FOREIGN KEY([AlbumID])
+		REFERENCES [dbo].[Album]([AlbumID]),
+		
+	CONSTRAINT[pk_Review] PRIMARY KEY([ReviewID])
+)
+GO
+
+
+
+/* sp_update_FirstName */
+
+print '' print '*** creating sp_update_FirstName ***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_FirstName]
+(
+	@Email			[nvarchar](100),	
+	@NewFirstName	[nvarchar](50)
+)
+AS
+	BEGIN
+		UPDATE	[User]
+		SET	[FirstName] = @NewFirstName
+		WHERE 	@Email = [Email]
+		  /* System Super Global @@ - Set by the system */
+		RETURN  @@ROWCOUNT
+	END
+GO
+
+/* sp_update_LastName */
+
+print '' print '*** creating sp_update_LastName ***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_LastName]
+(
+	@Email			[nvarchar](100),
+	@NewLastName	[nvarchar](50)
+)
+AS	
+	BEGIN
+		UPDATE	[User]
+		SET	[LastName] = @NewLastName
+		WHERE 	@Email = [Email]
+		  /* System Super Global @@ - Set by the system */
+		RETURN  @@ROWCOUNT
+	END
+GO
+
+/* sp_update_AccountImage */
+
+print '' print '*** creating sp_update_AccountImage ***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_AccountImage]
+(
+	@Email				[nvarchar](100),
+	@NewAccountImage	[nvarchar](500)
+)
+AS	
+	BEGIN
+		UPDATE	[User]
+		SET	[ImageFilePath] = @NewAccountImage
+		WHERE 	@Email = [Email]
+		  /* System Super Global @@ - Set by the system */
+		RETURN  @@ROWCOUNT
+	END
+GO
+
+/* sp_update_ProfileName */
+
+print '' print '*** creating sp_update_ProfileName ***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_ProfileName]
+(
+	@Email				[nvarchar](100),
+	@NewProfileName		[nvarchar](200)
+)
+AS	
+	BEGIN
+		UPDATE	[User]
+		SET	[ProfileName] = @NewProfileName
+		WHERE 	@Email = [Email]
+		  /* System Super Global @@ - Set by the system */
+		RETURN  @@ROWCOUNT
+	END
+GO
