@@ -543,10 +543,6 @@ namespace Muse2
 
             grdUsersRepopulation();
         }
-        //private void mnuViewAlbum_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
         #endregion
         private void btnProfileName_Click(object sender, RoutedEventArgs e)
         {
@@ -751,7 +747,10 @@ namespace Muse2
                 {
                     mediaPlayer.Open(new Uri((baseDirectory + "\\MuseConfig\\SongFiles\\" + userSongs[songNumber].Mp3FilePath)));
                 }
-                mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+                else
+                {
+                    mediaPlayer.Open(new Uri((userSongs[songNumber].Mp3FilePath)));
+                }
             }
             catch (Exception ex)
             {
