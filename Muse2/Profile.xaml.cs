@@ -194,6 +194,7 @@ namespace Muse2
                         MessageBox.Show("That is not a valid first name", "Invalid first name",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                         txtFirstName.Focus();
+                        btnEdit.Content = "Add Changes";
                         return;
                     }
                     if (!NewLastName.IsValidLastName())
@@ -201,6 +202,7 @@ namespace Muse2
                         MessageBox.Show("That is not a valid last name", "Invalid last name",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                         txtFirstName.Focus();
+                        btnEdit.Content = "Add Changes";
                         return;
                     }
 

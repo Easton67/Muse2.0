@@ -1038,6 +1038,12 @@ namespace Muse2
                         try
                         {
                             var playlistImageFilePath = ((Playlist)grdPlaylists.SelectedItem).ImageFilePath;
+                            
+                            if(playlistImageFilePath.IsDefaultImage())
+                            {
+                                playlistImageFilePath = baseDirectory + "\\MuseConfig\\PlaylistImages" + "defaultAlbumImage.png";
+                            }
+
                             BitmapImage playlistImageBitmap = new BitmapImage(new System.Uri(playlistImageFilePath));
                             imgPlaylistPicture.Source = playlistImageBitmap;
                         }
@@ -1165,19 +1171,13 @@ namespace Muse2
         private void UpdatePlaylistHelper()
         {
             try
-             {
-                if (playlistImg == "")
-                {
-                    playlistImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
-                }
-
+            {
                 var oldPlaylist = new Playlist()
                 {
                     PlaylistID = ((Playlist)grdPlaylists.SelectedItem).PlaylistID,
                     Title = ((Playlist)grdPlaylists.SelectedItem).Title,
                     ImageFilePath = System.IO.Path.GetFileName(((Playlist)grdPlaylists.SelectedItem).ImageFilePath),
                     Description = ((Playlist)grdPlaylists.SelectedItem).Description,
-                    UserID = loggedInUser.UserID
                 };
 
                 var newPlaylist = new Playlist()
@@ -1186,8 +1186,12 @@ namespace Muse2
                     Title = lblDataGridHeader.Content.ToString(),
                     ImageFilePath = playlistImg,
                     Description = lblDataGridSubHeader.Content.ToString(),
-                    UserID = loggedInUser.UserID,
                 };
+
+                if (newPlaylist.ImageFilePath == "")
+                {
+                    newPlaylist.ImageFilePath = oldPlaylist.ImageFilePath;
+                }
 
                 _playlistManager.UpdatePlaylist(oldPlaylist, newPlaylist);
 

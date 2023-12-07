@@ -35,6 +35,12 @@ namespace Muse2
         }
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
+            if (txtPlaylistTitle.Text == "")
+            {
+                MessageBox.Show("Add a title to your playlist.");
+                return;
+            }
+
             try
             {
                 var newPlaylist = new Playlist()
@@ -45,11 +51,10 @@ namespace Muse2
                     UserID = _loggedInUser.UserID
                 };
 
-                if(newPlaylist.ImageFilePath == "")
+                if (_imgFile.IsDefaultImage())
                 {
-                    newPlaylist.ImageFilePath = baseDirectory + "\\MuseConfig\\PlaylistImages\\defaultAlbumImage";
+                    newPlaylist.ImageFilePath = "defaultAlbumImage.png";
                 }
-
 
                 var pm = new PlaylistManager();
                 bool result = pm.CreatePlaylist(newPlaylist);

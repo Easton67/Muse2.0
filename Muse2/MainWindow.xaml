@@ -75,7 +75,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnPlaylistImageEdit" Height="75" Width="75" Grid.Row="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="33,0,0,0" MouseDoubleClick="btnPlaylistImageEdit_MouseDoubleClick" >
+            <Button x:Name="btnPlaylistImageEdit" Height="75" Width="75" Grid.Row="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="33,0,0,0" MouseDoubleClick="btnPlaylistImageEdit_MouseDoubleClick" Background="{x:Null}" BorderThickness="0,0,0,0" >
                 <Image x:Name="imgPlaylistPicture" Source="/Resources/defaultAlbumImage.png"/>
             </Button>
             <!-- Col0 -->
