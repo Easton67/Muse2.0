@@ -60,5 +60,40 @@ namespace DataObjects
             }
             return isValid;
         }
+        public static bool IsValidMP3(this string MP3FilePath)
+        {
+            bool isValid = false;
+
+            // what the db has as its max
+            if (MP3FilePath.Length <= 500 && 
+                MP3FilePath.Length > 0 &&
+                MP3FilePath.Contains(".mp3"))
+            {
+                isValid = true;
+            }
+            return isValid;
+        }
+        public static bool IsDefaultImage(this string ImageFilePath)
+        {
+            bool isDefault = false;
+
+            if (ImageFilePath.Length == 0)
+            {
+                isDefault = true;
+            }
+            return isDefault;
+        }
+        public static bool IsValidYear(this int Year)
+        {
+            bool isValid = false;
+
+            if (Year <= 2023 && 
+                Year >= 1700)
+            {
+                isValid = true;
+            }
+            return isValid;
+        }
+
     }
 }

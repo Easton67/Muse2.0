@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -29,7 +30,8 @@ namespace Muse2
     {
         private UserVM _loggedInUser = null;
         private string _mp3File = "";
-        private string _imgFile = "";
+        // set this to the default when adding, and then change it if a picture is selected
+        private string _imgFile = "defaultAlbumImage.png";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         Regex numericRegex = new Regex("[^0-9]+");
 
@@ -122,6 +124,35 @@ namespace Muse2
         }
         private void btnCreateSong_Click(object sender, RoutedEventArgs e)
         {
+            if (!_mp3File.IsValidMP3())
+            {
+                MessageBox.Show("That is not a valid mp3 file Path", "Invalid song file path",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+            int year= 0;
+            if(txtYear.Text != "")
+            {
+                year = int.Parse(txtYear.Text);
+            }
+            else
+            {
+                year = 0;
+            }
+            if (!year.IsValidYear())
+            {
+                MessageBox.Show("That is not a valid year", "Invalid Year",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                CleanWindow();
+                SongInformationHelper();
+                return;
+            }
+            if (txtMp3FilePath.Text == "")
+            {
+                MessageBox.Show("Click the Add MP3 button to add a song file.", "No MP3 file selected");
+                return;
+            }
             try
             {
                 var newSong = new Song()
@@ -129,7 +160,7 @@ namespace Muse2
                     Title = txtTitle.Text,
                     ImageFilePath = _imgFile,
                     Mp3FilePath = _mp3File,
-                    YearReleased = int.Parse(txtYear.Text),
+                    YearReleased = year,
                     Lyrics = txtLyrics.Text,
                     Explicit = (bool)chkExplicit.IsChecked,
                     Plays = int.Parse(txtPlays.Text),
@@ -198,9 +229,6 @@ namespace Muse2
         {
             e.Handled = numericRegex.IsMatch(e.Text);
         }
-        private void lblPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-        }
         private void btnAddMp3_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -244,7 +272,6 @@ namespace Muse2
                 return;
             }
         }
-
         private void txtPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = numericRegex.IsMatch(e.Text);

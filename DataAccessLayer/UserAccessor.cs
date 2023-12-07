@@ -268,7 +268,7 @@ namespace DataAccessLayer
             }
             return rows;
         }
-        public int UpdateMinutesListened(int userID, int minutesListened)
+        public int UpdateMinutesListened(int userID, int newMinutesListened)
         {
             int rows = 0;
             var conn = SqlConnectionProvider.GetConnection();
@@ -278,7 +278,7 @@ namespace DataAccessLayer
 
             // Add parameters
             cmd.Parameters.AddWithValue("@UserID", userID);
-            cmd.Parameters.AddWithValue("@NewMinutesListened", minutesListened);
+            cmd.Parameters.AddWithValue("@NewMinutesListened", newMinutesListened);
 
             try
             {

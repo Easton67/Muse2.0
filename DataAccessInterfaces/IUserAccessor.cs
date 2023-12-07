@@ -17,7 +17,7 @@ namespace DataAccessInterfaces
         List<string> SelectRolesByUserID(int UserID);
         List<User> SelectAllUsers();
         int UpdateUser(User oldUser, User newUser);
-        int UpdateMinutesListened(int userID, int minutesListened);
+        int UpdateMinutesListened(int userID, int newMinutesListened);
         int UpdatePasswordHash(string email, string oldPasswordHash, string newPasswordHash);
         int UpdateActiveUser(int userID, bool oldActive, bool newActive);
 

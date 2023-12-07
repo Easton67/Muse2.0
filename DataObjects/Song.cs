@@ -20,9 +20,4 @@ namespace DataObjects
         public string Artist { get; set; }
         public string Album { get; set; }
     }
-
-    public class SongVM : Song
-    {
-        public List<string> Song { get; set; }
-    }
 }

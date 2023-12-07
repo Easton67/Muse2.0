@@ -174,13 +174,13 @@ namespace LogicLayer
             }
             return result;
         }
-        public bool UpdateMinutesListened(int userID, int minutesListened)
+        public bool UpdateMinutesListened(int userID, int newMinutesListened)
         {
             bool result = false;
 
             try
             {
-                result = (1 == _userAccessor.UpdateMinutesListened(userID, minutesListened));
+                result = (1 == _userAccessor.UpdateMinutesListened(userID, newMinutesListened));
             }
             catch (Exception ex)
             {

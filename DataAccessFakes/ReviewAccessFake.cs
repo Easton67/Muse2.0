@@ -67,10 +67,6 @@ namespace DataAccessFakes
 
             return fakeReviews.Count;
         }
-        public int DeleteReview(int reviewID)
-        {
-            throw new NotImplementedException();
-        }
         public List<Review> SelectReviewsByUserID(int userID)
         {
             return fakeReviews.FindAll(r => r.UserID == userID);
@@ -78,6 +74,11 @@ namespace DataAccessFakes
         public int UpdateReview(Review oldReview, Review newReview)
         {
             throw new NotImplementedException();
+        }
+        public int DeleteReview(int reviewID)
+        {
+            int removedCount = fakeReviews.RemoveAll(review => review.ReviewID == reviewID);
+            return removedCount;
         }
     }
 }

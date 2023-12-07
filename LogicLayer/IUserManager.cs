@@ -19,5 +19,7 @@ namespace LogicLayer
         bool AuthenticateUser(string email, string password);
         bool ResetPassword(string email, string oldPassword, string newPassword);
         bool UpdateUser(User oldUser, User newUser);
+        bool UpdateMinutesListened(int userID, int newMinutesListened);
+        bool UpdateActiveUser(int userID, bool oldActive, bool newActive);
     }
 }

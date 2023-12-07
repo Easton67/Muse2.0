@@ -1244,6 +1244,8 @@ namespace Muse2
         }
         private void grdUsers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            // set the edit button to be clickable
+            btnUserEdit.IsEnabled = true;
             if (grdUsers.SelectedItems.Count != 0)
             {
                 var User = grdUsers.SelectedItem as User;
@@ -1274,6 +1276,7 @@ namespace Muse2
         }
         private void btnUserEdit_Click(object sender, RoutedEventArgs e)
         {
+            btnUserEdit.IsEnabled = false;
             btnUserProfileImage.IsEnabled = true;
             txtUserFirstName.IsEnabled = true;
             txtUserLastName.IsEnabled = true;
@@ -1303,6 +1306,8 @@ namespace Muse2
         }
         private void btnUserSaveChanges_Click(object sender, RoutedEventArgs e)
         {
+            // re-enable the user edit button
+            btnUserEdit.IsEnabled = true;
             string NewFirstName = txtUserFirstName.Text;
             string NewLastName = txtUserLastName.Text;
 
@@ -1321,10 +1326,10 @@ namespace Muse2
                 return;
             }
 
-            UserManager _userManager = new UserManager();
             string userEmail = txtUserEmail.Text;
 
             UserVM oldUser = _userManager.GetUserVMByEmail(userEmail);
+            oldUser.ImageFilePath = System.IO.Path.GetFileName(oldUser.ImageFilePath);
 
             var newUser = new UserVM()
             {
@@ -1333,7 +1338,7 @@ namespace Muse2
                 Email = txtUserEmail.Text,
                 FirstName = NewFirstName,
                 LastName = NewLastName,
-                ImageFilePath = userImg,
+                ImageFilePath = System.IO.Path.GetFileName(userImg),
                 Active = (bool)chkUserActive.IsChecked, 
                 MinutesListened = int.Parse(txtMinutesListened.Text),
                 Roles = oldUser.Roles
@@ -1347,7 +1352,7 @@ namespace Muse2
             try
             {
                 _userManager.UpdateUser(oldUser, newUser);
-                MessageBox.Show("\"{User.ProfileName}\\'s account details have been updated", "Success!",
+                MessageBox.Show("Account details have been updated", "Success!",
                 MessageBoxButton.OK);
                 grdUsersRepopulation();
             }

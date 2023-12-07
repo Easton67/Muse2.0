@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="SongManagerTests.cs" />
     <Compile Include="PlaylistManagerTests.cs" />
+    <Compile Include="ReviewManagerTests.cs" />
     <Compile Include="UserManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

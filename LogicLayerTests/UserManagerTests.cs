@@ -4,6 +4,7 @@ using LogicLayer;
 using DataAccessFakes;
 using DataAccessInterfaces;
 using DataObjects;
+using System.Collections.Generic;
 
 namespace LogicLayerTests
 {
@@ -85,7 +86,7 @@ namespace LogicLayerTests
         public void TestGetUserByEmailFailsWithBadEmail()
         {
             // arrange
-            string email = "ness@company.com"; // bad email                       
+            string email = "ness@company.com"; // bad email
             int expectedUserID = 1;
             int actualUserID = 0;
 
@@ -123,6 +124,169 @@ namespace LogicLayerTests
 
             // act
             actualResult = _userManager.ResetPassword(email, password, newPassword);
+
+            // assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+        [TestMethod]
+        public void TestSelectAllUsersWorksCorrectly()
+        {
+            // arrange
+
+            int expectedNumberOfUsers = 3;
+            int actualNumberOfUsers = 0;
+
+            // act
+            actualNumberOfUsers = _userManager.SelectAllUsers().Count;
+
+            // assert
+            Assert.AreEqual(expectedNumberOfUsers, actualNumberOfUsers);
+        }
+        [TestMethod]
+        public void TestInsertUserWorksCorrectly()
+        {
+            // arrange
+
+            User user = new User()
+            {
+                UserID = 1,
+                ProfileName = "Easton68",
+                Email = "LiamEastonNewUserInsertTest@gmail.com",
+                FirstName = "Liam",
+                LastName = "Easton",
+                ImageFilePath = "muse.png"
+            };
+
+            string password = "password";
+
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            // act
+            actualResult = _userManager.InsertUser(user, password);
+
+            // assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestInsertUserFailsWithAlreadyExistingEmail()
+        {
+            // arrange
+
+            User user = new User()
+            {
+                UserID = 1,
+                ProfileName = "Easton68",
+                Email = "Liam@gmail.com",
+                FirstName = "Liam",
+                LastName = "Easton",
+                ImageFilePath = "muse.png"
+            };
+
+            string password = "password";
+
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            // act
+            actualResult = _userManager.InsertUser(user, password);
+
+            // assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestInsertUserFailsWithAlreadyExistingProfileName()
+        {
+            // arrange
+
+            User user = new User()
+            {
+                UserID = 1,
+                ProfileName = "Easton67",
+                Email = "LiamNewUserEmail@gmail.com",
+                FirstName = "Liam",
+                LastName = "Easton",
+                ImageFilePath = "muse.png"
+            };
+
+            string password = "password";
+
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            // act
+            actualResult = _userManager.InsertUser(user, password);
+
+            // assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+        [TestMethod]
+        public void TestUpdateUserWorksCorrectly()
+        {
+            // arrange
+
+            User oldUser = new User()
+            {
+                UserID = 8,
+                FirstName = "Jess",
+                LastName = "Data",
+                ProfileName = "Jester",
+                Email = "jess@company.com",
+                Active = true,
+                MinutesListened = 0
+            };
+
+            User newUser = new User()
+            {
+                UserID = 8,
+                FirstName = "Tess",
+                LastName = "Bata",
+                ProfileName = "Jester",
+                Email = "jess@company.com",
+                Active = true,
+                MinutesListened = 0
+            };
+
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            // act
+            actualResult = _userManager.UpdateUser(oldUser, newUser);
+
+            // assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+        [TestMethod]
+        public void TestUpdateMinutesListenedWorksCorrectly()
+        {
+            // arrange
+            int userID = 9;
+            int newMinutesListened = 90433;
+
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            // act
+            actualResult = _userManager.UpdateMinutesListened(userID, newMinutesListened);
+
+            // assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+        [TestMethod]
+        public void TestUpdateActiveWorksCorrectly()
+        {
+            // arrange
+            int userID = 9;
+            bool oldActive = true;
+            bool newActive = false;
+
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            // act
+            actualResult = _userManager.UpdateActiveUser(userID, oldActive, newActive);
 
             // assert
             Assert.AreEqual(expectedResult, actualResult);

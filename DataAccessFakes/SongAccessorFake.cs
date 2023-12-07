@@ -11,8 +11,8 @@ namespace DataAccessFakes
 {
     public class SongAccessorFake : ISongAccessor
     {
+        private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
         private List<Song> fakeSongs = new List<Song>();
-        private List<Playlist> fakePalylists = new List<Playlist>();
 
         public SongAccessorFake()
         {
@@ -89,11 +89,22 @@ namespace DataAccessFakes
         }
         public int InsertSong(Song song)
         {
-            throw new NotImplementedException();
-        }
-        public List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID)
-        {
-            throw new NotImplementedException();
+            fakeSongs.Add(new Song()
+            {
+                SongID = 6,
+                Title = "Added Song",
+                ImageFilePath = defaultImg,
+                Mp3FilePath = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\SongFiles\\bruh.mp3",
+                YearReleased = 2023,
+                Lyrics = "fake",
+                Explicit = true,
+                Plays = 33526,
+                UserID = 100000,
+                Artist = "Liam Easton",
+                Album = "No album"
+            });
+
+            return 1;
         }
         public List<Song> SelectSongsByUserID(int UserID)
         {
@@ -107,6 +118,10 @@ namespace DataAccessFakes
                 }
             }
             return songs;
+        }
+        public List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID)
+        {
+            throw new NotImplementedException();
         }
         public int UpdatePlaysBySongID(int songID, int plays)
         {
@@ -126,7 +141,16 @@ namespace DataAccessFakes
         }
         public int DeleteSong(int SongID)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+
+            rows = fakeSongs.RemoveAll(song => song.SongID == SongID);
+
+            if (rows != 1) // no one found
+            {
+                throw new ApplicationException("User not found");
+            }
+
+            return rows;
         }
     }
 }

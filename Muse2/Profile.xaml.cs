@@ -81,7 +81,6 @@ namespace Muse2
                     labelStackPanel.Children.Add(lblTopSongs);
                     i += 1;
                 }
-
                 try
                 {
                     lblMinutesTotalListened.Content = _loggedInUser.MinutesListened;
