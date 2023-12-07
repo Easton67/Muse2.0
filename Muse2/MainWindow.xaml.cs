@@ -143,12 +143,12 @@ namespace Muse2
             barSongLength.Visibility = Visibility.Collapsed;
 
             // Default the login and hide it
-            txtEmail.Text = "Liam@gmail.com";
+            txtEmail.Text = "";
             txtEmail.Visibility = Visibility.Visible;
             lblEmail.Visibility = Visibility.Visible;
             btnProfileName.Content = "";
             btnProfileName.Visibility = Visibility.Hidden;
-            pwdPassword.Password = "password";
+            pwdPassword.Password = "";
             pwdPassword.Visibility = Visibility.Visible;
             lblPassword.Visibility = Visibility.Visible;
             btnLogin.Content = "Log In";
@@ -1283,6 +1283,7 @@ namespace Muse2
         private void btnUserEdit_Click(object sender, RoutedEventArgs e)
         {
             btnUserEdit.IsEnabled = false;
+            btnUserSaveChanges.IsEnabled = true;
             btnUserProfileImage.IsEnabled = true;
             txtUserFirstName.IsEnabled = true;
             txtUserLastName.IsEnabled = true;
@@ -1302,6 +1303,7 @@ namespace Muse2
                 txtUserLastName.IsEnabled = false;
                 chkUserActive.IsEnabled = false;
                 txtMinutesListened.IsEnabled = false;
+                btnUserSaveChanges.IsEnabled = false;
             }
             catch (Exception ex)
             {

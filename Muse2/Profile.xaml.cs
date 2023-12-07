@@ -101,6 +101,8 @@ namespace Muse2
 
             try
             {
+                UserManager um = new UserManager();
+                _loggedInUser = um.GetUserVMByEmail(_loggedInUser.Email);
                 var AccountImage = new BitmapImage(new System.Uri(_loggedInUser.ImageFilePath));
                 imgStatsAccount.Source = AccountImage;
                 imgAccountImage.Source = AccountImage;
@@ -261,7 +263,7 @@ namespace Muse2
                 {
                     _imgFile = openFileDialog.FileName;
 
-                    string destinationFolder = baseDirectory + "\\MuseConfig\\ProfileImages";
+                    string destinationFolder = baseDirectory + "MuseConfig\\ProfileImages";
 
                     if (!Directory.Exists(destinationFolder))
                     {
