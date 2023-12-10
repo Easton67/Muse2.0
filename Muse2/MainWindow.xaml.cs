@@ -143,12 +143,12 @@ namespace Muse2
             barSongLength.Visibility = Visibility.Collapsed;
 
             // Default the login and hide it
-            txtEmail.Text = "";
+            txtEmail.Text = "Liam@gmail.com";
             txtEmail.Visibility = Visibility.Visible;
             lblEmail.Visibility = Visibility.Visible;
             btnProfileName.Content = "";
             btnProfileName.Visibility = Visibility.Hidden;
-            pwdPassword.Password = "";
+            pwdPassword.Password = "password";
             pwdPassword.Visibility = Visibility.Visible;
             lblPassword.Visibility = Visibility.Visible;
             btnLogin.Content = "Log In";
@@ -1468,6 +1468,13 @@ namespace Muse2
         {
             Regex numericRegex = new Regex("[^0-9]+");
             e.Handled = numericRegex.IsMatch(e.Text);
+        }
+
+        private void mnuUrlToMp3_Click(object sender, RoutedEventArgs e)
+        {
+            var UrlToMp3 = new UrlToMp3();
+            UrlToMp3.ShowDialog();
+            songListRepopulation();
         }
     }
 }

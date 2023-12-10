@@ -1,0 +1,21 @@
+﻿<Window x:Class="Muse2.UrlToMp3"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Muse2"
+        mc:Ignorable="d"
+        Title="Url Conversion" Height="400" Width="800" Background="Lavender">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <Label x:Name="lblUrltoMp3" Grid.Row="0" Content="Turn your URL into an MP3" HorizontalAlignment="Center" FontSize="35" />
+        <TextBox x:Name="txtSongTitle"  Grid.Row="1" Width="500" Height="60" FontSize="30" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtURL" Grid.Row="2" Width="500" Height="60" FontSize="30" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button Grid.Row="3" x:Name="btnCreateMp3FromURL" Content="Create" Click="btnCreateMp3FromURL_Click" Width="200" FontSize="37"/>
+    </Grid>
+</Window>

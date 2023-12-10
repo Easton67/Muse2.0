@@ -37,6 +37,7 @@
             <MenuItem x:Name="mnuSong" Header="Song">
                 <MenuItem x:Name="mnuAddSongToLibrary" Header="Add Song To Library" Click="mnuAddSongToLibrary_Click"/>
                 <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs" Click="mnuViewAllSongs_Click"/>
+                <MenuItem x:Name="mnuUrlToMp3" Header="Url to Mp3" Click="mnuUrlToMp3_Click"/>
             </MenuItem>
             <!--Commented out since it was not implemented yet.-->
             <!--<MenuItem x:Name="mnuAlbum" Header="Album">
