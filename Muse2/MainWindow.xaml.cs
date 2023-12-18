@@ -23,6 +23,7 @@ namespace Muse2
         private DispatcherTimer timer;
         private int minutesPassed = 0;
         private MediaPlayer mediaPlayer = new MediaPlayer();
+        private UserVM _loggedInUser = null;
 
         UserManager _userManager = null;
         UserVM loggedInUser = null;
@@ -37,10 +38,11 @@ namespace Muse2
         private Playlist selectedPlaylist;
         private string baseDirectory = AppContext.BaseDirectory;
 
-        public MainWindow()
+        public MainWindow(UserVM loggedInUser)
         {
             InitializeComponent();
 
+            _loggedInUser = loggedInUser;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += SongTimer;
