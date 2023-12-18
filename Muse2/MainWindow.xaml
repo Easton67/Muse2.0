@@ -128,11 +128,11 @@
             <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="2" Width="100" Height="100" Source="/Resources/defaultAccount.png" HorizontalAlignment="Center"/>
             <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" Height="100" HorizontalAlignment="Center"/>
 
-            <Button x:Name="btnLogin" Content="Log In"
+            <Button x:Name="btnLogout" Content="Log Out"
                     Grid.Row="1" Grid.Column="2" 
                     FontWeight="Bold" Width="60" 
-                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-165,0,0,0" Background="White" BorderThickness="0,0,0,0" Click="btnLogin_Click" 
-                    VerticalContentAlignment="Top" VerticalAlignment="Center" Height="23" Padding="1,2,1,1">
+                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-165,0,0,0" Background="White" BorderThickness="0,0,0,0" 
+                    VerticalContentAlignment="Top" VerticalAlignment="Center" Height="23" Padding="1,2,1,1" Click="btnLogout_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="4"/>
@@ -140,14 +140,14 @@
                 </Button.Resources>
             </Button>
 
-            <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="2" 
+            <!--<TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="2" 
                      Width="179"
-                     HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                     HorizontalAlignment="Right" Margin="0,0,10,0"/>-->
 
-            <Label x:Name="lblEmail" Grid.Row="1" Grid.Column="2"
+            <!--<Label x:Name="lblEmail" Grid.Row="1" Grid.Column="2"
                    FontWeight="Bold" VerticalAlignment="Top"
                    HorizontalContentAlignment="Center"
-                   Content="Email" HorizontalAlignment="Right" Margin="0,0,153,0" Height="23" Padding="5,2,5,5" />
+                   Content="Email" HorizontalAlignment="Right" Margin="0,0,153,0" Height="23" Padding="5,2,5,5" />-->
 
             <Button x:Name="btnProfileName" Content="User" Grid.Row="1" Grid.Column="2" FontWeight="Bold"
                    HorizontalContentAlignment="Center"
@@ -159,7 +159,7 @@
                 </Button.Resources>
             </Button>
 
-            <Label x:Name="lblPassword" Grid.Row="3" Grid.Column="2"
+            <!--<Label x:Name="lblPassword" Grid.Row="3" Grid.Column="2"
                    FontWeight="Bold" VerticalAlignment="Bottom"
                    HorizontalContentAlignment="Center"
                    HorizontalAlignment="Right"
@@ -167,7 +167,7 @@
 
             <PasswordBox x:Name="pwdPassword" Grid.Row="4" Grid.Column="2" 
                      Width="179"
-                     HorizontalAlignment="Right" Password="" Margin="0,0,10,0"/>
+                     HorizontalAlignment="Right" Password="" Margin="0,0,10,0"/>-->
 
             <Label x:Name="lblCurrentTime" Grid.Row="2" Grid.Column="1"
                    Content="" FontWeight="Bold" HorizontalAlignment="Left" Margin="25,-8,0,0" />
@@ -283,6 +283,17 @@
                             <Setter Property="BorderBrush" Value="Black" />
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Opacity" Value="65" />
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#d0bee6" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
                     <DataGrid.Columns>
                         <DataGridTemplateColumn 
                             Width="25" 

@@ -1,7 +1,8 @@
-﻿using System;
+﻿using DataObjects;
+using LogicLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,35 +13,28 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using DataObjects;
-using Muse2;
-using LogicLayer;
 
-namespace Wpf_LoginForm.View
+namespace Muse2
 {
     /// <summary>
     /// Interaction logic for SignIn.xaml
     /// </summary>
     public partial class SignIn : Window
     {
-        private string validEmail = "";
-        UserManager _userManager = null;
         UserVM loggedInUser = null;
         public SignIn()
         {
             InitializeComponent();
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             btnBack.Visibility = Visibility.Hidden;
+            txtEmail.Text = "Liam@gmail.com";
+            pwdPassword.Password = "password";
         }
-
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if(pwdPassword.Visibility == Visibility.Hidden)
+            if (pwdPassword.Visibility == Visibility.Hidden)
             {
                 try
                 {
@@ -53,10 +47,10 @@ namespace Wpf_LoginForm.View
                     throw;
                 }
             }
-            if(pwdPassword.Visibility == Visibility.Visible)
+            if (pwdPassword.Visibility == Visibility.Visible)
             {
-                string email = txtEmail.Text;
-                string password = pwdPassword.Password;
+                var email = txtEmail.Text;
+                var password = pwdPassword.Password;
 
                 if (!email.IsValidEmail())
                 {
@@ -77,8 +71,10 @@ namespace Wpf_LoginForm.View
                 }
                 try
                 {
-                    loggedInUser = _userManager.LoginUser(email, password);
+                    UserManager _um = new UserManager();
+                    loggedInUser = _um.LoginUser(email, password);
                     var home = new MainWindow(loggedInUser);
+                    this.Close();
                     home.ShowDialog();
                 }
                 catch (Exception ex)
@@ -93,17 +89,6 @@ namespace Wpf_LoginForm.View
                 }
             }
         }
-
-        private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
-        {
-            txtSubHeader.Text = "Enter the email you would like to send the reset password link to below";
-            txtPasswordLabel.Visibility = Visibility.Hidden;
-            pwdPassword.Visibility = Visibility.Hidden;
-            btnBack.Visibility = Visibility.Visible;
-            btnBack.Content = "Back";
-            btnLogin.Content = "Send Email";
-        }
-
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             txtSubHeader.Text = "Control what you listen to.";
@@ -116,6 +101,15 @@ namespace Wpf_LoginForm.View
             txtEmail.Focus();
         }
 
+        private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+            txtSubHeader.Text = "Enter the email you would like to send the reset password link to below";
+            txtPasswordLabel.Visibility = Visibility.Hidden;
+            pwdPassword.Visibility = Visibility.Hidden;
+            btnBack.Visibility = Visibility.Visible;
+            btnBack.Content = "Back";
+            btnLogin.Content = "Send Email";
+        }
         private void SendEmail()
         {
             //MailMessage mailMessage = new MailMessage();
@@ -141,5 +135,9 @@ namespace Wpf_LoginForm.View
             //    MessageBox.Show("Error: " + ex.Message);
             //}
         }
+
+
+
+
     }
 }

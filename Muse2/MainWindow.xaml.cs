@@ -38,11 +38,11 @@ namespace Muse2
         private Playlist selectedPlaylist;
         private string baseDirectory = AppContext.BaseDirectory;
 
-        public MainWindow(UserVM loggedInUser)
+        public MainWindow(UserVM LoggedInUser)
         {
             InitializeComponent();
 
-            _loggedInUser = loggedInUser;
+            loggedInUser = LoggedInUser;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += SongTimer;
@@ -106,14 +106,14 @@ namespace Muse2
             _userManager = new UserManager();
             _songManager = new SongManager();
             _playlistManager = new PlaylistManager();
+
+            // Hide what should not be seen before showing what should be.
             updateUIForLogout();
+            updateUIForUserLogin();
         }
         #region UI Helpers
         private void updateUIForLogout()
         {
-            txtEmail.Focus();
-            btnLogin.IsDefault = true;
-
             // Turn off song if playing
             mediaPlayer.Pause();
 
@@ -145,16 +145,8 @@ namespace Muse2
             barSongLength.Visibility = Visibility.Collapsed;
 
             // Default the login and hide it
-            txtEmail.Text = "Liam@gmail.com";
-            txtEmail.Visibility = Visibility.Visible;
-            lblEmail.Visibility = Visibility.Visible;
             btnProfileName.Content = "";
             btnProfileName.Visibility = Visibility.Hidden;
-            pwdPassword.Password = "password";
-            pwdPassword.Visibility = Visibility.Visible;
-            lblPassword.Visibility = Visibility.Visible;
-            btnLogin.Content = "Log In";
-            btnLogin.IsDefault = false;
 
             imgAccount.Visibility = Visibility.Hidden;
             defaultimgAccount.Visibility = Visibility.Visible;
@@ -386,16 +378,8 @@ namespace Muse2
         private void GetAccountAndRoles()
         {
             // set account
-            txtEmail.Text = "";
-            txtEmail.Visibility = Visibility.Hidden;
-            lblEmail.Visibility = Visibility.Collapsed;
             btnProfileName.Content = loggedInUser.ProfileName;
             btnProfileName.Visibility = Visibility.Visible;
-            pwdPassword.Password = "";
-            pwdPassword.Visibility = Visibility.Hidden;
-            lblPassword.Visibility = Visibility.Hidden;
-            btnLogin.Content = "Log Out";
-            btnLogin.IsDefault = false;
 
             // set menus for specific roles
             //mnuAlbum.Visibility = Visibility.Visible;
@@ -587,51 +571,11 @@ namespace Muse2
                 playlistListRepopulation();
             }
         }
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
-            if (btnLogin.Content.ToString() == "Log In")
-            {
-                var email = txtEmail.Text;
-                var password = pwdPassword.Password;
-
-                if (!email.IsValidEmail())
-                {
-                    MessageBox.Show("That is not a valid email address", "Invalid Email",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    txtEmail.SelectAll();
-                    txtEmail.Focus();
-                    return;
-                }
-                if (!password.IsValidPassword())
-                {
-                    MessageBox.Show("That is not a valid password", "Invalid Password",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    pwdPassword.SelectAll();
-                    pwdPassword.Focus();
-                    return;
-                }
-
-                // try to log in the user
-                try
-                {
-                    loggedInUser = _userManager.LoginUser(email, password);
-                    updateUIForUserLogin();
-                }
-                catch (Exception ex)
-                {
-                    // you may never throw exceptions from the presentation layer
-                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    pwdPassword.SelectAll();
-                    pwdPassword.Clear();
-                    txtEmail.Focus();
-                    return;
-                }
-            }
-            else // logout      
-            {
-                updateUIForLogout();
-            }
+            var SignIn = new SignIn();
+            this.Close();
+            SignIn.ShowDialog();
         }
         #region Song Controls
         private void btnViewSong_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
