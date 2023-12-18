@@ -13,7 +13,7 @@ namespace DataAccessLayer
         // one method in the entire project that has the 
         // database connection string
 
-        private static string connectionString = @"Data Source=localhost;Initial Catalog=musedb;Integrated Security=True";
+        private static string connectionString = @"Data Source=E67\SQLEXPRESS;Initial Catalog=musedb;Integrated Security=True;";
 
         public static SqlConnection GetConnection()
         {

@@ -1,4 +1,6 @@
-﻿using NAudio.Lame;
+﻿using DataObjects;
+using LogicLayer;
+using NAudio.Lame;
 using NAudio.Wave;
 using System;
 using System.IO;
@@ -15,9 +17,13 @@ namespace Muse2
     /// </summary>
     public partial class UrlToMp3 : Window
     {
-        public UrlToMp3()
+        private UserVM _loggedInUser = null;
+        private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        public UrlToMp3(UserVM loggedInUser)
         {
             InitializeComponent();
+
+            _loggedInUser = loggedInUser;
         }
 
         static async Task DownloadAndConvertAudioAsync(string videoUrl, string outputFilePath)
@@ -45,15 +51,41 @@ namespace Muse2
         private async void btnCreateMp3FromURL_Click(object sender, RoutedEventArgs e)
         {
             string url = txtURL.Text;
-            string title = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\SongFiles\\" + txtSongTitle.Text + ".mp3";
+            string title = baseDirectory + "\\MuseConfig\\SongFiles\\" + txtSongTitle.Text + ".mp3";
             string formattedTitle = title.ToLower();
             string finalTitle = Regex.Replace(formattedTitle, @"\s", string.Empty);
-            MessageBox.Show(finalTitle);
+            string mp3Title = Regex.Replace(txtSongTitle.Text + ".mp3", @"\s", string.Empty).ToLower();
 
             try
             {
                 await DownloadAndConvertAudioAsync(url, finalTitle);
-                MessageBox.Show("Audio downloaded and converted successfully.");
+
+                try
+                {
+                    SongManager sm = new SongManager();
+                    var newSong = new Song()
+                    {
+                        Title = txtSongTitle.Text,
+                        ImageFilePath = "defaultAlbumImage.png",
+                        Mp3FilePath = mp3Title,
+                        YearReleased = 2023,
+                        Lyrics = "No Lyrics Provided",
+                        Explicit = false,
+                        Plays = 0,
+                        UserID = _loggedInUser.UserID,
+                        Album = "Unknown",
+                        Artist = "Unknown"
+                    };
+                    sm.InsertSong(newSong);
+                    MessageBox.Show("Song added to your library successfully.");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song could not be added. Please try again.",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
             catch (Exception ex)
             {

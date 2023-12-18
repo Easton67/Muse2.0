@@ -5,17 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="Url Conversion" Height="400" Width="800" Background="Lavender">
+        Title="Url Conversion" Height="530" Width="800" Background="Lavender">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="80" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="80" />
-            <RowDefinition Height="80" />
+            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
         <Label x:Name="lblUrltoMp3" Grid.Row="0" Content="Turn your URL into an MP3" HorizontalAlignment="Center" FontSize="35" />
-        <TextBox x:Name="txtSongTitle"  Grid.Row="1" Width="500" Height="60" FontSize="30" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="txtURL" Grid.Row="2" Width="500" Height="60" FontSize="30" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Button Grid.Row="3" x:Name="btnCreateMp3FromURL" Content="Create" Click="btnCreateMp3FromURL_Click" Width="200" FontSize="37"/>
+        <Label Grid.Row="1" HorizontalAlignment="Center" FontSize="27" Content="Title" />
+        <TextBox x:Name="txtSongTitle"  Grid.Row="2" Width="500" Height="60" FontSize="30" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Grid.Row="3" HorizontalAlignment="Center" FontSize="26" Content="URL" />
+        <TextBox x:Name="txtURL" Grid.Row="4" Width="500" Height="60" FontSize="30" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button Grid.Row="5" x:Name="btnCreateMp3FromURL" Content="Create" Click="btnCreateMp3FromURL_Click" Width="200" FontSize="37"/>
     </Grid>
 </Window>

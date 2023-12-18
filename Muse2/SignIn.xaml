@@ -1,0 +1,168 @@
+﻿<Window x:Class="Wpf_LoginForm.View.SignIn"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_LoginForm.View"
+        mc:Ignorable="d"
+        Title="SignIn" Height="550" Width="800"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="DarkGray" Loaded="Window_Loaded">
+    <Grid>
+        <Image Source="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\museBackground.jpg" Stretch="UniformToFill">
+            <Image.Effect>
+                <BlurEffect Radius="7"/>
+            </Image.Effect>
+        </Image>
+
+        <Border CornerRadius="10"                    
+                BorderThickness="2" Width="800">
+
+            <Grid Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="17*"/>
+                    <ColumnDefinition Width="381*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border CornerRadius="5"
+                            Background="White"
+                            Width="250"
+                            Height="440"
+                            Panel.ZIndex="1"
+                            Margin="239,46,273,35" Grid.Column="1">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="5" Direction="270"/>
+                    </Border.Effect>
+                    <StackPanel Width="250"
+                                    Grid.Row="1"
+                                    Orientation="Vertical"
+                                    Height="520"
+                                    Panel.ZIndex="1" 
+                                    Margin="0,1,0,0">
+
+                            <Image x:Name="imgLogo" 
+                                   Source="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\museLogo.png"
+                                   Width="170" Height="100" Margin="-8,21,0,0"/>
+                            <StackPanel>
+                                <TextBlock x:Name="txtSubHeader"
+                                    Text="Control what you listen to."
+                                    Foreground="Black"
+                                    FontSize="14"
+                                    FontWeight="Medium"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Center"
+                                    Margin="0,5,0,0"/>
+                            <TextBlock Text="Email"
+                                    Foreground="Black"
+                                    FontSize="12"
+                                    FontWeight="Medium"
+                                    FontFamily="Montserrat"                             
+                                    Margin="0,35,0,0" 
+                                    Padding="10,0,0,0"/>
+                            <TextBox x:Name="txtEmail"
+                                    FontSize="13"
+                                    FontWeight="Medium"
+                                    FontFamily="Montserrat"                            
+                                    Foreground="Black"
+                                    CaretBrush="Black"
+                                    BorderBrush="Black"
+                                    BorderThickness="0,0,0,2"
+                                    Height="28"
+                                    VerticalContentAlignment="Center"
+                                    Margin="10,5,10,0"
+                                    Padding="20,0,0,0">
+
+                                <TextBox.Background>
+                                    <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\user-icon.png"
+                                            Stretch="None"
+                                            AlignmentX="Left"/>
+                                </TextBox.Background>
+                            </TextBox>
+                            <TextBlock
+                                    x:Name="txtPasswordLabel"
+                                    Text="Password"
+                                    Foreground="Black"
+                                    FontSize="12"
+                                    FontWeight="Medium"                           
+                                    Margin="10,15,0,0"/>
+                            <PasswordBox x:Name="pwdPassword"
+                                    FontSize="13"
+                                    FontWeight="Medium"
+                                    Foreground="Black"
+                                    CaretBrush="Black"
+                                    BorderBrush="Black"
+                                    BorderThickness="0,0,0,2"
+                                    Height="28"
+                                    VerticalContentAlignment="Center"
+                                    Margin="10,5,10,0"
+                                    Padding="20,0,0,0">
+
+                                <PasswordBox.Background>
+                                    <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
+                                            Stretch="None"
+                                            AlignmentX="Left"/>
+                                </PasswordBox.Background>
+                            </PasswordBox>
+                            <Button x:Name="btnLogin"  
+                                Content="LOG IN"
+                                Foreground="Black"
+                                FontSize="12"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"                           
+                                Margin="0,32,0,0"
+                                Click="btnLogin_Click" 
+                                FontWeight="SemiBold">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Width="150" Height="40"
+                                            CornerRadius="20">
+                                            <Border.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#FFE5BAEA"/>
+                                                    <GradientStop Color="#FFE8CBCB" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <StackPanel Orientation="Horizontal" Margin="-2,0,0,0">
+                                <Button x:Name="btnBack"
+                                         Content=""
+                                         Background="transparent" 
+                                         BorderThickness="0,0,0,0" 
+                                         Foreground="Black"
+                                         FontSize="12"
+                                         FontFamily="Montserrat"
+                                         Margin="-9,15,0,0" Width="90" Click="btnBack_Click" >
+                                
+                                </Button>
+                                <Button x:Name="btnForgotPassword" 
+                                        Content="Forgot Password" 
+                                        Background="transparent" 
+                                        BorderThickness="0,0,0,0" 
+                                        Foreground="Black"
+                                        FontSize="12"
+                                        FontFamily="Montserrat"
+                                        Margin="1,15,0,0" Width="90" 
+                                        Click="btnForgotPassword_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,52,0,0">
+                            <TextBlock x:Name="txtCode1" Text="A" Padding="45,0,0,0" FontSize="20"/>
+                            <TextBlock x:Name="txtCode2" Text="B" Padding="20,0,0,0" FontSize="20"/>
+                            <TextBlock x:Name="txtCode3" Text="C" Padding="20,0,0,0" FontSize="20"/>
+                            <TextBlock x:Name="txtCode4" Text="1" Padding="20,0,0,0" FontSize="20"/>
+                            <TextBlock x:Name="txtCode5" Text="2" Padding="20,0,0,0" FontSize="20"/>
+                            <TextBlock x:Name="txtCode6" Text="3" Padding="20,0,0,0" FontSize="20"/>
+                        </StackPanel>
+                        </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

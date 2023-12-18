@@ -543,6 +543,12 @@ namespace Muse2
 
             grdUsersRepopulation();
         }
+        private void mnuUrlToMp3_Click(object sender, RoutedEventArgs e)
+        {
+            var UrlToMp3 = new UrlToMp3(loggedInUser);
+            UrlToMp3.ShowDialog();
+            songListRepopulation();
+        }
         #endregion
         private void btnProfileName_Click(object sender, RoutedEventArgs e)
         {
@@ -635,23 +641,23 @@ namespace Muse2
         }
         private void btnPause_Click(object sender, RoutedEventArgs e)
         {
+            Pause();
+        }
+        private void Pause()
+        {
             btnPlay.Visibility = Visibility.Visible;
             btnPause.Visibility = Visibility.Hidden;
             timer.Stop();
             mediaPlayer.Pause();
         }
-        private void btnPlay_Click(object sender, RoutedEventArgs e)
+        private void Play()
         {
             btnPlay.Visibility = Visibility.Hidden;
             btnPause.Visibility = Visibility.Visible;
             mediaPlayer.Play();
             timer.Start();
         }
-        private void btnNext_Click(object sender, RoutedEventArgs e)
-        {
-            NextSongHelper();
-        }
-        private void btnRewind_Click(object sender, RoutedEventArgs e)
+        private void Rewind()
         {
             // if the song is not at the start, rewind it
             if (mediaPlayer.Position.ToString(@"mm\:ss") != "00:00")
@@ -660,6 +666,7 @@ namespace Muse2
                 mediaPlayer.Play();
                 return;
             }
+
             if (btnPause.IsVisible)
             {
                 if (songNumber <= 0)
@@ -689,6 +696,18 @@ namespace Muse2
                 }
             }
         }
+        private void btnPlay_Click(object sender, RoutedEventArgs e)
+        {
+            Play();
+        }
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            NextSongHelper();
+        }
+        private void btnRewind_Click(object sender, RoutedEventArgs e)
+        {
+            Rewind();
+        }
         #endregion
         #region Song Control Helpers
         private void UpdateSongPlayCount()
@@ -710,6 +729,12 @@ namespace Muse2
         {
             try
             {
+                if (userSongs[songNumber].ImageFilePath == "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\AlbumArt\\")
+                {
+                    BitmapImage CoverArt = new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
+                    imgCoverArt.Source = CoverArt;
+                    return;
+                }
                 if (userSongs[songNumber].ImageFilePath != null)
                 {
                     BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
@@ -798,7 +823,6 @@ namespace Muse2
                 {
                     imgExplicit.Visibility = Visibility.Hidden;
                 }
-                GetSongCover();
                 CurrentSongHelper();
                 btnPlay.Visibility = Visibility.Hidden;
                 btnPause.Visibility = Visibility.Visible;
@@ -1468,13 +1492,6 @@ namespace Muse2
         {
             Regex numericRegex = new Regex("[^0-9]+");
             e.Handled = numericRegex.IsMatch(e.Text);
-        }
-
-        private void mnuUrlToMp3_Click(object sender, RoutedEventArgs e)
-        {
-            var UrlToMp3 = new UrlToMp3();
-            UrlToMp3.ShowDialog();
-            songListRepopulation();
         }
     }
 }
