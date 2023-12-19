@@ -57,7 +57,7 @@
             <Label Grid.Row="2" Grid.Column="0" x:Name="lblTitle" Content="Title" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
             <Label Grid.Row="2" Grid.Column="0" x:Name="lblSongArt" Content="Song Art" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
         <Label Grid.Row="2" Grid.Column="0" x:Name="lblLyrics" Content="Lyrics" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" Padding="5,5,15,5"/>
-        <Image x:Name="imgSongImage" Grid.Row="1" Grid.Column="1" Grid.RowSpan="7" Width="300" HorizontalAlignment="Left" Margin="30,0,0,0" Source="/defaultAlbumImage.png"/>
+        <Image x:Name="imgSongImage" Grid.Row="1" Grid.Column="1" Grid.RowSpan="7" Width="300" HorizontalAlignment="Left" Margin="30,0,0,0" Source="/defaultAlbumImage.png" PreviewKeyDown="imgSongImage_PreviewKeyDown"/>
         <TextBox Name="txtLyrics" Grid.Row="1" Grid.Column="1" Grid.RowSpan="7" Width="320" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" 
                  HorizontalScrollBarVisibility="Auto"
                  Margin="5,20,0,0"

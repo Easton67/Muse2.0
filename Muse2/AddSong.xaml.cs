@@ -276,5 +276,49 @@ namespace Muse2
         {
             e.Handled = numericRegex.IsMatch(e.Text);
         }
+
+        private void imgSongImage_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Check for Ctrl+V (paste) key combination
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.V)
+            {
+                // Handle paste event
+                HandlePaste();
+            }
+        }
+        private void HandlePaste()
+        {
+            // Check if clipboard contains image data
+            if (Clipboard.ContainsImage())
+            {
+                // Retrieve image data from clipboard
+                BitmapSource imageSource = Clipboard.GetImage();
+
+                // Display the image in the Image control
+                imgSongImage.Source = imageSource;
+
+                // Optionally, save the image to a file
+                SaveImageToFile(imageSource);
+            }
+        }
+
+        private void SaveImageToFile(BitmapSource imageSource)
+        {
+            // Allow the user to choose a file location
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog.Filter = "Image Files (*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All Files (*.*)|*.*";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                // Save the image to the chosen file location
+                string filePath = saveFileDialog.FileName;
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder(); // Choose the appropriate encoder based on your requirements
+                    encoder.Frames.Add(BitmapFrame.Create(imageSource));
+                    encoder.Save(stream);
+                }
+            }
+        }
     }
 }
