@@ -67,18 +67,11 @@ namespace Muse2
                 barSongLength.Minimum = 00.00;
                 barSongLength.Value = SongCurrentPosition;
 
-                if (SongCurrentPosition == SongLengthInSeconds) 
-                {
-                    UpdateSongPlayCount();
-                    songListRepopulation();
-                    NextSongHelper();
-                }
-
                 if (SongCurrentPosition > 0)
                 {
                     minutesPassed++;
 
-                    if(minutesPassed % 60 == 0)
+                    if (minutesPassed % 60 == 0)
                     {
                         try
                         {
@@ -94,6 +87,13 @@ namespace Muse2
                             return;
                         }
                     }
+                }
+
+                if (SongCurrentPosition == SongLengthInSeconds)
+                {
+                    UpdateSongPlayCount();
+                    songListRepopulation();
+                    NextSongHelper();
                 }
             }
             else

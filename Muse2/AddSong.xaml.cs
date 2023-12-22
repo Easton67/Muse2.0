@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Muse2
 {
@@ -44,7 +45,11 @@ namespace Muse2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CleanWindow();
-            SongInformationHelper();
+            SongInformationHelper();            
+            // Hide the blinking caret that appears when you type stuff.
+            txtHiddenPastingBox.CaretBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            // Show the caret.
+            txtHiddenPastingBox.CaretBrush = null;  // use default Brush
         }
         private void CleanWindow()
         {
@@ -114,6 +119,7 @@ namespace Muse2
             imgSongImage.Visibility = Visibility.Visible;
             btnAddArtwork.Visibility = Visibility.Visible;
             btnRemoveArtwork.Visibility = Visibility.Visible;
+            txtHiddenPastingBox.Focus();
         }
         private void btnLyrics_Click(object sender, RoutedEventArgs e)
         {
@@ -276,16 +282,6 @@ namespace Muse2
         {
             e.Handled = numericRegex.IsMatch(e.Text);
         }
-
-        private void imgSongImage_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            // Check for Ctrl+V (paste) key combination
-            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.V)
-            {
-                // Handle paste event
-                HandlePaste();
-            }
-        }
         private void HandlePaste()
         {
             // Check if clipboard contains image data
@@ -303,7 +299,7 @@ namespace Muse2
         }
 
         private void SaveImageToFile(BitmapSource imageSource)
-        {
+        { 
             // Allow the user to choose a file location
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog.Filter = "Image Files (*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All Files (*.*)|*.*";
@@ -318,6 +314,16 @@ namespace Muse2
                     encoder.Frames.Add(BitmapFrame.Create(imageSource));
                     encoder.Save(stream);
                 }
+            }
+        }
+
+        private void txtHiddenPastingBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Check for Ctrl+V (paste) key combination
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.V)
+            {
+                // Handle paste event
+                HandlePaste();
             }
         }
     }

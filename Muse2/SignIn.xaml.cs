@@ -3,6 +3,7 @@ using LogicLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Muse2
 {
@@ -22,24 +25,127 @@ namespace Muse2
     public partial class SignIn : Window
     {
         UserVM loggedInUser = null;
+        private string resetCode = "";
+        string newPassword = "";
+        string confirmPassword = "";
+        string tempEmail = "";
+        string email = "";
+        string oldpass = "password";
+
         public SignIn()
         {
             InitializeComponent();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            btnShowPasswordTop.Visibility = Visibility.Hidden;
+            btnShowPasswordBottom.Visibility = Visibility.Visible;
             btnBack.Visibility = Visibility.Hidden;
-            txtEmail.Text = "Liam@gmail.com";
+            txtEmail.Text = "67Easton@gmail.com";
             pwdPassword.Password = "password";
+            stkEmailPass.Visibility = Visibility.Visible;
+            stkConfirmEmailPass.Visibility = Visibility.Hidden;
+            stkVerificationCode.Visibility = Visibility.Collapsed;
         }
+
+        private void CodeCheck()
+        {
+            string userEnteredCode = txtCode1.Text + txtCode2.Text + txtCode3.Text + txtCode4.Text + txtCode5.Text + txtCode6.Text;
+
+            if (resetCode.Equals(userEnteredCode))
+            {
+                // wipe away the reset password code entry portion
+                stkVerificationCode.Visibility = Visibility.Hidden;
+                btnLogin.Content = "Reset Password";
+
+                // set up the reset password portion
+                stkEmailPass.Visibility = Visibility.Hidden;
+                stkConfirmEmailPass.Visibility = Visibility.Visible;
+            }
+        }
+        private void PasswordCheck()
+        {
+            stkConfirmEmailPass.Visibility = Visibility.Visible;
+
+            txtCode1.Text = "";
+            txtCode2.Text = "";
+            txtCode3.Text = "";
+            txtCode4.Text = "";
+            txtCode5.Text = "";
+            txtCode6.Text = "";
+
+            // open up the inputs for the new password and confirming the new password
+
+            string newPassword = pwdNewPassword.Password;
+            string confirmPassword = pwdConfirmNewPassword.Password;
+
+            if (!newPassword.IsValidPassword() || !confirmPassword.IsValidPassword())
+            {
+                MessageBox.Show("That is not a valid password", "Invalid Password",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                pwdNewPassword.Password = "";
+                pwdConfirmNewPassword.Password = "";
+                pwdNewPassword.Focus();
+                return;
+            }
+            if (pwdNewPassword.Password == pwdConfirmNewPassword.Password)
+            {
+                try
+                {
+                    UserManager um = new UserManager();
+                    um.ResetPassword(email, oldpass, newPassword);
+                    MessageBox.Show("Password successfully changed!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not update your password. Please try again.",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Password and confirm password do not match.");
+            }
+        }
+
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            if (btnLogin.Content.Equals("Reset Password"))
+            {
+                stkEmailPass.Visibility = Visibility.Collapsed;
+                btnShowPasswordTop.Visibility = Visibility.Visible;
+                PasswordCheck();
+            }
             if (pwdPassword.Visibility == Visibility.Hidden)
             {
                 try
                 {
-                    //SendEmail();
-                    //MessageBox.Show("Email Sent Successfully!");
+                    if (btnLogin.Content.Equals("Enter Code"))
+                    {
+                        CodeCheck();
+                    }
+                    if (btnLogin.Content.Equals("Send Email"))
+                    { 
+                        // Set up the entry textboxes for code entry
+                        txtCode1.Focus();
+                        btnLogin.Content = "Enter Code";
+                        stkVerificationCode.Visibility = Visibility.Visible;
+
+                        // don't let this be the email until it is checked and verified
+                        tempEmail = txtEmail.Text;
+
+                        if (!tempEmail.IsValidEmail())
+                        {
+                            MessageBox.Show("That is not a valid email address", "Invalid Email",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                            txtEmail.SelectAll();
+                            txtEmail.Focus();
+                            return;
+                        }
+                        stkEmailPass.Visibility = Visibility.Hidden;
+                        SendEmail();
+                    }
                 }
                 catch (Exception)
                 {
@@ -91,53 +197,96 @@ namespace Muse2
         }
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            txtSubHeader.Text = "Control what you listen to.";
-            txtPasswordLabel.Visibility = Visibility.Visible;
+            stkConfirmEmailPass.Visibility = Visibility.Hidden;
+            stkEmailPass.Visibility = Visibility.Visible;
             pwdPassword.Visibility = Visibility.Visible;
-            btnBack.Visibility = Visibility.Hidden;
+            txtPasswordLabel.Visibility = Visibility.Visible;
+            btnForgotPassword.Visibility = Visibility.Visible;
+            txtSubHeader.Text = "Control what you listen to.";
+
             btnBack.Content = "Back";
+            btnBack.Visibility = Visibility.Hidden;
             btnLogin.Content = "Login";
+            btnForgotPassword.Content = "Forgot Password";
             txtEmail.Text = "";
+            pwdPassword.Password = "";
             txtEmail.Focus();
         }
-
         private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-            txtSubHeader.Text = "Enter the email you would like to send the reset password link to below";
+            txtSubHeader.Text = "Send this code where?";
             txtPasswordLabel.Visibility = Visibility.Hidden;
             pwdPassword.Visibility = Visibility.Hidden;
             btnBack.Visibility = Visibility.Visible;
             btnBack.Content = "Back";
             btnLogin.Content = "Send Email";
+            btnForgotPassword.Visibility = Visibility.Hidden;
         }
+        #region Async Send Email Verification
         private void SendEmail()
         {
-            //MailMessage mailMessage = new MailMessage();
-            //mailMessage.From = new MailAddress("nicholasgurr502@gmail.com");
-            //mailMessage.To.Add("nicholasgurr502@gmail.com");
-            //mailMessage.Subject = "Subject";
-            //mailMessage.Body = "This is test email";
-
-            //System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
-            //smtpClient.Host = "smtp.google.com";
-            //smtpClient.Port = 587;
-            //smtpClient.UseDefaultCredentials = false;
-            //smtpClient.Credentials = new NetworkCredential("nicholasgurr502@gmail.com", "MuseCodingApplication");
-            //smtpClient.EnableSsl = true;
-
-            //try
-            //{
-            //    smtpClient.Send(mailMessage);
-            //    MessageBox.Show("Email Sent Successfully.");
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Error: " + ex.Message);
-            //}
+            // generate the reset code
+            Random rnd = new Random();
+            resetCode = rnd.Next(111111, 999999).ToString();
+            string result = Task.Run(() => requestAPI(resetCode, "Password Reset Code: ")).Result;
+            MessageBox.Show("Email Sent Successfully!");
+            txtSubHeader.Text = "Enter the code sent to your email";
+            txtCode1.Focus();
         }
+        private async Task<string> requestAPI(string message, string subject)
+        {
+            WebClient wc = new WebClient();
+            return await wc.DownloadStringTaskAsync($"http://127.0.0.1:8000/email/?recipient={tempEmail}&subject={subject}&body={message}");
+        }
+        #endregion
+        #region Code Checks
+        private void txtCode1_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
+        {
+            if(txtCode1.Text != "")
+            {
+                txtCode2.Focus();
+            }
+        }
+        private void txtCode2_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
+        {
+            if (txtCode2.Text != "")
+            {
+                txtCode3.Focus();
+            }
+        }
+        private void txtCode3_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
+        {
+            if (txtCode3.Text != "")
+            {
+                txtCode4.Focus();
+            }
+        }
+        private void txtCode4_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
+        {
+            if (txtCode4.Text != "")
+            {
+                txtCode5.Focus();
+            }
+        }
+        private void txtCode5_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
+        {
+            if (txtCode5.Text != "")
+            {
+                txtCode6.Focus();
+            }
+        }
+        private void txtCode6_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
+        {
+            if (txtCode6.Text != "")
+            {
+                btnLogin.Focus();
+            }
+        }
+        #endregion
 
-
-
-
+        private void btnShowPasswordBottom_Click(object sender, RoutedEventArgs e)
+        {
+            txtShownPassword.Text = pwdPassword.Password;
+        }
     }
 }

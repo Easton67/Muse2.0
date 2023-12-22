@@ -94,6 +94,5 @@ namespace DataObjects
             }
             return isValid;
         }
-
     }
 }
