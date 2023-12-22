@@ -17,7 +17,9 @@
         </Image>
 
         <Border CornerRadius="10"                    
-                BorderThickness="2" Width="800">
+                BorderThickness="2" 
+                Width="800" 
+                Height="533">
 
             <Grid Row="1">
                 <Grid.ColumnDefinitions>
@@ -70,8 +72,9 @@
                                             FontSize="12"
                                             FontWeight="Medium"
                                             FontFamily="Montserrat"                             
-                                            Margin="0,35,0,0" 
-                                            Padding="10,0,0,1"/>
+                                            Margin="0,29,0,-6" 
+                                            Padding="10,0,0,1" 
+                                            Width="250"/>
                                 <TextBox x:Name="txtEmail"
                                         FontSize="13"
                                         FontWeight="Medium"
@@ -82,8 +85,10 @@
                                         BorderThickness="0,0,0,2"
                                         Height="28"
                                         VerticalContentAlignment="Center"
-                                        Margin="10,5,10,0"
-                                        Padding="20,0,0,0" VerticalAlignment="Center">
+                                        Margin="10,5,31,0"
+                                        Padding="20,0,0,0" 
+                                        VerticalAlignment="Center" 
+                                        Width="209">
                                     <TextBox.Background>
                                         <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\user-icon.png"
                                                     Stretch="None"
@@ -96,7 +101,7 @@
                                     Foreground="Black"
                                     FontSize="12"
                                     FontWeight="Medium"                           
-                                    Margin="10,15,0,0"/>
+                                    Margin="10,21.2,0,0"/>
                                 <PasswordBox x:Name="pwdPassword"
                                             FontSize="13"
                                             FontWeight="Medium"
@@ -106,30 +111,17 @@
                                             BorderThickness="0,0,0,2"
                                             Height="28"
                                             VerticalContentAlignment="Center"
-                                            Margin="10,5,10,0"
-                                            Padding="20,0,0,0">
+                                            Margin="10,5,29,0" 
+                                            Width="210" 
+                                            Padding="20,0,0,3">
                                     <PasswordBox.Background>
                                         <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
                                                     Stretch="None"
                                                     AlignmentX="Left"/>
                                     </PasswordBox.Background>
                                 </PasswordBox>
-                                <Button x:Name="btnShowPasswordTop" 
-                                            Height="16" 
-                                            Width="16" 
-                                            BorderThickness="0,0,0,0" 
-                                            HorizontalContentAlignment="Right" 
-                                            HorizontalAlignment="Right" 
-                                            Padding="1,0,1,0" 
-                                            Margin="0,-171,11,-18" Panel.ZIndex="1">
-                                    <Button.Background>
-                                        <ImageBrush ImageSource="C:\Users\67Eas\Downloads\eye.png"
-                                                        Stretch="Uniform"
-                                                        AlignmentX="Left"/>
-                                    </Button.Background>
-                                </Button>
                             </StackPanel>
-                            <StackPanel x:Name="stkConfirmEmailPass">
+                            <StackPanel x:Name="stkConfirmEmailPass" Width="250">
                                 <TextBlock x:Name= "lblNewPassword"
                                     Text="New Password"
                                     Foreground="Black"
@@ -137,63 +129,49 @@
                                     FontWeight="Medium"
                                     FontFamily="Montserrat"                             
                                     Margin="0,-113,0,0" 
-                                    Padding="10,0,0,0"/>
+                                    Padding="10,0,0,0" 
+                                    Width="250"/>
                                 <TextBlock
                                     x:Name="lblConfirmNewPassword"
                                     Text="Confirm Password"
                                     Foreground="Black"
                                     FontSize="12"
                                     FontWeight="Medium"                           
-                                    Margin="10,-49,0,0"/>
-                                <StackPanel HorizontalAlignment="Right" Margin="0,-18,0,0">
-                                    <Button x:Name="btnShowPasswordBottom" 
-                                            Height="16" 
-                                            Width="16" 
-                                            BorderThickness="0,0,0,0" 
-                                            HorizontalContentAlignment="Right" 
-                                            HorizontalAlignment="Right" 
-                                            Margin="0,0,11,2" Click="btnShowPasswordBottom_Click">
-                                        <Button.Background>
-                                            <ImageBrush ImageSource="C:\Users\67Eas\Downloads\eye.png"
-                                                        Stretch="Uniform"
-                                                        AlignmentX="Left"/>
-                                        </Button.Background>
-                                    </Button>
-                                    <PasswordBox x:Name="pwdNewPassword"
+                                    Margin="10,-49,31,45"/>
+                                <PasswordBox x:Name="pwdNewPassword"
                                                 FontSize="13"
                                                 FontWeight="Medium"
                                                 Foreground="Black"
-                                                CaretBrush="Black"
-                                                BorderBrush="Black"
+                                                CaretBrush="Black"                                                BorderBrush="Black"
                                                 BorderThickness="0,0,0,2"
                                                 Height="28"
                                                 VerticalContentAlignment="Center"
-                                                Margin="10,-156,10,0"
                                                 Padding="21,0,0,0" 
-                                                Width="230" 
-                                                Cursor="Arrow">
+                                                Width="254" 
+                                                Cursor="Arrow" 
+                                                Margin="10,-192,31,0" 
+                                                Panel.ZIndex="3">
                                         <PasswordBox.Background>
                                             <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
                                                         Stretch="None"
                                                         AlignmentX="Left"/>
                                         </PasswordBox.Background>
                                     </PasswordBox>
-                                </StackPanel>
-                                <TextBox x:Name="txtShownPassword"
+                                <TextBox x:Name="txtShownPasswordTop"
                                          FontSize="13"
                                          FontWeight="Medium"
                                          Foreground="Black"
                                          CaretBrush="Black"
                                          BorderBrush="Black"
-                                         BorderThickness="0,0,0,2"
-                                         Height="28"
+                                         BorderThickness="0,0,0,0"
+                                         Height="21"
                                          VerticalContentAlignment="Center"
-                                         Margin="10,-28,10,0"
-                                         Padding="21,0,0,0" 
-                                         Width="230" 
+                                         Margin="24,-189,28,6" 
                                          Cursor="Arrow"
-                                         Background="Transparent">
-                                </TextBox>
+                                         Width="187" 
+                                         IsReadOnly="True" 
+                                         Background="White" 
+                                         Panel.ZIndex="5" />
                                 <PasswordBox x:Name="pwdConfirmNewPassword"
                                     FontSize="13"
                                     FontWeight="Medium"
@@ -203,9 +181,11 @@
                                     BorderThickness="0,0,0,2"
                                     Height="28"
                                     VerticalContentAlignment="Center"
-                                    Margin="10,-28,10,0"
-                                    Padding="20,0,0,0" 
-                                    Panel.ZIndex="2" VerticalAlignment="Center" Width="230">
+                                    Margin="10,-52,32,0" 
+                                    Panel.ZIndex="2" 
+                                    VerticalAlignment="Center" 
+                                    Width="207" 
+                                    Padding="20,0,0,2">
                                     <PasswordBox.Background>
                                         <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
                                             Stretch="None"
@@ -213,6 +193,47 @@
                                     </PasswordBox.Background>
                                 </PasswordBox>
                             </StackPanel>
+                            <TextBox x:Name="txtShownPassword"
+                                     FontSize="13"
+                                     FontWeight="Medium"
+                                     Foreground="Black"
+                                     CaretBrush="Black"
+                                     BorderBrush="Black"
+                                     BorderThickness="0,0,0,0"
+                                     Height="21"
+                                     VerticalContentAlignment="Center"
+                                     Margin="24,-49,28,6" 
+                                     Cursor="Arrow"
+                                     Width="187" 
+                                     IsReadOnly="True"/>          
+                            <Button x:Name="btnShowPasswordBottom" 
+                                           Height="16" 
+                                           Width="16" 
+                                           BorderThickness="0,0,0,0" 
+                                           HorizontalContentAlignment="Right" 
+                                           HorizontalAlignment="Right" 
+                                           Margin="0,-54,12,2" 
+                                           Click="btnShowPasswordBottom_Click" >
+                                <Button.Background>
+                                    <ImageBrush ImageSource="C:\Users\67Eas\Downloads\eye.png"
+                                                       Stretch="Uniform"
+                                                       AlignmentX="Left"/>
+                                </Button.Background>
+                            </Button>
+                            <Button x:Name="btnShowPasswordTop" 
+                                 Height="16" 
+                                 Width="16" 
+                                 BorderThickness="0,0,0,0" 
+                                 HorizontalContentAlignment="Right" 
+                                 HorizontalAlignment="Right" 
+                                 Padding="1,0,1,0" 
+                                 Margin="0,-213,12,-18" Click="btnShowPasswordTop_Click" >
+                                <Button.Background>
+                                    <ImageBrush ImageSource="C:\Users\67Eas\Downloads\eye.png"
+                                                 Stretch="Uniform"
+                                                 AlignmentX="Left"/>
+                                </Button.Background>
+                            </Button>
                             <StackPanel x:Name="stkButtonAndFooter">
                                 <Button x:Name="btnLogin"  
                                         Content="LOG IN"
@@ -259,7 +280,6 @@
                                 Click="btnForgotPassword_Click"/>
                                 </StackPanel>
                             </StackPanel>
-
                         </StackPanel>
                     </StackPanel>
                 </Border>

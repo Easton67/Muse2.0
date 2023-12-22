@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,6 +32,9 @@ namespace Muse2
         string tempEmail = "";
         string email = "";
         string oldpass = "password";
+        bool btnShowPasswordBottomIsClicked;
+        bool btnShowPasswordTopIsClicked;
+        Regex numericalRegex = new Regex("[^0-9]+");
 
         public SignIn()
         {
@@ -46,6 +50,8 @@ namespace Muse2
             stkEmailPass.Visibility = Visibility.Visible;
             stkConfirmEmailPass.Visibility = Visibility.Hidden;
             stkVerificationCode.Visibility = Visibility.Collapsed;
+            txtShownPassword.Visibility = Visibility.Hidden; 
+            txtShownPasswordTop.Visibility = Visibility.Hidden;
         }
 
         private void CodeCheck()
@@ -65,8 +71,6 @@ namespace Muse2
         }
         private void PasswordCheck()
         {
-            stkConfirmEmailPass.Visibility = Visibility.Visible;
-
             txtCode1.Text = "";
             txtCode2.Text = "";
             txtCode3.Text = "";
@@ -108,13 +112,10 @@ namespace Muse2
                 MessageBox.Show("Password and confirm password do not match.");
             }
         }
-
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (btnLogin.Content.Equals("Reset Password"))
             {
-                stkEmailPass.Visibility = Visibility.Collapsed;
-                btnShowPasswordTop.Visibility = Visibility.Visible;
                 PasswordCheck();
             }
             if (pwdPassword.Visibility == Visibility.Hidden)
@@ -124,6 +125,13 @@ namespace Muse2
                     if (btnLogin.Content.Equals("Enter Code"))
                     {
                         CodeCheck();
+                        stkEmailPass.Visibility = Visibility.Hidden;
+                        btnShowPasswordTop.Visibility = Visibility.Visible;
+                        stkConfirmEmailPass.Visibility = Visibility.Visible;
+                        pwdNewPassword.Visibility = Visibility.Visible;
+                        pwdNewPassword.Visibility = Visibility.Visible;
+                        btnShowPasswordTop.Visibility = Visibility.Visible;
+                        btnShowPasswordBottom.Visibility = Visibility.Visible;
                     }
                     if (btnLogin.Content.Equals("Send Email"))
                     { 
@@ -157,6 +165,7 @@ namespace Muse2
             {
                 var email = txtEmail.Text;
                 var password = pwdPassword.Password;
+                btnShowPasswordTop.Visibility = Visibility.Visible;
 
                 if (!email.IsValidEmail())
                 {
@@ -197,6 +206,14 @@ namespace Muse2
         }
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
+            txtCode1.Text = "";
+            txtCode2.Text = "";
+            txtCode3.Text = "";
+            txtCode4.Text = "";
+            txtCode5.Text = "";
+            txtCode6.Text = "";
+            stkVerificationCode.Visibility = Visibility.Hidden;
+
             stkConfirmEmailPass.Visibility = Visibility.Hidden;
             stkEmailPass.Visibility = Visibility.Visible;
             pwdPassword.Visibility = Visibility.Visible;
@@ -221,6 +238,9 @@ namespace Muse2
             btnBack.Content = "Back";
             btnLogin.Content = "Send Email";
             btnForgotPassword.Visibility = Visibility.Hidden;
+            btnShowPasswordBottom.Visibility = Visibility.Hidden;
+            btnShowPasswordTop.Visibility = Visibility.Hidden;
+            txtShownPassword.Visibility = Visibility.Hidden;
         }
         #region Async Send Email Verification
         private void SendEmail()
@@ -242,13 +262,17 @@ namespace Muse2
         #region Code Checks
         private void txtCode1_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
         {
-            if(txtCode1.Text != "")
+            e.Handled = numericalRegex.IsMatch(e.Text);
+
+            if (txtCode1.Text != "")
             {
                 txtCode2.Focus();
             }
         }
         private void txtCode2_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
         {
+            e.Handled = numericalRegex.IsMatch(e.Text);
+
             if (txtCode2.Text != "")
             {
                 txtCode3.Focus();
@@ -256,6 +280,8 @@ namespace Muse2
         }
         private void txtCode3_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
         {
+            e.Handled = numericalRegex.IsMatch(e.Text);
+
             if (txtCode3.Text != "")
             {
                 txtCode4.Focus();
@@ -263,6 +289,8 @@ namespace Muse2
         }
         private void txtCode4_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
         {
+            e.Handled = numericalRegex.IsMatch(e.Text);
+
             if (txtCode4.Text != "")
             {
                 txtCode5.Focus();
@@ -270,6 +298,8 @@ namespace Muse2
         }
         private void txtCode5_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
         {
+            e.Handled = numericalRegex.IsMatch(e.Text);
+
             if (txtCode5.Text != "")
             {
                 txtCode6.Focus();
@@ -277,16 +307,50 @@ namespace Muse2
         }
         private void txtCode6_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
         {
+            e.Handled = numericalRegex.IsMatch(e.Text);
+
             if (txtCode6.Text != "")
             {
                 btnLogin.Focus();
             }
         }
         #endregion
-
         private void btnShowPasswordBottom_Click(object sender, RoutedEventArgs e)
         {
-            txtShownPassword.Text = pwdPassword.Password;
+            if(btnLogin.Content.Equals("Reset Password") && btnShowPasswordBottomIsClicked == false)
+            {
+                txtShownPassword.Visibility = Visibility.Visible;
+                txtShownPassword.Text = pwdConfirmNewPassword.Password;
+                btnShowPasswordBottomIsClicked = true;
+                return;
+            }
+            if(btnShowPasswordBottomIsClicked == false)
+            {
+                txtShownPassword.Visibility = Visibility.Visible;
+                txtShownPassword.Text = pwdPassword.Password;
+                btnShowPasswordBottomIsClicked = true;
+            }
+            else
+            {
+                pwdPassword.Visibility = Visibility.Visible;
+                txtShownPassword.Visibility = Visibility.Hidden;
+                btnShowPasswordBottomIsClicked = false;
+            }
+        }
+        private void btnShowPasswordTop_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnShowPasswordTopIsClicked == false)
+            {
+                txtShownPasswordTop.Visibility = Visibility.Visible;
+                txtShownPasswordTop.Text = pwdNewPassword.Password;
+                btnShowPasswordTopIsClicked = true;
+            }
+            else
+            {
+                pwdNewPassword.Visibility = Visibility.Visible;
+                txtShownPasswordTop.Visibility = Visibility.Hidden;
+                btnShowPasswordTopIsClicked = false;
+            }
         }
     }
 }
