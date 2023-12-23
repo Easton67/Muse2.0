@@ -44,7 +44,6 @@ namespace Muse2
         {
             btnShowPasswordTop.Visibility = Visibility.Hidden;
             btnShowPasswordBottom.Visibility = Visibility.Visible;
-            btnBack.Visibility = Visibility.Hidden;
             txtEmail.Text = "67Easton@gmail.com";
             pwdPassword.Password = "password";
             stkEmailPass.Visibility = Visibility.Visible;
@@ -53,7 +52,6 @@ namespace Muse2
             txtShownPassword.Visibility = Visibility.Hidden; 
             txtShownPasswordTop.Visibility = Visibility.Hidden;
         }
-
         private void CodeCheck()
         {
             string userEnteredCode = txtCode1.Text + txtCode2.Text + txtCode3.Text + txtCode4.Text + txtCode5.Text + txtCode6.Text;
@@ -206,6 +204,14 @@ namespace Muse2
         }
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
+            if(btnBack.Content.Equals("Sign Up"))
+            {
+                stkBodyContentSignIn.Visibility = Visibility.Collapsed;
+                frmSignUp.Navigate(new pgSignUp());
+                frmSignUp.Visibility = Visibility.Visible;    
+                btnBack.Content = "Back";
+            }
+
             txtCode1.Text = "";
             txtCode2.Text = "";
             txtCode3.Text = "";

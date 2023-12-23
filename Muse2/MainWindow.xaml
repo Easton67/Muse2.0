@@ -248,7 +248,6 @@
                 HorizontalAlignment="left" Height="22" Margin="11,0,30,0" IsEnabled="False" MaxLength="7" InputScope="Number" PreviewTextInput="txtMinutesListened_PreviewTextInput" />
                 <Label x:Name="lblActive" Content="Active" FontWeight="Bold" Padding="10,6,5,5" />
                 <CheckBox x:Name="chkUserActive" Margin="13,0,0,0" />
-                
                 <StackPanel Orientation="Horizontal" Width="228">
                     <Button x:Name="btnUserEdit" Content="Edit" Width="47" Height="28" HorizontalAlignment="Left" Margin="11,12,39,10" Click="btnUserEdit_Click">
                         <Button.Resources>
