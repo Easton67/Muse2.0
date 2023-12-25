@@ -35,6 +35,10 @@ namespace Muse2
         bool btnShowPasswordBottomIsClicked;
         bool btnShowPasswordTopIsClicked;
         Regex numericalRegex = new Regex("[^0-9]+");
+        Page pgSignUp = new pgSignUp();
+        Page pgSignIn = new pgSignIn();
+        //pgResetPassword
+        //pgVerificationCode
 
         public SignIn()
         {
@@ -42,15 +46,18 @@ namespace Muse2
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            btnShowPasswordTop.Visibility = Visibility.Hidden;
-            btnShowPasswordBottom.Visibility = Visibility.Visible;
-            txtEmail.Text = "67Easton@gmail.com";
-            pwdPassword.Password = "password";
-            stkEmailPass.Visibility = Visibility.Visible;
-            stkConfirmEmailPass.Visibility = Visibility.Hidden;
-            stkVerificationCode.Visibility = Visibility.Collapsed;
-            txtShownPassword.Visibility = Visibility.Hidden; 
-            txtShownPasswordTop.Visibility = Visibility.Hidden;
+            //btnShowPasswordTop.Visibility = Visibility.Hidden;
+            //btnShowPasswordBottom.Visibility = Visibility.Visible;
+
+            //stkEmailPass.Visibility = Visibility.Visible;
+            //stkConfirmEmailPass.Visibility = Visibility.Hidden;
+            //stkVerificationCode.Visibility = Visibility.Collapsed;
+            //txtShownPassword.Visibility = Visibility.Hidden; 
+            //txtShownPasswordTop.Visibility = Visibility.Hidden;
+            //btnLogin.Visibility = Visibility.Collapsed;
+
+            stkBodyContentSignIn.Visibility = Visibility.Collapsed;
+            frmSignIn.Visibility = Visibility.Visible;
         }
         private void CodeCheck()
         {
@@ -204,36 +211,36 @@ namespace Muse2
         }
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            if(btnBack.Content.Equals("Sign Up"))
+            if (btnBack.Content.Equals("Sign Up"))
             {
                 stkBodyContentSignIn.Visibility = Visibility.Collapsed;
-                frmSignUp.Navigate(new pgSignUp());
-                frmSignUp.Visibility = Visibility.Visible;    
+                frmSignUp.Navigate(pgSignUp);
+                frmSignUp.Visibility = Visibility.Visible;
                 btnBack.Content = "Back";
             }
+            else
+            {
+                stkBodyContentSignIn.Visibility = Visibility.Visible;
+                frmSignUp.Visibility = Visibility.Collapsed;
+                txtCode1.Text = "";
+                txtCode2.Text = "";
+                txtCode3.Text = "";
+                txtCode4.Text = "";
+                txtCode5.Text = "";
+                txtCode6.Text = "";
+                stkVerificationCode.Visibility = Visibility.Hidden;
+                
+                stkEmailPass.Visibility = Visibility.Visible;
+                btnForgotPassword.Visibility = Visibility.Visible;
+                txtSubHeader.Text = "Control what you listen to.";
 
-            txtCode1.Text = "";
-            txtCode2.Text = "";
-            txtCode3.Text = "";
-            txtCode4.Text = "";
-            txtCode5.Text = "";
-            txtCode6.Text = "";
-            stkVerificationCode.Visibility = Visibility.Hidden;
-
-            stkConfirmEmailPass.Visibility = Visibility.Hidden;
-            stkEmailPass.Visibility = Visibility.Visible;
-            pwdPassword.Visibility = Visibility.Visible;
-            txtPasswordLabel.Visibility = Visibility.Visible;
-            btnForgotPassword.Visibility = Visibility.Visible;
-            txtSubHeader.Text = "Control what you listen to.";
-
-            btnBack.Content = "Back";
-            btnBack.Visibility = Visibility.Hidden;
-            btnLogin.Content = "Login";
-            btnForgotPassword.Content = "Forgot Password";
-            txtEmail.Text = "";
-            pwdPassword.Password = "";
-            txtEmail.Focus();
+                btnBack.Content = "Sign Up";
+                btnLogin.Content = "Login";
+                btnForgotPassword.Content = "Forgot Password";
+                txtEmail.Text = "";
+                pwdPassword.Password = "";
+                txtEmail.Focus();
+            }
         }
         private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
         {

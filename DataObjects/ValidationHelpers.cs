@@ -26,6 +26,16 @@ namespace DataObjects
             }
             return isValid;
         }
+        public static bool IsValidProfileName(this string profileName)
+        {
+            bool isValid = false;
+            if (profileName.Length >= 1 &&
+                profileName.Length <= 100)
+            {
+                isValid = true;
+            }
+            return isValid;
+        }
         public static bool IsValidPassword(this string password)
         {
             bool isValid = false;
