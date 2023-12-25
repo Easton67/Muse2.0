@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Muse2"
       mc:Ignorable="d" 
       d:DesignHeight="242" d:DesignWidth="250"
-      Title="pgSignIn" Background="White" Loaded="Page_Loaded">
+      Title="pgSignIn" Loaded="Page_Loaded">
     <Grid>
         <Grid>
             <StackPanel>

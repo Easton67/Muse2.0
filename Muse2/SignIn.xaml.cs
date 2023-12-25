@@ -36,13 +36,13 @@ namespace Muse2
         bool btnShowPasswordTopIsClicked;
         Regex numericalRegex = new Regex("[^0-9]+");
         Page pgSignUp = new pgSignUp();
-        Page pgSignIn = new pgSignIn();
         //pgResetPassword
         //pgVerificationCode
 
         public SignIn()
         {
             InitializeComponent();
+            frmSignUp.Navigate(new pgSignIn());
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -57,7 +57,6 @@ namespace Muse2
             //btnLogin.Visibility = Visibility.Collapsed;
 
             stkBodyContentSignIn.Visibility = Visibility.Collapsed;
-            frmSignIn.Visibility = Visibility.Visible;
         }
         private void CodeCheck()
         {

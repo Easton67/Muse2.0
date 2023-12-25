@@ -56,7 +56,7 @@
                                     TextAlignment="Center"
                                     Margin="0,5,0,21"/>
                             <Frame x:Name="frmSignUp" Height="242" Visibility="Collapsed" />
-                            <Frame x:Name="frmSignIn" Height="242"/>
+                            <Frame x:Name="frmSignIn" Height="242" Visibility="Collapsed"/>
                             <StackPanel x:Name="stkBodyContentSignIn">
                                 <StackPanel x:Name="stkVerificationCode" Orientation="Horizontal" Margin="0,23,0,-76" HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
@@ -243,7 +243,7 @@
                             </StackPanel>
                             <StackPanel x:Name="stkButtonAndFooter">
                                     <Button x:Name="btnLogin"  
-                                        Content="LOG IN"
+                                        Content="Login"
                                         Foreground="Black"
                                         FontSize="12"
                                         FontFamily="Montserrat"
