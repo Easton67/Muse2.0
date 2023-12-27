@@ -1440,7 +1440,5 @@ namespace Muse2
             Regex numericRegex = new Regex("[^0-9]+");
             e.Handled = numericRegex.IsMatch(e.Text);
         }
-
-
     }
 }

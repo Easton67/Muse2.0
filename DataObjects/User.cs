@@ -22,4 +22,8 @@ namespace DataObjects
     {
         public List<string> Roles { get; set; }
     }
+    public class UserPass : User
+    {
+        public string PasswordHash { get; set; }
+    }
 }

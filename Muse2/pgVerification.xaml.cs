@@ -1,4 +1,5 @@
 ﻿using DataObjects;
+using LogicLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Muse2
 {
@@ -23,25 +25,107 @@ namespace Muse2
     /// </summary>
     public partial class pgVerification : Page
     {
+        UserManager um = new UserManager();
         string resetCode;
         string tempEmail;
         Regex numericalRegex = new Regex("[^0-9]+");
         Page pgSignUp = new pgSignUp();
+        string oldPassword;
+        string newPassword;
+        string email;
+        UserPass oldUser;
+        bool btnShowPasswordTopIsClicked;
+        bool btnShowPasswordBottomIsClicked;
         public pgVerification()
         {
             InitializeComponent();
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            stkPassword.Visibility = Visibility.Hidden;
+            stkConfirmPassword.Visibility = Visibility.Hidden;
             stkVerificationCode.Visibility = Visibility.Hidden;
+            btnShowPasswordTop.Visibility = Visibility.Hidden;
+            btnShowPasswordBottom.Visibility = Visibility.Hidden;
+            txtShownPasswordTop.Visibility = Visibility.Hidden;
+            txtShownPasswordBottom.Visibility = Visibility.Hidden;
+            txtEmail.Text = "67Easton@gmail.com";
+            txtEmail.Focus();
         }
-        private void CodeCheck()
+        #region Validation
+        private void SetEmail()
         {
-            string userEnteredCode = txtCode1.Text + txtCode2.Text + txtCode3.Text + txtCode4.Text + txtCode5.Text + txtCode6.Text;
-
-            if (resetCode.Equals(userEnteredCode))
+            if (!email.IsValidEmail())
             {
-                // reset password code
+                MessageBox.Show("That is not a valid email address", "Invalid Email",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                txtEmail.SelectAll();
+                txtEmail.Focus();
+                return;
+            }
+            else
+            {
+                email = txtEmail.Text;
+            }
+        }
+        private void SetPassword()
+        {
+            if (pwdPassword.Password == pwdConfirmPassword.Password && pwdPassword.Password.IsValidPassword())
+            {
+                newPassword = pwdConfirmPassword.Password;
+            }
+            else
+            {
+                MessageBox.Show("That is not a valid password", "Invalid Password",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                pwdPassword.SelectAll();
+                pwdPassword.Focus();
+                return;
+            }
+        }
+        #endregion
+        private void ResetPassword()
+        {
+            // run check if not all fields are put in
+            if (txtEmail.Text == "" || pwdPassword.Password == "" || pwdConfirmPassword.Password == "")
+            {
+                MessageBox.Show("Please fill out all fields to continue.");
+                return;
+            }
+
+            try
+            {
+                if (pwdPassword.Password == pwdConfirmPassword.Password)
+                {
+                    // seperated into different methods for validation checks
+                    SetPassword();
+                    SetEmail();
+
+                    try
+                    {
+                        oldUser = um.SelectPasswordHashByEmail(email);
+                        oldPassword = oldUser.PasswordHash;
+                        um.ResetPassword(email, oldPassword, newPassword);
+                        MessageBox.Show("Your password reset was successful!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not reset your password. Please try again.",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Password and confirm password do not match.");
+                    pwdPassword.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Unable to find your old password. Please try again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
         #region Async Send Email Verification
@@ -51,7 +135,7 @@ namespace Muse2
             Random rnd = new Random();
             resetCode = rnd.Next(111111, 999999).ToString();
             string result = Task.Run(() => requestAPI(resetCode, "Password Reset Code: ")).Result;
-            MessageBox.Show("Email Sent Successfully!");
+            stkVerificationCode.Visibility = Visibility.Visible;
             txtCode1.Focus();
         }
         private async Task<string> requestAPI(string message, string subject)
@@ -136,14 +220,79 @@ namespace Muse2
                     txtEmail.Focus();
                     return;
                 }
-                stkEmailPass.Visibility = Visibility.Hidden;
+                stkForgetPasswordInputs.Visibility = Visibility.Hidden;
                 SendEmail();
                 btnEnterCode.Content = "ENTER CODE";
+                return;
             }
             if(btnEnterCode.Content.Equals("ENTER CODE"))
             {
-                CodeCheck();
+                try
+                {
+                    string userEnteredCode = txtCode1.Text + txtCode2.Text + txtCode3.Text + txtCode4.Text + txtCode5.Text + txtCode6.Text;
+
+                    if (resetCode.Equals(userEnteredCode))
+                    {
+                        stkForgetPasswordInputs.Visibility = Visibility.Visible;
+                        lblPassword.Content = "New Password";
+                        stkPassword.Visibility = Visibility.Visible;
+                        stkConfirmPassword.Visibility = Visibility.Visible;
+                        stkVerificationCode.Visibility = Visibility.Hidden;
+                        btnShowPasswordTop.Visibility = Visibility.Visible;
+                        btnShowPasswordBottom.Visibility = Visibility.Visible;
+                        btnEnterCode.Content = "RESET PASSWORD";
+                        txtEmail.Focus();
+                    }
+                    else
+                    {
+                        SendEmail();
+                        MessageBox.Show("A different code was sent to your email.","Incorrect code");
+                    }
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                
+            }
+            if (btnEnterCode.Content.Equals("RESET PASSWORD"))
+            {
+                ResetPassword();
+                return;
             }
         }
+        #region Show Password Buttons
+        private void btnShowPasswordTop_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnShowPasswordTopIsClicked == false)
+            {
+                txtShownPasswordTop.Visibility = Visibility.Visible;
+                txtShownPasswordTop.Text = pwdPassword.Password;
+                btnShowPasswordTopIsClicked = true;
+                return;
+            }
+            else
+            {
+                pwdPassword.Visibility = Visibility.Visible;
+                txtShownPasswordTop.Visibility = Visibility.Hidden;
+                btnShowPasswordTopIsClicked = false;
+            }
+        }
+        private void btnShowPasswordBottom_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnShowPasswordBottomIsClicked == false)
+            {
+                txtShownPasswordBottom.Visibility = Visibility.Visible;
+                txtShownPasswordBottom.Text = pwdConfirmPassword.Password;
+                btnShowPasswordTopIsClicked = true;
+            }
+            else
+            {
+                pwdConfirmPassword.Visibility = Visibility.Visible;
+                txtShownPasswordBottom.Visibility = Visibility.Hidden;
+                btnShowPasswordTopIsClicked = false;
+            }
+        }
+        #endregion
     }
 }

@@ -35,9 +35,12 @@ namespace Muse2
             // easier to hide than to figure out the exact coordinates
             txtEmail.Text = "67Easton@gmail.com";
             pwdPassword.Password = "password";
-            //stkProfileName.Visibility = Visibility.Hidden;
-            //stkConfirmPassword.Visibility = Visibility.Hidden;
+            txtShownPasswordTop.Visibility = Visibility.Hidden;
+            btnShowPasswordBottom.Visibility = Visibility.Hidden;
+            stkProfileName.Visibility = Visibility.Hidden;
+            stkConfirmPassword.Visibility = Visibility.Hidden;
         }
+        #region Show Password Buttons
         private void btnShowPasswordTop_Click(object sender, RoutedEventArgs e)
         {
             if (btnShowPasswordTopIsClicked == false)
@@ -54,6 +57,22 @@ namespace Muse2
                 btnShowPasswordTopIsClicked = false;
             }
         }
+        private void btnShowPasswordBottom_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnShowPasswordTopIsClicked == false)
+            {
+                txtShownPasswordBottom.Visibility = Visibility.Visible;
+                txtShownPasswordBottom.Text = pwdConfirmPassword.Password;
+                btnShowPasswordTopIsClicked = true;
+            }
+            else
+            {
+                pwdConfirmPassword.Visibility = Visibility.Visible;
+                txtShownPasswordBottom.Visibility = Visibility.Hidden;
+                btnShowPasswordTopIsClicked = false;
+            }
+        }
+        #endregion
 
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
         {

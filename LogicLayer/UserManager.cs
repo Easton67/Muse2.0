@@ -47,6 +47,20 @@ namespace LogicLayer
             }
             return userVM;
         }
+        public UserPass SelectPasswordHashByEmail(string email)
+        {
+            UserPass userPass = null;
+
+            try
+            {
+                userPass = _userAccessor.SelectPasswordHashByEmail(email);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to find your old password. ", ex);
+            }
+            return userPass;
+        }
         public List<string> GetRolesByUserID(int UserID)
         {
             List<string> roles = new List<string>();
@@ -116,8 +130,6 @@ namespace LogicLayer
         public bool ResetPassword(string email, string oldPassword, string newPassword)
         {
             bool result = false;
-
-            oldPassword = HashSha256(oldPassword);
             newPassword = HashSha256(newPassword);
 
             try
@@ -198,7 +210,7 @@ namespace LogicLayer
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Unable deactivate or reactivate the account ", ex);
+                throw new ApplicationException("Unable to deactivate or reactivate the account ", ex);
             }
             return result;
         }

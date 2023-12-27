@@ -20,7 +20,6 @@
                 BorderThickness="2" 
                 Width="800" 
                 Height="533">
-
             <Grid Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="17*"/>
@@ -55,240 +54,33 @@
                                     TextWrapping="Wrap"
                                     TextAlignment="Center"
                                     Margin="0,5,0,21"/>
+                            <!--Frames-->
                             <Frame x:Name="frmSignUp" Height="242" Visibility="Collapsed" />
                             <Frame x:Name="frmSignIn" Height="242" Visibility="Collapsed"/>
-                            <StackPanel x:Name="stkBodyContentSignIn">
-                                <StackPanel x:Name="stkVerificationCode" Orientation="Horizontal" Margin="0,23,0,-76" HorizontalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBox x:Name="txtCode1" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" PreviewTextInput="txtCode1_PreviewTextInput_1" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" />
-                                        <TextBox x:Name="txtCode2" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" PreviewTextInput="txtCode2_PreviewTextInput_1" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"  />
-                                        <TextBox x:Name="txtCode3" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" PreviewTextInput="txtCode3_PreviewTextInput_1" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" />
-                                        <TextBox x:Name="txtCode4" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" PreviewTextInput="txtCode4_PreviewTextInput_1" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" />
-                                        <TextBox x:Name="txtCode5" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" PreviewTextInput="txtCode5_PreviewTextInput_1" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" />
-                                        <TextBox x:Name="txtCode6" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" PreviewTextInput="txtCode6_PreviewTextInput_1" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" />
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel x:Name="stkEmailPass">
-                                    <TextBlock x:Name= "lblEmail"
-                                            Text="Email"
-                                            Foreground="Black"
-                                            FontSize="12"
-                                            FontWeight="Medium"
-                                            FontFamily="Montserrat"                             
-                                            Margin="0,29,0,-6" 
-                                            Padding="10,0,0,1" 
-                                            Width="250"/>
-                                    <TextBox x:Name="txtEmail"
-                                        FontSize="13"
-                                        FontWeight="Medium"
-                                        FontFamily="Montserrat"                            
-                                        Foreground="Black"
-                                        CaretBrush="Black"
-                                        BorderBrush="Black"
-                                        BorderThickness="0,0,0,2"
-                                        Height="28"
-                                        VerticalContentAlignment="Center"
-                                        Margin="10,5,31,0"
-                                        Padding="20,0,0,0" 
-                                        VerticalAlignment="Center" 
-                                        Width="209">
-                                        <TextBox.Background>
-                                            <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\user-icon.png"
-                                                    Stretch="None"
-                                                    AlignmentX="Left"/>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                    <TextBlock
-                                    x:Name="txtPasswordLabel"
-                                    Text="Password"
-                                    Foreground="Black"
-                                    FontSize="12"
-                                    FontWeight="Medium"                           
-                                    Margin="10,21.2,0,0"/>
-                                    <PasswordBox x:Name="pwdPassword"
-                                            FontSize="13"
-                                            FontWeight="Medium"
-                                            Foreground="Black"
-                                            CaretBrush="Black"
-                                            BorderBrush="Black"
-                                            BorderThickness="0,0,0,2"
-                                            Height="28"
-                                            VerticalContentAlignment="Center"
-                                            Margin="10,5,29,0" 
-                                            Width="210" 
-                                            Padding="20,0,0,3">
-                                        <PasswordBox.Background>
-                                            <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
-                                                    Stretch="None"
-                                                    AlignmentX="Left"/>
-                                        </PasswordBox.Background>
-                                    </PasswordBox>
-                                </StackPanel>
-                                <StackPanel x:Name="stkConfirmEmailPass" Width="250" Margin="0,0,0,32">
-                                    <TextBlock x:Name= "lblNewPassword"
-                                    Text="New Password"
-                                    Foreground="Black"
-                                    FontSize="12"
-                                    FontWeight="Medium"
-                                    FontFamily="Montserrat"                             
-                                    Margin="0,-113,0,0" 
-                                    Padding="10,0,0,0" 
-                                    Width="250"/>
-                                    <TextBlock
-                                    x:Name="lblConfirmNewPassword"
-                                    Text="Confirm Password"
-                                    Foreground="Black"
-                                    FontSize="12"
-                                    FontWeight="Medium"                           
-                                    Margin="10,-49,31,45"/>
-                                    <PasswordBox x:Name="pwdNewPassword"
-                                                FontSize="13"
-                                                FontWeight="Medium"
-                                                Foreground="Black"
-                                                CaretBrush="Black"                                                BorderBrush="Black"
-                                                BorderThickness="0,0,0,2"
-                                                Height="28"
-                                                VerticalContentAlignment="Center"
-                                                Padding="21,0,0,0" 
-                                                Width="254" 
-                                                Cursor="Arrow" 
-                                                Margin="10,-192,31,0" 
-                                                Panel.ZIndex="3">
-                                        <PasswordBox.Background>
-                                            <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
-                                                        Stretch="None"
-                                                        AlignmentX="Left"/>
-                                        </PasswordBox.Background>
-                                    </PasswordBox>
-                                    <TextBox x:Name="txtShownPasswordTop"
-                                         FontSize="13"
-                                         FontWeight="Medium"
+                            <Frame x:Name="frmVerification" Height="242" Visibility="Collapsed"/>
+                            <StackPanel x:Name="stkFooterButtons" Orientation="Horizontal" Margin="0,5,0,0">
+                                <Button x:Name="btnBack"
+                                         Content="Sign Up"
+                                         Background="transparent" 
+                                         BorderThickness="0,0,0,0" 
                                          Foreground="Black"
-                                         CaretBrush="Black"
-                                         BorderBrush="Black"
-                                         BorderThickness="0,0,0,0"
-                                         Height="21"
-                                         VerticalContentAlignment="Center"
-                                         Margin="24,-189,28,6" 
-                                         Cursor="Arrow"
-                                         Width="187" 
-                                         IsReadOnly="True" 
-                                         Background="White" 
-                                         Panel.ZIndex="5" />
-                                    <PasswordBox x:Name="pwdConfirmNewPassword"
-                                    FontSize="13"
-                                    FontWeight="Medium"
-                                    Foreground="Black"
-                                    CaretBrush="Black"
-                                    BorderBrush="Black"
-                                    BorderThickness="0,0,0,2"
-                                    Height="28"
-                                    VerticalContentAlignment="Center"
-                                    Margin="10,-52,32,0" 
-                                    Panel.ZIndex="2" 
-                                    VerticalAlignment="Center" 
-                                    Width="207" 
-                                    Padding="20,0,0,2">
-                                        <PasswordBox.Background>
-                                            <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
-                                            Stretch="None"
-                                            AlignmentX="Left"/>
-                                        </PasswordBox.Background>
-                                    </PasswordBox>
-                                </StackPanel>
-                                <TextBox x:Name="txtShownPassword"
-                                     FontSize="13"
-                                     FontWeight="Medium"
-                                     Foreground="Black"
-                                     CaretBrush="Black"
-                                     BorderBrush="Black"
-                                     BorderThickness="0,0,0,0"
-                                     Height="21"
-                                     VerticalContentAlignment="Center"
-                                     Margin="24,-112,28,6" 
-                                     Cursor="Arrow"
-                                     Width="187" 
-                                     IsReadOnly="True"/>
-                                <Button x:Name="btnShowPasswordBottom" 
-                                           Height="16" 
-                                           Width="16" 
-                                           BorderThickness="0,0,0,0" 
-                                           HorizontalContentAlignment="Right" 
-                                           HorizontalAlignment="Right" 
-                                           Margin="0,-118,12,2" 
-                                           Click="btnShowPasswordBottom_Click" >
-                                    <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="9"/>
-                                        </Style>
-                                    </Button.Resources>
+                                         FontSize="12"
+                                         FontFamily="Montserrat"
+                                         Margin="-9,0,0,0" 
+                                         Width="90" 
+                                         Click="btnBack_Click">
                                 </Button>
-                                <Button x:Name="btnShowPasswordTop" 
-                                 Height="16" 
-                                 Width="16" 
-                                 BorderThickness="0,0,0,0" 
-                                 HorizontalContentAlignment="Right" 
-                                 HorizontalAlignment="Right" 
-                                 Padding="1,0,1,0" 
-                                 Margin="0,-278,12,-18" 
-                                 Click="btnShowPasswordTop_Click" >
-                                    <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="9"/>
-                                        </Style>
-                                    </Button.Resources>
-                                </Button>
-                            </StackPanel>
-                            <StackPanel x:Name="stkButtonAndFooter">
-                                    <Button x:Name="btnLogin"  
-                                        Content="Login"
+                                <Button x:Name="btnForgotPassword" 
+                                        Content="Forgot Password" 
+                                        Background="transparent" 
+                                        BorderThickness="0,0,0,0" 
                                         Foreground="Black"
                                         FontSize="12"
                                         FontFamily="Montserrat"
-                                        Cursor="Hand" 
-                                        FontWeight="SemiBold" Click="btnLogin_Click">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border Width="150" Height="40"
-                                                    CornerRadius="20">
-                                                    <Border.Background>
-                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                            <GradientStop Color="#FFE5BAEA"/>
-                                                            <GradientStop Color="#FFE8CBCB" Offset="1"/>
-                                                        </LinearGradientBrush>
-                                                    </Border.Background>
-                                                    <ContentPresenter VerticalAlignment="Center"
-                                                                HorizontalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                <StackPanel Orientation="Horizontal" Margin="-1,0,0,0">
-                                    <Button x:Name="btnBack"
-                                             Content="Sign Up"
-                                             Background="transparent" 
-                                             BorderThickness="0,0,0,0" 
-                                             Foreground="Black"
-                                             FontSize="12"
-                                             FontFamily="Montserrat"
-                                             Margin="-9,15,0,0" 
-                                             Width="90" 
-                                             Click="btnBack_Click">
-                                    </Button>
-                                    <Button x:Name="btnForgotPassword" 
-                                            Content="Forgot Password" 
-                                            Background="transparent" 
-                                            BorderThickness="0,0,0,0" 
-                                            Foreground="Black"
-                                            FontSize="12"
-                                            FontFamily="Montserrat"
-                                            Margin="1,15,0,0" 
-                                            Width="90" 
-                                            Click="btnForgotPassword_Click" />
-                                    </StackPanel>
-                                </StackPanel>
+                                        Margin="1,0,0,0" 
+                                        Width="90" 
+                                        Click="btnForgotPassword_Click" />
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </Border>

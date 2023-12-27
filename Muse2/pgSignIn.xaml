@@ -125,6 +125,20 @@
                         </PasswordBox.Background>
                     </PasswordBox>
                 </StackPanel>
+                <TextBox x:Name="txtShownPasswordBottom"
+                        FontSize="13"
+                        FontWeight="Medium"
+                        Foreground="Black"
+                        CaretBrush="Black"
+                        BorderBrush="Black"
+                        BorderThickness="0,0,0,0"
+                        Height="21"
+                        VerticalContentAlignment="Center"
+                        Margin="24,-23,28,6" 
+                        Cursor="Arrow"
+                        Width="187" 
+                        IsReadOnly="True" 
+                        Panel.ZIndex="5" />
             </StackPanel>
             <TextBox x:Name="txtShownPasswordTop"
                     FontSize="13"
@@ -163,7 +177,7 @@
                      HorizontalContentAlignment="Right" 
                      HorizontalAlignment="Right" 
                      Padding="1,0,1,0" 
-                     Margin="0,31,12,-18" >
+                     Margin="0,31,12,-18" Click="btnShowPasswordBottom_Click" >
                     <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
                     <Button.Resources>
                         <Style TargetType="Border">

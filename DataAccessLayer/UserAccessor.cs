@@ -87,6 +87,53 @@ namespace DataAccessLayer
             return rows;
 
         }
+        public UserPass SelectPasswordHashByEmail(string email)
+        {
+            UserPass userPass = new UserPass();
+
+            var conn = SqlConnectionProvider.GetConnection();
+
+            var cmdText = "sp_select_passwordHash_by_Email";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100);
+
+            cmd.Parameters["@Email"].Value = email;
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                //process the results
+                if (reader.HasRows)
+                {
+                    //change if to while if multiple rows
+                    if (reader.Read())
+                    {
+                        userPass.PasswordHash = reader.GetString(0);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Password not found");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return userPass;
+        }
         public UserVM SelectUserVMByEmail(string email)
         {
             UserVM userVM = new UserVM();

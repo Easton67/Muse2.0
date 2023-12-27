@@ -71,21 +71,6 @@ namespace Muse2
             }
         }
         #region Validation
-        private void SetEmail()
-        {
-            if (!email.IsValidEmail())
-            {
-                MessageBox.Show("That is not a valid email address", "Invalid Email",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                txtEmail.SelectAll();
-                txtEmail.Focus();
-                return;
-            }
-            else
-            {
-                email = txtEmail.Text;
-            }
-        }
         private void SetProfileName()
         {
             if (!profileName.IsValidProfileName())
@@ -99,6 +84,21 @@ namespace Muse2
             else
             {
                 profileName = txtProfileName.Text;
+            }
+        }
+        private void SetEmail()
+        {
+            if (!email.IsValidEmail())
+            {
+                MessageBox.Show("That is not a valid email address", "Invalid Email",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                txtEmail.SelectAll();
+                txtEmail.Focus();
+                return;
+            }
+            else
+            {
+                email = txtEmail.Text;
             }
         }
         private void SetPassword()

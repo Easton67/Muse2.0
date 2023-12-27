@@ -271,5 +271,10 @@ namespace DataAccessFakes
 
             return rows;
         }
+
+        public UserPass SelectPasswordHashByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

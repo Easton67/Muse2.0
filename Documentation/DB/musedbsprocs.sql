@@ -61,6 +61,38 @@ AS
 	END
 GO
 
+/* sp_select_passwordHash_by_Email */
+
+print '' print '*** creating sp_select_passwordHash_by_Email ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_passwordHash_by_Email]
+(
+	@Email			[nvarchar](100)
+)
+AS	
+	BEGIN
+		SELECT	[PasswordHash]
+		FROM	[User]
+		WHERE 	@Email = [Email]
+	END
+GO
+
+/* sp_select_passwordHash_by_Email */
+
+print '' print '*** creating sp_select_passwordHash_by_Email ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_passwordHash_by_Email]
+(
+	@Email			[nvarchar](100)
+)
+AS	
+	BEGIN
+		SELECT	[PasswordHash]
+		FROM	[User]
+		WHERE 	@Email = [Email]
+	END
+GO
+
 /* sp_select_all_users */
  
 print '' print '*** creating sp_select_all_users ***'
