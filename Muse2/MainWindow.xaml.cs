@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -39,6 +40,8 @@ namespace Muse2
         private Playlist selectedPlaylist;
         private string baseDirectory = AppContext.BaseDirectory;
         private bool isEnabledShuffle;
+        private double initialTextBlockWidth;
+        private double animationDuration = 5;
 
         public MainWindow(UserVM LoggedInUser)
         {

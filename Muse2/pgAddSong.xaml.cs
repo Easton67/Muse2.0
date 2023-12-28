@@ -24,5 +24,20 @@ namespace Muse2
         {
             InitializeComponent();
         }
+
+        private void btnAddMp3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void txtPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
+
+        private void txtYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
     }
 }

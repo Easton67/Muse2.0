@@ -49,9 +49,8 @@
                 Background="White" 
                 Padding="11,1,11,1" 
                 Height="30" 
-                Click="btnAddMp3_Click" 
                 HorizontalAlignment="Right" 
-                Margin="0,0,30,0" >
+                Margin="0,0,30,0" Click="btnAddMp3_Click" >
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"/>
@@ -146,8 +145,7 @@
                  FontSize="13" 
                  VerticalContentAlignment="Center" 
                  HorizontalContentAlignment="Center" 
-                 PreviewTextInput="txtYear_PreviewTextInput" 
-                 MaxLength="4" />
+                 MaxLength="4" PreviewTextInput="txtYear_PreviewTextInput" />
         <CheckBox x:Name="chkExplicit" 
                   Grid.Row="5" 
                   Grid.Column="1" 
@@ -181,7 +179,6 @@
                  VerticalContentAlignment="Center" 
                  InputScope="DateYear" 
                  HorizontalContentAlignment="Center" 
-                 MaxLength="4" 
-                 PreviewTextInput="txtPlays_PreviewTextInput" />
+                 MaxLength="4" PreviewTextInput="txtPlays_PreviewTextInput" />
     </Grid>
 </Page>

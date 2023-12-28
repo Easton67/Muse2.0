@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="Muse" Height="900" Width="1500" MinWidth="810" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/Resources/museLogo.png">
+        Title="Muse" Height="900" Width="1500" MinWidth="900" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/Resources/museLogo.png">
 
     <!--// Toying around with the idea of adding color, but didn't have time to change all font to white-->
 
@@ -80,12 +80,13 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="141*" />
-                <ColumnDefinition Width="158" />
+                <ColumnDefinition Width="378*" />
+                <ColumnDefinition Width="29" />
                 <ColumnDefinition Width="74" />
-                <ColumnDefinition Width="381*" />
-                <ColumnDefinition Width="28" />
-                <ColumnDefinition Width="141*" />
+                <ColumnDefinition Width="332*" />
+                <ColumnDefinition Width="29" />
+                <ColumnDefinition Width="200*" />
+                <ColumnDefinition Width="218*" />
             </Grid.ColumnDefinitions>
             <Button x:Name="btnPlaylistImageEdit" 
                     Width="75" 
@@ -98,37 +99,37 @@
                 <Image x:Name="imgPlaylistPicture" 
                        Source="/Resources/defaultAlbumImage.png"/>
             </Button>
-            <StackPanel x:Name="stkCol0">
+            <StackPanel x:Name="stkCol0" Margin="0,0,5,0">
                 <Image x:Name="imgLogo" 
                        Grid.Row="0" 
                        Width="200" 
                        HorizontalAlignment="Left" 
-                       Margin="50,0,0,0" 
+                       Margin="6,8,0,0" 
                        Source="/Resources/museLogo.png"/>
             </StackPanel>
             <StackPanel x:Name="stkCol1"
-                        Grid.Column="3" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        Height="66" >
-                <TextBlock>
-                        <Label x:Name="lblSongTitle" 
-                               Content="Song" 
-                               FontWeight="Bold"
-                               FontSize="20"/>
-                        <Image x:Name="imgExplicit" 
-                               Source="/explicit.png" 
-                               Width="12" 
-                               Height="12" 
-                               Margin="0,0,0,9"/>
+                        Grid.Column="3"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Height="66">
+                <TextBlock x:Name="txtSongInfo" TextWrapping="NoWrap">
+                <Label x:Name="lblSongTitle"
+                       Content="Song"
+                       FontWeight="Bold"
+                       FontSize="20" Margin="0,0,30,0" />
+                <Image x:Name="imgExplicit"
+                       Source="/explicit.png"
+                       Width="12"
+                       Height="12"
+                       Margin="-46,0,0,9" />
                 </TextBlock>
-                <Label x:Name="lblSongArtist" 
-                       Content="Artist" 
-                       Grid.Column="1" 
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center" 
-                       FontWeight="Bold" 
-                       FontSize="15" />
+                <Label x:Name="lblSongArtist"
+                       Content="Artist"
+                       Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontWeight="Bold"
+                       FontSize="15" Margin="0,0,46,0" />
             </StackPanel>
             <Button x:Name="btnRewind" 
                     Grid.Row="1" 
@@ -138,7 +139,7 @@
                     Background="White" 
                     BorderThickness="0,0,0,0" 
                     Click="btnRewind_Click" >
-                <Image Source="/Resources/next.png">
+                <Image Source="/Resources/next.png" Margin="-10,0,0,0">
                     <Image.RenderTransform>
                         <ScaleTransform ScaleX="-1"/>
                     </Image.RenderTransform>
@@ -158,16 +159,16 @@
                          Grid.ColumnSpan="2" 
                          Width="auto" 
                          Foreground="#FFD5C9E3" 
-                         Margin="0,5,11,5"/>
+                         Margin="0,5,0,5"/>
             <Button x:Name="btnNext" 
-                    HorizontalAlignment="Left" 
+                    HorizontalAlignment="Center" 
                     Grid.Row="1" 
                     Grid.Column="4"
                     Width="25"
                     Background="White" 
                     BorderThickness="0,0,0,0"  
                     Click="btnNext_Click" >
-                <Image Source="/Resources/next.png"/>
+                <Image Source="/Resources/next.png" Margin="0,0,-6,0"/>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="6"/>
@@ -181,7 +182,7 @@
                     HorizontalAlignment="Center"   
                     Background="White" 
                     BorderThickness="0,0,0,0" 
-                    Click="btnPause_Click" >
+                    Click="btnPause_Click" Margin="0,0,44,0" >
                 <Image Source="/Resources/pause.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -196,7 +197,7 @@
                     HorizontalAlignment="Center"  
                     Background="White" 
                     BorderThickness="0,0,0,0"  
-                    Click="btnPlay_Click">
+                    Click="btnPlay_Click" Margin="0,0,44,0">
                 <Image Source="/Resources/play.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -204,17 +205,16 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="5" Width="100" Source="/Resources/account.png" HorizontalAlignment="Center"/>
-            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="5" Width="100" HorizontalAlignment="Center"/>
+            <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="6" Width="100" Source="/Resources/account.png" HorizontalAlignment="Center"/>
+            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="6" Width="100" HorizontalAlignment="Center"/>
             <Button x:Name="btnLogout" 
                         Content="Log Out"
                         Grid.Row="1" 
-                        Grid.Column="5" 
+                        Grid.Column="6" 
                         FontWeight="Bold" 
                         Width="60" 
                         HorizontalAlignment="Left" 
-                        HorizontalContentAlignment="Center" 
-                        Margin="55,0,0,0" 
+                        HorizontalContentAlignment="Left" 
                         Background="White" 
                         BorderThickness="0,0,0,0" 
                         VerticalContentAlignment="Top" 
@@ -231,16 +231,17 @@
             <Button x:Name="btnProfileName" 
                     Content="User" 
                     Grid.Row="1" 
-                    Grid.Column="5" 
+                    Grid.Column="6" 
                     FontWeight="Bold"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Left" 
+                    HorizontalContentAlignment="left"
+                    HorizontalAlignment="right" 
                     Padding="5,0,5,3" 
                     VerticalAlignment="Center" 
                     Background="White" 
                     BorderThickness="0,0,0,0" 
                     Click="btnProfileName_Click" 
-                    Height="24" Width="26" Margin="181,0,0,0">
+                    Height="24" 
+                    Margin="0,0,9,0">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="4"/>
@@ -248,30 +249,35 @@
                 </Button.Resources>
             </Button>
             <Label x:Name="lblCurrentTime" 
-                   Grid.Row="1" 
+                   Grid.Row="3" 
+                   Grid.RowSpan="2"
                    Grid.Column="2"
                    FontWeight="Bold" 
-                   HorizontalAlignment="Left" 
-                   Margin="1,12,0,0" Grid.RowSpan="2" Width="10" />
+                   HorizontalAlignment="Left"  
+                   VerticalAlignment="Center" 
+                   Margin="0,-67,0,0" />
+
             <Label x:Name="lblSongLength" 
-                   Grid.Row="1" 
-                   Grid.Column="1"
-                   Content="" 
+                   Grid.Row="3" 
+                   Grid.RowSpan="2"
+                   Grid.Column="3"
                    FontWeight="Bold" 
-                   HorizontalAlignment="Center" 
-                   Margin="0,12,0,0" Grid.RowSpan="2" Width="10" />
+                   HorizontalAlignment="Right" 
+                   Panel.ZIndex="3" 
+                   VerticalAlignment="Center" 
+                   Margin="0,-67,0,0" />
             <Button x:Name="btnShuffle" 
                     Grid.Row="3" 
                     Grid.Column="2"
                     Content="Shuffle" 
-                    HorizontalAlignment="Center" 
+                    HorizontalAlignment="Left" 
                     FontWeight="Bold" 
                     Click="btnShuffle_Click" Width="40"/>
             <Button x:Name="btnQueue" 
                     Grid.Row="3" 
-                    Grid.Column="4"
+                    Grid.Column="3"
                     Content="Queue" 
-                    HorizontalAlignment="Right" 
+                    HorizontalAlignment="right" 
                     FontWeight="Bold" 
                     Click="btnQueue_Click" Width="38"/>
         </Grid>
