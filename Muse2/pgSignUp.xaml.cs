@@ -37,7 +37,6 @@ namespace Muse2
             txtShownPasswordTop.Visibility = Visibility.Hidden;
             txtShownPasswordBottom.Visibility = Visibility.Hidden;
         }
-
         private void btnShowPasswordTop_Click(object sender, RoutedEventArgs e)
         {
             if (btnShowPasswordBottomIsClicked == false)
@@ -54,7 +53,6 @@ namespace Muse2
                 btnShowPasswordBottomIsClicked = false;
             }
         }
-
         private void btnShowPasswordBottom_Click(object sender, RoutedEventArgs e)
         {
             if (btnShowPasswordTopIsClicked == false)
@@ -73,6 +71,7 @@ namespace Muse2
         #region Validation
         private void SetProfileName()
         {
+            profileName = txtProfileName.Text;
             if (!profileName.IsValidProfileName())
             {
                 MessageBox.Show("That is not a valid profile name", "Invalid Profile Name",
@@ -88,6 +87,7 @@ namespace Muse2
         }
         private void SetEmail()
         {
+            email = txtEmail.Text;
             if (!email.IsValidEmail())
             {
                 MessageBox.Show("That is not a valid email address", "Invalid Email",
@@ -120,7 +120,7 @@ namespace Muse2
         private void btnSignUp_Click(object sender, RoutedEventArgs e)
         {
             // run check if not all fields are put in
-            if(txtProfileName.Text == "" || txtEmail.Text == "" || pwdPassword.Password == "" || pwdConfirmPassword.Password == "")
+            if (txtProfileName.Text == "" || txtEmail.Text == "" || pwdPassword.Password == "" || pwdConfirmPassword.Password == "")
             {
                 MessageBox.Show("Please fill out all fields to continue.");
                 return;
@@ -141,6 +141,8 @@ namespace Muse2
                 UserManager um = new UserManager();
                 um.InsertUser(newUser, password);
                 MessageBox.Show("Account Created!");
+                CloseWindow.CloseParent();
+
             }
             catch (Exception ex)
             {

@@ -36,6 +36,8 @@ namespace Muse2
         UserPass oldUser;
         bool btnShowPasswordTopIsClicked;
         bool btnShowPasswordBottomIsClicked;
+        bool emailSent;
+
         public pgVerification()
         {
             InitializeComponent();
@@ -55,6 +57,8 @@ namespace Muse2
         #region Validation
         private void SetEmail()
         {
+            MessageBox.Show(txtEmail.Text);
+            email = txtEmail.Text;
             if (!email.IsValidEmail())
             {
                 MessageBox.Show("That is not a valid email address", "Invalid Email",
@@ -134,9 +138,18 @@ namespace Muse2
             // generate the reset code
             Random rnd = new Random();
             resetCode = rnd.Next(111111, 999999).ToString();
-            string result = Task.Run(() => requestAPI(resetCode, "Password Reset Code: ")).Result;
-            stkVerificationCode.Visibility = Visibility.Visible;
-            txtCode1.Focus();
+            try
+            {
+                string result = Task.Run(() => requestAPI(resetCode, "Password Reset Code: ")).Result;
+                emailSent = true;
+                stkVerificationCode.Visibility = Visibility.Visible;
+                txtCode1.Focus();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("We are unable to make your request to our email server. Please try again later.", "Unable to send email");
+                return;
+            }
         }
         private async Task<string> requestAPI(string message, string subject)
         {
@@ -222,10 +235,18 @@ namespace Muse2
                 }
                 stkForgetPasswordInputs.Visibility = Visibility.Hidden;
                 SendEmail();
-                btnEnterCode.Content = "ENTER CODE";
+                if(emailSent == true)
+                {
+                    btnEnterCode.Content = "ENTER CODE";
+                    return;
+                }
+            }
+            if (btnEnterCode.Content.Equals("RESET PASSWORD"))
+            {
+                ResetPassword();
                 return;
             }
-            if(btnEnterCode.Content.Equals("ENTER CODE"))
+            if (btnEnterCode.Content.Equals("ENTER CODE"))
             {
                 try
                 {
@@ -253,12 +274,6 @@ namespace Muse2
                 {
                     return;
                 }
-                
-            }
-            if (btnEnterCode.Content.Equals("RESET PASSWORD"))
-            {
-                ResetPassword();
-                return;
             }
         }
         #region Show Password Buttons
@@ -284,13 +299,13 @@ namespace Muse2
             {
                 txtShownPasswordBottom.Visibility = Visibility.Visible;
                 txtShownPasswordBottom.Text = pwdConfirmPassword.Password;
-                btnShowPasswordTopIsClicked = true;
+                btnShowPasswordBottomIsClicked = true;
             }
             else
             {
                 pwdConfirmPassword.Visibility = Visibility.Visible;
                 txtShownPasswordBottom.Visibility = Visibility.Hidden;
-                btnShowPasswordTopIsClicked = false;
+                btnShowPasswordBottomIsClicked = false;
             }
         }
         #endregion

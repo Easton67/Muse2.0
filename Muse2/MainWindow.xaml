@@ -8,13 +8,13 @@
         Title="Muse" Height="900" Width="1500" MinWidth="810" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/Resources/museLogo.png">
 
     <!--// Toying around with the idea of adding color, but didn't have time to change all font to white-->
-    
-    
-        <!--<Window.Background>
+
+
+    <!--<Window.Background>
             <ImageBrush ImageSource="/museBackground.jpg" TileMode="None" Stretch="UniformToFill"/>
         </Window.Background>-->
-    
-        <Window.Background>
+
+    <Window.Background>
         <!--<RadialGradientBrush 
           GradientOrigin="0.5,0.5" 
           Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
@@ -25,13 +25,13 @@
             </RadialGradientBrush.GradientStops>
         </RadialGradientBrush>-->
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF525252" Offset="1"/>
-                <GradientStop Color="#FFF79EF0" Offset="1"/>
-                <GradientStop Color="Black" Offset="0.51"/>
-                <GradientStop Color="#FEAA6DA5" Offset="0.12"/>
-                <GradientStop Color="#FEAA6DA5" Offset="0.22"/>
-            </LinearGradientBrush>
-        </Window.Background>
+            <GradientStop Color="#FF525252" Offset="1"/>
+            <GradientStop Color="#FFF79EF0" Offset="1"/>
+            <GradientStop Color="Black" Offset="0.51"/>
+            <GradientStop Color="#FEAA6DA5" Offset="0.12"/>
+            <GradientStop Color="#FEAA6DA5" Offset="0.22"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -48,10 +48,9 @@
                 <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs" Click="mnuViewAllSongs_Click"/>
                 <MenuItem x:Name="mnuUrlToMp3" Header="Url to Mp3" Click="mnuUrlToMp3_Click"/>
             </MenuItem>
-            <!--Commented out since it was not implemented yet.-->
-            <!--<MenuItem x:Name="mnuAlbum" Header="Album">
+            <MenuItem x:Name="mnuAlbum" Header="Album">
                 <MenuItem x:Name="mnuCreateNewAlbum" Header="Create new Album" Click="mnuCreateNewAlbum_Click" />
-            </MenuItem>-->
+            </MenuItem>
             <MenuItem x:Name="mnuPlaylist" Header="Playlist">
                 <MenuItem x:Name="mnuNewPlaylist" Header="Create new Playlist" Click="mnuNewPlaylist_Click" />
             </MenuItem>
@@ -81,35 +80,93 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="141*" />
+                <ColumnDefinition Width="158" />
+                <ColumnDefinition Width="74" />
+                <ColumnDefinition Width="381*" />
+                <ColumnDefinition Width="28" />
+                <ColumnDefinition Width="141*" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnPlaylistImageEdit" Height="75" Width="75" Grid.Row="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="33,0,0,0" MouseDoubleClick="btnPlaylistImageEdit_MouseDoubleClick" Background="{x:Null}" BorderThickness="0,0,0,0" >
-                <Image x:Name="imgPlaylistPicture" Source="/Resources/defaultAlbumImage.png"/>
+            <Button x:Name="btnPlaylistImageEdit" 
+                    Width="75" 
+                    Grid.Row="1" 
+                    HorizontalAlignment="Left" 
+                    Grid.RowSpan="4" 
+                    Margin="33,2,0,2" 
+                    MouseDoubleClick="btnPlaylistImageEdit_MouseDoubleClick" 
+                    BorderThickness="0,0,0,0" >
+                <Image x:Name="imgPlaylistPicture" 
+                       Source="/Resources/defaultAlbumImage.png"/>
             </Button>
-            <!-- Col0 -->
-            <Image x:Name="imgLogo" Grid.Row="0" Width="200" HorizontalAlignment="Left" Margin="50,0,0,0" Source="/Resources/museLogo.png"/>
-            <!-- Col1 -->
-            <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="20" Margin="0,0,-20,31" >
-                <Label x:Name="lblSongTitle" Content="Song" />
-                <Image x:Name="imgExplicit" Source="/explicit.png" Width="12" Height="12" Margin="0,0,0,9"/>
-            </TextBlock>
-            <Label x:Name="lblSongArtist" Content="Artist" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Margin="0,21,0,0" FontSize="15" />
-            <Button x:Name="btnRewind"  Grid.Row="1" Grid.Column="1" Width="25" Margin="0,0,5,0" HorizontalAlignment="Left"  Background="White" BorderThickness="0,0,0,0" Click="btnRewind_Click" >
-                <Image Source="/Resources/rewind.png"/>
+            <StackPanel x:Name="stkCol0">
+                <Image x:Name="imgLogo" 
+                       Grid.Row="0" 
+                       Width="200" 
+                       HorizontalAlignment="Left" 
+                       Margin="50,0,0,0" 
+                       Source="/Resources/museLogo.png"/>
+            </StackPanel>
+            <StackPanel x:Name="stkCol1"
+                        Grid.Column="3" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        Height="66" >
+                <TextBlock>
+                        <Label x:Name="lblSongTitle" 
+                               Content="Song" 
+                               FontWeight="Bold"
+                               FontSize="20"/>
+                        <Image x:Name="imgExplicit" 
+                               Source="/explicit.png" 
+                               Width="12" 
+                               Height="12" 
+                               Margin="0,0,0,9"/>
+                </TextBlock>
+                <Label x:Name="lblSongArtist" 
+                       Content="Artist" 
+                       Grid.Column="1" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       FontWeight="Bold" 
+                       FontSize="15" />
+            </StackPanel>
+            <Button x:Name="btnRewind" 
+                    Grid.Row="1" 
+                    Grid.Column="2" 
+                    Width="25" 
+                    HorizontalAlignment="Left"  
+                    Background="White" 
+                    BorderThickness="0,0,0,0" 
+                    Click="btnRewind_Click" >
+                <Image Source="/Resources/next.png">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleX="-1"/>
+                    </Image.RenderTransform>
+                </Image>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="6"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnViewSong" Grid.Row="0" Grid.Column="1" Width="75" Height="75" HorizontalAlignment="Left" Margin="34,0,0,0" Background="White" BorderThickness="0,0,0,0"  Padding="0,0,0,0" MouseDoubleClick="btnViewSong_MouseDoubleClick" >
-                <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="1" Width="75" Source="/defaultAlbumImage.png" />
+            <Button x:Name="btnViewSong" Grid.Row="0" Grid.Column="2" Width="74" HorizontalAlignment="Center" Margin="0,12,0,12" Background="White" BorderThickness="0,0,0,0"  Padding="0,0,0,0" MouseDoubleClick="btnViewSong_MouseDoubleClick" >
+                <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="2" Width="75" Source="/defaultAlbumImage.png" />
             </Button>
-            <ProgressBar x:Name="barSongLength" Grid.Row="1" Grid.Column="1" Height="10" Width="auto" Foreground="#FFD5C9E3" Margin="31,0,31,0"/>
-
-            <Button x:Name="btnNext" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Width="25" Background="White" BorderThickness="0,0,0,0"  Click="btnNext_Click" >
+            <ProgressBar x:Name="barSongLength" 
+                         Grid.Row="1" 
+                         Grid.Column="2" 
+                         Grid.ColumnSpan="2" 
+                         Width="auto" 
+                         Foreground="#FFD5C9E3" 
+                         Margin="0,5,11,5"/>
+            <Button x:Name="btnNext" 
+                    HorizontalAlignment="Left" 
+                    Grid.Row="1" 
+                    Grid.Column="4"
+                    Width="25"
+                    Background="White" 
+                    BorderThickness="0,0,0,0"  
+                    Click="btnNext_Click" >
                 <Image Source="/Resources/next.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -117,7 +174,14 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnPause" Grid.Row="2" Grid.Column="1" Width="25" HorizontalAlignment="Center"   Background="White" BorderThickness="0,0,0,0"  Margin="0,0,0,0" Click="btnPause_Click" >
+            <Button x:Name="btnPause" 
+                    Grid.Row="2" 
+                    Grid.Column="3" 
+                    Width="24" 
+                    HorizontalAlignment="Center"   
+                    Background="White" 
+                    BorderThickness="0,0,0,0" 
+                    Click="btnPause_Click" >
                 <Image Source="/Resources/pause.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -125,7 +189,14 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnPlay" Grid.Row="2" Grid.Column="1" Width="25" HorizontalAlignment="Center"  Background="White" BorderThickness="0,0,0,0"  Click="btnPlay_Click">
+            <Button x:Name="btnPlay" 
+                    Grid.Row="2" 
+                    Grid.Column="3" 
+                    Width="24" 
+                    HorizontalAlignment="Center"  
+                    Background="White" 
+                    BorderThickness="0,0,0,0"  
+                    Click="btnPlay_Click">
                 <Image Source="/Resources/play.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -133,56 +204,76 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <!-- Col2 -->
-            <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="2" Width="100" Height="100" Source="/Resources/defaultAccount.png" HorizontalAlignment="Center"/>
-            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="100" Height="100" HorizontalAlignment="Center"/>
-
-            <Button x:Name="btnLogout" Content="Log Out"
-                    Grid.Row="1" Grid.Column="2" 
-                    FontWeight="Bold" Width="60" 
-                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-165,0,0,0" Background="White" BorderThickness="0,0,0,0" 
-                    VerticalContentAlignment="Top" VerticalAlignment="Center" Height="23" Padding="1,2,1,1" Click="btnLogout_Click">
+            <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="5" Width="100" Source="/Resources/account.png" HorizontalAlignment="Center"/>
+            <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="5" Width="100" HorizontalAlignment="Center"/>
+            <Button x:Name="btnLogout" 
+                        Content="Log Out"
+                        Grid.Row="1" 
+                        Grid.Column="5" 
+                        FontWeight="Bold" 
+                        Width="60" 
+                        HorizontalAlignment="Left" 
+                        HorizontalContentAlignment="Center" 
+                        Margin="55,0,0,0" 
+                        Background="White" 
+                        BorderThickness="0,0,0,0" 
+                        VerticalContentAlignment="Top" 
+                        VerticalAlignment="Center" 
+                        Height="24" 
+                        Padding="1,2,1,1" 
+                        Click="btnLogout_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="4"/>
                     </Style>
                 </Button.Resources>
             </Button>
-
-            <!--<TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="2" 
-                     Width="179"
-                     HorizontalAlignment="Right" Margin="0,0,10,0"/>-->
-
-            <!--<Label x:Name="lblEmail" Grid.Row="1" Grid.Column="2"
-                   FontWeight="Bold" VerticalAlignment="Top"
-                   HorizontalContentAlignment="Center"
-                   Content="Email" HorizontalAlignment="Right" Margin="0,0,153,0" Height="23" Padding="5,2,5,5" />-->
-
-            <Button x:Name="btnProfileName" Content="User" Grid.Row="1" Grid.Column="2" FontWeight="Bold"
-                   HorizontalContentAlignment="Center"
-                   HorizontalAlignment="Center" Margin="46,0,-127,0" Padding="5,0,5,3" VerticalAlignment="Center" Background="White" BorderThickness="0,0,0,0" Click="btnProfileName_Click" Height="23">
+            <Button x:Name="btnProfileName" 
+                    Content="User" 
+                    Grid.Row="1" 
+                    Grid.Column="5" 
+                    FontWeight="Bold"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Left" 
+                    Padding="5,0,5,3" 
+                    VerticalAlignment="Center" 
+                    Background="White" 
+                    BorderThickness="0,0,0,0" 
+                    Click="btnProfileName_Click" 
+                    Height="24" Width="26" Margin="181,0,0,0">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="4"/>
                     </Style>
                 </Button.Resources>
             </Button>
-
-            <!--<Label x:Name="lblPassword" Grid.Row="3" Grid.Column="2"
-                   FontWeight="Bold" VerticalAlignment="Bottom"
-                   HorizontalContentAlignment="Center"
-                   HorizontalAlignment="Right"
-                   Content="Password" Margin="0,0,130,0" Padding="5,0,5,5"/>
-
-            <PasswordBox x:Name="pwdPassword" Grid.Row="4" Grid.Column="2" 
-                     Width="179"
-                     HorizontalAlignment="Right" Password="" Margin="0,0,10,0"/>-->
-
-            <Label x:Name="lblCurrentTime" Grid.Row="2" Grid.Column="1"
-                   Content="" FontWeight="Bold" HorizontalAlignment="Left" Margin="25,-8,0,0" />
-
-            <Label x:Name="lblSongLength" Grid.Row="2" Grid.Column="1"
-                    Content="" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,-8,25,0" />
+            <Label x:Name="lblCurrentTime" 
+                   Grid.Row="1" 
+                   Grid.Column="2"
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Left" 
+                   Margin="1,12,0,0" Grid.RowSpan="2" Width="10" />
+            <Label x:Name="lblSongLength" 
+                   Grid.Row="1" 
+                   Grid.Column="1"
+                   Content="" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,12,0,0" Grid.RowSpan="2" Width="10" />
+            <Button x:Name="btnShuffle" 
+                    Grid.Row="3" 
+                    Grid.Column="2"
+                    Content="Shuffle" 
+                    HorizontalAlignment="Center" 
+                    FontWeight="Bold" 
+                    Click="btnShuffle_Click" Width="40"/>
+            <Button x:Name="btnQueue" 
+                    Grid.Row="3" 
+                    Grid.Column="4"
+                    Content="Queue" 
+                    HorizontalAlignment="Right" 
+                    FontWeight="Bold" 
+                    Click="btnQueue_Click" Width="38"/>
         </Grid>
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
@@ -193,7 +284,14 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label x:Name="lblDataGridHeader" Content="Library" FontSize="25" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,-11,0,0" MouseDoubleClick="lblDataGridHeader_MouseDoubleClick"/>
-            <TextBox x:Name="txtDataGridHeaderEdit" Text="Data Grid Header" FontSize="25" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,-6,0,0" KeyDown="txtDataGridHeaderEdit_KeyDown"/>
+            <TextBox x:Name="txtDataGridHeaderEdit" 
+                     Text="Data Grid Header" 
+                     FontSize="25" 
+                     FontWeight="DemiBold" 
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Left" 
+                     Margin="26,-6,0,0" 
+                     KeyDown="txtDataGridHeaderEdit_KeyDown" />
             <Label x:Name="lblDataGridSubHeader" Content="Description" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,22,0,0" MouseDoubleClick="lblDataGridSubHeader_MouseDoubleClick"/>
             <TextBox x:Name="txtDataGridSubHeaderEdit" Text="Data Grid Sub Header" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,28,0,0" KeyDown="txtDataGridSubHeaderEdit_KeyDown"/>
             <DataGrid Grid.Column="0" x:Name="grdUsers" AutoGenerateColumns="false" BorderThickness="1,1,1,1" FontWeight="UltraBlack" 
@@ -256,7 +354,13 @@
                             </Style>
                         </Button.Resources>
                     </Button>
-                    <Button x:Name="btnUserSaveChanges" Content="Save Changes" Width="104" Height="28" HorizontalAlignment="Right" Margin="10,12,0,10" Click="btnUserSaveChanges_Click">
+                    <Button x:Name="btnUserSaveChanges"
+                            Content="Save Changes" 
+                            Width="104" 
+                            Height="28" 
+                            HorizontalAlignment="Right"
+                            Margin="10,12,0,10" 
+                            Click="btnUserSaveChanges_Click">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="4"/>
@@ -284,7 +388,7 @@
                           Margin="8,0,0,0" 
                           Width="1284" 
                           BorderThickness="3,0,0,0" 
-                          BorderBrush="Black">
+                          BorderBrush="Black" PreviewKeyDown="grdLibrary_PreviewKeyDown">
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="BorderThickness" Value="0,3,3,3" />
@@ -367,7 +471,7 @@
                 </DataGrid>
                 <Button x:Name="btnAllSongs" Content="All Songs" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" 
                     Padding="5,5,5,5" Margin="0,-1,30,0" Background="Lavender" BorderThickness="1,1,1,1" 
-                    BorderBrush="Black" Click="btnAllSongs_Click">  
+                    BorderBrush="Black" Click="btnAllSongs_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>

@@ -25,54 +25,35 @@ namespace Muse2
     /// </summary>
     public partial class SignIn : Window
     {
-        UserVM loggedInUser = null;
-        private string resetCode = "";
-        string newPassword = "";
-        string confirmPassword = "";
-        string tempEmail = "";
-        string email = "";
-        string oldpass = "password";
-        bool btnShowPasswordBottomIsClicked;
-        bool btnShowPasswordTopIsClicked;
-        Regex numericalRegex = new Regex("[^0-9]+");
-
+        Dictionary<string, Page> pages = new Dictionary<string, Page>();
         public SignIn()
         {
             InitializeComponent();
-            frmSignIn.Navigate(new pgSignIn());
-            frmSignUp.Navigate(new pgSignUp());
-            frmVerification.Navigate(new pgVerification());
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            frmSignIn.Visibility = Visibility.Visible;
-        }
-        private void frmClear()
-        {
-            txtSubHeader.Text = "Control what you listen to.";
-            frmSignIn.Visibility = Visibility.Collapsed;
-            frmSignUp.Visibility = Visibility.Collapsed;
-            frmVerification.Visibility = Visibility.Collapsed;
+            CloseWindow.win = this;
+            pages.Add("frmSignIn", new pgSignIn());
+            pages.Add("frmSignUp", new pgSignUp());
+            pages.Add("frmVerification", new pgVerification());
+
+            frmMain.Navigate(pages["frmSignIn"]);
         }
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             if (btnBack.Content.Equals("Sign Up"))
             {
-                frmClear();
                 txtSubHeader.Text = "Sign up for Muse.";
-                frmSignUp.Visibility = Visibility.Visible;
+                frmMain.Navigate(pages["frmSignUp"]);
                 btnBack.Content = "Back";
             }
             else
             {
-                frmClear();
-                frmSignIn.Visibility = Visibility.Visible;
                 btnBack.Content = "Sign Up";
                 // check if it we are on main screen to turn forgot password back to forgot password
                 if (txtSubHeader.Text.Equals("Control what you listen to."))
                 {
-                    frmClear();
-                    frmSignIn.Visibility = Visibility.Visible;
+                    frmMain.Navigate(pages["frmSignIn"]);
                     btnForgotPassword.Content = "Forgot Password";
                 }
             }
@@ -81,16 +62,14 @@ namespace Muse2
         {
             if (btnForgotPassword.Content.Equals("Forgot Password"))
             {
-                frmClear();
                 txtSubHeader.Text = "Send this code where?";
-                frmVerification.Visibility = Visibility.Visible;
+                frmMain.Navigate(pages["frmVerification"]);
                 btnForgotPassword.Content = "Sign In";
             }
             else
             {
-                frmClear();
-                frmSignIn.Visibility = Visibility.Visible;
                 btnForgotPassword.Content = "Forgot Password";
+                frmMain.Navigate(pages["frmSignIn"]);
             }
         }
     }

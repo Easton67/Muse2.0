@@ -25,19 +25,20 @@ namespace Muse2
         private int minutesPassed = 0;
         private MediaPlayer mediaPlayer = new MediaPlayer();
         private UserVM _loggedInUser = null;
-
-        UserManager _userManager = null;
-        UserVM loggedInUser = null;
-        SongManager _songManager = null;
-        PlaylistManager _playlistManager = null;
+        private UserManager _userManager = null;
+        private UserVM loggedInUser = null;
+        private SongManager _songManager = null;
+        private PlaylistManager _playlistManager = null;
         private string userImg = "";
         private int songNumber = 0;
+        private Random shuffledSongNumber = new Random();
         private int userNumber = 0;
         private string playlistImg = "";
-        List<Song> userSongs = null;
+        private List<Song> userSongs = null;
         private ContextMenu contextMenu;
         private Playlist selectedPlaylist;
         private string baseDirectory = AppContext.BaseDirectory;
+        private bool isEnabledShuffle;
 
         public MainWindow(UserVM LoggedInUser)
         {
@@ -544,7 +545,7 @@ namespace Muse2
             mediaPlayer.Pause();
             var profileWindow = new Profile(loggedInUser, _songManager);
             profileWindow.ShowDialog();
-            if(grdLibrary.Visibility == Visibility.Visible)
+            if (grdLibrary.Visibility == Visibility.Visible)
             {
                 UserVM updatedUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
                 try
@@ -563,7 +564,7 @@ namespace Muse2
                     return;
                 }
             }
-            else if(grdUsers.Visibility == Visibility.Visible)
+            else if (grdUsers.Visibility == Visibility.Visible)
             {
                 grdUsersRepopulation();
             }
@@ -655,6 +656,20 @@ namespace Muse2
         {
             Rewind();
         }
+        private void btnShuffle_Click(object sender, RoutedEventArgs e)
+        {
+            if (isEnabledShuffle == false)
+            {
+                isEnabledShuffle = true;
+                btnShuffle.BorderThickness = new Thickness(2);
+                NextSongHelper();
+            }
+            else
+            {
+                isEnabledShuffle = false;
+                btnShuffle.BorderThickness = new Thickness(0);
+            }
+        }
         #endregion
         #region Song Control Helpers
         private void UpdateSongPlayCount()
@@ -676,7 +691,7 @@ namespace Muse2
         {
             try
             {
-                if (userSongs[songNumber].ImageFilePath == "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\AlbumArt\\")
+                if (userSongs[songNumber].ImageFilePath == AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\")
                 {
                     BitmapImage CoverArt = new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
                     imgCoverArt.Source = CoverArt;
@@ -715,7 +730,7 @@ namespace Muse2
             GetSongCover();
             try
             {
-                if(imgPlaylistPicture.Visibility == Visibility.Visible)
+                if (imgPlaylistPicture.Visibility == Visibility.Visible)
                 {
                     mediaPlayer.Open(new Uri((baseDirectory + "\\MuseConfig\\SongFiles\\" + userSongs[songNumber].Mp3FilePath)));
                 }
@@ -734,6 +749,14 @@ namespace Muse2
         }
         private void NextSongHelper()
         {
+            if (isEnabledShuffle == true)
+            {
+                int minShuffledIndex = 0;
+                int maxShuffledIndex = userSongs.Count;
+
+                int shuffledSongIndex = shuffledSongNumber.Next(minShuffledIndex, maxShuffledIndex);
+                songNumber = shuffledSongIndex;
+            }
             if (songNumber < userSongs.Count - 1)
             {
                 songNumber++;
@@ -786,6 +809,7 @@ namespace Muse2
                 MessageBox.Show("Select a Song to listen to it.");
             }
         }
+
         private void grdLibrary_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (btnPlaylistImageEdit.Visibility == Visibility.Visible)
@@ -809,7 +833,6 @@ namespace Muse2
                 {
                     contextMenu.Items.Add(removeSongFromPlaylist);
                 }
-
                 removeSongFromPlaylist.Visibility = Visibility.Visible;
             }
 
@@ -867,7 +890,7 @@ namespace Muse2
                     {
                         _songManager.DeleteSong(song.SongID);
                         MessageBox.Show("Song successfully deleted");
-                        if(userSongs.Count() == 0)
+                        if (userSongs.Count() == 0)
                         {
                             grdLibrary.ItemsSource = null;
                         }
@@ -1009,8 +1032,8 @@ namespace Muse2
                         try
                         {
                             var playlistImageFilePath = ((Playlist)grdPlaylists.SelectedItem).ImageFilePath;
-                            
-                            if(playlistImageFilePath.IsDefaultImage())
+
+                            if (playlistImageFilePath.IsDefaultImage())
                             {
                                 playlistImageFilePath = baseDirectory + "\\MuseConfig\\PlaylistImages" + "defaultAlbumImage.png";
                             }
@@ -1318,7 +1341,7 @@ namespace Muse2
                 FirstName = NewFirstName,
                 LastName = NewLastName,
                 ImageFilePath = System.IO.Path.GetFileName(userImg),
-                Active = (bool)chkUserActive.IsChecked, 
+                Active = (bool)chkUserActive.IsChecked,
                 MinutesListened = int.Parse(txtMinutesListened.Text),
                 Roles = oldUser.Roles
             };
@@ -1378,7 +1401,7 @@ namespace Muse2
                     MessageBox.Show("Choose a photo to update your current account photo.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Invalid image." + " " + ex.Message);
             }
@@ -1439,6 +1462,65 @@ namespace Muse2
         {
             Regex numericRegex = new Regex("[^0-9]+");
             e.Handled = numericRegex.IsMatch(e.Text);
+        }
+        private void grdLibrary_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete || e.Key == Key.Back)
+            {
+                var song = grdLibrary.SelectedItem as Song;
+
+                if (grdLibrary.SelectedItem != null)
+                {
+                        MessageBoxResult result = MessageBox.Show(
+                        $"Are you sure you want to delete {song.Title}?",
+                        "Confirmation",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        try
+                        {
+                            _songManager.DeleteSong(song.SongID);
+                            if (userSongs.Count() == 0)
+                            {
+                                grdLibrary.ItemsSource = null;
+                                grdLibrary.Visibility = Visibility.Collapsed;
+                            }
+                            else
+                            {
+                                // Reload your library or playlist
+                                if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
+                                {
+                                    songListRepopulation();
+                                }
+                                else
+                                {
+                                    playlistSongsRepopulation();
+                                }
+                                // Simulate skipping to the next song, so it isn't showing up in the media player
+                                if (grdLibrary.Items.Count != 0)
+                                {
+                                    NextSongHelper();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Select a Song to view it.");
+                }
+            }
+        }
+        private void btnQueue_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
