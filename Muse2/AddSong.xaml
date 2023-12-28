@@ -22,6 +22,7 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <Frame x:Name="frmMain" />
         <Button Grid.Column="0" 
                 Width="90" 
                 x:Name="btnSongInfomation" 
