@@ -1525,5 +1525,11 @@ namespace Muse2
         {
 
         }
+        private void mnuPlaylistFolderToDb_Click(object sender, RoutedEventArgs e)
+        {
+            var p = new addPlaylistFolderFromFiles(loggedInUser);
+            p.ShowDialog();
+            updateUIForUserLogin();
+        }
     }
 }

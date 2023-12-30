@@ -297,7 +297,6 @@ namespace Muse2
                 SaveImageToFile(imageSource);
             }
         }
-
         private void SaveImageToFile(BitmapSource imageSource)
         { 
             // Allow the user to choose a file location
@@ -316,7 +315,6 @@ namespace Muse2
                 }
             }
         }
-
         private void txtHiddenPastingBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Check for Ctrl+V (paste) key combination

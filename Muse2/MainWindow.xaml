@@ -47,6 +47,7 @@
                 <MenuItem x:Name="mnuAddSongToLibrary" Header="Add Song To Library" Click="mnuAddSongToLibrary_Click"/>
                 <MenuItem x:Name="mnuViewAllSongs" Header="View All Songs" Click="mnuViewAllSongs_Click"/>
                 <MenuItem x:Name="mnuUrlToMp3" Header="Url to Mp3" Click="mnuUrlToMp3_Click"/>
+                <MenuItem x:Name="mnuPlaylistFolderToDb" Header="Playlist Folder to DB" Click="mnuPlaylistFolderToDb_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuAlbum" Header="Album">
                 <MenuItem x:Name="mnuCreateNewAlbum" Header="Create new Album" Click="mnuCreateNewAlbum_Click" />
@@ -283,7 +284,7 @@
         </Grid>
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1250*" />
@@ -379,27 +380,32 @@
                 Orientation="Horizontal" 
                 Margin="18,55,0,0">
                 <DataGrid x:Name="grdLibrary" 
-                          AutoGenerateColumns="false" 
-                          FontWeight="UltraBlack" 
-                          VerticalAlignment="Top" 
-                          HorizontalAlignment="Left" 
-                          IsReadOnly="True" 
-                          SelectionMode="Single" 
-                          MouseDoubleClick="grdLibrary_MouseDoubleClick" 
-                          SelectionChanged="grdLibrary_SelectionChanged" 
-                          CanUserSortColumns="False" 
-                          CanUserAddRows="False" 
-                          CanUserResizeRows="False"
-                          CanUserResizeColumns="False" 
-                          Margin="8,0,0,0" 
-                          Width="1284" 
-                          BorderThickness="3,0,0,0" 
-                          BorderBrush="Black" PreviewKeyDown="grdLibrary_PreviewKeyDown">
+                      AutoGenerateColumns="false" 
+                      FontWeight="UltraBlack" 
+                      VerticalAlignment="Top" 
+                      HorizontalAlignment="Left" 
+                      IsReadOnly="True" 
+                      SelectionMode="Single" 
+                      MouseDoubleClick="grdLibrary_MouseDoubleClick" 
+                      SelectionChanged="grdLibrary_SelectionChanged" 
+                      CanUserAddRows="False" 
+                      Margin="8,0,0,0" 
+                      Width="1284" 
+                      BorderThickness="3,0,0,0" 
+                      BorderBrush="Black" 
+                      PreviewKeyDown="grdLibrary_PreviewKeyDown"
+                      ScrollViewer.CanContentScroll="True" 
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                      CanUserDeleteRows="False" 
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="False" 
+                      CanUserResizeRows="False" 
+                      CanUserSortColumns="False" >
                     <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="BorderThickness" Value="0,3,3,3" />
-                            <Setter Property="BorderBrush" Value="Black" />
-                        </Style>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="BorderThickness" Value="0,3,3,3" />
+                        <Setter Property="BorderBrush" Value="Black" />
+                    </Style>
                     </DataGrid.ColumnHeaderStyle>
                     <DataGrid.CellStyle>
                         <Style TargetType="DataGridCell">
@@ -414,12 +420,12 @@
                     </DataGrid.CellStyle>
                     <DataGrid.Columns>
                         <DataGridTemplateColumn 
-                            Width="25" 
-                            MinWidth="25" 
-                            MaxWidth="55" 
-                            CanUserResize="False" 
-                            CanUserReorder="False" 
-                            CanUserSort="False">
+                                        Width="25" 
+                                        MinWidth="25" 
+                                        MaxWidth="55" 
+                                        CanUserResize="False" 
+                                        CanUserReorder="False" 
+                                        CanUserSort="False">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Image Source="{Binding ImageFilePath}" 
