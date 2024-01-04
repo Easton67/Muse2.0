@@ -63,6 +63,10 @@
                 <MenuItem x:Name="mnuPause" Header="Pause" Click="mnuPause_Click"/>
                 <MenuItem x:Name="mnuNext" Header="Next" Click="mnuNext_Click"/>
                 <MenuItem x:Name="mnuRewind" Header="Rewind" Click="mnuRewind_Click"/>
+                <MenuItem x:Name="mnuShuffle" Header="Shuffle">
+                    <MenuItem x:Name="mnuShuffleOn" Header="On" Click="mnuShuffleOn_Click"/>
+                    <MenuItem x:Name="mnuShuffleOff" Header="Off" Click="mnuShuffleOff_Click"/>
+                </MenuItem>
             </MenuItem>
             <MenuItem x:Name="mnuHelp" Header="Help">
                 <MenuItem x:Name="mnuSignUp" Header="Sign Up" Click="mnuSignUp_Click"/>

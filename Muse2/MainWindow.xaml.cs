@@ -713,8 +713,8 @@ namespace Muse2
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover could not be found.",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+                BitmapImage CoverArt = new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
+                imgCoverArt.Source = CoverArt;
                 NextSongHelper();
             }
         }
@@ -1530,6 +1530,15 @@ namespace Muse2
             var p = new addPlaylistFolderFromFiles(loggedInUser);
             p.ShowDialog();
             updateUIForUserLogin();
+        }
+        private void mnuShuffleOn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void mnuShuffleOff_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
