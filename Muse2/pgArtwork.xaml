@@ -1,0 +1,45 @@
+﻿<Page x:Class="Muse2.pgArtwork"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Muse2"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" 
+      d:DesignWidth="620"
+      Title="pgArtwork" Background="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="125" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="125" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button 
+            Grid.Row="7" 
+            x:Name="btnAddArtwork">
+            Add Artwork
+        </Button>
+        <Button Grid.Row="7" 
+                Grid.Column="2" 
+                x:Name="btnRemoveArtwork">
+            Remove Artwork
+        </Button>
+        <Image x:Name="imgArtwork" 
+               Grid.Row="1"
+               Source="\Resources\defaultAlbumImage.png"
+               Grid.RowSpan="6" 
+               Grid.Column="1">
+            
+        </Image>
+    </Grid>
+</Page>

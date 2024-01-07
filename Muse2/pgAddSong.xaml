@@ -55,6 +55,40 @@
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"/>
                 </Style>
+            </Button.Resources> 
+        </Button>
+        <Button Grid.Row="1" 
+            Grid.Column="1" 
+            Width="90" 
+            x:Name="btnAddFolder" 
+            Content="Add Folder"
+            HorizontalContentAlignment="Center" 
+            Background="White" 
+            Padding="11,1,11,1" 
+            Height="30" 
+            HorizontalAlignment="Right" 
+            Margin="0,0,30,0" Click="btnAddFolder_Click" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button> 
+        <Button Grid.Row="2" 
+            Grid.Column="1" 
+            Width="111" 
+            x:Name="btnAddSongFromUrl" 
+            Content="Add Song From URL"
+            HorizontalContentAlignment="Center" 
+            Background="White" 
+            Padding="11,1,11,1" 
+            Height="30"  
+            HorizontalAlignment="Right" 
+            Margin="0,0,30,0" Click="btnAddSongFromUrl_Click" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
             </Button.Resources>
         </Button>
         <Label Grid.Row="2" 
@@ -167,7 +201,7 @@
                   Grid.Column="1" 
                   Width="200" 
                   HorizontalAlignment="Left" 
-                  Margin="7,0,0,0"/>
+                  Margin="7,0,0,0" Height="28"/>
         <TextBox Grid.Row="7" 
                  Grid.Column="1" 
                  x:Name="txtPlays" 

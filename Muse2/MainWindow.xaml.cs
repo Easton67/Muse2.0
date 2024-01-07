@@ -40,8 +40,6 @@ namespace Muse2
         private Playlist selectedPlaylist;
         private string baseDirectory = AppContext.BaseDirectory;
         private bool isEnabledShuffle;
-        private double initialTextBlockWidth;
-        private double animationDuration = 5;
 
         public MainWindow(UserVM LoggedInUser)
         {
@@ -664,7 +662,6 @@ namespace Muse2
             if (isEnabledShuffle == false)
             {
                 isEnabledShuffle = true;
-                btnShuffle.BorderThickness = new Thickness(2);
                 NextSongHelper();
             }
             else
@@ -1535,7 +1532,6 @@ namespace Muse2
         {
 
         }
-
         private void mnuShuffleOff_Click(object sender, RoutedEventArgs e)
         {
 

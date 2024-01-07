@@ -26,6 +26,8 @@ namespace Muse2
     public partial class SignIn : Window
     {
         Dictionary<string, Page> pages = new Dictionary<string, Page>();
+
+
         public SignIn()
         {
             InitializeComponent();
