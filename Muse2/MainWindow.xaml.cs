@@ -576,9 +576,7 @@ namespace Muse2
         }
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
-            var SignIn = new SignIn();
             this.Close();
-            SignIn.ShowDialog();
         }
         #region Song Controls
         private void btnViewSong_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

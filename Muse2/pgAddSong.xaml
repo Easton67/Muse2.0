@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Muse2"
       mc:Ignorable="d" 
       d:DesignHeight="450" 
-      d:DesignWidth="620"
+      d:DesignWidth="650"
       Title="pgAddSong"
       Background="White">
     <Grid>

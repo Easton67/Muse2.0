@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +25,14 @@ namespace Muse2
     /// </summary>
     public partial class pgAddSong : Page
     {
+        public string mp3FileName = "test file name.mp3";
+        public string songTitle = "Example Song Title";
+        public string artistName = "Test Artist";
+        public int yearReleased = 2002;
+        public bool isExplicit = true;
+        public int plays = 67;
+
+
         private string _mp3File = "";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         Regex numericRegex = new Regex("[^0-9]+");

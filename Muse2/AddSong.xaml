@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="Add Song" Height="540" Width="620" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+        Title="Add Song" Height="540" Width="650" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="125" />
@@ -72,6 +72,22 @@
                     Background="White"
                     Padding="11,1,11,1" 
                     Click="btnLyrics_Click" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Grid.Column="1"
+                Width="100" 
+                x:Name="btnTestSong" 
+                Height="20" 
+                Content="Test Song"
+                HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Right" 
+                Background="#FF4FB35A"
+                Padding="11,1,11,1" 
+                Margin="0,0,163,0" Click="btnTestSong_Click" >
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"/>

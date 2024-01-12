@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Background="DarkGray" Loaded="Window_Loaded">
     <Grid>
-        <Image Source="/Resources/museBackground.jpg" Stretch="UniformToFill">
+        <Image Source="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\museBackground.jpg" Stretch="UniformToFill">
             <Image.Effect>
                 <BlurEffect Radius="7"/>
             </Image.Effect>
