@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Background="DarkGray" Loaded="Window_Loaded">
     <Grid>
-        <Image Source="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\museBackground.jpg" Stretch="UniformToFill">
+        <Image Source="/Resources/museBackground.jpg" Stretch="UniformToFill">
             <Image.Effect>
                 <BlurEffect Radius="7"/>
             </Image.Effect>
@@ -43,7 +43,7 @@
                                     Margin="0,1,0,0">
 
                         <Image x:Name="imgLogo" 
-                                   Source="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\museLogo.png"
+                                   Source="/Resources/museLogo.png"
                                    Width="170" Height="100" Margin="-8,21,0,0"/>
                         <StackPanel>
                             <TextBlock x:Name="txtSubHeader"

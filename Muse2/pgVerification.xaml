@@ -34,7 +34,7 @@
                          VerticalAlignment="Center" 
                          Width="209">
                     <TextBox.Background>
-                        <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\user-icon.png"
+                        <ImageBrush ImageSource="/Resources/user-icon.png"
                                      Stretch="None"
                                      AlignmentX="Left"/>
                     </TextBox.Background>
@@ -62,7 +62,7 @@
                             Width="210" 
                             Padding="20,0,0,3">  
                     <PasswordBox.Background>
-                        <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
+                        <ImageBrush ImageSource="/Resources/key-icon.png"
                                     Stretch="None"
                                     AlignmentX="Left"/>  
                     </PasswordBox.Background>
@@ -103,7 +103,7 @@
                                 Width="210" 
                                 Padding="20,0,0,3">
                     <PasswordBox.Background>
-                        <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
+                        <ImageBrush ImageSource="/Resources/key-icon.png"
                            Stretch="None"
                            AlignmentX="Left"/>
                     </PasswordBox.Background>
@@ -171,7 +171,7 @@
                     HorizontalAlignment="Right" 
                     Padding="1,0,1,0" 
                     Margin="0,118,8,-49" Click="btnShowPasswordTop_Click" >
-                <Image Source="C:\Users\67Eas\Downloads\eye.png" Margin="0,-47,0,0"/>
+                <Image Source="/Resources/eye.png" Margin="0,-47,0,0"/>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="9"/>
@@ -186,7 +186,7 @@
                     HorizontalAlignment="Right" 
                     Padding="1,0,1,0" 
                     Margin="0,68,8,-18" Click="btnShowPasswordBottom_Click" >
-                <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
+                <Image Source="/Resources/eye.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="9"/>

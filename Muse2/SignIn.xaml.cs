@@ -52,11 +52,17 @@ namespace Muse2
             else
             {
                 btnBack.Content = "Sign Up";
+                
                 // check if it we are on main screen to turn forgot password back to forgot password
+
                 if (txtSubHeader.Text.Equals("Control what you listen to."))
                 {
                     frmMain.Navigate(pages["frmSignIn"]);
                     btnForgotPassword.Content = "Forgot Password";
+                }
+                else
+                {
+                    frmMain.Navigate(pages["frmSignIn"]);
                 }
             }
         }
@@ -72,6 +78,7 @@ namespace Muse2
             {
                 btnForgotPassword.Content = "Forgot Password";
                 frmMain.Navigate(pages["frmSignIn"]);
+                btnBack.Content = "Sign Up";
             }
         }
     }
