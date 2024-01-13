@@ -97,7 +97,7 @@ namespace DataObjects
         {
             bool isValid = false;
 
-            if (Year <= 2023 && 
+            if (Year <= DateTime.Now.Year && 
                 Year >= 1700)
             {
                 isValid = true;

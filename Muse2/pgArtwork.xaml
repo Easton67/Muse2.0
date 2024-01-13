@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Muse2"
       mc:Ignorable="d" 
       d:DesignHeight="450" 
-      d:DesignWidth="650"
+      d:DesignWidth="660"
       Title="pgArtwork" Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,21 +25,45 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Button 
+            Width="90" 
+            HorizontalContentAlignment="Center" 
+            Background="White" 
+            Padding="11,1,11,1" 
+            Height="30" 
+            HorizontalAlignment="Right" 
             Grid.Row="7" 
-            x:Name="btnAddArtwork">
+            x:Name="btnAddArtwork" 
+            Click="btnAddArtwork_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
             Add Artwork
         </Button>
-        <Button Grid.Row="7" 
-                Grid.Column="2" 
-                x:Name="btnRemoveArtwork">
+        <Button 
+            Width="115" 
+            HorizontalContentAlignment="Center" 
+            Background="White" 
+            Padding="11,1,11,1" 
+            Height="30" 
+            HorizontalAlignment="Right" 
+            Grid.Row="7" 
+            Grid.Column="2" 
+            x:Name="btnRemoveArtwork" 
+            Click="btnRemoveArtwork_Click" Margin="0,0,10,0">
             Remove Artwork
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
         </Button>
         <Image x:Name="imgArtwork" 
                Grid.Row="1"
                Source="\Resources\defaultAlbumImage.png"
                Grid.RowSpan="6" 
                Grid.Column="1">
-            
         </Image>
     </Grid>
 </Page>

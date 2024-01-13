@@ -6,19 +6,19 @@
       xmlns:local="clr-namespace:Muse2"
       mc:Ignorable="d" 
       d:DesignHeight="450" 
-      d:DesignWidth="650"
+      d:DesignWidth="660"
       Title="pgLyrics" Background="White">
     <Grid>
         <TextBox Name="txtLyrics" 
-                 Width="320" 
+                 Width="330" 
                  TextWrapping="Wrap" 
                  AcceptsReturn="True" 
                  VerticalScrollBarVisibility="Auto" 
                  HorizontalScrollBarVisibility="Auto"
-                 Margin="146,20,0,78"
+                 Margin="175,32,0,39"
                  MinLines="5" 
                  MinHeight="100" 
                  HorizontalAlignment="Left" 
-                 FontSize="14"/>
+                 FontSize="14" LostFocus="txtLyrics_LostFocus"/>
     </Grid>
 </Page>

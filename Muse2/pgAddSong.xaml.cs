@@ -1,22 +1,14 @@
-﻿using Microsoft.Win32;
-using NAudio.Wave;
+﻿using DataObjects;
+using LogicLayer;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Muse2
 {
@@ -25,23 +17,37 @@ namespace Muse2
     /// </summary>
     public partial class pgAddSong : Page
     {
-        public string mp3FileName = "test file name.mp3";
-        public string songTitle = "Example Song Title";
-        public string artistName = "Test Artist";
-        public int yearReleased = 2002;
-        public bool isExplicit = true;
-        public int plays = 67;
-
-
-        private string _mp3File = "";
+        private UserVM _loggedInUser = null;
+        private List<Song> userSongs = null;
+        private List<DataObjects.Playlist> userPlaylists = null;
+        private Playlist _playlist = null;
+        private Song _song = null;
+        public string mp3FileName;
+        private string playlistFolderPath;
+        public string songTitle;
+        public string artistName;
+        public string albumName;
+        public int yearReleased;
+        public bool isExplicit;
+        public string genre;
+        public int plays = 0;
+        private string songfilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles";
+        private string imageFilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         Regex numericRegex = new Regex("[^0-9]+");
 
-        public pgAddSong()
+        public pgAddSong(UserVM loggedInUser)
         {
             InitializeComponent();
-        }
 
+            _loggedInUser = loggedInUser;
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            lblPlays.Visibility = Visibility.Collapsed;
+            txtPlays.Visibility = Visibility.Collapsed;
+            btnConfirm.Visibility = Visibility.Hidden;
+        }
         private void btnAddMp3_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -55,7 +61,7 @@ namespace Muse2
 
                 if (result == true)
                 {
-                    _mp3File = openFileDialog.FileName;
+                    mp3FileName = openFileDialog.FileName;
 
                     string destinationFolder = baseDirectory + "\\MuseConfig\\SongFiles";
 
@@ -65,12 +71,12 @@ namespace Muse2
                     }
 
                     // Copy the selected MP3 file to SongFiles
-                    string newFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(_mp3File));
-                    File.Copy(_mp3File, newFilePath, true);
+                    string newFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(mp3FileName));
+                    File.Copy(mp3FileName, newFilePath, true);
 
-                    _mp3File = System.IO.Path.GetFileName(newFilePath);
+                    mp3FileName = System.IO.Path.GetFileName(newFilePath);
 
-                    txtMp3FilePath.Text = baseDirectory + "\\MuseConfig\\SongFiles\\" + _mp3File;
+                    txtMp3FilePath.Text = mp3FileName;
                 }
                 else
                 {
@@ -98,21 +104,48 @@ namespace Muse2
 
         private void btnAddFolder_Click(object sender, RoutedEventArgs e)
         {
+            // Change which buttons are being shown
+            btnConfirm.Visibility = Visibility.Visible;
+            btnAddFolder.Visibility = Visibility.Hidden;
+
+            // Hide all other controls
+            lblTitle.Content = "Add to Playlist";
+
+            lblYear.Visibility = Visibility.Hidden;
+            txtYear.Visibility = Visibility.Hidden;
+
+            lblAlbum.Visibility = Visibility.Hidden;
+            txtAlbum.Visibility = Visibility.Hidden;
+
+            lblArtist.Visibility = Visibility.Hidden;
+            txtArtist.Visibility = Visibility.Hidden;
+
+            lblGenre.Visibility = Visibility.Hidden;
+            cboGenre.Visibility = Visibility.Hidden;
+
+            lblExplicit.Visibility = Visibility.Hidden;
+            chkExplicit.Visibility = Visibility.Hidden;
+
+            lblPlays.Visibility = Visibility.Hidden;
+            txtPlays.Visibility = Visibility.Hidden;
+
+            btnConfirm.Visibility = Visibility.Visible;
+
             string selectedFolder = OpenFolderDialog();
 
             if (!string.IsNullOrEmpty(selectedFolder))
             {
-                Console.WriteLine($"Selected Folder: {selectedFolder}");
-            }
-            else
-            {
-                Console.WriteLine("No folder selected.");
+                lblMp3File.Content = "Playlist Folder";
+                txtMp3FilePath.Text = selectedFolder;
+                txtTitle.Text = Path.GetFileName(selectedFolder);
             }
         }
 
         private void btnAddSongFromUrl_Click(object sender, RoutedEventArgs e)
         {
             txtMp3FilePath.IsReadOnly = false;
+            txtMp3FilePath.IsEnabled = true;
+            txtMp3FilePath.Focus();
         }
 
         static string OpenFolderDialog()
@@ -140,6 +173,204 @@ namespace Muse2
             bool pngExists = Directory.EnumerateFiles(folderPath, "*.png", SearchOption.AllDirectories).Any();
 
             return txtExists && mp3Exists && pngExists;
+        }
+        #region Create Variables
+        private void txtTitle_LostFocus(object sender, RoutedEventArgs e)
+        {
+            songTitle = txtTitle.Text;
+        }
+
+        private void txtArtist_LostFocus(object sender, RoutedEventArgs e)
+        {
+            artistName = txtArtist.Text;
+        }
+
+        private void txtAlbum_LostFocus(object sender, RoutedEventArgs e)
+        {
+            albumName = txtAlbum.Text;
+        }
+
+        private void txtYear_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(txtYear.Text != "")
+            {
+                yearReleased = int.Parse(txtYear.Text);
+            }
+        }
+
+        private void chkExplicit_LostFocus(object sender, RoutedEventArgs e)
+        {
+            isExplicit = (bool)chkExplicit.IsChecked;
+        }
+
+        private void cboGenre_LostFocus(object sender, RoutedEventArgs e)
+        {
+            genre = cboGenre.Text;
+        }
+
+        private void txtPlays_LostFocus(object sender, RoutedEventArgs e)
+        {
+            plays = int.Parse(txtPlays.Text);
+        }
+
+        private void txtMp3FilePath_LostFocus(object sender, RoutedEventArgs e)
+        {
+            mp3FileName =  txtMp3FilePath.Text;
+        }
+
+        #endregion
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            btnConfirm.Visibility = Visibility.Hidden;
+            btnAddFolder.Visibility = Visibility.Visible;
+            playlistFolderPath = txtMp3FilePath.Text;
+
+            if (txtMp3FilePath.Text.Equals(""))
+            {
+                System.Windows.MessageBox.Show("Please enter a valid file path", "Invalid Path");
+                btnAddMp3.Focus();
+                return;
+            }
+            System.Windows.MessageBox.Show("Loading... Please wait.");
+
+            string[] subfolders = Directory.GetDirectories(playlistFolderPath);
+            int numberOfSongsAdded = 0;
+
+            // Create playlist if they choose to add it to one
+            try
+            {
+                var newPlaylist = new DataObjects.Playlist()
+                {
+                    Title = txtTitle.Text,
+                    ImageFilePath = "defaultAlbumImage.png",
+                    Description = "",
+                    UserID = _loggedInUser.UserID
+                };
+                // Make playlist and then find that playlist within all of them to get the playlistID
+
+                var pm = new PlaylistManager();
+                pm.CreatePlaylist(newPlaylist);
+                userPlaylists = pm.SelectPlaylistByUserID(_loggedInUser.UserID);
+                _playlist = userPlaylists.FirstOrDefault(p => p.Title == txtTitle.Text);
+            }
+            catch (Exception ex) 
+            {
+                System.Windows.MessageBox.Show(ex.Message, "Unable to add songs to this playlist.");
+            }
+            
+
+            // loop through each folder, add the song to the library, and add it to the playlist if the user chooses
+
+            foreach (string subfolder in subfolders)
+            {
+                try
+                {
+                    string[] songFolder = Directory.GetFiles(subfolder);
+
+                    string artist = "Unknown";
+                    string songTitle = "Unknown";
+                    string imageFilePath = "defaultAlbumImage.png";
+                    string lyrics = "No Lyrics Provided.";
+
+                    foreach (string file in songFolder)
+                    {
+                        string extension = System.IO.Path.GetExtension(file);
+
+                        switch (extension.ToLower())
+                        {
+                            case ".mp3":
+
+                                if (file.Contains(" - "))
+                                {
+                                    try
+                                    {
+                                        string newmp3FileLocation = System.IO.Path.Combine(songfilesLocation, System.IO.Path.GetFileName(file));
+                                        File.Copy(file, newmp3FileLocation, true);
+                                        var unsplitSongTitle = System.IO.Path.GetFileNameWithoutExtension(file);
+                                        mp3FileName = System.IO.Path.GetFileName(file);
+
+                                        string[] parts = unsplitSongTitle.Split('-');
+                                        string artistPart = parts[0].Trim();
+                                        string songPart = parts[1].Trim();
+                                        artist = artistPart;
+                                        songTitle = songPart;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        System.Windows.MessageBox.Show($"Error copying file '{file}': {ex.Message}");
+                                    }
+                                }
+                                else
+                                {
+                                    string newmp3FileLocation = System.IO.Path.Combine(songfilesLocation, System.IO.Path.GetFileName(file));
+                                    File.Copy(file, newmp3FileLocation, true);
+                                    var unsplitSongTitle = System.IO.Path.GetFileNameWithoutExtension(file);
+                                    mp3FileName = unsplitSongTitle + ".mp3";
+
+                                    artist = "Unknown";
+                                    songTitle = unsplitSongTitle;
+                                }
+                                break;
+                            case ".png":
+
+                                try
+                                {
+                                    string newPngFileLocation = System.IO.Path.Combine(imageFilesLocation, System.IO.Path.GetFileName(file));
+                                    File.Copy(file, newPngFileLocation, true);
+                                    imageFilePath = System.IO.Path.GetFileName(file);
+                                }
+                                catch (Exception ex)
+                                {
+                                    System.Windows.MessageBox.Show($"Error copying file '{file}': {ex.Message}");
+                                }
+                                break;
+                            case ".txt":
+
+                                lyrics = File.ReadAllText(file);
+                                break;
+                        }
+                    }
+                    try
+                    {
+                        var newSong = new Song()
+                        {
+                            Title = songTitle,
+                            ImageFilePath = imageFilePath,
+                            Mp3FilePath = mp3FileName,
+                            YearReleased = 2023,
+                            Lyrics = lyrics,
+                            Explicit = false,
+                            Plays = 0,
+                            UserID = _loggedInUser.UserID,
+                            Album = "",
+                            Artist = artist,
+                        };
+
+                        var sm = new SongManager();
+                        var pm = new PlaylistManager();
+                        bool result = sm.InsertSong(newSong);
+                        numberOfSongsAdded++;
+
+                        userSongs = sm.SelectSongsByUserID(_loggedInUser.UserID);
+                        _song = userSongs.FirstOrDefault(s => s.Title == newSong.Title);
+                        pm.InsertSongIntoPlaylist(_song.SongID, _playlist.PlaylistID);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show(ex.Message + "\n\n" + ex.InnerException?.Message);
+                    }
+                }
+                catch (Exception)
+                {
+                    System.Windows.MessageBox.Show("Error");
+                }
+            }
+            if(txtTitle.Equals(""))
+            {
+                System.Windows.MessageBox.Show(numberOfSongsAdded.ToString() + " songs were added to your library.");
+            }
+            System.Windows.MessageBox.Show(numberOfSongsAdded.ToString() + " songs were added to your playlist " + txtTitle.Text + ".");
+
         }
     }
 }

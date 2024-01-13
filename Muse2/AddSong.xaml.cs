@@ -1,27 +1,15 @@
 ﻿using DataObjects;
 using LogicLayer;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Numerics;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
+using YoutubeExplode;
 
 namespace Muse2
 {
@@ -30,6 +18,7 @@ namespace Muse2
     /// </summary>
     public partial class AddSong : Window
     {
+        private string _lyrics;
         private string _mp3FileName;
         private string _songTitle;
         private string _artistName;
@@ -39,7 +28,7 @@ namespace Muse2
         private UserVM _loggedInUser = null;
         private string _mp3File = "";
         // set this to the default when adding, and then change it if a picture is selected
-        private string _imgFile = "defaultAlbumImage.png";
+        private string _imageFilePath = "defaultAlbumImage.png";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         Regex numericRegex = new Regex("[^0-9]+");
 
@@ -50,10 +39,16 @@ namespace Muse2
 
             _loggedInUser = loggedInUser;
         }
+        private void CleanWindow()
+        {
+            btnSongInfomation.Background = Brushes.White;
+            btnArtwork.Background = Brushes.White;
+            btnLyrics.Background = Brushes.White;
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CloseWindow.win = this;
-            pages.Add("frmSongInformation", new pgAddSong());
+            pages.Add("frmSongInformation", new pgAddSong(_loggedInUser));
             pages.Add("frmArtwork", new pgArtwork());
             pages.Add("frmLyrics", new pgLyrics());
 
@@ -61,90 +56,124 @@ namespace Muse2
         }
         private void btnSongInfomation_Click(object sender, RoutedEventArgs e)
         {
+            CleanWindow();
+            btnSongInfomation.Background = Brushes.Lavender;
             frmMain.Navigate(pages["frmSongInformation"]);
         }
         private void btnArtwork_Click(object sender, RoutedEventArgs e)
         {
+            CleanWindow();
+            btnArtwork.Background = Brushes.Lavender;
             frmMain.Navigate(pages["frmArtwork"]);
         }
         private void btnLyrics_Click(object sender, RoutedEventArgs e)
         {
+            CleanWindow();
+            btnLyrics.Background = Brushes.Lavender;
             frmMain.Navigate(pages["frmLyrics"]);
         }
-        private void btnCreateSong_Click(object sender, RoutedEventArgs e)
+        static async Task DownloadAndConvertAudioAsync(string videoUrl, string outputFilePath)
         {
-            if (!_mp3File.IsValidMP3())
-            {
-                MessageBox.Show("That is not a valid mp3 file Path", "Invalid song file path",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+            var youtube = new YoutubeClient();
+            var video = await youtube.Videos.GetAsync(videoUrl);
 
+            if (video != null)
+            {
+                var streamInfoSet = await youtube.Videos.Streams.GetManifestAsync(videoUrl);
+                var audioStreamInfo = streamInfoSet.GetAudioOnlyStreams().FirstOrDefault();
+
+                if (audioStreamInfo != null)
+                {
+                    var audioStream = await youtube.Videos.Streams.GetAsync(audioStreamInfo);
+
+                    using (var audioFileStream = File.Create(outputFilePath))
+                    {
+                        await audioStream.CopyToAsync(audioFileStream);
+                    }
+                }
+            }
+        }
+        private async void btnCreateSong_Click(object sender, RoutedEventArgs e)
+        {
+            // grab the public properties from each page in the frame
+
+            pgAddSong addSongPage = (pgAddSong)pages["frmSongInformation"];
+            _mp3FileName = addSongPage.mp3FileName;
+            _songTitle = addSongPage.songTitle;
+            _artistName = addSongPage.artistName;
+            _yearReleased = addSongPage.yearReleased;
+            _isExplicit = addSongPage.isExplicit;
+            _plays = addSongPage.plays;
+
+            if (_mp3FileName.StartsWith("https://www.youtube.com"))
+            {
+                try
+                {
+                    // extract the mp3 from the url provided
+                    string url = _mp3FileName;
+                    string mp3File = Regex.Replace(_songTitle + ".mp3", @"\s", string.Empty).ToLower();
+                    string mp3FilePath = baseDirectory + "\\MuseConfig\\SongFiles\\" + mp3File;
+                    _mp3FileName = mp3File;
+
+                    await DownloadAndConvertAudioAsync(url, mp3FilePath);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("That is not a valid youtube URL.", "Invalid url file path",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+            else
+            {
+                if (!_mp3FileName.IsValidMP3())
+                {
+                    MessageBox.Show("That is not a valid mp3 file Path", "Invalid song file path",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+            if (_imageFilePath.IsDefaultImage() || _imageFilePath == null)
+            {
+                _imageFilePath = baseDirectory + "\\MuseConfig\\AlbumArt\\defaultAlbumImage.png";
                 return;
             }
 
-            //int year= 0;
-            //if(txtYear.Text != "")
-            //{
-            //    year = int.Parse(txtYear.Text);
-            //}
-            //else
-            //{
-            //    year = 0;
-            //}
-            //if (!year.IsValidYear())
-            //{
-            //    MessageBox.Show("That is not a valid year", "Invalid Year",
-            //    MessageBoxButton.OK, MessageBoxImage.Error);
-            //    CleanWindow();
-            //    SongInformationHelper();
-            //    return;
-            //}
-            //if (txtMp3FilePath.Text == "")
-            //{
-            //    MessageBox.Show("Click the Add MP3 button to add a song file.", "No MP3 file selected");
-            //    return;
-            //}
-            //try
-            //{
-            //    var newSong = new Song()
-            //    {
-            //        Title = txtTitle.Text,
-            //        ImageFilePath = _imgFile,
-            //        Mp3FilePath = _mp3File,
-            //        YearReleased = year,
-            //        Lyrics = txtLyrics.Text,
-            //        Explicit = (bool)chkExplicit.IsChecked,
-            //        Plays = int.Parse(txtPlays.Text),
-            //        UserID = _loggedInUser.UserID,
-            //        Album = txtAlbum.Text,
-            //        Artist = txtArtist.Text
-            //    };
-            //    var sm = new SongManager();
-            //    bool result = sm.InsertSong(newSong);
-            //    this.Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message);
-            //}
-        }
-
-        private void btnTestSong_Click(object sender, RoutedEventArgs e)
-        {
-            if (frmMain.Content is pgAddSong addSongPage)
+            if (!_yearReleased.IsValidYear())
             {
-                _mp3FileName = addSongPage.mp3FileName;
-                _songTitle = addSongPage.songTitle;
-                _artistName = addSongPage.artistName;
-                _yearReleased = addSongPage.yearReleased;
-                _isExplicit = addSongPage.isExplicit;
-                _plays = addSongPage.plays;
+                _yearReleased = 2024;
+                return;
             }
-            MessageBox.Show(_mp3FileName);
-            MessageBox.Show(_songTitle);
-            MessageBox.Show(_artistName);
-            MessageBox.Show(_yearReleased.ToString());
-            MessageBox.Show(_isExplicit.ToString());
-            MessageBox.Show(_plays.ToString());
+
+            pgArtwork addArtwork = (pgArtwork)pages["frmArtwork"];
+            _imageFilePath = addArtwork.imageFilePath;
+
+            pgLyrics addLyrics = (pgLyrics)pages["frmLyrics"];
+            _lyrics = addLyrics.lyrics;
+
+            try
+            {
+                var newSong = new Song()
+                {
+                    Title = _songTitle,
+                    ImageFilePath = _imageFilePath,
+                    Mp3FilePath = _mp3FileName,
+                    YearReleased = _yearReleased,
+                    Lyrics = _lyrics,
+                    Explicit = _isExplicit,
+                    Plays = _plays,
+                    UserID = _loggedInUser.UserID,
+                    Album = "",
+                    Artist = _artistName
+                };
+                var sm = new SongManager();
+                bool result = sm.InsertSong(newSong);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message);
+            }
         }
     }
 }

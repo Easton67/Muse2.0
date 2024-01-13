@@ -6,9 +6,9 @@
       xmlns:local="clr-namespace:Muse2"
       mc:Ignorable="d" 
       d:DesignHeight="450" 
-      d:DesignWidth="650"
+      d:DesignWidth="660"
       Title="pgAddSong"
-      Background="White">
+      Background="White" Loaded="Page_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="125" />
@@ -67,7 +67,8 @@
             Padding="11,1,11,1" 
             Height="30" 
             HorizontalAlignment="Right" 
-            Margin="0,0,30,0" Click="btnAddFolder_Click" >
+            Margin="0,0,30,0" 
+            Click="btnAddFolder_Click" >
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"/>
@@ -76,7 +77,7 @@
         </Button> 
         <Button Grid.Row="2" 
             Grid.Column="1" 
-            Width="111" 
+            Width="137" 
             x:Name="btnAddSongFromUrl" 
             Content="Add Song From URL"
             HorizontalContentAlignment="Center" 
@@ -84,7 +85,25 @@
             Padding="11,1,11,1" 
             Height="30"  
             HorizontalAlignment="Right" 
-            Margin="0,0,30,0" Click="btnAddSongFromUrl_Click" >
+            Margin="0,0,30,0" 
+            Click="btnAddSongFromUrl_Click" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Grid.Row="1" 
+            Grid.Column="1" 
+            Width="85" 
+            x:Name="btnConfirm" 
+            Content="Confirm"
+            HorizontalContentAlignment="Center" 
+            Background="White" 
+            Padding="11,1,11,1" 
+            Height="30"  
+            HorizontalAlignment="Right" 
+            Margin="0,0,30,0" Click="btnConfirm_Click" >   
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"/>
@@ -141,7 +160,7 @@
                  FontSize="13" 
                  VerticalContentAlignment="Center" 
                  IsEnabled="False" 
-                 IsReadOnly="True" />
+                 IsReadOnly="True" LostFocus="txtMp3FilePath_LostFocus" />
         <TextBox Grid.Row="1" 
                  Grid.Column="1" 
                  x:Name="txtTitle"
@@ -150,7 +169,7 @@
                  Width="330" 
                  Margin="7,0,0,0" 
                  FontSize="13" 
-                 VerticalContentAlignment="Center" />
+                 VerticalContentAlignment="Center" LostFocus="txtTitle_LostFocus" />
         <TextBox Grid.Row="2" 
                  Grid.Column="1" 
                  x:Name="txtArtist" 
@@ -159,7 +178,7 @@
                  Width="330" 
                  Margin="7,0,0,0" 
                  FontSize="13" 
-                 VerticalContentAlignment="Center" />
+                 VerticalContentAlignment="Center" LostFocus="txtArtist_LostFocus" />
         <TextBox Grid.Row="3"
                  Grid.Column="1" 
                  x:Name="txtAlbum"
@@ -168,7 +187,7 @@
                  Width="330" 
                  Margin="7,0,0,0" 
                  FontSize="13" 
-                 VerticalContentAlignment="Center" />
+                 VerticalContentAlignment="Center" LostFocus="txtAlbum_LostFocus" />
         <TextBox Grid.Row="4" 
                  Grid.Column="1" 
                  x:Name="txtYear" 
@@ -179,16 +198,16 @@
                  FontSize="13" 
                  VerticalContentAlignment="Center" 
                  HorizontalContentAlignment="Center" 
-                 MaxLength="4" PreviewTextInput="txtYear_PreviewTextInput" />
+                 MaxLength="4" PreviewTextInput="txtYear_PreviewTextInput" LostFocus="txtYear_LostFocus" />
         <CheckBox x:Name="chkExplicit" 
                   Grid.Row="5" 
                   Grid.Column="1" 
-                  Margin="17,18,0,0" >
+                  Margin="17,18,0,0" LostFocus="chkExplicit_LostFocus" >
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
             </CheckBox.LayoutTransform>
         </CheckBox>
-        <Label x:Name="Genre"
+        <Label x:Name="lblGenre"
                Grid.Row="6"
                Content="Genre"
                Grid.Column="0" 
@@ -201,7 +220,7 @@
                   Grid.Column="1" 
                   Width="200" 
                   HorizontalAlignment="Left" 
-                  Margin="7,0,0,0" Height="28"/>
+                  Margin="7,0,0,0" Height="28" LostFocus="cboGenre_LostFocus"/>
         <TextBox Grid.Row="7" 
                  Grid.Column="1" 
                  x:Name="txtPlays" 
@@ -213,6 +232,6 @@
                  VerticalContentAlignment="Center" 
                  InputScope="DateYear" 
                  HorizontalContentAlignment="Center" 
-                 MaxLength="4" PreviewTextInput="txtPlays_PreviewTextInput" />
+                 MaxLength="4" PreviewTextInput="txtPlays_PreviewTextInput" LostFocus="txtPlays_LostFocus" />
     </Grid>
 </Page>
