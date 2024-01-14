@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" 
       d:DesignWidth="660"
-      Title="pgLyrics" Background="White">
+      Title="pgLyrics" Background="#FFE8E6EA">
     <Grid>
         <TextBox Name="txtLyrics" 
                  Width="330" 
@@ -20,5 +20,21 @@
                  MinHeight="100" 
                  HorizontalAlignment="Left" 
                  FontSize="14" LostFocus="txtLyrics_LostFocus"/>
+        <Button Grid.Column="0" 
+                Width="120" 
+                x:Name="btnSearchForLyrics" 
+                Height="30" 
+                Content="Search for Lyrics" 
+                Margin="26,341,10,0"
+                HorizontalContentAlignment="Center" 
+                HorizontalAlignment="left" 
+                Background="#FFD5C9E3" 
+                Padding="11,1,11,1" Click="btnSearchForLyrics_Click" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Page>

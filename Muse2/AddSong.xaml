@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="Add Song" Height="540" Width="660" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Add Song" Height="540" Width="660" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FFE8E6EA">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="125" />

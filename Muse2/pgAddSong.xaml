@@ -8,7 +8,8 @@
       d:DesignHeight="450" 
       d:DesignWidth="660"
       Title="pgAddSong"
-      Background="White" Loaded="Page_Loaded">
+      Background="#FFE8E6EA" 
+      Loaded="Page_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="125" />
@@ -202,7 +203,7 @@
         <CheckBox x:Name="chkExplicit" 
                   Grid.Row="5" 
                   Grid.Column="1" 
-                  Margin="17,18,0,0" LostFocus="chkExplicit_LostFocus" >
+                  Margin="-479,3,0,0" LostFocus="chkExplicit_LostFocus" Width="16" Height="15" >
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
             </CheckBox.LayoutTransform>

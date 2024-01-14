@@ -7,7 +7,14 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" 
       d:DesignWidth="660"
-      Title="pgArtwork" Background="White">
+      Title="pgArtwork" Background="#FFE8E6EA" Loaded="Page_Loaded">
+    <Page.Resources>
+        <Style x:Key="NoFocusBorderStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </Page.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="125" />
@@ -24,6 +31,15 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <TextBox x:Name="TextBoxWithImage" 
+                 Grid.RowSpan="8"
+                 Grid.ColumnSpan="3"
+                 Foreground="#FFE8E6EA"
+                 Background="Transparent" PreviewKeyDown="TextBoxWithImage_PreviewKeyDown" 
+                 CaretBrush="#FFE8E6EA" 
+                 Cursor="Arrow"/>
+
+
         <Button 
             Width="90" 
             HorizontalContentAlignment="Center" 

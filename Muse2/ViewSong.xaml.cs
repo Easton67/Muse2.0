@@ -22,6 +22,7 @@ namespace Muse2
     public partial class ViewSong : Window
     {
         private Song song = null;
+        private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
         public ViewSong(Song s)
         {
@@ -49,7 +50,7 @@ namespace Muse2
             }
             try
             {
-                imgCoverArt.Source = new BitmapImage(new System.Uri(song.ImageFilePath));
+                imgCoverArt.Source = new BitmapImage(new System.Uri(baseDirectory + "\\MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
             }
             catch
             {
