@@ -22,7 +22,7 @@ namespace Muse2
     /// </summary>
     public partial class pgLibrary : Page
     {
-        private UserVM loggedInUser;
+        private UserVM _loggedInUser;
         private UserManager _userManager;
         private SongManager _songManager;
         private PlaylistManager _playlistManager;
@@ -30,11 +30,11 @@ namespace Muse2
         public Song song;
         private List<Song> userSongs = null;
 
-        public pgLibrary(UserVM _loggedInUser)
+        public pgLibrary(UserVM loggedInUser)
         {
             InitializeComponent();
 
-            loggedInUser = _loggedInUser;
+            _loggedInUser = loggedInUser;
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -42,6 +42,7 @@ namespace Muse2
             _playlistManager = new PlaylistManager();
 
             songListRepopulation();
+            playlistListRepopulation();
         }
 
         private void grdLibrary_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -55,26 +56,13 @@ namespace Muse2
                     song = grdLibrary.SelectedItem as Song;
                 }
 
-                //lblSongTitle.Content = Song.Title;
-                //lblSongArtist.Content = Song.Artist;
-                //if (Song.Explicit == true)
-                //{
-                //    imgExplicit.Visibility = Visibility.Visible;
-                //}
-                //else
-                //{
-                //    imgExplicit.Visibility = Visibility.Hidden;
-                //}
-                //CurrentSongHelper();
-                //btnPlay.Visibility = Visibility.Hidden;
-                //btnPause.Visibility = Visibility.Visible;
-                //if (grdLibrary.SelectedItem != null)
-                //{
-                //    int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
-                //    songNumber = selectedRowIndex;
-                //}
-                //mediaPlayer.Play();
-                //timer.Start();
+                // click the play button on the main window
+                Window mainWindow = Window.GetWindow(this);
+                Button btnPlay = mainWindow.FindName("btnPlay") as Button;
+                if (btnPlay != null)
+                {
+                    btnPlay.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
             }
             else
             {
@@ -86,7 +74,7 @@ namespace Muse2
         {
             try
             {
-                userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
+                userSongs = _songManager.SelectSongsByUserID(_loggedInUser.UserID);
                 grdLibrary.ItemsSource = userSongs;
 
                 if (userSongs != null)
@@ -102,13 +90,71 @@ namespace Muse2
             }
         }
 
+        private void playlistListRepopulation()
+        {
+            // set the playlists
+            try
+            {
+                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
+
+                ContextMenu contextMenu = new ContextMenu();
+
+                List<string> playlistTitles = new List<string>();
+
+                // Add playlist title to a new list of just the title
+                foreach (Playlist playlist in playlists)
+                {
+                    string playlistTitle = playlist.Title;
+                    playlistTitles.Add(playlistTitle);
+                }
+
+                MenuItem editSong = new MenuItem();
+                editSong.Header = "Edit Song Details";
+                editSong.Click += mnuEditSongFromDataGrid_Click;
+                contextMenu.Items.Add(editSong);
+
+                MenuItem writeReview = new MenuItem();
+                writeReview.Header = "Write a review";
+                writeReview.Click += mnuCreateReview_Click;
+                contextMenu.Items.Add(writeReview);
+
+                if (playlists.Count > 0)
+                {
+                    MenuItem deleteSong = new MenuItem();
+                    deleteSong.Header = "Delete Song";
+                    deleteSong.Click += mnuDeleteSong_Click;
+                    contextMenu.Items.Add(deleteSong);
+
+                    MenuItem addSong = new MenuItem();
+                    addSong.Header = "Add Song To Playlist:";
+                    contextMenu.Items.Add(addSong);
+
+                    // Add the list of playlist titles to the context menu
+                    foreach (string menuItemText in playlistTitles)
+                    {
+                        MenuItem menuItem = new MenuItem();
+                        menuItem.Header = menuItemText;
+                        menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
+                        addSong.Items.Add(menuItem);
+                    }
+                }
+                grdLibrary.ContextMenu = contextMenu;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists. Please try again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
         private void mnuEditSongFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
             var song = grdLibrary.SelectedItem as Song;
 
             if (grdLibrary.SelectedItem != null)
             {
-                var EditSong = new AddEditSongxaml(song, loggedInUser);
+                var EditSong = new AddEditSongxaml(song, _loggedInUser);
                 EditSong.ShowDialog();
                 songListRepopulation();
             }
@@ -120,17 +166,35 @@ namespace Muse2
 
         private void mnuAddSongToPlaylistFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
-            var song = grdLibrary.SelectedItem as Song;
+            // Get the index of the clicked menu item
+            if (sender is MenuItem addToPlaylist)
+            {
+                if (addToPlaylist.Parent is ItemsControl playlistName)
+                {
+                    // Get the index from the sub item, not the parent item
+                    int index = playlistName.ItemContainerGenerator.IndexFromContainer(addToPlaylist);
 
-            if (grdLibrary.SelectedItem != null)
-            {
-                var AddEditSong = new AddEditSongxaml(song, loggedInUser);
-                AddEditSong.ShowDialog();
-                songListRepopulation();
-            }
-            else
-            {
-                MessageBox.Show("Select a Song to view it.");
+                    try
+                    {
+                        List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
+                        int songID = userSongs[songNumber].SongID;
+                        int playlistID = playlists[index].PlaylistID;
+
+                        try
+                        {
+                            _playlistManager.InsertSongIntoPlaylist(songID, playlistID);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("You have already added this song to your playlist");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song was not added. Please try again.",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             }
         }
 
@@ -140,12 +204,12 @@ namespace Muse2
 
             if (grdLibrary.SelectedItem != null)
             {
-                var AddReview = new AddReview(song, loggedInUser);
+                var AddReview = new AddReview(song, _loggedInUser);
                 AddReview.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Select a song song.");
+                MessageBox.Show("Select a song.");
             }
         }
 
