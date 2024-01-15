@@ -5,10 +5,40 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Muse2"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="900" d:DesignWidth="170"
       Title="pgPlaylist">
-
     <Grid>
-        
+        <DataGrid 
+        x:Name="grdPlaylists" 
+        BorderThickness="3,3,3,3" 
+        AutoGenerateColumns="false" 
+        FontWeight="UltraBlack" 
+        HorizontalGridLinesBrush="White" 
+        VerticalAlignment="Top" 
+        HorizontalAlignment="right" 
+        FontSize="12" 
+        CanUserResizeColumns="False" 
+        CanUserResizeRows="False" 
+        IsReadOnly="True" 
+        SelectionMode="Single" 
+        CanUserSortColumns="False" 
+        CanUserReorderColumns="False" 
+        BorderBrush="Black" 
+        Panel.ZIndex="5" 
+        Margin="1,0,10,0" MouseDoubleClick="grdPlaylists_MouseDoubleClick" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Playlists" 
+                            Binding="{Binding Title}" 
+                            Width="165" 
+                            CanUserResize="True" 
+                            IsReadOnly="True"/>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="New Playlist" x:Name="mnuCreateNewPlaylist" Click="mnuCreateNewPlaylist_Click" />
+                    <MenuItem Header="Delete Playlist" x:Name="mnuRemovePlaylist" Click="mnuRemovePlaylist_Click" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
     </Grid>
 </Page>

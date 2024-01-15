@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Muse2"
       mc:Ignorable="d" 
       d:DesignHeight="900" d:DesignWidth="1500"
-      Title="pgLibrary" Background="White" Loaded="Page_Loaded">
+      Title="pgLibrary" Loaded="Page_Loaded">
     <Grid>
         <DataGrid x:Name="grdLibrary"
                    AutoGenerateColumns="false" 

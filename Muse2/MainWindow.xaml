@@ -23,6 +23,7 @@
                 <GradientStop Color="white" Offset="1.7" />
             </RadialGradientBrush.GradientStops>
         </RadialGradientBrush>-->
+        
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FF525252" Offset="1"/>
             <GradientStop Color="#FFF79EF0" Offset="1"/>
@@ -314,7 +315,6 @@
                    HorizontalAlignment="Left"  
                    VerticalAlignment="Center" 
                    Margin="0,-67,0,0" />
-
             <Label x:Name="lblSongLength" 
                    Grid.Row="3" 
                    Grid.RowSpan="2"
@@ -356,93 +356,6 @@
                      KeyDown="txtDataGridHeaderEdit_KeyDown" />
             <Label x:Name="lblDataGridSubHeader" Content="Description" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,22,0,0" MouseDoubleClick="lblDataGridSubHeader_MouseDoubleClick"/>
             <TextBox x:Name="txtDataGridSubHeaderEdit" Text="Data Grid Sub Header" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,28,0,0" KeyDown="txtDataGridSubHeaderEdit_KeyDown"/>
-            <DataGrid Grid.Column="0" 
-                      x:Name="grdUsers" 
-                      AutoGenerateColumns="false" 
-                      BorderThickness="1,1,1,1" 
-                      FontWeight="UltraBlack" 
-                      VerticalAlignment="Top" 
-                      HorizontalAlignment="Left" 
-                      IsReadOnly="True" 
-                      SelectionMode="Single" 
-                      CanUserReorderColumns="False"
-                      CanUserSortColumns="False" 
-                      Margin="18,54,0,0" 
-                      SelectionChanged="grdUsers_SelectionChanged" 
-                      MouseDoubleClick="grdUsers_MouseDoubleClick">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="25" MinWidth="25" MaxWidth="55">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding ImageFilePath}" MaxWidth="55" MinWidth="25" MaxHeight="55" MinHeight="25" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="UserID" Binding="{Binding UserID}" Width="50"/>
-                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="300"/>
-                    <DataGridTextColumn Header="Profile Name" Binding="{Binding ProfileName}" Width="150"/>
-                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="150"/>
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="150" CanUserResize="False"/>
-                    <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="70" CanUserResize="False" />
-                </DataGrid.Columns>
-            </DataGrid>
-            <WrapPanel Grid.Column="2" 
-                       x:Name="panelSelectedUser" HorizontalAlignment="Right" Orientation="Vertical" Margin="0,0,21,0" Background="#FFB4ACC8" Width="219">
-                <Button x:Name="btnUserProfileImage" HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Padding="5,5,5,5" Margin="0,20,57,0" Grid.Row="0" Grid.Column="2" Width="100" Height="100" 
-                        BorderThickness="0,0,0,0" MouseDoubleClick="btnUserProfileImage_MouseDoubleClick">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="100"/>
-                        </Style>
-                    </Button.Resources>
-                    <Button.Background>
-                        <ImageBrush Stretch="UniformToFill" ImageSource="/defaultAccount.png"/>
-                    </Button.Background>
-                </Button>
-                <Label x:Name="lblUserID" Content="UserID" FontWeight="Bold" Padding="11,5,5,5" Margin="4,20,10,0"/>
-                <TextBox x:Name="txtUserID" Width="70"
-                HorizontalAlignment="Left" Margin="13,0,10,0" Height="22" IsEnabled="False" />
-                <Label x:Name="lblUserFirstName" Content="First Name" FontWeight="Bold" Padding="10,0,5,5" Margin="0,20,10,0"/>
-                <TextBox x:Name="txtUserFirstName" Width="179"
-                HorizontalAlignment="Right" Margin="0,0,30,0" Height="22" IsEnabled="False" />
-                <Label x:Name="lblUserLastName" Content="Last Name" FontWeight="Bold" Padding="10,5,5,5" />
-                <TextBox x:Name="txtUserLastName" Width="179"
-                HorizontalAlignment="Right" Height="22" Margin="9,0,30,0" IsEnabled="False"/>
-                <Label x:Name="lblUserEmail" Content="Email" FontWeight="Bold" Padding="10,5,5,5" />
-                <TextBox x:Name="txtUserEmail" Width="179"
-                HorizontalAlignment="Right" Height="22" Margin="0,0,30,0" IsEnabled="False" />
-                <Label x:Name="lblUserProfileName" Content="Profile Name" FontWeight="Bold" Padding="10,5,5,5" />
-                <TextBox x:Name="txtUserProfileName" Width="179"
-                HorizontalAlignment="Right" Height="22" Margin="0,0,30,0" IsEnabled="False" />
-                <Label x:Name="lblMinutesListened" Content="Minutes Listened" FontWeight="Bold" Padding="10,6,5,5" />
-                <TextBox x:Name="txtMinutesListened" Width="75"
-                HorizontalAlignment="left" Height="22" Margin="11,0,30,0" IsEnabled="False" MaxLength="7" InputScope="Number" PreviewTextInput="txtMinutesListened_PreviewTextInput" />
-                <Label x:Name="lblActive" Content="Active" FontWeight="Bold" Padding="10,6,5,5" />
-                <CheckBox x:Name="chkUserActive" Margin="13,0,0,0" />
-                <StackPanel Orientation="Horizontal" Width="228">
-                    <Button x:Name="btnUserEdit" Content="Edit" Width="47" Height="28" HorizontalAlignment="Left" Margin="11,12,39,10" Click="btnUserEdit_Click">
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="4"/>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
-                    <Button x:Name="btnUserSaveChanges"
-                            Content="Save Changes" 
-                            Width="104" 
-                            Height="28" 
-                            HorizontalAlignment="Right"
-                            Margin="10,12,0,10" 
-                            Click="btnUserSaveChanges_Click">
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="4"/>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
-                </StackPanel>
-            </WrapPanel>
             <StackPanel 
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
@@ -455,46 +368,14 @@
                     Margin="0,41,10,0" >
                 <Button x:Name="btnAllSongs" Content="All Songs" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" 
                 Padding="5,5,5,5" Margin="0,-1,30,0" Background="Lavender" BorderThickness="1,1,1,1" 
-                BorderBrush="Black" Click="btnAllSongs_Click">  
+                BorderBrush="Black" Click="btnAllSongs_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </Button.Resources>
                 </Button>
-                <DataGrid 
-                        x:Name="grdPlaylists" 
-                        BorderThickness="3,3,3,3" 
-                        AutoGenerateColumns="false" 
-                        FontWeight="UltraBlack" 
-                        HorizontalGridLinesBrush="White" 
-                        VerticalAlignment="Bottom" 
-                        HorizontalAlignment="right" 
-                        FontSize="12" 
-                        CanUserResizeColumns="False" 
-                        CanUserResizeRows="False" 
-                        MouseDoubleClick="grdPlaylists_MouseDoubleClick" 
-                        IsReadOnly="True" 
-                        SelectionMode="Single" 
-                        CanUserSortColumns="False" 
-                        CanUserReorderColumns="False" 
-                        BorderBrush="Black" 
-                        Panel.ZIndex="5" 
-                        Margin="1,0,10,0" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Playlists" 
-                                            Binding="{Binding Title}" 
-                                            Width="165" 
-                                            CanUserResize="True" 
-                                            IsReadOnly="True"/>
-                    </DataGrid.Columns>
-                    <DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="New Playlist" x:Name="mnuCreateNewPlaylist" Click="mnuCreateNewPlaylist_Click" />
-                            <MenuItem Header="Delete Playlist" x:Name="mnuRemovePlaylist" Click="mnuRemovePlaylist_Click" />
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
-                </DataGrid>
+                <Frame x:Name="frmListOfPlaylists"/>
             </StackPanel>
         </Grid>
     </Grid>
