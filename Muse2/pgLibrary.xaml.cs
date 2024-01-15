@@ -45,6 +45,28 @@ namespace Muse2
             playlistListRepopulation();
         }
 
+        private void Play()
+        {
+            // click the play button on the main window
+            Window mainWindow = Window.GetWindow(this);
+            Button btnPlay = mainWindow.FindName("btnPlay") as Button;
+            if (btnPlay != null)
+            {
+                btnPlay.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+        }
+
+        private void Next()
+        {
+            // click the play button on the main window
+            Window mainWindow = Window.GetWindow(this);
+            Button btnPlay = mainWindow.FindName("btnNext") as Button;
+            if (btnPlay != null)
+            {
+                btnPlay.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+        }
+
         private void grdLibrary_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (grdLibrary.SelectedItems.Count != 0)
@@ -55,14 +77,7 @@ namespace Muse2
                     songNumber = selectedRowIndex;
                     song = grdLibrary.SelectedItem as Song;
                 }
-
-                // click the play button on the main window
-                Window mainWindow = Window.GetWindow(this);
-                Button btnPlay = mainWindow.FindName("btnPlay") as Button;
-                if (btnPlay != null)
-                {
-                    btnPlay.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                }
+                Play();
             }
             else
             {
@@ -250,6 +265,53 @@ namespace Muse2
             else
             {
                 MessageBox.Show("Select a Song to view it.");
+            }
+        }
+
+        private void grdLibrary_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete || e.Key == Key.Back)
+            {
+                var song = grdLibrary.SelectedItem as Song;
+
+                if (grdLibrary.SelectedItem != null)
+                {
+                    MessageBoxResult result = MessageBox.Show(
+                    $"Are you sure you want to delete {song.Title}?",
+                    "Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        try
+                        {
+                            _songManager.DeleteSong(song.SongID);
+                            if (userSongs.Count() == 0)
+                            {
+                                grdLibrary.ItemsSource = null;
+                                grdLibrary.Visibility = Visibility.Collapsed;
+                            }
+                            else
+                            { 
+                                songListRepopulation();
+                                if (grdLibrary.Items.Count != 0)
+                                {
+                                    Next();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Select a Song to view it.");
+                }
             }
         }
     }

@@ -116,8 +116,12 @@ namespace Muse2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             pages.Add("frmLibrary", new pgLibrary(loggedInUser));
+            // pages.Add("frmLibrary", new pgPlaylist(loggedInUser));
+            // pages.Add("frmLibrary", new pgAdmin(loggedInUser));
+            pages.Add("frmListOfPlaylists", new pgPlaylistList(loggedInUser));
 
             frmMain.Navigate(pages["frmLibrary"]);
+            frmListOfPlaylists.Navigate(pages["frmListOfPlaylists"]);
 
             _userManager = new UserManager();
             _songManager = new SongManager();
@@ -1019,60 +1023,5 @@ namespace Muse2
                 txtDataGridSubHeaderEdit.Focus();
             }
         }
-        //private void grdLibrary_PreviewKeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Delete || e.Key == Key.Back)
-        //    {
-        //        var song = grdLibrary.SelectedItem as Song;
-
-        //        if (grdLibrary.SelectedItem != null)
-        //        {
-        //                MessageBoxResult result = MessageBox.Show(
-        //                $"Are you sure you want to delete {song.Title}?",
-        //                "Confirmation",
-        //                MessageBoxButton.YesNo,
-        //                MessageBoxImage.Question);
-        //            if (result == MessageBoxResult.Yes)
-        //            {
-        //                try
-        //                {
-        //                    _songManager.DeleteSong(song.SongID);
-        //                    if (userSongs.Count() == 0)
-        //                    {
-        //                        grdLibrary.ItemsSource = null;
-        //                        grdLibrary.Visibility = Visibility.Collapsed;
-        //                    }
-        //                    else
-        //                    {
-        //                        // Reload your library or playlist
-        //                        if (btnPlaylistImageEdit.Visibility == Visibility.Hidden)
-        //                        {
-        //                            songListRepopulation();
-        //                        }
-        //                        else
-        //                        {
-        //                            playlistSongsRepopulation();
-        //                        }
-        //                        // Simulate skipping to the next song, so it isn't showing up in the media player
-        //                        if (grdLibrary.Items.Count != 0)
-        //                        {
-        //                            NextSongHelper();
-        //                        }
-        //                    }
-        //                }
-        //                catch (Exception ex)
-        //                {
-        //                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
-        //                    MessageBoxButton.OK, MessageBoxImage.Error);
-        //                    return;
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Select a Song to view it.");
-        //        }
-        //    }
-        //}
     }
 }

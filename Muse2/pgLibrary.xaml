@@ -26,7 +26,7 @@
                    CanUserResizeRows="False" 
                    CanUserSortColumns="False" 
                    HorizontalScrollBarVisibility="Visible" 
-                   MouseDoubleClick="grdLibrary_MouseDoubleClick">
+                   MouseDoubleClick="grdLibrary_MouseDoubleClick" PreviewKeyDown="grdLibrary_PreviewKeyDown">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="BorderThickness" Value="0,3,3,3" />
