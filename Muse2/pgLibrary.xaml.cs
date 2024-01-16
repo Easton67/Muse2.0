@@ -3,17 +3,9 @@ using DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Muse2
 {
@@ -29,6 +21,8 @@ namespace Muse2
         public int songNumber = 0;
         public Song song;
         private List<Song> userSongs = null;
+        private ContextMenu contextMenu;
+        Window mainWindow = null;
 
         public pgLibrary(UserVM loggedInUser)
         {
@@ -38,24 +32,23 @@ namespace Muse2
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            mainWindow = Window.GetWindow(this);
+
             _songManager = new SongManager();
             _playlistManager = new PlaylistManager();
 
             songListRepopulation();
             playlistListRepopulation();
         }
-
         private void Play()
         {
             // click the play button on the main window
-            Window mainWindow = Window.GetWindow(this);
             Button btnPlay = mainWindow.FindName("btnPlay") as Button;
             if (btnPlay != null)
             {
                 btnPlay.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
         }
-
         private void Next()
         {
             // click the play button on the main window
@@ -66,25 +59,75 @@ namespace Muse2
                 btnPlay.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
         }
-
-        private void grdLibrary_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void playlistListRepopulation()
         {
-            if (grdLibrary.SelectedItems.Count != 0)
+            // set the playlists
+            try
             {
-                if (grdLibrary.SelectedItem != null)
+                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
+
+                contextMenu = new ContextMenu();
+
+                List<string> playlistTitles = new List<string>();
+
+                // Add playlist title to a new list of just the title
+                foreach (Playlist playlist in playlists)
                 {
-                    int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
-                    songNumber = selectedRowIndex;
-                    song = grdLibrary.SelectedItem as Song;
+                    string playlistTitle = playlist.Title;
+                    playlistTitles.Add(playlistTitle);
                 }
-                Play();
+
+                MenuItem editSong = new MenuItem();
+                editSong.Header = "Edit Song Details";
+                // editSong.Click += mnuAddSongFromDataGrid_Click;
+                contextMenu.Items.Add(editSong);
+
+                MenuItem writeReview = new MenuItem();
+                writeReview.Header = "Write a review";
+                // writeReview.Click += mnuCreateReview_Click;
+                contextMenu.Items.Add(writeReview);
+
+                MenuItem newPlaylist = new MenuItem();
+                newPlaylist.Header = "New Playlist";
+                // newPlaylist.Click += mnuCreateNewPlaylist_Click;
+                contextMenu.Items.Add(newPlaylist);
+
+                if (playlists.Count > 0)
+                {
+                    MenuItem deleteSong = new MenuItem();
+                    deleteSong.Header = "Delete Song";
+                    // deleteSong.Click += mnuDeleteSong_Click;
+                    contextMenu.Items.Add(deleteSong);
+
+                    MenuItem addSong = new MenuItem();
+                    addSong.Header = "Add Song To Playlist:";
+                    contextMenu.Items.Add(addSong);
+
+                    // Add the list of playlist titles to the context menu
+                    foreach (string menuItemText in playlistTitles)
+                    {
+                        MenuItem menuItem = new MenuItem();
+                        menuItem.Header = menuItemText;
+                        menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
+                        addSong.Items.Add(menuItem);
+                    }
+                }
+
+                grdLibrary.ContextMenu = contextMenu;
+
+                if (playlists.Count > 0)
+                {
+                    // grdPlaylists.Visibility = Visibility.Visible;
+                    // grdPlaylists.ItemsSource = playlists;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Select a Song to listen to it.");
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists. Please try again.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
-
         private void songListRepopulation()
         {
             try
@@ -104,65 +147,24 @@ namespace Muse2
                 return;
             }
         }
-
-        private void playlistListRepopulation()
+        private void grdLibrary_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // set the playlists
-            try
+            if (grdLibrary.SelectedItems.Count != 0)
             {
-                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
-
-                ContextMenu contextMenu = new ContextMenu();
-
-                List<string> playlistTitles = new List<string>();
-
-                // Add playlist title to a new list of just the title
-                foreach (Playlist playlist in playlists)
+                if (grdLibrary.SelectedItem != null)
                 {
-                    string playlistTitle = playlist.Title;
-                    playlistTitles.Add(playlistTitle);
+                    int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
+                    songNumber = selectedRowIndex;
+                    song = grdLibrary.SelectedItem as Song;
                 }
-
-                MenuItem editSong = new MenuItem();
-                editSong.Header = "Edit Song Details";
-                editSong.Click += mnuEditSongFromDataGrid_Click;
-                contextMenu.Items.Add(editSong);
-
-                MenuItem writeReview = new MenuItem();
-                writeReview.Header = "Write a review";
-                writeReview.Click += mnuCreateReview_Click;
-                contextMenu.Items.Add(writeReview);
-
-                if (playlists.Count > 0)
-                {
-                    MenuItem deleteSong = new MenuItem();
-                    deleteSong.Header = "Delete Song";
-                    deleteSong.Click += mnuDeleteSong_Click;
-                    contextMenu.Items.Add(deleteSong);
-
-                    MenuItem addSong = new MenuItem();
-                    addSong.Header = "Add Song To Playlist:";
-                    contextMenu.Items.Add(addSong);
-
-                    // Add the list of playlist titles to the context menu
-                    foreach (string menuItemText in playlistTitles)
-                    {
-                        MenuItem menuItem = new MenuItem();
-                        menuItem.Header = menuItemText;
-                        menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
-                        addSong.Items.Add(menuItem);
-                    }
-                }
-                grdLibrary.ContextMenu = contextMenu;
+                Play();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists. Please try again.",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                MessageBox.Show("Select a Song to listen to it.");
             }
         }
-
+        #region Context Menu 
         private void mnuEditSongFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
             var song = grdLibrary.SelectedItem as Song;
@@ -178,7 +180,6 @@ namespace Muse2
                 MessageBox.Show("Select a Song to view it.");
             }
         }
-
         private void mnuAddSongToPlaylistFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
             // Get the index of the clicked menu item
@@ -212,7 +213,6 @@ namespace Muse2
                 }
             }
         }
-
         private void mnuCreateReview_Click(object sender, RoutedEventArgs e)
         {
             var song = grdLibrary.SelectedItem as Song;
@@ -227,7 +227,6 @@ namespace Muse2
                 MessageBox.Show("Select a song.");
             }
         }
-
         private void mnuDeleteSong_Click(object sender, RoutedEventArgs e)
         {
             var song = grdLibrary.SelectedItem as Song;
@@ -267,7 +266,7 @@ namespace Muse2
                 MessageBox.Show("Select a Song to view it.");
             }
         }
-
+        #endregion
         private void grdLibrary_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete || e.Key == Key.Back)

@@ -91,7 +91,7 @@
                 <ColumnDefinition Width="200*" />
                 <ColumnDefinition Width="218*" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnPlaylistImageEdit" 
+            <!--<Button x:Name="btnPlaylistImageEdit" 
                     Width="75" 
                     Grid.Row="1" 
                     HorizontalAlignment="Left" 
@@ -101,7 +101,7 @@
                     BorderThickness="0,0,0,0" >
                 <Image x:Name="imgPlaylistPicture" 
                        Source="/Resources/defaultAlbumImage.png"/>
-            </Button>
+            </Button>-->
             <StackPanel x:Name="stkCol0" Margin="0,0,5,0">
                 <Image x:Name="imgLogo" 
                        Grid.Row="0" 
@@ -345,37 +345,24 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="14*" />
             </Grid.ColumnDefinitions>
-            <Label x:Name="lblDataGridHeader" Content="Library" FontSize="25" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,-11,0,0" MouseDoubleClick="lblDataGridHeader_MouseDoubleClick"/>
-            <TextBox x:Name="txtDataGridHeaderEdit" 
-                     Text="Data Grid Header" 
-                     FontSize="25" 
-                     FontWeight="DemiBold" 
-                     VerticalAlignment="Top" 
-                     HorizontalAlignment="Left" 
-                     Margin="26,-6,0,0" 
-                     KeyDown="txtDataGridHeaderEdit_KeyDown" />
-            <Label x:Name="lblDataGridSubHeader" Content="Description" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,22,0,0" MouseDoubleClick="lblDataGridSubHeader_MouseDoubleClick"/>
-            <TextBox x:Name="txtDataGridSubHeaderEdit" Text="Data Grid Sub Header" FontSize="15" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,28,0,0" KeyDown="txtDataGridSubHeaderEdit_KeyDown"/>
+            <Label x:Name="lblLibrary" 
+                   Content="Library" 
+                   FontSize="25" 
+                   FontWeight="DemiBold" 
+                   VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" 
+                   Margin="26,-47,0,0"/>
             <StackPanel 
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Orientation="Horizontal" 
                 Margin="18,55,0,0">
-                <Frame x:Name="frmMain" />
+                <Frame x:Name="frmMain" NavigationUIVisibility="Hidden"/>
             </StackPanel>
             <StackPanel 
                     Grid.Column="2" 
                     Margin="0,41,10,0" >
-                <Button x:Name="btnAllSongs" Content="All Songs" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" 
-                Padding="5,5,5,5" Margin="0,-1,30,0" Background="Lavender" BorderThickness="1,1,1,1" 
-                BorderBrush="Black" Click="btnAllSongs_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Frame x:Name="frmListOfPlaylists"/>
+                <Frame x:Name="frmListOfPlaylists" NavigationUIVisibility="Hidden" />
             </StackPanel>
         </Grid>
     </Grid>

@@ -20,10 +20,13 @@ namespace Muse2
     {
         private UserManager _userManager;
         private string userImg = "";
+        private UserVM _loggedInUser;
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        public pgAdmin()
+        public pgAdmin(UserVM loggedInUser)
         {
             InitializeComponent();
+
+            _loggedInUser = loggedInUser;
         }
 
         private void grdUsers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
