@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Muse2"
       mc:Ignorable="d" 
       d:DesignHeight="900" d:DesignWidth="1500"
-      Title="pgAdmin" >
+      Title="pgAdmin" Loaded="Page_Loaded" >
 
     <Grid>
         <DataGrid Grid.Column="0" 
@@ -37,61 +37,5 @@
                 <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="70" CanUserResize="False" />
             </DataGrid.Columns>
         </DataGrid>
-        <WrapPanel Grid.Column="2" 
-               x:Name="panelSelectedUser" HorizontalAlignment="Right" Orientation="Vertical" Margin="0,0,21,0" Background="#FFB4ACC8" Width="219">
-            <Button x:Name="btnUserProfileImage" HorizontalAlignment="Right" VerticalAlignment="Top"
-            Padding="5,5,5,5" Margin="0,20,57,0" Grid.Row="0" Grid.Column="2" Width="100" Height="100" 
-                BorderThickness="0,0,0,0" MouseDoubleClick="btnUserProfileImage_MouseDoubleClick">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="100"/>
-                    </Style>
-                </Button.Resources>
-                <Button.Background>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="/defaultAccount.png"/>
-                </Button.Background>
-            </Button>
-            <Label x:Name="lblUserID" Content="UserID" FontWeight="Bold" Padding="11,5,5,5" Margin="4,20,10,0"/>
-            <TextBox x:Name="txtUserID" Width="70"
-        HorizontalAlignment="Left" Margin="13,0,10,0" Height="22" IsEnabled="False" />
-            <Label x:Name="lblUserFirstName" Content="First Name" FontWeight="Bold" Padding="10,0,5,5" Margin="0,20,10,0"/>
-            <TextBox x:Name="txtUserFirstName" Width="179"
-        HorizontalAlignment="Right" Margin="0,0,30,0" Height="22" IsEnabled="False" />
-            <Label x:Name="lblUserLastName" Content="Last Name" FontWeight="Bold" Padding="10,5,5,5" />
-            <TextBox x:Name="txtUserLastName" Width="179"
-        HorizontalAlignment="Right" Height="22" Margin="9,0,30,0" IsEnabled="False"/>
-            <Label x:Name="lblUserEmail" Content="Email" FontWeight="Bold" Padding="10,5,5,5" />
-            <TextBox x:Name="txtUserEmail" Width="179"
-        HorizontalAlignment="Right" Height="22" Margin="0,0,30,0" IsEnabled="False" />
-            <Label x:Name="lblUserProfileName" Content="Profile Name" FontWeight="Bold" Padding="10,5,5,5" />
-            <TextBox x:Name="txtUserProfileName" Width="179"
-        HorizontalAlignment="Right" Height="22" Margin="0,0,30,0" IsEnabled="False" />
-            <Label x:Name="lblMinutesListened" Content="Minutes Listened" FontWeight="Bold" Padding="10,6,5,5" />
-            <TextBox x:Name="txtMinutesListened" Width="75"
-        HorizontalAlignment="left" Height="22" Margin="11,0,30,0" IsEnabled="False" MaxLength="7" InputScope="Number" PreviewTextInput="txtMinutesListened_PreviewTextInput" />
-            <Label x:Name="lblActive" Content="Active" FontWeight="Bold" Padding="10,6,5,5" />
-            <CheckBox x:Name="chkUserActive" Margin="13,0,0,0" />
-            <StackPanel Orientation="Horizontal" Width="228">
-                <Button x:Name="btnUserEdit" Content="Edit" Width="47" Height="28" HorizontalAlignment="Left" Margin="11,12,39,10" Click="btnUserEdit_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="4"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button x:Name="btnUserSaveChanges"
-                    Content="Save Changes" 
-                    Width="104" 
-                    Height="28" 
-                    HorizontalAlignment="Right"
-                    Margin="10,12,0,10" Click="btnUserSaveChanges_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="4"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </StackPanel>
-        </WrapPanel>
     </Grid>
 </Page>

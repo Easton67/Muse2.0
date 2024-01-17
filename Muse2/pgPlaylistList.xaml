@@ -15,7 +15,7 @@
                     HorizontalAlignment="Right" 
                     VerticalAlignment="Top" 
                     Padding="5,5,5,5" 
-                    Margin="0,-47,96,18"
+                    Margin="0,15,95,12"
                     Background="Lavender" 
                     BorderThickness="1,1,1,1" 
                     BorderBrush="Black" Click="btnAllSongs_Click">

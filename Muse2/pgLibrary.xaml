@@ -14,7 +14,6 @@
                    VerticalAlignment="Top" 
                    HorizontalAlignment="Left" 
                    IsReadOnly="True" 
-                   SelectionMode="Single" 
                    CanUserAddRows="False" 
                    BorderThickness="3,0,0,0" 
                    BorderBrush="Black"
@@ -26,7 +25,9 @@
                    CanUserResizeRows="False" 
                    CanUserSortColumns="False" 
                    HorizontalScrollBarVisibility="Visible" 
-                   MouseDoubleClick="grdLibrary_MouseDoubleClick" PreviewKeyDown="grdLibrary_PreviewKeyDown">
+                   MouseDoubleClick="grdLibrary_MouseDoubleClick" 
+                   PreviewKeyDown="grdLibrary_PreviewKeyDown" 
+                   ContextMenuOpening="grdLibrary_ContextMenuOpening">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="BorderThickness" Value="0,3,3,3" />

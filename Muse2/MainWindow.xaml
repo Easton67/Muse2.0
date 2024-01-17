@@ -91,17 +91,17 @@
                 <ColumnDefinition Width="200*" />
                 <ColumnDefinition Width="218*" />
             </Grid.ColumnDefinitions>
-            <!--<Button x:Name="btnPlaylistImageEdit" 
-                    Width="75" 
-                    Grid.Row="1" 
-                    HorizontalAlignment="Left" 
-                    Grid.RowSpan="4" 
-                    Margin="33,2,0,2" 
-                    MouseDoubleClick="btnPlaylistImageEdit_MouseDoubleClick" 
-                    BorderThickness="0,0,0,0" >
+            <Button x:Name="btnPlaylistImageEdit" 
+                     Width="75" 
+                     Grid.Row="1" 
+                     HorizontalAlignment="Left" 
+                     Grid.RowSpan="4" 
+                     Margin="14,2,0,2" 
+                     Background="Transparent"
+                     BorderThickness="0,0,0,0" MouseDoubleClick="btnPlaylistImageEdit_MouseDoubleClick" >
                 <Image x:Name="imgPlaylistPicture" 
                        Source="/Resources/defaultAlbumImage.png"/>
-            </Button>-->
+            </Button>
             <StackPanel x:Name="stkCol0" Margin="0,0,5,0">
                 <Image x:Name="imgLogo" 
                        Grid.Row="0" 
@@ -167,7 +167,16 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="btnViewSong" Grid.Row="0" Grid.Column="2" Width="74" HorizontalAlignment="Center" Margin="0,12,0,12" Background="White" BorderThickness="0,0,0,0"  Padding="0,0,0,0" MouseDoubleClick="btnViewSong_MouseDoubleClick" >
+            <Button x:Name="btnViewSong" 
+                    Grid.Row="0" 
+                    Grid.Column="2" 
+                    Width="74" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,12,0,12" 
+                    Background="Transparent" 
+                    BorderThickness="0,0,0,0"  
+                    Padding="0,0,0,0"
+                    MouseDoubleClick="btnViewSong_MouseDoubleClick" >
                 <Image x:Name="imgCoverArt" Grid.Row="0" Grid.Column="2" Width="75" Source="/defaultAlbumImage.png" />
             </Button>
             <ProgressBar x:Name="barSongLength" 
@@ -345,13 +354,47 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="14*" />
             </Grid.ColumnDefinitions>
+            <TextBox x:Name="txtDataGridHeaderEdit" 
+                     Grid.Row="1"
+                     Text="Data Grid Header" 
+                     FontSize="25" 
+                     FontWeight="DemiBold" 
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Left" 
+                     Margin="10,4,0,-17" 
+                     KeyDown="txtDataGridHeaderEdit_KeyDown" />
+            <TextBox x:Name="txtDataGridSubHeaderEdit" 
+                     Text="Data Grid Sub Header" 
+                     FontSize="15" 
+                     FontWeight="DemiBold" 
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Left" 
+                     Margin="10,39,0,0" 
+                     KeyDown="txtDataGridSubHeaderEdit_KeyDown"/>
+            <Label x:Name="lblDataGridHeader" 
+                   Content="Library" 
+                   FontSize="25" 
+                   FontWeight="DemiBold" 
+                   VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" 
+                   Margin="10,-1,0,0" 
+                   Padding="5,5,5,5" 
+                   MouseDoubleClick="lblDataGridHeader_MouseDoubleClick"/>
+            <Label x:Name="lblDataGridSubHeader"
+                   Content="Description" 
+                   FontSize="15" 
+                   FontWeight="DemiBold" 
+                   VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" 
+                   Margin="10,35,0,0" 
+                   MouseDoubleClick="lblDataGridSubHeader_MouseDoubleClick" />
             <Label x:Name="lblLibrary" 
                    Content="Library" 
                    FontSize="25" 
                    FontWeight="DemiBold" 
                    VerticalAlignment="Top" 
                    HorizontalAlignment="Left" 
-                   Margin="26,-47,0,0"/>
+                   Margin="14,0,0,0"/>
             <StackPanel 
                 Grid.Column="0"
                 Grid.ColumnSpan="2"

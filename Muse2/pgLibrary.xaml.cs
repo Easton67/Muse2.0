@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Muse2
 {
@@ -20,7 +21,7 @@ namespace Muse2
         private PlaylistManager _playlistManager;
         public int songNumber = 0;
         public Song song;
-        private List<Song> userSongs = null;
+        public List<Song> userSongs = null;
         private ContextMenu contextMenu;
         Window mainWindow = null;
 
@@ -227,11 +228,49 @@ namespace Muse2
                 MessageBox.Show("Select a song.");
             }
         }
-        private void mnuDeleteSong_Click(object sender, RoutedEventArgs e)
+        private void DeleteOneOrMoreSongs()
         {
             var song = grdLibrary.SelectedItem as Song;
 
             if (grdLibrary.SelectedItem != null)
+            {
+                if (grdLibrary.SelectedItems.Count > 1)
+                {
+                    MessageBoxResult result = MessageBox.Show(
+                         $"Are you sure you want to delete {grdLibrary.SelectedItems.Count} songs from your library?",
+                         "Confirmation",
+                         MessageBoxButton.YesNo,
+                         MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        foreach (var selectedItem in grdLibrary.SelectedItems)
+                        {
+                            try
+                            {
+                                if (selectedItem is Song selectedSong)
+                                {
+                                    _songManager.DeleteSong(selectedSong.SongID);
+                                    songNumber = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
+                                    Next();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+                        MessageBox.Show("Songs Successfully Deleted!");
+                        songListRepopulation();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Select a Song to view it.");
+                    }
+                }
+            }
+            else
             {
                 MessageBoxResult result = MessageBox.Show(
                     $"Are you sure you want to delete '{song.Title}'?",
@@ -260,12 +299,17 @@ namespace Muse2
                         return;
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("Select a Song to view it.");
+                else
+                {
+                    MessageBox.Show("Select a Song to view it.");
+                }
             }
         }
+        private void mnuDeleteSong_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteOneOrMoreSongs();
+        }
+
         #endregion
         private void grdLibrary_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -311,6 +355,29 @@ namespace Muse2
                 {
                     MessageBox.Show("Select a Song to view it.");
                 }
+            }
+        }
+        private void grdLibrary_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (grdLibrary.SelectedItems.Count > 1)
+            {
+                ContextMenu multipleItemsContextMenu = new ContextMenu();
+
+                MenuItem addSongsToPlaylist = new MenuItem();
+                addSongsToPlaylist.Header = "Add Songs To Playlist";
+                // editSong.Click += mnuAddSongFromDataGrid_Click;
+                multipleItemsContextMenu.Items.Add(addSongsToPlaylist);
+
+                MenuItem removeSongsFromPlaylist = new MenuItem();
+                removeSongsFromPlaylist.Header = "Remove Songs From Library";
+                removeSongsFromPlaylist.Click += mnuDeleteSong_Click;
+                multipleItemsContextMenu.Items.Add(removeSongsFromPlaylist);
+
+                grdLibrary.ContextMenu = multipleItemsContextMenu;
+            }
+            else
+            {
+                grdLibrary.ContextMenu = contextMenu;
             }
         }
     }

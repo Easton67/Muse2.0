@@ -91,17 +91,14 @@ namespace Muse2
                 return;
             }
         }
-
         private void txtPlays_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = numericRegex.IsMatch(e.Text);
         }
-
         private void txtYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = numericRegex.IsMatch(e.Text);
         }
-
         private void btnAddFolder_Click(object sender, RoutedEventArgs e)
         {
             // Change which buttons are being shown
@@ -140,14 +137,12 @@ namespace Muse2
                 txtTitle.Text = Path.GetFileName(selectedFolder);
             }
         }
-
         private void btnAddSongFromUrl_Click(object sender, RoutedEventArgs e)
         {
             txtMp3FilePath.IsReadOnly = false;
             txtMp3FilePath.IsEnabled = true;
             txtMp3FilePath.Focus();
         }
-
         static string OpenFolderDialog()
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
@@ -164,7 +159,6 @@ namespace Muse2
                 return null;
             }
         }
-
         static bool CheckFolderContents(string folderPath)
         {
             // Check if at least one TXT, MP3, and PNG file exists in subdirectories
@@ -257,7 +251,6 @@ namespace Muse2
             {
                 System.Windows.MessageBox.Show(ex.Message, "Unable to add songs to this playlist.");
             }
-            
 
             // loop through each folder, add the song to the library, and add it to the playlist if the user chooses
 
@@ -370,7 +363,6 @@ namespace Muse2
                 System.Windows.MessageBox.Show(numberOfSongsAdded.ToString() + " songs were added to your library.");
             }
             System.Windows.MessageBox.Show(numberOfSongsAdded.ToString() + " songs were added to your playlist " + txtTitle.Text + ".");
-
         }
     }
 }

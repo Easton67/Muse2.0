@@ -38,7 +38,6 @@ namespace Muse2
 
             _loggedInUser = loggedInUser;
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             _songManager = new SongManager();
@@ -96,6 +95,7 @@ namespace Muse2
                                 if (frmMain != null && frmMain.NavigationService != null)
                                 {
                                     frmMain.NavigationService.Navigate(new pgPlaylist(_loggedInUser, playlistSongs, selectedPlaylist));
+                                    mainWin.ShowPlaylistItems();
                                 }
                             }
                         }
@@ -194,6 +194,7 @@ namespace Muse2
                     if (mainWindow is MainWindow mainWin)
                     {
                         mainWin.ShowLibrary();
+                        mainWin.HidePlaylistItems();
                     }
                     Frame frmMain = mainWindow.FindName("frmMain") as Frame;
 
