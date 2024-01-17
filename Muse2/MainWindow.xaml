@@ -357,12 +357,16 @@
                 Grid.ColumnSpan="2"
                 Orientation="Horizontal" 
                 Margin="18,55,0,0">
-                <Frame x:Name="frmMain" NavigationUIVisibility="Hidden"/>
+                <Frame x:Name="frmMain" 
+                       NavigationUIVisibility="Hidden" 
+                       Panel.ZIndex="3"/>
             </StackPanel>
             <StackPanel 
                     Grid.Column="2" 
-                    Margin="0,41,10,0" >
-                <Frame x:Name="frmListOfPlaylists" NavigationUIVisibility="Hidden" />
+                    Margin="0,41,10,0" Width="173" >
+                <Frame x:Name="frmListOfPlaylists" 
+                       NavigationUIVisibility="Hidden" 
+                       Panel.ZIndex="3"/>
             </StackPanel>
         </Grid>
     </Grid>

@@ -32,20 +32,40 @@ namespace Muse2
         public Song song;
         private List<Song> userSongs = null;
         public List<Song> _playlistSongs = null;
+        private Playlist _selectedPlaylist = null;
         private string playlistImg = "";
         public int songNumber = 0;
         private string baseDirectory = AppContext.BaseDirectory;
 
-        public pgPlaylist(UserVM loggedInUser, List<Song> playlistSongs)
+        public pgPlaylist(UserVM loggedInUser, List<Song> playlistSongs, Playlist selectedPlaylist)
         {
             InitializeComponent();
 
             _loggedInUser = loggedInUser;
             _playlistSongs = playlistSongs;
+            _selectedPlaylist = selectedPlaylist;
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             grdPlaylist.ItemsSource = _playlistSongs;
+            txtDataGridHeaderEdit.Visibility = Visibility.Hidden;
+            txtDataGridSubHeaderEdit.Visibility = Visibility.Hidden;
+            lblDataGridHeader.Content = _selectedPlaylist.Title;
+            lblDataGridSubHeader.Content = _selectedPlaylist.Description;
+
+            try
+            {
+                var PlaylistImage = new BitmapImage(new System.Uri(_selectedPlaylist.ImageFilePath));
+                imgPlaylistPicture.Source = PlaylistImage;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not update your playlist image.",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+                
+            }
+
         }
         private void playlistListRepopulation()
         {
@@ -299,7 +319,7 @@ namespace Muse2
                 {
                     try
                     {
-                        _songManager.DeleteSong(song.SongID);
+                        _songManager.DeleteSong(song.SongID); 
                         MessageBox.Show("Song successfully deleted");
                         if (userSongs.Count() == 0)
                         {
@@ -392,7 +412,7 @@ namespace Muse2
 
                     playlistImg = System.IO.Path.GetFileName(newImageFilePath);
 
-                    // UpdatePlaylistHelper();
+                    UpdatePlaylistHelper();
                 }
                 else
                 {

@@ -8,14 +8,14 @@
       d:DesignHeight="900" d:DesignWidth="170"
       Title="pgPlaylistList" Loaded="Page_Loaded">
     <Grid>
-        <StackPanel>
+        <StackPanel Panel.ZIndex="3">
             <Button x:Name="btnAllSongs" 
                     Content="All Songs" 
                     Width="75" 
                     HorizontalAlignment="Right" 
                     VerticalAlignment="Top" 
                     Padding="5,5,5,5" 
-                    Margin="0,-1,30,0"
+                    Margin="0,-47,96,18"
                     Background="Lavender" 
                     BorderThickness="1,1,1,1" 
                     BorderBrush="Black" Click="btnAllSongs_Click">
@@ -42,8 +42,7 @@
                     CanUserReorderColumns="False" 
                     BorderBrush="Black" 
                     Panel.ZIndex="5" 
-                    Margin="1,0,10,0" 
-                    MouseDoubleClick="grdPlaylists_MouseDoubleClick" >
+                    MouseDoubleClick="grdPlaylists_MouseDoubleClick" Width="171" HorizontalScrollBarVisibility="Disabled" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Playlists" 
                     Binding="{Binding Title}" 

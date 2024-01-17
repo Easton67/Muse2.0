@@ -57,51 +57,6 @@ namespace Muse2
 
                 List<string> playlistTitles = new List<string>();
 
-                // Add playlist title to a new list of just the title
-                foreach (Playlist playlist in playlists)
-                {
-                    string playlistTitle = playlist.Title;
-                    playlistTitles.Add(playlistTitle);
-                }
-
-                MenuItem editSong = new MenuItem();
-                editSong.Header = "Edit Song Details";
-                // editSong.Click += mnuAddSongFromDataGrid_Click;
-                contextMenu.Items.Add(editSong);
-
-                MenuItem writeReview = new MenuItem();
-                writeReview.Header = "Write a review";
-                // writeReview.Click += mnuCreateReview_Click;
-                contextMenu.Items.Add(writeReview);
-
-                MenuItem newPlaylist = new MenuItem();
-                newPlaylist.Header = "New Playlist";
-                newPlaylist.Click += mnuCreateNewPlaylist_Click;
-                contextMenu.Items.Add(newPlaylist);
-
-                if (playlists.Count > 0)
-                {
-                    MenuItem deleteSong = new MenuItem();
-                    deleteSong.Header = "Delete Song";
-                    // deleteSong.Click += mnuDeleteSong_Click;
-                    contextMenu.Items.Add(deleteSong);
-
-                    MenuItem addSong = new MenuItem();
-                    addSong.Header = "Add Song To Playlist:";
-                    contextMenu.Items.Add(addSong);
-
-                    // Add the list of playlist titles to the context menu
-                    foreach (string menuItemText in playlistTitles)
-                    {
-                        MenuItem menuItem = new MenuItem();
-                        menuItem.Header = menuItemText;
-                        // menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
-                        addSong.Items.Add(menuItem);
-                    }
-                }
-
-                // grdLibrary.ContextMenu = contextMenu;
-
                 if (playlists.Count > 0)
                 {
                     grdPlaylists.Visibility = Visibility.Visible;
@@ -129,15 +84,22 @@ namespace Muse2
                         playlistSongs = _songManager.SelectSongsByPlaylistID(userID, playlistID);
 
                         Window mainWindow = Window.GetWindow(this);
+
                         if (mainWindow != null)
                         {
-                            Frame frmMain = mainWindow.FindName("frmMain") as Frame;
-
-                            if (frmMain != null && frmMain.NavigationService != null)
+                            if (mainWindow is MainWindow mainWin)
                             {
-                                frmMain.NavigationService.Navigate(new pgPlaylist(_loggedInUser, playlistSongs));
+                                mainWin.HideLibrary();
+
+                                Frame frmMain = mainWin.FindName("frmMain") as Frame;
+
+                                if (frmMain != null && frmMain.NavigationService != null)
+                                {
+                                    frmMain.NavigationService.Navigate(new pgPlaylist(_loggedInUser, playlistSongs, selectedPlaylist));
+                                }
                             }
                         }
+
                         string playlistName = ((Playlist)grdPlaylists.SelectedItem).Title;
                         string playlistDescription = ((Playlist)grdPlaylists.SelectedItem).Description;
 
@@ -155,7 +117,7 @@ namespace Muse2
                             }
 
                             BitmapImage playlistImageBitmap = new BitmapImage(new System.Uri(playlistImageFilePath));
-                            // imgPlaylistPicture.Source = playlistImageBitmap;
+                            //imgPlaylistPicture.Source = playlistImageBitmap;
                         }
                         catch (Exception ex)
                         {
@@ -229,6 +191,10 @@ namespace Muse2
                 Window mainWindow = Window.GetWindow(this);
                 if (mainWindow != null)
                 {
+                    if (mainWindow is MainWindow mainWin)
+                    {
+                        mainWin.ShowLibrary();
+                    }
                     Frame frmMain = mainWindow.FindName("frmMain") as Frame;
 
                     if (frmMain != null && frmMain.NavigationService != null)
