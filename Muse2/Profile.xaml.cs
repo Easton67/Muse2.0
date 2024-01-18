@@ -36,8 +36,8 @@ namespace Muse2
         // Menu Items
         private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
         {
-            var resetPassword = new ResetPassword(_loggedInUser.Email);
-            resetPassword.ShowDialog();
+            //var resetPassword = new ResetPassword(_loggedInUser.Email);
+            //resetPassword.ShowDialog();
         }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
@@ -128,8 +128,8 @@ namespace Muse2
         }
         private void btnResetPassword_Click(object sender, RoutedEventArgs e)
         {
-            var resetPassword = new ResetPassword(_loggedInUser.Email);
-            resetPassword.ShowDialog();
+            //var resetPassword = new ResetPassword(_loggedInUser.Email);
+            //resetPassword.ShowDialog();
         }
         private void btnDeleteAccount_Click(object sender, RoutedEventArgs e)
         {

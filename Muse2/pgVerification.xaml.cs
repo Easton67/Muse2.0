@@ -42,6 +42,7 @@ namespace Muse2
         {
             InitializeComponent();
         }
+       
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             stkPassword.Visibility = Visibility.Hidden;

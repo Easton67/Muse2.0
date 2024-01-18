@@ -160,7 +160,7 @@
                         BorderThickness="0,0,0,0" 
                         HorizontalContentAlignment="Right" 
                         HorizontalAlignment="Right" 
-                        Margin="0,1,12,2" Click="btnShowPasswordTop_Click" >
+                        Margin="0,-2,12,5" Click="btnShowPasswordTop_Click" >
                     <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
                     <Button.Resources>
                         <Style TargetType="Border">
@@ -175,7 +175,7 @@
                         HorizontalContentAlignment="Right" 
                         HorizontalAlignment="Right" 
                         Padding="1,0,1,0" 
-                        Margin="0,31,12,-18" Click="btnShowPasswordBottom_Click" >
+                        Margin="0,27,12,-14" Click="btnShowPasswordBottom_Click" >
                     <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
                     <Button.Resources>
                         <Style TargetType="Border">

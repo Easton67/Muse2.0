@@ -80,24 +80,19 @@ namespace Muse2
 
                 MenuItem editSong = new MenuItem();
                 editSong.Header = "Edit Song Details";
-                // editSong.Click += mnuAddSongFromDataGrid_Click;
+                editSong.Click += mnuEditSongFromDataGrid_Click;
                 contextMenu.Items.Add(editSong);
 
                 MenuItem writeReview = new MenuItem();
                 writeReview.Header = "Write a review";
-                // writeReview.Click += mnuCreateReview_Click;
+                writeReview.Click += mnuCreateReview_Click;
                 contextMenu.Items.Add(writeReview);
-
-                MenuItem newPlaylist = new MenuItem();
-                newPlaylist.Header = "New Playlist";
-                // newPlaylist.Click += mnuCreateNewPlaylist_Click;
-                contextMenu.Items.Add(newPlaylist);
 
                 if (playlists.Count > 0)
                 {
                     MenuItem deleteSong = new MenuItem();
                     deleteSong.Header = "Delete Song";
-                    // deleteSong.Click += mnuDeleteSong_Click;
+                    deleteSong.Click += mnuDeleteSong_Click;
                     contextMenu.Items.Add(deleteSong);
 
                     MenuItem addSong = new MenuItem();
@@ -260,7 +255,6 @@ namespace Muse2
                                 return;
                             }
                         }
-                        songNumber = 0;
                         Window mainWindow = Window.GetWindow(this);
 
                         if (mainWindow != null)
@@ -271,52 +265,58 @@ namespace Muse2
 
                                 if (frmMain != null && frmMain.NavigationService != null)
                                 {
+                                    songNumber = 0;
+                                    MessageBox.Show("Songs Successfully Deleted!");
+                                    songListRepopulation();
                                     mainWin.CurrentSongHelper();
+                                    mainWin.Pause();
                                 }
                             }
                         }
-                        MessageBox.Show("Songs Successfully Deleted!");
-                        songListRepopulation();
                     }
                     else
                     {
-                        MessageBox.Show("Select a Song to view it.");
-                    }
-                }
-            }
-            else
-            {
-                MessageBoxResult result = MessageBox.Show(
-                    $"Are you sure you want to delete '{song.Title}'?",
-                    "Confirmation",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    try
-                    {
-                        _songManager.DeleteSong(song.SongID);
-                        MessageBox.Show("Song successfully deleted");
-                        if (userSongs.Count() == 0)
-                        {
-                            grdLibrary.ItemsSource = null;
-                        }
-                        else
-                        {
-                            songListRepopulation();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Select a Song to view it.");
+                    MessageBoxResult result = MessageBox.Show(
+                    $"Are you sure you want to delete '{song.Title}'?",
+                    "Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        try
+                        {
+                            _songManager.DeleteSong(song.SongID);
+                            MessageBox.Show("Song successfully deleted");
+                            if (userSongs.Count() == 0)
+                            {
+                                grdLibrary.ItemsSource = null;
+                            }
+                            else
+                            {
+                                songListRepopulation();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Select a Song to view it.");
             }
         }
         private void mnuDeleteSong_Click(object sender, RoutedEventArgs e)

@@ -54,7 +54,6 @@
                                     TextWrapping="Wrap"
                                     TextAlignment="Center"
                                     Margin="0,5,0,21"/>
-                            <!--Frames-->
                             <Frame x:Name="frmMain" NavigationUIVisibility="Hidden" Height="242"  />
                             <StackPanel x:Name="stkFooterButtons" Orientation="Horizontal" Margin="0,5,0,0">
                                 <Button x:Name="btnBack"

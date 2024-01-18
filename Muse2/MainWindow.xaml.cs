@@ -276,71 +276,71 @@ namespace Muse2
         private void playlistListRepopulation()
         {
             // set the playlists
-            try
-            {
-                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+            //try
+            //{
+            //    List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
 
-                contextMenu = new ContextMenu();
+            //    contextMenu = new ContextMenu();
 
-                List<string> playlistTitles = new List<string>();
+            //    List<string> playlistTitles = new List<string>();
 
-                // Add playlist title to a new list of just the title
-                foreach (Playlist playlist in playlists)
-                {
-                    string playlistTitle = playlist.Title;
-                    playlistTitles.Add(playlistTitle);
-                }
+            //    // Add playlist title to a new list of just the title
+            //    foreach (Playlist playlist in playlists)
+            //    {
+            //        string playlistTitle = playlist.Title;
+            //        playlistTitles.Add(playlistTitle);
+            //    }
 
-                MenuItem editSong = new MenuItem();
-                editSong.Header = "Edit Song Details";
-                // editSong.Click += mnuAddSongFromDataGrid_Click;
-                contextMenu.Items.Add(editSong);
+            //    MenuItem editSong = new MenuItem();
+            //    editSong.Header = "Edit Song Details";
+            //    // editSong.Click += mnuAddSongFromDataGrid_Click;
+            //    contextMenu.Items.Add(editSong);
 
-                MenuItem writeReview = new MenuItem();
-                writeReview.Header = "Write a review";
-                // writeReview.Click += mnuCreateReview_Click;
-                contextMenu.Items.Add(writeReview);
+            //    MenuItem writeReview = new MenuItem();
+            //    writeReview.Header = "Write a review";
+            //    // writeReview.Click += mnuCreateReview_Click;
+            //    contextMenu.Items.Add(writeReview);
 
-                MenuItem newPlaylist = new MenuItem();
-                newPlaylist.Header = "New Playlist";
-                // newPlaylist.Click += mnuCreateNewPlaylist_Click;
-                contextMenu.Items.Add(newPlaylist);
+            //    MenuItem newPlaylist = new MenuItem();
+            //    newPlaylist.Header = "New Playlist";
+            //    // newPlaylist.Click += mnuCreateNewPlaylist_Click;
+            //    contextMenu.Items.Add(newPlaylist);
 
-                if (playlists.Count > 0)
-                {
-                    MenuItem deleteSong = new MenuItem();
-                    deleteSong.Header = "Delete Song";
-                    // deleteSong.Click += mnuDeleteSong_Click;
-                    contextMenu.Items.Add(deleteSong);
+            //    if (playlists.Count > 0)
+            //    {
+            //        MenuItem deleteSong = new MenuItem();
+            //        deleteSong.Header = "Delete Song";
+            //        // deleteSong.Click += mnuDeleteSong_Click;
+            //        contextMenu.Items.Add(deleteSong);
 
-                    MenuItem addSong = new MenuItem();
-                    addSong.Header = "Add Song To Playlist:";
-                    contextMenu.Items.Add(addSong);
+            //        MenuItem addSong = new MenuItem();
+            //        addSong.Header = "Add Song To Playlist:";
+            //        contextMenu.Items.Add(addSong);
 
-                    // Add the list of playlist titles to the context menu
-                    foreach (string menuItemText in playlistTitles)
-                    {
-                        MenuItem menuItem = new MenuItem();
-                        menuItem.Header = menuItemText;
-                        menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
-                        addSong.Items.Add(menuItem);
-                    }
-                }
+            //        // Add the list of playlist titles to the context menu
+            //        foreach (string menuItemText in playlistTitles)
+            //        {
+            //            MenuItem menuItem = new MenuItem();
+            //            menuItem.Header = menuItemText;
+            //            menuItem.Click += mnuAddSongToPlaylistFromDataGrid_Click;
+            //            addSong.Items.Add(menuItem);
+            //        }
+            //    }
 
-                // grdLibrary.ContextMenu = contextMenu;
+            //    // grdLibrary.ContextMenu = contextMenu;
 
-                if (playlists.Count > 0)
-                {
-                    // grdPlaylists.Visibility = Visibility.Visible;
-                    // grdPlaylists.ItemsSource = playlists;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists. Please try again.",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            //    if (playlists.Count > 0)
+            //    {
+            //        // grdPlaylists.Visibility = Visibility.Visible;
+            //        // grdPlaylists.ItemsSource = playlists;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not find your playlists. Please try again.",
+            //    MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
         }
         private void GetAccountAndRoles()
         {
@@ -461,8 +461,9 @@ namespace Muse2
         }
         private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
         {
-            var resetPassword = new ResetPassword(loggedInUser.Email);
-            resetPassword.ShowDialog();
+            SignIn signInWindow = new SignIn(loggedInUser);
+            signInWindow.Show();
+            signInWindow.NavigateToResetPassword();
         }
         private void mnuCreateNewAlbum_Click(object sender, RoutedEventArgs e)
         {
@@ -476,8 +477,9 @@ namespace Muse2
         }
         private void mnuSignUp_Click(object sender, RoutedEventArgs e)
         {
-            var SignUp = new SignUp();
-            SignUp.ShowDialog();
+            SignIn signInWindow = new SignIn(loggedInUser);
+            signInWindow.Show();
+            signInWindow.NavigateToSignUp();
         }
         private void mnuViewAllUsers_Click(object sender, RoutedEventArgs e)
         {
@@ -492,33 +494,22 @@ namespace Muse2
             mediaPlayer.Pause();
             var profileWindow = new Profile(loggedInUser, _songManager);
             profileWindow.ShowDialog();
-            //if (grdLibrary.Visibility == Visibility.Visible)
-            //{
-                UserVM updatedUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
-                try
-                {
-                    var AccountImage = new BitmapImage(new System.Uri(updatedUser.ImageFilePath));
-                    defaultimgAccount.Visibility = Visibility.Hidden;
-                    imgAccount.Visibility = Visibility.Visible;
-                    imgAccount.Source = AccountImage;
-                }
-                catch (Exception)
-                {
-                    imgAccount.Source = null;
-                    imgAccount.Visibility = Visibility.Hidden;
-                    defaultimgAccount.Visibility = Visibility.Visible;
-                    GetAccountAndRoles();
-                    return;
-                }
-            //}
-            //else if (grdUsers.Visibility == Visibility.Visible)
-            //{
-            //    grdUsersRepopulation();
-            //}
-            //else
-            //{
-            //    playlistListRepopulation();
-            //}
+            UserVM updatedUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
+            try
+            {
+                var AccountImage = new BitmapImage(new System.Uri(updatedUser.ImageFilePath));
+                defaultimgAccount.Visibility = Visibility.Hidden;
+                imgAccount.Visibility = Visibility.Visible;
+                imgAccount.Source = AccountImage;
+            }
+            catch (Exception)
+            {
+                imgAccount.Source = null;
+                imgAccount.Visibility = Visibility.Hidden;
+                defaultimgAccount.Visibility = Visibility.Visible;
+                GetAccountAndRoles();
+                return;
+            }
         }
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
@@ -532,7 +523,6 @@ namespace Muse2
         private void btnViewSong_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var song = userSongs[songNumber] as Song;
-
             var ViewSong = new ViewSong(song);
             ViewSong.ShowDialog();
         }
@@ -540,7 +530,7 @@ namespace Muse2
         {
             Pause();
         }
-        private void Pause()
+        public void Pause()
         {
             btnPlay.Visibility = Visibility.Visible;
             btnPause.Visibility = Visibility.Hidden;
@@ -755,33 +745,6 @@ namespace Muse2
                     }
                 }
             }
-        }
-        private void mnuRemoveSongFromPlaylist_Click(object sender, RoutedEventArgs e)
-        {
-            // var song = grdLibrary.SelectedItem as Song;
-
-            //if (grdLibrary.SelectedItem != null)
-            //{
-            //    try
-            //    {
-            //        _playlistManager.RemoveSongFromPlaylist(song.SongID);
-
-            //        // handle if the last song of the playlist
-            //        playlistSongsRepopulation();
-
-            //        // if there is another song to skip to, run this
-            //        if (grdLibrary.Items.Count != 0)
-            //        {
-            //            NextSongHelper();
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not remove this song. Please try again",
-            //        MessageBoxButton.OK, MessageBoxImage.Error);
-            //        return;
-            //    }
-            //}
         }
         #endregion
         #region Playlist

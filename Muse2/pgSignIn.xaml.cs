@@ -22,14 +22,13 @@ namespace Muse2
     /// </summary>
     public partial class pgSignIn : Page
     {
-
         UserVM loggedInUser = null;
         bool btnShowPasswordTopIsClicked;
+
         public pgSignIn()
         {
             InitializeComponent();
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // easier to hide than to figure out the exact coordinates
@@ -73,7 +72,6 @@ namespace Muse2
             }
         }
         #endregion
-
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
             var email = txtEmail.Text;

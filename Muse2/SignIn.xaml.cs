@@ -1,14 +1,10 @@
-﻿using DataObjects;
-using LogicLayer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+
+using DataObjects;
+using LogicLayer;
+using System;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -26,11 +22,18 @@ namespace Muse2
     public partial class SignIn : Window
     {
         Dictionary<string, Page> pages = new Dictionary<string, Page>();
-
+        UserVM _loggedInUser = null;
 
         public SignIn()
         {
             InitializeComponent();
+        }
+
+        public SignIn(UserVM loggedInUser)
+        {
+            InitializeComponent();
+
+            _loggedInUser = loggedInUser;
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -38,8 +41,17 @@ namespace Muse2
             pages.Add("frmSignIn", new pgSignIn());
             pages.Add("frmSignUp", new pgSignUp());
             pages.Add("frmVerification", new pgVerification());
+            pages.Add("frmResetPassword", new pgResetPassword(_loggedInUser));
 
             frmMain.Navigate(pages["frmSignIn"]);
+        }
+        public void NavigateToSignUp()
+        {
+            frmMain.NavigationService.Navigate(new pgSignUp());
+        }
+        public void NavigateToResetPassword()
+        {
+            frmMain.NavigationService.Navigate(new pgResetPassword(_loggedInUser));
         }
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
