@@ -551,13 +551,7 @@ namespace Muse2
         {
             pgLibrary libraryPage = (pgLibrary)pages["frmLibrary"];
             selectedSong = libraryPage.song;
-            MessageBox.Show(libraryPage.songNumber.ToString());
             songNumber = libraryPage.songNumber;
-
-            //songNumber = libraryPage.songNumber;
-
-            // add song that is being played to the queue
-            // past songs played
 
             CurrentSongHelper();
 
@@ -670,10 +664,13 @@ namespace Muse2
                 return;
             }
         }
-        private void CurrentSongHelper()
+        public void CurrentSongHelper()
         {
             try
             {
+                pgLibrary pgLibrary = (pgLibrary)pages["frmLibrary"];
+                userSongs = pgLibrary.userSongs;
+
                 GetSongCover();
                 lblSongTitle.Content = userSongs[songNumber].Title;
                 lblSongArtist.Content = userSongs[songNumber].Artist;

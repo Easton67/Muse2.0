@@ -151,10 +151,10 @@ namespace Muse2
         {
             // click the play button on the main window
             Window mainWindow = Window.GetWindow(this);
-            Button btnPlay = mainWindow.FindName("btnNext") as Button;
-            if (btnPlay != null)
+            Button btnNext = mainWindow.FindName("btnNext") as Button;
+            if (btnNext != null)
             {
-                btnPlay.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                btnNext.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
         }
         private void grdPlaylist_MouseDoubleClick(object sender, MouseButtonEventArgs e)

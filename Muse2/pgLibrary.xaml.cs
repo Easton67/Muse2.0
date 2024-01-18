@@ -251,7 +251,6 @@ namespace Muse2
                                 {
                                     _songManager.DeleteSong(selectedSong.SongID);
                                     songNumber = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
-                                    Next();
                                 }
                             }
                             catch (Exception ex)
@@ -259,6 +258,21 @@ namespace Muse2
                                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Could not delete this song. Please try again",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
                                 return;
+                            }
+                        }
+                        songNumber = 0;
+                        Window mainWindow = Window.GetWindow(this);
+
+                        if (mainWindow != null)
+                        {
+                            if (mainWindow is MainWindow mainWin)
+                            {
+                                Frame frmMain = mainWin.FindName("frmMain") as Frame;
+
+                                if (frmMain != null && frmMain.NavigationService != null)
+                                {
+                                    mainWin.CurrentSongHelper();
+                                }
                             }
                         }
                         MessageBox.Show("Songs Successfully Deleted!");
@@ -309,7 +323,6 @@ namespace Muse2
         {
             DeleteOneOrMoreSongs();
         }
-
         #endregion
         private void grdLibrary_PreviewKeyDown(object sender, KeyEventArgs e)
         {
