@@ -119,6 +119,7 @@ namespace Muse2
             pages.Add("frmLibrary", new pgLibrary(loggedInUser));
             pages.Add("frmAdmin", new pgAdmin(loggedInUser));
             pages.Add("frmListOfPlaylists", new pgPlaylistList(loggedInUser));
+            pages.Add("frmUsers", new pgUsers(loggedInUser));
 
             frmMain.Navigate(pages["frmLibrary"]);
             frmListOfPlaylists.Navigate(pages["frmListOfPlaylists"]);
@@ -226,8 +227,6 @@ namespace Muse2
                     btnPlay.Visibility = Visibility.Visible;
                     btnNext.Visibility = Visibility.Visible;
                     barSongLength.Visibility = Visibility.Visible;
-
-                    playlistListRepopulation();
                 }
                 else
                 {
@@ -381,7 +380,7 @@ namespace Muse2
             var addPlaylist = new AddPlaylist(loggedInUser);
             addPlaylist.ShowDialog();
             playlistListRepopulation();
-        }
+        }   
         private void mnuPlay_Click(object sender, RoutedEventArgs e)
         {
             btnPlay.Visibility = Visibility.Hidden;
@@ -451,6 +450,7 @@ namespace Muse2
         }
         private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
         {
+            mediaPlayer = null;
             this.Close();
         }
         private void mnuAddSongToLibrary_Click(object sender, RoutedEventArgs e)
@@ -484,7 +484,7 @@ namespace Muse2
         private void mnuViewAllUsers_Click(object sender, RoutedEventArgs e)
         {
             frmMain.Navigate(pages["frmAdmin"]);
-            frmListOfPlaylists.Visibility = Visibility.Collapsed;
+            frmListOfPlaylists.Navigate(pages["frmUsers"]);
         }
         #endregion
         private void btnProfileName_Click(object sender, RoutedEventArgs e)
@@ -541,8 +541,10 @@ namespace Muse2
         {
             pgLibrary libraryPage = (pgLibrary)pages["frmLibrary"];
             selectedSong = libraryPage.song;
-            songNumber = libraryPage.songNumber;
-
+            if (selectedSong != null)
+            {
+                songNumber = libraryPage.songNumber;
+            }
             CurrentSongHelper();
 
             btnPlay.Visibility = Visibility.Hidden;

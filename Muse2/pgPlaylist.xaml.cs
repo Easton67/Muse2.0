@@ -32,6 +32,7 @@ namespace Muse2
         public Song song;
         private List<Song> userSongs = null;
         public List<Song> _playlistSongs = null;
+        public List<Playlist> playlists = new List<Playlist>();
         private Playlist _selectedPlaylist = null;
         private string playlistImg = "";
         public int songNumber = 0;
@@ -48,12 +49,14 @@ namespace Muse2
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             grdPlaylist.ItemsSource = _playlistSongs;
+            playlistListRepopulation();
         }
         private void playlistListRepopulation()
         {
             // set the playlists
             try
             {
+                MessageBox.Show(_loggedInUser.UserID.ToString());
                 List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
 
                 contextMenu = new ContextMenu();
@@ -69,12 +72,12 @@ namespace Muse2
 
                 MenuItem editSong = new MenuItem();
                 editSong.Header = "Edit Song Details";
-                // editSong.Click += mnuAddSongFromDataGrid_Click;
+                //editSong.Click += mnuAddSongFromDataGrid_Click;
                 contextMenu.Items.Add(editSong);
 
                 MenuItem writeReview = new MenuItem();
                 writeReview.Header = "Write a review";
-                // writeReview.Click += mnuCreateReview_Click;
+                writeReview.Click += mnuCreateReview_Click;
                 contextMenu.Items.Add(writeReview);
 
                 MenuItem newPlaylist = new MenuItem();
@@ -103,7 +106,7 @@ namespace Muse2
                     }
                 }
 
-                // grdLibrary.ContextMenu = contextMenu;
+                grdPlaylist.ContextMenu = contextMenu;
 
                 if (playlists.Count > 0)
                 {

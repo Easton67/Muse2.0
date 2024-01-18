@@ -21,7 +21,7 @@ namespace Muse2
         {
             InitializeComponent();
         }
-        
+
         private void txtLyrics_LostFocus(object sender, RoutedEventArgs e)
         {
             lyrics = txtLyrics.Text;
