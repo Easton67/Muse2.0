@@ -26,7 +26,7 @@ namespace Muse2
     public partial class pgPlaylist : Page
     {
         private UserVM _loggedInUser;
-        private PlaylistManager _playlistManager;
+        private PlaylistManager _playlistManager = new PlaylistManager();
         private SongManager _songManager;
         private ContextMenu contextMenu;
         public Song song;
@@ -56,8 +56,7 @@ namespace Muse2
             // set the playlists
             try
             {
-                MessageBox.Show(_loggedInUser.UserID.ToString());
-                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
+                playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
 
                 contextMenu = new ContextMenu();
 
