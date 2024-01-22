@@ -46,7 +46,7 @@ namespace LogicLayer
                 throw new ApplicationException("User not found", ex);
             }
             return userVM;
-        }
+       }
         public UserPass SelectPasswordHashByEmail(string email)
         {
             UserPass userPass = null;
