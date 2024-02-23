@@ -25,7 +25,12 @@ View your public account
  - Profile
  - Recently Played
  - Your Friends
-View others public account
 View your personal information
 Update your personal information
 Delete Account
+Save to database
+Delete Song
+Create playlist
+Listen to playlist
+Update playlist
+Delete Playlist

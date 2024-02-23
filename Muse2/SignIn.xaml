@@ -10,12 +10,11 @@
         WindowStartupLocation="CenterScreen"
         Background="DarkGray" Loaded="Window_Loaded">
     <Grid>
-        <Image Source="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\museBackground.jpg" Stretch="UniformToFill">
+        <Image Source="/background.jpg" Stretch="UniformToFill">
             <Image.Effect>
-                <BlurEffect Radius="7"/>
+                <BlurEffect Radius="10"/>
             </Image.Effect>
         </Image>
-
         <Border CornerRadius="10"                    
                 BorderThickness="2" 
                 Width="800" 
@@ -25,9 +24,8 @@
                     <ColumnDefinition Width="17*"/>
                     <ColumnDefinition Width="381*"/>
                 </Grid.ColumnDefinitions>
-
                 <Border CornerRadius="5"
-                            Background="White"
+                            Background="{StaticResource clrTertiary}"
                             Width="250"
                             Height="440"
                             Panel.ZIndex="1"
@@ -41,18 +39,13 @@
                                     Height="520"
                                     Panel.ZIndex="1" 
                                     Margin="0,1,0,0">
-
                         <Image x:Name="imgLogo" 
-                                   Source="/Resources/museLogo.png"
+                                   Source="/museV3Logo.png"
                                    Width="170" Height="100" Margin="-8,21,0,0"/>
                         <StackPanel>
                             <TextBlock x:Name="txtSubHeader"
+                                    Style="{StaticResource txtSubHeader}"
                                     Text="Control what you listen to."
-                                    Foreground="Black"
-                                    FontSize="14"
-                                    FontWeight="Medium"
-                                    TextWrapping="Wrap"
-                                    TextAlignment="Center"
                                     Margin="0,5,0,21"/>
                             <Frame x:Name="frmMain" NavigationUIVisibility="Hidden" Height="242"  />
                             <StackPanel x:Name="stkFooterButtons" Orientation="Horizontal" Margin="0,5,0,0">

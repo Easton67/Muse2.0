@@ -24,6 +24,8 @@ namespace Muse2
         public List<Song> userSongs = null;
         private ContextMenu contextMenu;
         Window mainWindow = null;
+        List<Song> filteredSongs = new List<Song>();
+
 
         public pgLibrary(UserVM loggedInUser)
         {
@@ -50,6 +52,17 @@ namespace Muse2
                 btnPlay.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
         }
+
+        private void AddSongToQueue()
+        {
+            // click the play button on the main window
+            Button btnQueue = mainWindow.FindName("btnQueue") as Button;
+            if (btnQueue != null)
+            {
+                btnQueue.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+        }
+
         private void Next()
         {
             // click the play button on the main window
@@ -151,16 +164,25 @@ namespace Muse2
                 {
                     int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
                     songNumber = selectedRowIndex;
+
+                    if (grdLibrary.ItemsSource == filteredSongs)
+                    {
+                        string selectedMp3FilePath = filteredSongs[selectedRowIndex].Mp3FilePath;
+                        songNumber = userSongs.FindIndex(song => song.Mp3FilePath == selectedMp3FilePath);
+                        song = grdLibrary.SelectedItem as Song;
+                        Play();
+                    }
                     song = grdLibrary.SelectedItem as Song;
+                    Play();
                 }
-                Play();
-            }
-            else
-            {
-                MessageBox.Show("Select a Song to listen to it.");
             }
         }
         #region Context Menu 
+        private void mnuAddSongToQueue_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void mnuEditSongFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
             var song = grdLibrary.SelectedItem as Song;
@@ -267,7 +289,13 @@ namespace Muse2
                                 {
                                     songNumber = 0;
                                     MessageBox.Show("Songs Successfully Deleted!");
-                                    songListRepopulation();
+                                    if (txtSearch.Text.Equals(""))
+                                    {
+                                        userSongs = _songManager.SelectSongsByUserID(_loggedInUser.UserID);
+                                        List<Song> filteredSongs = new List<Song>();
+                                        filteredSongs = userSongs.Where(x => x.Title.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
+                                        grdLibrary.ItemsSource = filteredSongs;
+                                    }
                                     mainWin.CurrentSongHelper();
                                     mainWin.Pause();
                                 }
@@ -298,7 +326,14 @@ namespace Muse2
                             }
                             else
                             {
-                                songListRepopulation();
+                                if (txtSearch.Text != (""))
+                                {
+                                    userSongs = _songManager.SelectSongsByUserID(_loggedInUser.UserID);
+                                    List<Song> filteredSongs = new List<Song>();
+                                    filteredSongs = userSongs.Where(x => x.Title.ToLower().Contains(txtSearch.Text.ToLower()) 
+                                                                      || x.Artist.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
+                                    grdLibrary.ItemsSource = filteredSongs;
+                                }
                             }
                         }
                         catch (Exception ex)
@@ -378,7 +413,6 @@ namespace Muse2
 
                 MenuItem addSongsToPlaylist = new MenuItem();
                 addSongsToPlaylist.Header = "Add Songs To Playlist";
-                // editSong.Click += mnuAddSongFromDataGrid_Click;
                 multipleItemsContextMenu.Items.Add(addSongsToPlaylist);
 
                 MenuItem removeSongsFromPlaylist = new MenuItem();
@@ -393,5 +427,37 @@ namespace Muse2
                 grdLibrary.ContextMenu = contextMenu;
             }
         }
+        #region Search Box 
+        private void txtSearch_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearch.Text.Replace(" ", "").Equals("Search"))
+            {
+                txtSearch.Text = "";
+            }
+        }
+        private void txtSearch_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearch.Text.Equals(""))
+            {
+                txtSearch.Text = "Search";
+            }
+        }
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtSearch.Text.Equals(""))
+            {
+                songListRepopulation();
+            }
+            if (txtSearch.Text != "Search")
+            {
+                userSongs = _songManager.SelectSongsByUserID(_loggedInUser.UserID);
+                grdLibrary.ItemsSource = userSongs;
+
+                filteredSongs = new List<Song>();
+                filteredSongs = userSongs.Where(x => x.Title.ToLower().Contains(txtSearch.Text.ToLower()) || x.Artist.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
+                grdLibrary.ItemsSource = filteredSongs;
+            }
+        }
+        #endregion
     }
 }

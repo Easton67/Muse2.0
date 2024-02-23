@@ -27,16 +27,14 @@
                Grid.RowSpan="8" 
                Grid.ColumnSpan="2"
                NavigationUIVisibility="Hidden"/>
-        <Button Grid.Column="0" 
-                Width="90" 
+        <Button Grid.Column="0"
+                Style="{StaticResource btnCreateSong}"
                 x:Name="btnSongInfomation" 
-                Height="20" 
                 Content="Information" 
                 Margin="0,0,10,0"
-                HorizontalContentAlignment="Center" 
                 HorizontalAlignment="right" 
                 Background="#FFD5C9E3" 
-                Padding="11,1,11,1" 
+
                 Click="btnSongInfomation_Click" >
             <Button.Resources>
                 <Style TargetType="Border">
@@ -45,15 +43,12 @@
             </Button.Resources>
         </Button>
             <Button Grid.Column="1" 
-                    Width="90" 
                     x:Name="btnArtwork" 
-                    Height="20" 
                     Content="Artwork" 
                     Margin="0,0,10,0"
-                    HorizontalContentAlignment="Center" 
+                    Style="{StaticResource btnCreateSong}"
                     HorizontalAlignment="left" 
                     Background="White" 
-                    Padding="11,1,11,1" 
                     Click="btnArtwork_Click" >
             <Button.Resources>
                 <Style TargetType="Border">
@@ -62,12 +57,10 @@
             </Button.Resources>
         </Button>
         <Button Grid.Column="1" 
-                    Width="90" 
                     x:Name="btnLyrics"
-                    Height="20" 
+                    Style="{StaticResource btnCreateSong}"
                     Content="Lyrics" 
                     Margin="100,0,0,0"
-                    HorizontalContentAlignment="Center" 
                     HorizontalAlignment="Left" 
                     Background="White"
                     Padding="11,1,11,1" 
@@ -79,11 +72,9 @@
             </Button.Resources>
         </Button>
         <Button Grid.Column="1"
-                Width="100" 
                 x:Name="btnCreateSong" 
-                Height="20" 
+                Style="{StaticResource btnCreateSong}"
                 Content="Create Song"
-                HorizontalContentAlignment="Center" 
                 HorizontalAlignment="Right" 
                 Background="#FF88D9E6"
                 Padding="11,1,11,1" 

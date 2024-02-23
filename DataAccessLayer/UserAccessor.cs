@@ -108,7 +108,6 @@ namespace DataAccessLayer
                 conn.Open();
 
                 var reader = cmd.ExecuteReader();
-                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
                 //process the results
                 if (reader.HasRows)

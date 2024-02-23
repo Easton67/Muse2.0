@@ -133,8 +133,7 @@ namespace Muse2
             if (!string.IsNullOrEmpty(selectedFolder))
             {
                 lblMp3File.Content = "Playlist Folder";
-                txtMp3FilePath.Text = selectedFolder;
-                txtTitle.Text = Path.GetFileName(selectedFolder);
+                txtMp3FilePath.Text = Path.GetFileName(selectedFolder);
             }
         }
         private void btnAddSongFromUrl_Click(object sender, RoutedEventArgs e)

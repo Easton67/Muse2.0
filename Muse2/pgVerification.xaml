@@ -171,7 +171,7 @@
                     HorizontalAlignment="Right" 
                     Padding="1,0,1,0" 
                     Margin="0,118,8,-49" Click="btnShowPasswordTop_Click" >
-                <Image Source="C:\Users\67Eas\Downloads\eye.png" Margin="0,-47,0,0"/>
+                <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="9"/>

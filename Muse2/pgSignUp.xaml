@@ -63,11 +63,11 @@
                           Margin="10,0,31,0"
                           Padding="20,0,0,0" 
                           VerticalAlignment="Center" 
-                          Width="209">
+                          Width="209" >
                         <TextBox.Background>
                             <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\user-icon.png"
-                      Stretch="None"
-                      AlignmentX="Left"/>
+                                        Stretch="None"
+                                        AlignmentX="Left"/>
                         </TextBox.Background>
                     </TextBox>
                 </StackPanel>

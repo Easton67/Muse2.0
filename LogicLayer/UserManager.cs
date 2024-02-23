@@ -12,15 +12,12 @@ namespace LogicLayer
 {
     public class UserManager : IUserManager
     {
-        // dependency inversion for the data provider
         private IUserAccessor _userAccessor = null;
 
-        // the default constructor will use the database
         public UserManager()
         {
             _userAccessor = new UserAccessor();
         }
-        // the optional constructor can accept any data provider
         public UserManager(IUserAccessor userAccessor)
         {
             _userAccessor = userAccessor;
@@ -64,9 +61,6 @@ namespace LogicLayer
         public List<string> GetRolesByUserID(int UserID)
         {
             List<string> roles = new List<string>();
-
-            //roles.Add("");
-            //roles.Add("");
 
             try
             {
@@ -213,6 +207,10 @@ namespace LogicLayer
                 throw new ApplicationException("Unable to deactivate or reactivate the account ", ex);
             }
             return result;
+        }
+        public UserPass ResetPassword(string employeeID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

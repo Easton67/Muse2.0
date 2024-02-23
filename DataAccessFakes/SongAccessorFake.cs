@@ -147,7 +147,7 @@ namespace DataAccessFakes
 
             if (rows != 1) // no one found
             {
-                throw new ApplicationException("User not found");
+                throw new ApplicationException("Song not found");
             }
 
             return rows;

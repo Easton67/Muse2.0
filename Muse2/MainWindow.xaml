@@ -6,31 +6,8 @@
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
         Title="Muse" Height="900" Width="1500" MinWidth="900" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/Resources/museLogo.png">
-
-    <!--// Toying around with the idea of adding color, but didn't have time to change all font to white-->
-    
-    <!--<Window.Background>
-            <ImageBrush ImageSource="/museBackground.jpg" TileMode="None" Stretch="UniformToFill"/>
-        </Window.Background>-->
-
     <Window.Background>
-        <!--<RadialGradientBrush 
-          GradientOrigin="0.5,0.5" 
-          Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
-            <RadialGradientBrush.GradientStops>
-                <GradientStop Color="#E6E6FA" Offset="1.5" />
-                <GradientStop Color="#C8A2C8" Offset="0.70" />
-                <GradientStop Color="white" Offset="1.7" />
-            </RadialGradientBrush.GradientStops>
-        </RadialGradientBrush>-->
-        
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF525252" Offset="1"/>
-            <GradientStop Color="#FFF79EF0" Offset="1"/>
-            <GradientStop Color="Black" Offset="0.51"/>
-            <GradientStop Color="#FEAA6DA5" Offset="0.12"/>
-            <GradientStop Color="#FEAA6DA5" Offset="0.22"/>
-        </LinearGradientBrush>
+        <ImageBrush ImageSource="/background.jpg" TileMode="None" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -107,8 +84,8 @@
                        Grid.Row="0" 
                        Width="200" 
                        HorizontalAlignment="Left" 
-                       Margin="6,8,0,0" 
-                       Source="/Resources/museLogo.png"/>
+                       Margin="6,8,0,0" Source="/museV3Logo.png"
+                       />
             </StackPanel>
             <StackPanel x:Name="stkCol1"
                         Grid.Column="3"
@@ -118,6 +95,7 @@
                 <TextBlock x:Name="txtSongInfo" TextWrapping="NoWrap">
                 <Label x:Name="lblSongTitle"
                        Content="Song"
+                       Foreground="{StaticResource clrLight}"
                        FontWeight="Bold"
                        FontSize="20" Margin="0,0,30,0" />
                 <Image x:Name="imgExplicit"
@@ -128,6 +106,7 @@
                 </TextBlock>
                 <Label x:Name="lblSongArtist"
                        Content="Artist"
+                       Foreground="{StaticResource clrLight}"
                        Grid.Column="1"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
@@ -142,11 +121,7 @@
                     Background="White" 
                     BorderThickness="0,0,0,0" 
                     Click="btnRewind_Click" >
-                <Image Source="/Resources/next.png" Margin="-10,0,0,0">
-                    <Image.RenderTransform>
-                        <ScaleTransform ScaleX="-1"/>
-                    </Image.RenderTransform>
-                </Image>
+                <Image Source="/Resources/rewind.png" Margin="-60,0,0,0" />
                 <Button.Resources>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -184,8 +159,21 @@
                          Grid.Column="2" 
                          Grid.ColumnSpan="2" 
                          Width="auto" 
-                         Foreground="#FFD5C9E3" 
-                         Margin="0,5,0,5"/>
+                         Foreground="{StaticResource clrSecondary}" 
+                         BorderThickness="0,0,0,0" 
+                         Margin="0,5,0,5" 
+                         Height="10"/>
+
+            <Slider x:Name="sliderSongLength" 
+                        Grid.Row="1" 
+                        Grid.Column="2" 
+                        Grid.ColumnSpan="2" 
+                        Width="auto"
+                        Foreground="{StaticResource clrSecondary}" 
+                        Margin="0,5,0,5" 
+                        ValueChanged="sliderSongLength_ValueChanged" 
+                        Height="10">
+            </Slider>
             <Button x:Name="btnNext" 
                     HorizontalAlignment="Center" 
                     Grid.Row="1" 
@@ -194,7 +182,17 @@
                     Background="White" 
                     BorderThickness="0,0,0,0"  
                     Click="btnNext_Click" >
-                <Image Source="/Resources/next.png" Margin="0,0,-6,0"/>
+                <Image Source="/rewind.png">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="180" CenterX="14" CenterY="9"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                
                 <Button.Resources>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -276,50 +274,32 @@
             <Image x:Name="defaultimgAccount" Grid.Row="0" Grid.Column="6" Width="100" Source="/Resources/account.png" HorizontalAlignment="Center"/>
             <Image x:Name="imgAccount" Grid.Row="0" Grid.Column="6" Width="100" HorizontalAlignment="Center"/>
             <Button x:Name="btnLogout" 
-                        Content="Log Out"
-                        Grid.Row="1" 
-                        Grid.Column="6" 
-                        FontWeight="Bold" 
-                        Width="60" 
-                        HorizontalAlignment="Left" 
-                        HorizontalContentAlignment="Left" 
-                        Background="White" 
-                        BorderThickness="0,0,0,0" 
-                        VerticalContentAlignment="Top" 
-                        VerticalAlignment="Center" 
-                        Height="24" 
-                        Padding="1,2,1,1" 
-                        Click="btnLogout_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="4"/>
-                    </Style>
-                </Button.Resources>
+                    Style="{StaticResource btnLight}"
+                    Content="Log Out"
+                    Grid.Row="1" 
+                    Grid.Column="6"  
+                    HorizontalAlignment="Left"
+                    Width="60" 
+                    Height="20" 
+                    Click="btnLogout_Click">
             </Button>
             <Button x:Name="btnProfileName" 
+                    Style="{StaticResource btnLight}"
                     Content="User" 
                     Grid.Row="1" 
                     Grid.Column="6" 
                     FontWeight="Bold"
-                    HorizontalContentAlignment="left"
                     HorizontalAlignment="right" 
-                    Padding="5,0,5,3" 
-                    VerticalAlignment="Center" 
-                    Background="White" 
-                    BorderThickness="0,0,0,0" 
                     Click="btnProfileName_Click" 
-                    Height="24" 
+                    Height="20"  
+                    Width="60" 
                     Margin="0,0,9,0">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="4"/>
-                    </Style>
-                </Button.Resources>
             </Button>
             <Label x:Name="lblCurrentTime" 
                    Grid.Row="3" 
                    Grid.RowSpan="2"
                    Grid.Column="2"
+                   Foreground="{StaticResource clrLight}"
                    FontWeight="Bold" 
                    HorizontalAlignment="Left"  
                    VerticalAlignment="Center" 
@@ -328,6 +308,7 @@
                    Grid.Row="3" 
                    Grid.RowSpan="2"
                    Grid.Column="3"
+                   Foreground="{StaticResource clrLight}"
                    FontWeight="Bold" 
                    HorizontalAlignment="Right" 
                    Panel.ZIndex="3" 
@@ -336,17 +317,39 @@
             <Button x:Name="btnShuffle" 
                     Grid.Row="3" 
                     Grid.Column="2"
-                    Content="Shuffle" 
                     HorizontalAlignment="Left" 
-                    FontWeight="Bold" 
-                    Click="btnShuffle_Click" Width="40"/>
+                    Click="btnShuffle_Click" 
+                    Width="40">
+                <Image Source="/shuffle-enabled.png" />
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="Transparent">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
             <Button x:Name="btnQueue" 
                     Grid.Row="3" 
+                    Style="{StaticResource btnLight}"
                     Grid.Column="3"
                     Content="Queue" 
                     HorizontalAlignment="right" 
                     FontWeight="Bold" 
-                    Click="btnQueue_Click" Width="38"/>
+                    Click="btnQueue_Click" 
+                    Width="60"/>
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -373,6 +376,7 @@
                      KeyDown="txtDataGridSubHeaderEdit_KeyDown"/>
             <Label x:Name="lblDataGridHeader" 
                    Content="Library" 
+                   Foreground="{StaticResource clrLight}"
                    FontSize="25" 
                    FontWeight="DemiBold" 
                    VerticalAlignment="Top" 
@@ -382,6 +386,7 @@
                    MouseDoubleClick="lblDataGridHeader_MouseDoubleClick"/>
             <Label x:Name="lblDataGridSubHeader"
                    Content="Description" 
+                   Foreground="{StaticResource clrLight}"
                    FontSize="15" 
                    FontWeight="DemiBold" 
                    VerticalAlignment="Top" 
@@ -390,6 +395,7 @@
                    MouseDoubleClick="lblDataGridSubHeader_MouseDoubleClick" />
             <Label x:Name="lblLibrary" 
                    Content="Library" 
+                   Foreground="{StaticResource clrLight}"
                    FontSize="25" 
                    FontWeight="DemiBold" 
                    VerticalAlignment="Top" 

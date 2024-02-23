@@ -42,7 +42,9 @@
                     CanUserReorderColumns="False" 
                     BorderBrush="Black" 
                     Panel.ZIndex="5" 
-                    MouseDoubleClick="grdPlaylists_MouseDoubleClick" Width="171" HorizontalScrollBarVisibility="Disabled" >
+                    MouseDoubleClick="grdPlaylists_MouseDoubleClick" 
+                    Width="171" 
+                    HorizontalScrollBarVisibility="Disabled" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Playlists" 
                     Binding="{Binding Title}" 

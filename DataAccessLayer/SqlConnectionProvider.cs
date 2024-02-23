@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    internal class SqlConnectionProvider
+    public class SqlConnectionProvider
     {
         // use a factory method to ensure that there is only 
         // one method in the entire project that has the 

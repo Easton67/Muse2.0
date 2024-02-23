@@ -8,69 +8,70 @@
       d:DesignHeight="900" d:DesignWidth="1500"
       Title="pgLibrary" Loaded="Page_Loaded">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBox
+                x:Name="txtSearch"
+                Text="Search" 
+                Width="200" 
+                FontSize="14" 
+                BorderThickness="1.5" 
+                Height="29" 
+                BorderBrush="#252525" 
+                Padding="5,5,5,0"
+                HorizontalAlignment="Center"
+                Panel.ZIndex="2" 
+                GotFocus="txtSearch_GotFocus" 
+                LostFocus="txtSearch_LostFocus" 
+                TextChanged="txtSearch_TextChanged" Margin="0,0,183,0">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
         <DataGrid x:Name="grdLibrary"
-                   AutoGenerateColumns="false" 
-                   FontWeight="UltraBlack" 
-                   VerticalAlignment="Top" 
-                   HorizontalAlignment="Left" 
-                   IsReadOnly="True" 
-                   CanUserAddRows="False" 
-                   BorderThickness="3,0,0,0" 
-                   BorderBrush="Black"
-                   ScrollViewer.CanContentScroll="True" 
-                   ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                   CanUserDeleteRows="False" 
-                   CanUserReorderColumns="False"
-                   CanUserResizeColumns="False" 
-                   CanUserResizeRows="False" 
-                   CanUserSortColumns="False" 
-                   HorizontalScrollBarVisibility="Visible" 
+                   Grid.Row="1"
+                   Style="{StaticResource dgDefault}"
                    MouseDoubleClick="grdLibrary_MouseDoubleClick" 
                    PreviewKeyDown="grdLibrary_PreviewKeyDown" 
-                   ContextMenuOpening="grdLibrary_ContextMenuOpening">
+                   ContextMenuOpening="grdLibrary_ContextMenuOpening" 
+                   GridLinesVisibility="None">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="BorderThickness" Value="0,3,3,3" />
-                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="Foreground" Value="White" />
                 </Style>
             </DataGrid.ColumnHeaderStyle>
-            <DataGrid.CellStyle>
-                <Style TargetType="DataGridCell">
-                    <Setter Property="Opacity" Value="65" />
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="#d0bee6" />
-                            <Setter Property="Foreground" Value="Black" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.CellStyle>
             <DataGrid.Columns>
+                <DataGridTextColumn Header="" Width="2"/>
                 <DataGridTemplateColumn 
                          Width="25" 
                          MinWidth="25" 
-                         MaxWidth="55" 
-                         CanUserResize="False" 
-                         CanUserReorder="False" 
-                         CanUserSort="False">
+                         MaxWidth="55">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Source="{Binding ImageFilePath}" 
                             MaxWidth="55" 
                             MinWidth="25" 
                             MaxHeight="55" 
-                            MinHeight="25" />
+                            MinHeight="25" >
+                            </Image>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="" Width="2"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Title}" Width="500"/>
                 <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" Width="300"/>
                 <DataGridTextColumn Header="Album" Binding="{Binding Album}" Width="300"/>
-                <DataGridTextColumn Header="Year" Binding="{Binding YearReleased}" Width="75" CanUserResize="False"/>
-                <DataGridTextColumn Header="Plays" Binding="{Binding Plays}" Width="75" CanUserResize="False"/>
+                <DataGridTextColumn Header="Year" Binding="{Binding YearReleased}" Width="75"/>
+                <DataGridTextColumn Header="Plays" Binding="{Binding Plays}" Width="75"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
+                    <MenuItem Header="Add Song to Queue" x:Name="mnuAddSongToQueue" Click="mnuAddSongToQueue_Click"/>
                     <MenuItem Header="Edit Song Details" x:Name="mnuEditSongFromDataGrid" Click="mnuEditSongFromDataGrid_Click" />
                     <MenuItem Header="Add Song To Playlist" x:Name="mnuAddSongToPlaylistFromDataGrid" Click="mnuAddSongToPlaylistFromDataGrid_Click" />
                     <MenuItem Header="Write a Review" x:Name="mnuCreateReview" Click="mnuCreateReview_Click" />

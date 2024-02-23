@@ -21,5 +21,6 @@ namespace LogicLayer
         bool UpdateUser(User oldUser, User newUser);
         bool UpdateMinutesListened(int userID, int newMinutesListened);
         bool UpdateActiveUser(int userID, bool oldActive, bool newActive);
+        UserPass ResetPassword(string employeeID);
     }
 }

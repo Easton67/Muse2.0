@@ -3,17 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Muse2"
              StartupUri="SignIn.xaml">
-    <!--<Application.Resources>
-        <Style TargetType="Button">
+    <Application.Resources>
+        
+        <!-- #region Colors -->
+        <SolidColorBrush x:Key="clrPrimary" Color="#4EA5D9" />
+        <SolidColorBrush x:Key="clrPrimarySelected" Color="#6FB9FF" />
+        <SolidColorBrush x:Key="clrSecondary" Color="#2E224C" />
+        <SolidColorBrush x:Key="clrTertiary" Color="#FF403C4A" />
+        <SolidColorBrush x:Key="clrDark" Color="#FF000000" />
+        <SolidColorBrush x:Key="clrLight" Color="#FFFFFFFF" />
+        <SolidColorBrush x:Key="clrInvalid" Color="#FFEB2C1A" />
+        <!-- #endregion Colors -->
+
+        <!--#region ButtonStyles-->
+        <Style x:Key="btnCreateSong" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource clrDark}" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="Transparent">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="1" 
+                                CornerRadius="5"
+                                Width="90" 
+                                Height="20"  
+                                BorderBrush="{StaticResource clrDark}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Background" Value="{StaticResource clrPrimarySelected}"/>
                                 <Setter Property="Cursor" Value="Hand"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -21,5 +40,198 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </Application.Resources>-->
+
+        <Style x:Key="btnLight" TargetType="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource clrSecondary}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{StaticResource clrLight}"
+                                BorderThickness="1" 
+                                CornerRadius="5" 
+                                BorderBrush="{StaticResource clrSecondary}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource clrPrimarySelected}"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="btnDark" TargetType="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource clrLight}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{StaticResource clrTertiary}"
+                               BorderThickness="1" 
+                               CornerRadius="5" 
+                               BorderBrush="{StaticResource clrSecondary}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource clrPrimarySelected}"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--#endRegion-->
+
+        <!--#region TextBlock Styles-->
+        <Style x:Key="txtSubHeader" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="{StaticResource clrDark}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="txtLogin" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="{StaticResource clrLight}" />
+            <Setter Property="FontFamily" Value="Montserrat" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextAlignment" Value="Left" />
+        </Style>
+        <!--#endRegion-->
+
+        <!--#region TextBox Styles-->
+        <Style x:Key="txtBoxLoginShownInput" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderBrush="{StaticResource clrDark}" BorderThickness="0,0,0,0"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+            <Setter Property="Foreground" Value="{StaticResource clrLight}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Width" Value="187"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="txtBoxLoginInput" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderBrush="{StaticResource clrDark}" BorderThickness="0,0,0,2">
+                            <Grid>
+                                <Image Source="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\user-icon.png"
+                               Stretch="None"
+                               HorizontalAlignment="Left"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="20,0,0,0"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+            <Setter Property="Foreground" Value="{StaticResource clrLight}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Width" Value="209"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/> 
+        </Style>
+        <!--#endRegion-->
+
+        <!--#region PasswordBox Styles-->
+        <Style x:Key="pwdBoxLoginInput" TargetType="PasswordBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border BorderBrush="{StaticResource clrDark}" BorderThickness="0,0,0,2">
+                            <Grid>
+                                <Image Source="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
+                                       Stretch="None"
+                                       HorizontalAlignment="Left"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="20,0,0,0"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+            <Setter Property="Foreground" Value="{StaticResource clrLight}"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Width" Value="209"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <!--#endRegion-->
+
+        <!--#region Datagrid-->
+        <Style x:Key="dgDefault" TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="false" />
+            <Setter Property="Foreground" Value="{StaticResource clrLight}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="CanUserAddRows" Value="false" />
+            <Setter Property="CanUserDeleteRows" Value="false" />
+            <Setter Property="CanUserReorderColumns" Value="false" />
+            <Setter Property="CanUserResizeColumns" Value="false" />
+            <Setter Property="CanUserSortColumns" Value="false" />
+            <Setter Property="CanUserResizeRows" Value="false" />
+            <Setter Property="BorderBrush" Value="{StaticResource clrDark}" />
+            <Setter Property="BorderThickness" Value="0,0,0,0" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="OpacityMask" Value="{StaticResource clrSecondary}" />
+        </Style>
+
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource clrLight}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="Opacity" Value="65" />
+            <Setter Property="BorderThickness" Value="0,0,0,0" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#FF65578A" />
+                    <Setter Property="Foreground" Value="{StaticResource clrDark}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--#endRegion-->
+
+    </Application.Resources>
 </Application>

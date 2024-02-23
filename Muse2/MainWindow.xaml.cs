@@ -36,13 +36,14 @@ namespace Muse2
         private string playlistImg = "";
         private string userImg = "";
         private List<Song> userSongs = null;
-        private List<Song> queue = null;
+        private Stack<Song> queue = null;
         private ContextMenu contextMenu;
         private Playlist selectedPlaylist;
         private string baseDirectory = AppContext.BaseDirectory;
         private bool isEnabledShuffle;
         private Song selectedSong;
         Dictionary<string, Page> pages = new Dictionary<string, Page>();
+        double SongCurrentPosition;
 
         public MainWindow(UserVM LoggedInUser)
         {
@@ -67,12 +68,16 @@ namespace Muse2
                 lblSongLength.Content = mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
 
                 double SongLengthInSeconds = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-                double SongCurrentPosition = mediaPlayer.Position.TotalSeconds;
+                SongCurrentPosition = mediaPlayer.Position.TotalSeconds;
                 double LengthToSendToQueue = 10.00;
 
                 barSongLength.Maximum = SongLengthInSeconds;
                 barSongLength.Minimum = 00.00;
                 barSongLength.Value = SongCurrentPosition;
+
+                sliderSongLength.Minimum = 00.00;
+                sliderSongLength.Maximum = SongLengthInSeconds;
+                //sliderSongLength.Value = SongCurrentPosition;
 
                 if (SongCurrentPosition > 0)
                 {
@@ -98,7 +103,7 @@ namespace Muse2
 
                 if (SongCurrentPosition == LengthToSendToQueue)
                 {
-                    queue.Add(selectedSong);
+                    queue.Push(selectedSong);
                     MessageBox.Show("Sent to queue");
                 }
 
@@ -175,6 +180,7 @@ namespace Muse2
         }
         private void updateUIForUserLogin()
         {
+            sliderSongLength.Value = 00.00;
             lblDataGridHeader.Visibility = Visibility.Collapsed;
             lblDataGridSubHeader.Visibility = Visibility.Collapsed;
             txtDataGridHeaderEdit.Visibility = Visibility.Collapsed;
@@ -208,14 +214,7 @@ namespace Muse2
                     BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
                     imgCoverArt.Source = CoverArt;
                     mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
-                    if (userSongs[0].Explicit == true)
-                    {
-                        imgExplicit.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        imgExplicit.Visibility = Visibility.Hidden;
-                    }
+                    imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
                     lblSongTitle.Content = userSongs[songNumber].Title;
                     lblSongArtist.Content = userSongs[songNumber].Artist;
 
@@ -516,6 +515,11 @@ namespace Muse2
             this.Close();
         }
         #region Song Controls
+        private void sliderSongLength_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            SongCurrentPosition = e.NewValue;
+            mediaPlayer.Position = TimeSpan.FromSeconds(SongCurrentPosition);
+        }
         private void btnQueue_Click(object sender, RoutedEventArgs e)
         {
 
@@ -537,20 +541,53 @@ namespace Muse2
             timer.Stop();
             mediaPlayer.Pause();
         }
-        private void Play()
+        private void Play(int songNumber)
         {
+            if (btnPlay.Visibility == Visibility.Visible && SongCurrentPosition != 00.00)
+            {
+                mediaPlayer.Play();
+            }
+
             pgLibrary libraryPage = (pgLibrary)pages["frmLibrary"];
             selectedSong = libraryPage.song;
             if (selectedSong != null)
             {
                 songNumber = libraryPage.songNumber;
             }
-            CurrentSongHelper();
-
-            btnPlay.Visibility = Visibility.Hidden;
-            btnPause.Visibility = Visibility.Visible;
-            mediaPlayer.Play();
-            timer.Start();
+            try
+            {
+                pgLibrary pgLibrary = (pgLibrary)pages["frmLibrary"];
+                userSongs = pgLibrary.userSongs;
+                mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
+                lblSongTitle.Content = userSongs[songNumber].Title;
+                lblSongArtist.Content = userSongs[songNumber].Artist;
+                imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
+                try
+                {
+                    BitmapImage CoverArt = (userSongs[songNumber].ImageFilePath.Length > 1) ? 
+                        new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath)) : 
+                        new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
+                    imgCoverArt.Source = CoverArt;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
+                    "Please make sure your image file exists",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                btnPlay.Visibility = Visibility.Hidden;
+                btnPause.Visibility = Visibility.Visible;
+                mediaPlayer.Play();
+                timer.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
+                "Please make sure your song file exists",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
         private void Rewind()
         {
@@ -593,7 +630,7 @@ namespace Muse2
         }
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            Play();
+            Play(songNumber);
         }
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {

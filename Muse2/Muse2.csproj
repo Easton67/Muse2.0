@@ -8,17 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="background.jpg" />
     <None Remove="defaultAccount.png" />
     <None Remove="defaultAlbumImage.png" />
     <None Remove="explicit.png" />
     <None Remove="museBackground.jpg" />
+    <None Remove="museV3Logo.png" />
     <None Remove="Resources\defaultAccount.png" />
     <None Remove="Resources\defaultAlbumImage.png" />
     <None Remove="Resources\museLogo.png" />
-    <None Remove="Resources\next.png" />
     <None Remove="Resources\pause.png" />
     <None Remove="Resources\play.png" />
     <None Remove="Resources\rewind.png" />
+    <None Remove="rewind.png" />
+    <None Remove="shuffle-enabled.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,17 +56,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="background.jpg" />
     <Resource Include="defaultAccount.png" />
     <Resource Include="defaultAlbumImage.png" />
     <Resource Include="explicit.png" />
     <Resource Include="museBackground.jpg" />
+    <Resource Include="museV3Logo.png" />
     <Resource Include="Resources\defaultAccount.png" />
     <Resource Include="Resources\defaultAlbumImage.png" />
     <Resource Include="Resources\museLogo.png" />
-    <Resource Include="Resources\next.png" />
     <Resource Include="Resources\pause.png" />
     <Resource Include="Resources\play.png" />
     <Resource Include="Resources\rewind.png" />
+    <Resource Include="rewind.png" />
+    <Resource Include="shuffle-enabled.png" />
   </ItemGroup>
 
   <ItemGroup>

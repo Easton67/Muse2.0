@@ -45,7 +45,7 @@
                 Grid.Column="1" 
                 Width="90" 
                 x:Name="btnAddMp3" 
-                Content="Add Mp3"
+                Content="Add Mp3" 
                 HorizontalContentAlignment="Center" 
                 Background="White" 
                 Padding="11,1,11,1" 
