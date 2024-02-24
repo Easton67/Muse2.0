@@ -9,13 +9,25 @@
     <Window.Background>
         <ImageBrush ImageSource="/background.jpg" TileMode="None" Stretch="UniformToFill"/>
     </Window.Background>
-    <Grid>
+    <Grid Opacity="0.88">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="180"/>
             <RowDefinition Height="10"/>
             <RowDefinition />
         </Grid.RowDefinitions>
+        <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.RowSpan="2">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF2C1D68" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+
+        </StackPanel>
         <Menu Grid.Row="0" Padding="20px, 0px">
             <MenuItem x:Name="mnuFile" Header="File">
                 <MenuItem x:Name="mnuExitApplcation" Header="Exit Application" Click="mnuExitApplcation_Click"/>
@@ -192,7 +204,7 @@
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
-                
+
                 <Button.Resources>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -214,13 +226,13 @@
                 </Button.Resources>
             </Button>
             <Button x:Name="btnPause" 
-                    Grid.Row="2" 
+                    Grid.Row="3" 
                     Grid.Column="3" 
                     Width="24" 
                     HorizontalAlignment="Center"   
                     Background="White" 
                     BorderThickness="0,0,0,0" 
-                    Click="btnPause_Click" Margin="0,0,44,0" >
+                    Click="btnPause_Click" Margin="0,0,45,0" >
                 <Image Source="/Resources/pause.png"/>
                 <Button.Resources>
                     <Style TargetType="Button">
@@ -243,7 +255,7 @@
                 </Button.Resources>
             </Button>
             <Button x:Name="btnPlay" 
-                    Grid.Row="2" 
+                    Grid.Row="3" 
                     Grid.Column="3" 
                     Width="24" 
                     HorizontalAlignment="Center"  
@@ -303,7 +315,7 @@
                    FontWeight="Bold" 
                    HorizontalAlignment="Left"  
                    VerticalAlignment="Center" 
-                   Margin="0,-67,0,0" />
+                   Margin="-6,-67,0,0" />
             <Label x:Name="lblSongLength" 
                    Grid.Row="3" 
                    Grid.RowSpan="2"
@@ -313,14 +325,13 @@
                    HorizontalAlignment="Right" 
                    Panel.ZIndex="3" 
                    VerticalAlignment="Center" 
-                   Margin="0,-67,0,0" />
+                   Margin="0,-67,-6,0" />
             <Button x:Name="btnShuffle" 
                     Grid.Row="3" 
                     Grid.Column="2"
                     HorizontalAlignment="Left" 
-                    Click="btnShuffle_Click" 
-                    Width="40">
-                <Image Source="/shuffle-enabled.png" />
+                    Click="btnShuffle_Click">
+                <Image Source="/shuffle.png" HorizontalAlignment="Left" />
                 <Button.Resources>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -343,13 +354,31 @@
             </Button>
             <Button x:Name="btnQueue" 
                     Grid.Row="3" 
-                    Style="{StaticResource btnLight}"
                     Grid.Column="3"
-                    Content="Queue" 
                     HorizontalAlignment="right" 
                     FontWeight="Bold" 
-                    Click="btnQueue_Click" 
-                    Width="60"/>
+                    Click="btnQueue_Click">
+                <Image Source="/queue.png" HorizontalAlignment="Right"/>
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="Transparent">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>

@@ -28,6 +28,7 @@
                     Margin="0,0,0,-6" 
                     Padding="10,0,0,1"/>
                     <TextBox x:Name="txtEmail"
+                             Text="Email Field"
                        Style="{StaticResource txtBoxLoginInput}"
                        Margin="10,0,31,0"
                        Padding="20,0,0,0" />
@@ -54,13 +55,16 @@
                                 Margin="10,0,29,0" 
                                 Padding="20,0,0,3" />
                 </StackPanel>
-                <TextBox x:Name="txtShownPasswordBottom"
-                        Style="{StaticResource txtBoxLoginShownInput}"
-                        Margin="24,-23,28,6" Panel.ZIndex="1" />
             </StackPanel>
             <TextBox x:Name="txtShownPasswordTop"
-                    Style="{StaticResource txtBoxLoginShownInput}"
-                    Margin="24,6,28,6" Panel.ZIndex="1" />
+                     Text="Shown Password Field"
+                     Style="{StaticResource txtBoxLoginShownInput}"
+                     Margin="32,1,28,6" 
+                     Panel.ZIndex="1" 
+                     BorderThickness="0,0,0,0" 
+                     Height="23" 
+                     Width="187" 
+                     Padding="19,0,0,0" />
             <StackPanel x:Name="stkShowPasswordButtons" Margin="0,114,0,0">
                 <Button x:Name="btnShowPasswordTop" 
                      Height="16" 
@@ -84,7 +88,7 @@
                      HorizontalContentAlignment="Right" 
                      HorizontalAlignment="Right" 
                      Padding="1,0,1,0" 
-                     Margin="0,31,12,-18" Click="btnShowPasswordBottom_Click" >
+                     Margin="0,31,12,-18" >
                     <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
                     <Button.Resources>
                         <Style TargetType="Border">

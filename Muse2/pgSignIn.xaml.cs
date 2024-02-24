@@ -32,6 +32,7 @@ namespace Muse2
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // easier to hide than to figure out the exact coordinates
+            txtShownPasswordTop.Text = "";
             txtEmail.Text = "67Easton@gmail.com";
             pwdPassword.Password = "password";
             txtShownPasswordTop.Visibility = Visibility.Hidden;
@@ -42,34 +43,11 @@ namespace Muse2
         #region Show Password Buttons
         private void btnShowPasswordTop_Click(object sender, RoutedEventArgs e)
         {
-            if (btnShowPasswordTopIsClicked == false)
-            {
-                txtShownPasswordTop.Visibility = Visibility.Visible;
-                txtShownPasswordTop.Text = pwdPassword.Password;
-                btnShowPasswordTopIsClicked = true;
-                return;
-            }
-            else
-            {
-                pwdPassword.Visibility = Visibility.Visible;
-                txtShownPasswordTop.Visibility = Visibility.Hidden;
-                btnShowPasswordTopIsClicked = false;
-            }
-        }
-        private void btnShowPasswordBottom_Click(object sender, RoutedEventArgs e)
-        {
-            if (btnShowPasswordTopIsClicked == false)
-            {
-                txtShownPasswordBottom.Visibility = Visibility.Visible;
-                txtShownPasswordBottom.Text = pwdConfirmPassword.Password;
-                btnShowPasswordTopIsClicked = true;
-            }
-            else
-            {
-                pwdConfirmPassword.Visibility = Visibility.Visible;
-                txtShownPasswordBottom.Visibility = Visibility.Hidden;
-                btnShowPasswordTopIsClicked = false;
-            }
+            txtShownPasswordTop.Text = pwdPassword.Password;
+
+            btnShowPasswordTopIsClicked = !btnShowPasswordTopIsClicked;
+            txtShownPasswordTop.Visibility = (btnShowPasswordTopIsClicked) ? Visibility.Visible
+                                                                           : Visibility.Hidden;
         }
         #endregion
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
@@ -99,12 +77,17 @@ namespace Muse2
             {
                 UserManager _um = new UserManager();
                 loggedInUser = _um.LoginUser(email, password);
+
+                if (Application.Current.MainWindow != null)
+                {
+                    Application.Current.MainWindow.Hide();
+                }
+
                 var home = new MainWindow(loggedInUser);
                 home.ShowDialog();
             }
             catch (Exception ex)
             {
-                // you may never throw exceptions from the presentation layer
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Login Failed",
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 pwdPassword.SelectAll();

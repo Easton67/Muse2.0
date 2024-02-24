@@ -51,24 +51,15 @@
                             <StackPanel x:Name="stkFooterButtons" Orientation="Horizontal" Margin="0,5,0,0">
                                 <Button x:Name="btnBack"
                                          Content="Sign Up"
-                                         Background="transparent" 
-                                         BorderThickness="0,0,0,0" 
-                                         Foreground="Black"
-                                         FontSize="12"
-                                         FontFamily="Montserrat"
+                                         Style="{StaticResource btnLoginFooter}"
                                          Margin="-9,0,0,0" 
                                          Width="90" 
                                          Click="btnBack_Click">
                                 </Button>
                                 <Button x:Name="btnForgotPassword" 
+                                        Style="{StaticResource btnLoginFooter}"
                                         Content="Forgot Password" 
-                                        Background="transparent" 
-                                        BorderThickness="0,0,0,0" 
-                                        Foreground="Black"
-                                        FontSize="12"
-                                        FontFamily="Montserrat"
-                                        Margin="1,0,0,0" 
-                                        Width="90" 
+                                        Margin="1,0,0,0"
                                         Click="btnForgotPassword_Click" />
                             </StackPanel>
                         </StackPanel>

@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -77,7 +78,6 @@ namespace Muse2
 
                 sliderSongLength.Minimum = 00.00;
                 sliderSongLength.Maximum = SongLengthInSeconds;
-                //sliderSongLength.Value = SongCurrentPosition;
 
                 if (SongCurrentPosition > 0)
                 {
@@ -140,9 +140,6 @@ namespace Muse2
         #region UI Helpers
         private void updateUIForLogout()
         {
-            // Turn off song if playing
-            //mediaPlayer.Pause();
-
             // Hide role specific  items
             //mnuAlbum.Visibility = Visibility.Collapsed;
             mnuFile.Visibility = Visibility.Collapsed;
@@ -407,33 +404,11 @@ namespace Muse2
                 mediaPlayer.Play();
                 return;
             }
+            songNumber = (songNumber <= 0) ? userSongs.Count - 1 : songNumber - 1;
+            CurrentSongHelper();
             if (btnPause.IsVisible)
             {
-                if (songNumber <= 0)
-                {
-                    songNumber = userSongs.Count - 1;
-                    CurrentSongHelper();
-                    mediaPlayer.Play();
-                }
-                else
-                {
-                    songNumber--;
-                    CurrentSongHelper();
-                    mediaPlayer.Play();
-                }
-            }
-            else
-            {
-                if (songNumber <= 0)
-                {
-                    songNumber = userSongs.Count - 1;
-                    CurrentSongHelper();
-                }
-                else
-                {
-                    songNumber--;
-                    CurrentSongHelper();
-                }
+                mediaPlayer.Play();
             }
         }
         private void mnuViewProfile_Click(object sender, RoutedEventArgs e)
@@ -512,13 +487,16 @@ namespace Muse2
         }
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Application.Current.Shutdown();
         }
         #region Song Controls
         private void sliderSongLength_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             SongCurrentPosition = e.NewValue;
             mediaPlayer.Position = TimeSpan.FromSeconds(SongCurrentPosition);
+            barSongLength.Value = SongCurrentPosition;
+            timer.Interval = TimeSpan.FromSeconds(SongCurrentPosition);
+            lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
         }
         private void btnQueue_Click(object sender, RoutedEventArgs e)
         {
@@ -526,8 +504,7 @@ namespace Muse2
         }
         private void btnViewSong_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var song = userSongs[songNumber] as Song;
-            var ViewSong = new ViewSong(song);
+            var ViewSong = new ViewSong(selectedSong);
             ViewSong.ShowDialog();
         }
         private void btnPause_Click(object sender, RoutedEventArgs e)
@@ -543,10 +520,7 @@ namespace Muse2
         }
         private void Play(int songNumber)
         {
-            if (btnPlay.Visibility == Visibility.Visible && SongCurrentPosition != 00.00)
-            {
-                mediaPlayer.Play();
-            }
+            sliderSongLength.Value = 00.00;
 
             pgLibrary libraryPage = (pgLibrary)pages["frmLibrary"];
             selectedSong = libraryPage.song;
@@ -557,17 +531,16 @@ namespace Muse2
             try
             {
                 pgLibrary pgLibrary = (pgLibrary)pages["frmLibrary"];
+                selectedSong = userSongs[songNumber];
                 userSongs = pgLibrary.userSongs;
-                mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
                 lblSongTitle.Content = userSongs[songNumber].Title;
                 lblSongArtist.Content = userSongs[songNumber].Artist;
                 imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
                 try
                 {
-                    BitmapImage CoverArt = (userSongs[songNumber].ImageFilePath.Length > 1) ? 
+                    imgCoverArt.Source = (userSongs[songNumber].ImageFilePath.Length > 1) ? 
                         new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath)) : 
                         new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
-                    imgCoverArt.Source = CoverArt;
                 }
                 catch (Exception ex)
                 {
@@ -576,6 +549,10 @@ namespace Muse2
                     MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+
+                mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
+                mediaPlayer.Play();
+
                 btnPlay.Visibility = Visibility.Hidden;
                 btnPause.Visibility = Visibility.Visible;
                 mediaPlayer.Play();
@@ -598,34 +575,11 @@ namespace Muse2
                 mediaPlayer.Play();
                 return;
             }
-
+            songNumber = (songNumber <= 0) ? userSongs.Count - 1 : songNumber - 1;
+            CurrentSongHelper();
             if (btnPause.IsVisible)
             {
-                if (songNumber <= 0)
-                {
-                    songNumber = userSongs.Count - 1;
-                    CurrentSongHelper();
-                    mediaPlayer.Play();
-                }
-                else
-                {
-                    songNumber--;
-                    CurrentSongHelper();
-                    mediaPlayer.Play();
-                }
-            }
-            else
-            {
-                if (songNumber <= 0)
-                {
-                    songNumber = userSongs.Count - 1;
-                    CurrentSongHelper();
-                }
-                else
-                {
-                    songNumber--;
-                    CurrentSongHelper();
-                }
+                mediaPlayer.Play();
             }
         }
         private void btnPlay_Click(object sender, RoutedEventArgs e)
@@ -701,16 +655,10 @@ namespace Muse2
                 userSongs = pgLibrary.userSongs;
 
                 GetSongCover();
+                selectedSong = userSongs[songNumber];
                 lblSongTitle.Content = userSongs[songNumber].Title;
                 lblSongArtist.Content = userSongs[songNumber].Artist;
-                if (userSongs[songNumber].Explicit == true)
-                {
-                    imgExplicit.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    imgExplicit.Visibility = Visibility.Hidden;
-                }
+                imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
                 mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
             }
             catch (Exception ex)
@@ -731,58 +679,12 @@ namespace Muse2
                 int shuffledSongIndex = shuffledSongNumber.Next(minShuffledIndex, maxShuffledIndex);
                 songNumber = shuffledSongIndex;
             }
-            if (songNumber < userSongs.Count - 1)
+            // check to see if the list is beyond the index
+            songNumber = (songNumber < userSongs.Count - 1) ? songNumber + 1 : 0;
+            CurrentSongHelper();
+            if (btnPause.IsVisible)
             {
-                songNumber++;
-                CurrentSongHelper();
-                if (btnPause.IsVisible)
-                {
-                    mediaPlayer.Play();
-                }
-            }
-            else
-            {
-                songNumber = 0;
-                CurrentSongHelper();
-                if (btnPause.IsVisible)
-                {
-                    mediaPlayer.Play();
-                }
-            }
-        }
-        #endregion
-        #region Playlist Manipulation
-        private void mnuAddSongToPlaylistFromDataGrid_Click(object sender, RoutedEventArgs e)
-        {
-            // Get the index of the clicked menu item
-            if (sender is MenuItem addToPlaylist)
-            {
-                if (addToPlaylist.Parent is ItemsControl playlistName)
-                {
-                    // Get the index from the sub item, not the parent item
-                    int index = playlistName.ItemContainerGenerator.IndexFromContainer(addToPlaylist);
-
-                    try
-                    {
-                        List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
-                        int songID = userSongs[songNumber].SongID;
-                        int playlistID = playlists[index].PlaylistID;
-
-                        try
-                        {
-                            _playlistManager.InsertSongIntoPlaylist(songID, playlistID);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("You have already added this song to your playlist");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song was not added. Please try again.",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
+                mediaPlayer.Play();
             }
         }
         #endregion

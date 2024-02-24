@@ -15,7 +15,7 @@
         <SolidColorBrush x:Key="clrInvalid" Color="#FFEB2C1A" />
         <!-- #endregion Colors -->
 
-        <!--#region ButtonStyles-->
+        <!--#region Button Styles-->
         <Style x:Key="btnCreateSong" TargetType="Button">
             <Setter Property="Foreground" Value="{StaticResource clrDark}" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -88,12 +88,37 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="btnLoginFooter" TargetType="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="{StaticResource clrLight}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Montserrat" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent"
+                               BorderThickness="0" > 
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource clrPrimarySelected}"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!--#endRegion-->
 
         <!--#region TextBlock Styles-->
         <Style x:Key="txtSubHeader" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Medium" />
-            <Setter Property="Foreground" Value="{StaticResource clrDark}" />
+            <Setter Property="Foreground" Value="{StaticResource clrLight}" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="TextAlignment" Value="Center" />
@@ -110,18 +135,11 @@
 
         <!--#region TextBox Styles-->
         <Style x:Key="txtBoxLoginShownInput" TargetType="TextBox">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border BorderBrush="{StaticResource clrDark}" BorderThickness="0,0,0,0"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontFamily" Value="Montserrat"/>
             <Setter Property="Foreground" Value="{StaticResource clrLight}"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Background" Value="{StaticResource clrTertiary}"/>
             <Setter Property="CaretBrush" Value="White"/>
             <Setter Property="Height" Value="28"/>
             <Setter Property="Width" Value="187"/>
