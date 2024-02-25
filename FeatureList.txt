@@ -34,3 +34,13 @@ Create playlist
 Listen to playlist
 Update playlist
 Delete Playlist
+
+2.5
+Upload songs from a folder
+Download youtube playlist to autosort songs and then upload
+
+
+
+
+
+

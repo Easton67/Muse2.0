@@ -45,15 +45,6 @@ namespace Muse2
 
             song = userSongs[0];
         }
-        private void Play()
-        {
-            // click the play button on the main window
-            Button btnPlay = mainWindow.FindName("btnPlay") as Button;
-            if (btnPlay != null)
-            {
-                btnPlay.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            }
-        }
 
         private void AddSongToQueue()
         {
@@ -171,11 +162,12 @@ namespace Muse2
                     {
                         string selectedMp3FilePath = filteredSongs[selectedRowIndex].Mp3FilePath;
                         songNumber = userSongs.FindIndex(song => song.Mp3FilePath == selectedMp3FilePath);
-                        song = grdLibrary.SelectedItem as Song;
-                        Play();
                     }
                     song = grdLibrary.SelectedItem as Song;
-                    Play();
+                    if (Application.Current.MainWindow is MainWindow s)
+                    {
+                        s.Play(song);
+                    }
                 }
             }
         }
@@ -298,7 +290,7 @@ namespace Muse2
                                         filteredSongs = userSongs.Where(x => x.Title.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
                                         grdLibrary.ItemsSource = filteredSongs;
                                     }
-                                    mainWin.CurrentSongHelper();
+                                    mainWin.CurrentSongHelper(songNumber);
                                     mainWin.Pause();
                                 }
                             }
