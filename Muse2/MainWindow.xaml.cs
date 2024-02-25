@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -207,13 +208,13 @@ namespace Muse2
                     userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
 
                     // load the first song in the list
+                    selectedSong = userSongs[songNumber];
                     btnViewSong.Visibility = Visibility.Visible;
-                    BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
-                    imgCoverArt.Source = CoverArt;
-                    mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
-                    imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
-                    lblSongTitle.Content = userSongs[songNumber].Title;
-                    lblSongArtist.Content = userSongs[songNumber].Artist;
+                    imgCoverArt.Source = new BitmapImage(new System.Uri(selectedSong.ImageFilePath));
+                    mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
+                    imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
+                    lblSongTitle.Content = selectedSong.Title;
+                    lblSongArtist.Content = selectedSong.Artist;
 
                     // set song controls
                     lblCurrentTime.Visibility = Visibility.Visible;
@@ -511,6 +512,8 @@ namespace Muse2
         {
             Pause();
         }
+
+
         public void Pause()
         {
             btnPlay.Visibility = Visibility.Visible;
@@ -518,28 +521,52 @@ namespace Muse2
             timer.Stop();
             mediaPlayer.Pause();
         }
-        private void Play(int songNumber)
+        private void GetSongCover()
         {
-            sliderSongLength.Value = 00.00;
-
-            pgLibrary libraryPage = (pgLibrary)pages["frmLibrary"];
-            selectedSong = libraryPage.song;
-            if (selectedSong != null)
-            {
-                songNumber = libraryPage.songNumber;
-            }
             try
             {
-                pgLibrary pgLibrary = (pgLibrary)pages["frmLibrary"];
-                selectedSong = userSongs[songNumber];
-                userSongs = pgLibrary.userSongs;
+                imgCoverArt.Source = (selectedSong.ImageFilePath.Length > 1) ?
+                    new BitmapImage(new System.Uri(selectedSong.ImageFilePath)) :
+                    new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
+                "Please make sure your image file exists",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        public void CurrentSongHelper()
+        {
+            sliderSongLength.Value = 00.00;
+            try
+            {
+                lblSongTitle.Content = selectedSong.Title;
+                lblSongArtist.Content = selectedSong.Artist;
+                imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
+                GetSongCover();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
+                "Please make sure your song file exists",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        public void CurrentSongHelper(int songNumber)
+        {
+            sliderSongLength.Value = 00.00;
+            try
+            {
                 lblSongTitle.Content = userSongs[songNumber].Title;
                 lblSongArtist.Content = userSongs[songNumber].Artist;
                 imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
                 try
                 {
-                    imgCoverArt.Source = (userSongs[songNumber].ImageFilePath.Length > 1) ? 
-                        new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath)) : 
+                    imgCoverArt.Source = (userSongs[songNumber].ImageFilePath.Length > 1) ?
+                        new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath)) :
                         new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
                 }
                 catch (Exception ex)
@@ -549,14 +576,6 @@ namespace Muse2
                     MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-
-                mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
-                mediaPlayer.Play();
-
-                btnPlay.Visibility = Visibility.Hidden;
-                btnPause.Visibility = Visibility.Visible;
-                mediaPlayer.Play();
-                timer.Start();
             }
             catch (Exception ex)
             {
@@ -565,6 +584,42 @@ namespace Muse2
                 MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            UpdateCurrentTimeLabel();
+        }
+        private void UpdateCurrentTimeLabel()
+        {
+            TimeSpan currentPosition = mediaPlayer.Position;
+            lblCurrentTime.Content = currentPosition.ToString(@"mm\:ss");
+        }
+        private void Play(int songNumber)
+        {
+            pgLibrary libraryPage = (pgLibrary)pages["frmLibrary"];
+            selectedSong = libraryPage.song;
+            var newSelectedSong = mediaPlayer.Source.AbsolutePath.Replace("%20", " ").Replace("/", "\\");
+            if (sliderSongLength.Value != 00.00 && selectedSong.Mp3FilePath == newSelectedSong)
+            {
+                TimeSpan currentPosition = mediaPlayer.Position;
+                lblCurrentTime.Content = currentPosition.ToString(@"mm\:ss");
+                mediaPlayer.Play();
+                btnPlay.Visibility = Visibility.Hidden;
+                btnPause.Visibility = Visibility.Visible;
+                timer.Interval = TimeSpan.FromSeconds(1);
+                timer.Tick += Timer_Tick;
+                timer.Start();
+                return;
+            }
+            else
+            {
+                mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
+            }
+            CurrentSongHelper();
+            mediaPlayer.Play();
+            btnPlay.Visibility = Visibility.Hidden;
+            btnPause.Visibility = Visibility.Visible;
+            timer.Start();
         }
         private void Rewind()
         {
@@ -582,13 +637,46 @@ namespace Muse2
                 mediaPlayer.Play();
             }
         }
+        private void NextSongHelper()
+        {
+            if (isEnabledShuffle == true)
+            {
+                int minShuffledIndex = 0;
+                int maxShuffledIndex = userSongs.Count;
+
+                int shuffledSongIndex = shuffledSongNumber.Next(minShuffledIndex, maxShuffledIndex);
+                songNumber = shuffledSongIndex;
+            }
+            // check to see if the list is beyond the index
+            songNumber = (songNumber < userSongs.Count - 1) ? songNumber + 1 : 0;
+            CurrentSongHelper(songNumber);
+            if (btnPause.IsVisible)
+            {
+                mediaPlayer.Play();
+            }
+        }
+
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
             Play(songNumber);
         }
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            NextSongHelper();
+            if (isEnabledShuffle == true)
+            {
+                int minShuffledIndex = 0;
+                int maxShuffledIndex = userSongs.Count;
+
+                int shuffledSongIndex = shuffledSongNumber.Next(minShuffledIndex, maxShuffledIndex);
+                songNumber = shuffledSongIndex;
+            }
+            // check to see if the list is beyond the index
+            songNumber = (songNumber < userSongs.Count - 1) ? songNumber + 1 : 0;
+            CurrentSongHelper(songNumber);
+            if (btnPause.IsVisible)
+            {
+                mediaPlayer.Play();
+            }
         }
         private void btnRewind_Click(object sender, RoutedEventArgs e)
         {
@@ -601,13 +689,10 @@ namespace Muse2
                 isEnabledShuffle = true;
                 NextSongHelper();
             }
-            else
-            {
-                isEnabledShuffle = false;
-                btnShuffle.BorderThickness = new Thickness(0);
-            }
         }
         #endregion
+
+
         #region Song Control Helpers
         private void UpdateSongPlayCount()
         {
@@ -624,70 +709,11 @@ namespace Muse2
                 return;
             }
         }
-        private void GetSongCover()
-        {
-            try
-            {
-                if (userSongs[songNumber].ImageFilePath != null || userSongs[songNumber].ImageFilePath == "")
-                {
-                    BitmapImage CoverArt = new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath));
-                    imgCoverArt.Source = CoverArt;
-                }
-                else
-                {
-                    BitmapImage CoverArt = new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
-                    imgCoverArt.Source = CoverArt;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
-                "Please make sure your image file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        public void CurrentSongHelper()
-        {
-            try
-            {
-                pgLibrary pgLibrary = (pgLibrary)pages["frmLibrary"];
-                userSongs = pgLibrary.userSongs;
-
-                GetSongCover();
-                selectedSong = userSongs[songNumber];
-                lblSongTitle.Content = userSongs[songNumber].Title;
-                lblSongArtist.Content = userSongs[songNumber].Artist;
-                imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
-                mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
-                "Please make sure your song file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        private void NextSongHelper()
-        {
-            if (isEnabledShuffle == true)
-            {
-                int minShuffledIndex = 0;
-                int maxShuffledIndex = userSongs.Count;
-
-                int shuffledSongIndex = shuffledSongNumber.Next(minShuffledIndex, maxShuffledIndex);
-                songNumber = shuffledSongIndex;
-            }
-            // check to see if the list is beyond the index
-            songNumber = (songNumber < userSongs.Count - 1) ? songNumber + 1 : 0;
-            CurrentSongHelper();
-            if (btnPause.IsVisible)
-            {
-                mediaPlayer.Play();
-            }
-        }
         #endregion
+      
+
+
+
         #region Playlist
         private void txtDataGridHeaderEdit_KeyDown(object sender, KeyEventArgs e)
         {

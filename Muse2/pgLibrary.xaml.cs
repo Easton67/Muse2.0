@@ -42,6 +42,8 @@ namespace Muse2
 
             songListRepopulation();
             playlistListRepopulation();
+
+            song = userSongs[0];
         }
         private void Play()
         {
