@@ -71,7 +71,7 @@
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Song to Queue" x:Name="mnuAddSongToQueue" Click="mnuAddSongToQueue_Click"/>
+                    <MenuItem Header="Add Song To Queue" x:Name="mnuQueueNextSong" Click="mnuQueueNextSong_Click"></MenuItem>
                     <MenuItem Header="Edit Song Details" x:Name="mnuEditSongFromDataGrid" Click="mnuEditSongFromDataGrid_Click" />
                     <MenuItem Header="Add Song To Playlist" x:Name="mnuAddSongToPlaylistFromDataGrid" Click="mnuAddSongToPlaylistFromDataGrid_Click" />
                     <MenuItem Header="Write a Review" x:Name="mnuCreateReview" Click="mnuCreateReview_Click" />

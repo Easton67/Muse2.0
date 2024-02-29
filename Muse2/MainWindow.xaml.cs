@@ -51,7 +51,7 @@ namespace Muse2
         {
             InitializeComponent();
 
-                    Application.Current.MainWindow = this;
+            Application.Current.MainWindow = this;
 
             loggedInUser = LoggedInUser;
             timer = new DispatcherTimer();
@@ -492,7 +492,6 @@ namespace Muse2
         {
             Application.Current.Shutdown();
         }
-
         #region Song Controls
         private void sliderSongLength_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -521,74 +520,6 @@ namespace Muse2
             btnPause.Visibility = Visibility.Hidden;
             timer.Stop();
             mediaPlayer.Pause();
-        }
-        private void GetSongCover(Song selectedSong)
-        {
-            try
-            {
-                imgCoverArt.Source = (selectedSong.ImageFilePath.Length > 1) ?
-                    new BitmapImage(new System.Uri(selectedSong.ImageFilePath)) :
-                    new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
-                "Please make sure your image file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        private void GetSongCover(int songNumber)
-        {
-            try
-            {
-                imgCoverArt.Source = (userSongs[songNumber].ImageFilePath.Length > 1) ?
-                    new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath)) :
-                    new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
-                "Please make sure your image file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        public void CurrentSongHelper(Song selectedSong)
-        {
-            sliderSongLength.Value = 00.00;
-            try
-            {
-                lblSongTitle.Content = selectedSong.Title;
-                lblSongArtist.Content = selectedSong.Artist;
-                imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
-                GetSongCover(selectedSong);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
-                "Please make sure your song file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        public void CurrentSongHelper(int songNumber)
-        {
-            sliderSongLength.Value = 00.00;
-            try
-            {
-                lblSongTitle.Content = userSongs[songNumber].Title;
-                lblSongArtist.Content = userSongs[songNumber].Artist;
-                imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
-                GetSongCover(songNumber);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
-                "Please make sure your song file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -670,8 +601,6 @@ namespace Muse2
             }
             selectedSong = userSongs[songNumber];
         }
-
-
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
             Play(selectedSong);
@@ -694,6 +623,74 @@ namespace Muse2
         }
         #endregion
         #region Song Control Helpers
+        private void GetSongCover(Song selectedSong)
+        {
+            try
+            {
+                imgCoverArt.Source = (selectedSong.ImageFilePath.Length > 1) ?
+                    new BitmapImage(new System.Uri(selectedSong.ImageFilePath)) :
+                    new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
+                "Please make sure your image file exists",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        private void GetSongCover(int songNumber)
+        {
+            try
+            {
+                imgCoverArt.Source = (userSongs[songNumber].ImageFilePath.Length > 1) ?
+                    new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath)) :
+                    new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
+                "Please make sure your image file exists",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        public void CurrentSongHelper(Song selectedSong)
+        {
+            sliderSongLength.Value = 00.00;
+            try
+            {
+                lblSongTitle.Content = selectedSong.Title;
+                lblSongArtist.Content = selectedSong.Artist;
+                imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
+                GetSongCover(selectedSong);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
+                "Please make sure your song file exists",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        public void CurrentSongHelper(int songNumber)
+        {
+            sliderSongLength.Value = 00.00;
+            try
+            {
+                lblSongTitle.Content = userSongs[songNumber].Title;
+                lblSongArtist.Content = userSongs[songNumber].Artist;
+                imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
+                GetSongCover(songNumber);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
+                "Please make sure your song file exists",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
         private void UpdateSongPlayCount()
         {
             var SongID = userSongs[songNumber].SongID;

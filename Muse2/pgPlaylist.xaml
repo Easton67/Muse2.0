@@ -10,23 +10,7 @@
     <Grid Margin="0,0,0,0">
         <Grid Margin="0,10,0,0">
                 <DataGrid x:Name="grdPlaylist"
-                       AutoGenerateColumns="false" 
-                       FontWeight="UltraBlack" 
-                       VerticalAlignment="Top" 
-                       HorizontalAlignment="Left" 
-                       IsReadOnly="True" 
-                       SelectionMode="Single" 
-                       CanUserAddRows="False" 
-                       BorderThickness="3,0,0,0" 
-                       BorderBrush="Black"
-                       ScrollViewer.CanContentScroll="True" 
-                       ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                       CanUserDeleteRows="False" 
-                       CanUserReorderColumns="False"
-                       CanUserResizeColumns="False" 
-                       CanUserResizeRows="False" 
-                       CanUserSortColumns="False" 
-                       HorizontalScrollBarVisibility="Visible" 
+                       Style="{StaticResource dgDefault}"
                        MouseDoubleClick="grdPlaylist_MouseDoubleClick" 
                        PreviewKeyDown="grdPlaylist_PreviewKeyDown" Margin="0,-6,0,0">
                     <DataGrid.ColumnHeaderStyle>

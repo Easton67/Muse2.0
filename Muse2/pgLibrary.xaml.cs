@@ -26,7 +26,6 @@ namespace Muse2
         Window mainWindow = null;
         List<Song> filteredSongs = new List<Song>();
 
-
         public pgLibrary(UserVM loggedInUser)
         {
             InitializeComponent();
@@ -45,7 +44,6 @@ namespace Muse2
 
             song = userSongs[0];
         }
-
         private void AddSongToQueue()
         {
             // click the play button on the main window
@@ -55,7 +53,6 @@ namespace Muse2
                 btnQueue.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
         }
-
         private void Next()
         {
             // click the play button on the main window
@@ -83,6 +80,11 @@ namespace Muse2
                     string playlistTitle = playlist.Title;
                     playlistTitles.Add(playlistTitle);
                 }
+
+                MenuItem addSongToQueue = new MenuItem();
+                addSongToQueue.Header = "Add Song To Queue";
+                addSongToQueue.Click += mnuQueueNextSong_Click;
+                contextMenu.Items.Add(addSongToQueue);
 
                 MenuItem editSong = new MenuItem();
                 editSong.Header = "Edit Song Details";
@@ -151,32 +153,28 @@ namespace Muse2
         }
         private void grdLibrary_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (grdLibrary.SelectedItems.Count != 0)
+            if (grdLibrary.SelectedItems.Count != 0 && grdLibrary.SelectedItem != null)
             {
-                if (grdLibrary.SelectedItem != null)
-                {
-                    int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
-                    songNumber = selectedRowIndex;
+                int selectedRowIndex = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
+                songNumber = selectedRowIndex;
 
-                    if (grdLibrary.ItemsSource == filteredSongs)
-                    {
-                        string selectedMp3FilePath = filteredSongs[selectedRowIndex].Mp3FilePath;
-                        songNumber = userSongs.FindIndex(song => song.Mp3FilePath == selectedMp3FilePath);
-                    }
-                    song = grdLibrary.SelectedItem as Song;
-                    if (Application.Current.MainWindow is MainWindow s)
-                    {
-                        s.Play(song);
-                    }
+                if (grdLibrary.ItemsSource == filteredSongs)
+                {
+                    string selectedMp3FilePath = filteredSongs[selectedRowIndex].Mp3FilePath;
+                    songNumber = userSongs.FindIndex(song => song.Mp3FilePath == selectedMp3FilePath);
+                }
+                song = grdLibrary.SelectedItem as Song;
+                if (Application.Current.MainWindow is MainWindow s)
+                {
+                    s.Play(song);
                 }
             }
         }
         #region Context Menu 
-        private void mnuAddSongToQueue_Click(object sender, RoutedEventArgs e)
+        private void mnuQueueNextSong_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
-
         private void mnuEditSongFromDataGrid_Click(object sender, RoutedEventArgs e)
         {
             var song = grdLibrary.SelectedItem as Song;

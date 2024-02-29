@@ -194,7 +194,7 @@
                     Background="White" 
                     BorderThickness="0,0,0,0"  
                     Click="btnNext_Click" >
-                <Image Source="/rewind.png">
+                <Image Source="/Resources/rewind.png">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -331,7 +331,7 @@
                     Grid.Column="2"
                     HorizontalAlignment="Left" 
                     Click="btnShuffle_Click">
-                <Image Source="/shuffle.png" HorizontalAlignment="Left" />
+                <Image Source="/Resources/shuffle.png" HorizontalAlignment="Left" />
                 <Button.Resources>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -358,7 +358,7 @@
                     HorizontalAlignment="right" 
                     FontWeight="Bold" 
                     Click="btnQueue_Click">
-                <Image Source="/queue.png" HorizontalAlignment="Right"/>
+                <Image Source="/Resources/queue.png" HorizontalAlignment="Right"/>
                 <Button.Resources>
                     <Style TargetType="Button">
                         <Setter Property="Template">

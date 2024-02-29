@@ -14,16 +14,12 @@
     <None Remove="explicit.png" />
     <None Remove="museBackground.jpg" />
     <None Remove="museV3Logo.png" />
-    <None Remove="queue.png" />
     <None Remove="Resources\defaultAccount.png" />
     <None Remove="Resources\defaultAlbumImage.png" />
     <None Remove="Resources\museLogo.png" />
     <None Remove="Resources\pause.png" />
     <None Remove="Resources\play.png" />
     <None Remove="Resources\rewind.png" />
-    <None Remove="rewind.png" />
-    <None Remove="shuffle-enabled.png" />
-    <None Remove="shuffle.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,20 +60,18 @@
     <Resource Include="explicit.png" />
     <Resource Include="museBackground.jpg" />
     <Resource Include="museV3Logo.png" />
-    <Resource Include="queue.png" />
     <Resource Include="Resources\defaultAccount.png" />
     <Resource Include="Resources\defaultAlbumImage.png" />
     <Resource Include="Resources\museLogo.png" />
     <Resource Include="Resources\pause.png" />
     <Resource Include="Resources\play.png" />
     <Resource Include="Resources\rewind.png" />
-    <Resource Include="rewind.png" />
-    <Resource Include="shuffle-enabled.png" />
-    <Resource Include="shuffle.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="bin\Debug\" />
+    <Folder Include="Pages\AddSong\" />
+    <Folder Include="Pages\Login\" />
   </ItemGroup>
 
 </Project>
