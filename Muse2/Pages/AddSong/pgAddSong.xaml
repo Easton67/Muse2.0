@@ -1,4 +1,4 @@
-﻿<Page x:Class="Muse2.pgAddSong"
+﻿<Page x:Class="Muse2.Pages.AddSong.pgAddSong"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
       d:DesignHeight="450" 
       d:DesignWidth="660"
       Title="pgAddSong"
-      Background="#FFE8E6EA" 
+      Background="#FFE8E6EA"
       Loaded="Page_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>

@@ -20,6 +20,8 @@
     <None Remove="Resources\pause.png" />
     <None Remove="Resources\play.png" />
     <None Remove="Resources\rewind.png" />
+    <None Remove="Windows\Login\close.png" />
+    <None Remove="Windows\Login\muse-favicon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,12 +68,13 @@
     <Resource Include="Resources\pause.png" />
     <Resource Include="Resources\play.png" />
     <Resource Include="Resources\rewind.png" />
+    <Resource Include="Windows\Login\close.png" />
+    <Resource Include="Windows\Login\muse-favicon.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="bin\Debug\" />
-    <Folder Include="Pages\AddSong\" />
-    <Folder Include="Pages\Login\" />
+    <Folder Include="Images\SoundIcons\" />
   </ItemGroup>
 
 </Project>

@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using YoutubeExplode;
+using Muse2.Pages.AddSong;
 
 namespace Muse2
 {

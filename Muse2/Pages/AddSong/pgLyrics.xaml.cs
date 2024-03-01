@@ -6,15 +6,13 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 
-namespace Muse2
+namespace Muse2.Pages.AddSong
 {
     /// <summary>
     /// Interaction logic for pgLyrics.xaml
     /// </summary>
     public partial class pgLyrics : Page
     {
-        private const string GeniusApiBaseUrl = "https://api.genius.com";
-        private const string AccessToken = "XWJIBe22GdHOtfYAhboNnxPX4ZnfjPjvjLNbMrZlOIM3tsJed6amxUkC3jrj3LRz";
         public string lyrics = "No Lyrics Provided";
         public string Lyrics { get; set; } = "No Lyrics Provided";
         public pgLyrics()

@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace Muse2
+namespace Muse2.Pages.AddSong
 {
     /// <summary>
     /// Interaction logic for pgAddSong.xaml

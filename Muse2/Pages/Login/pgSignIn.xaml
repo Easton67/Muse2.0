@@ -1,0 +1,58 @@
+﻿<Page x:Class="Muse2.Pages.Login.pgSignIn"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Muse2"
+      mc:Ignorable="d" 
+      d:DesignHeight="242" d:DesignWidth="250"
+      Title="pgSignIn" Loaded="Page_Loaded">
+    <Grid>
+        <Grid>
+            <StackPanel>
+                <StackPanel Margin="0,43,0,0">
+                    <StackPanel Margin="0,5,0,0">
+                        <TextBlock x:Name= "lblEmail"
+                                    Style="{StaticResource txtLogin}"
+                                    Text="Email"        
+                                    Margin="0,0,0,-6" 
+                                    Padding="10,0,0,1"/>
+                        <TextBox x:Name="txtEmail"
+                                   Text="Email Field"
+                                   Style="{StaticResource txtBoxLoginInput}"
+                                   Margin="10,0,31,0"
+                                   Padding="20,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5,0,0">
+                        <TextBlock x:Name="txtPasswordLabel" 
+                                   Style="{StaticResource txtLogin}"
+                                   Text="Password"                         
+                                   Margin="10,0,0,0"/>
+                        <PasswordBox x:Name="pwdPassword"
+                                     Style="{StaticResource pwdBoxLoginInput}"
+                                     Margin="10,0,29,0" 
+                                     Padding="20,0,0,3"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <TextBox x:Name="txtShownPasswordTop"
+                     Text="Shown Password Field"
+                     Style="{StaticResource txtBoxLoginShownInput}"
+                     Margin="32,1,28,6" 
+                     Padding="19,0,0,0" />
+            <StackPanel x:Name="stkShowPasswordButtons" Margin="0,114,0,0">
+                <Button x:Name="btnShowPasswordTop" 
+                        Style="{StaticResource btnShowPassword}"
+                        Margin="0,1,12,2" 
+                        Click="btnShowPasswordTop_Click" />
+                <StackPanel>
+                    <Button x:Name="btnLogIn"  
+                         Content="LOG IN"
+                         Style="{StaticResource btnLoginMain}"
+                         Click="btnLogIn_Click">
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

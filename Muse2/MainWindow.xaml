@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-        Title="Muse" Height="900" Width="1500" MinWidth="900" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Icon="/Resources/museLogo.png">
+        Title="Muse" 
+        Height="900" 
+        Width="1500" 
+        MinWidth="900" 
+        Loaded="Window_Loaded" 
+        WindowStartupLocation="CenterScreen" 
+        Icon="/Resources/museLogo.png">
     <Window.Background>
         <ImageBrush ImageSource="/background.jpg" TileMode="None" Stretch="UniformToFill"/>
     </Window.Background>
@@ -28,7 +34,10 @@
             </StackPanel.Background>
 
         </StackPanel>
-        <Menu Grid.Row="0" Padding="20px, 0px">
+        <Menu Grid.Row="0" 
+              Padding="20px, 0px" 
+              Background="{StaticResource clrTertiary}" 
+              Opacity="0.69">
             <MenuItem x:Name="mnuFile" Header="File">
                 <MenuItem x:Name="mnuExitApplcation" Header="Exit Application" Click="mnuExitApplcation_Click"/>
             </MenuItem>

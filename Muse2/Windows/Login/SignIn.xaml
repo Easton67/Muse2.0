@@ -1,15 +1,40 @@
-﻿<Window x:Class="Muse2.SignIn"
+﻿<Window x:Class="Muse2.Windows.Login.SignIn"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse2"
         mc:Ignorable="d"
-    Title="Sign In" Height="550" Width="800"
+        Title="Sign In"
+        Width="800" Height="550"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Background="DarkGray" Loaded="Window_Loaded">
+        Background="DarkGray" 
+        WindowStyle="None"
+        Loaded="Window_Loaded"
+        Icon="/Windows/Login/muse-favicon.png">
+    <Window.Clip>
+        <RectangleGeometry Rect="0,0,800,550" RadiusX="5" RadiusY="5"/>
+    </Window.Clip>
     <Grid>
+        
+        <!--#region Menu Header-->
+        <StackPanel Height="20px"
+                    Background="{StaticResource clrTertiary}" 
+                    Panel.ZIndex="1" 
+                    VerticalAlignment="Top" MouseDown="StackPanel_MouseDown">
+            <Image x:Name="btnClose"
+                   Height="16px" 
+                   Source="/Windows/Login/close.png" 
+                   HorizontalAlignment="Right" 
+                   Margin="0,2,6,0" 
+                   MouseDown="btnClose_MouseDown" />
+            <Image x:Name="imgIcon"
+                   Height="16px"
+                   HorizontalAlignment="Left" Margin="6,-16,0,0" Source="/Windows/Login/muse-favicon.png" />
+        </StackPanel>
+        <!--#endregion Menu Header-->
+
         <Image Source="/background.jpg" Stretch="UniformToFill">
             <Image.Effect>
                 <BlurEffect Radius="10"/>
@@ -20,16 +45,12 @@
                 Width="800" 
                 Height="533">
             <Grid Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="17*"/>
-                    <ColumnDefinition Width="381*"/>
-                </Grid.ColumnDefinitions>
                 <Border CornerRadius="5"
                             Background="{StaticResource clrTertiary}"
                             Width="250"
                             Height="440"
                             Panel.ZIndex="1"
-                            Margin="239,46,273,35" Grid.Column="1">
+                            Margin="273,46,273,35" Grid.Column="1">
                     <Border.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="5" Direction="270"/>
                     </Border.Effect>

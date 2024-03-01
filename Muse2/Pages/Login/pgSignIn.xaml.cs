@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Muse2
+namespace Muse2.Pages.Login
 {
     /// <summary>
     /// Interaction logic for pgSignIn.xaml
@@ -36,20 +36,14 @@ namespace Muse2
             txtEmail.Text = "67Easton@gmail.com";
             pwdPassword.Password = "password";
             txtShownPasswordTop.Visibility = Visibility.Hidden;
-            btnShowPasswordBottom.Visibility = Visibility.Hidden;
-            stkProfileName.Visibility = Visibility.Hidden;
-            stkConfirmPassword.Visibility = Visibility.Hidden;
         }
-        #region Show Password Buttons
         private void btnShowPasswordTop_Click(object sender, RoutedEventArgs e)
         {
             txtShownPasswordTop.Text = pwdPassword.Password;
-
             btnShowPasswordTopIsClicked = !btnShowPasswordTopIsClicked;
             txtShownPasswordTop.Visibility = (btnShowPasswordTopIsClicked) ? Visibility.Visible
                                                                            : Visibility.Hidden;
         }
-        #endregion
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
             var email = txtEmail.Text;

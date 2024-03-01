@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
-namespace Muse2
+namespace Muse2.Pages.Login
 {
     /// <summary>
     /// Interaction logic for pgSignUp.xaml

@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace Muse2
+namespace Muse2.Pages.AddSong
 {
     /// <summary>
     /// Interaction logic for pgArtwork.xaml

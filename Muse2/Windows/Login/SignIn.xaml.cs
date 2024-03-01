@@ -1,20 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-
+using Muse2.Pages.Login;
 using DataObjects;
-using LogicLayer;
-using System;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
-namespace Muse2
+namespace Muse2.Windows.Login
 {
     /// <summary>
     /// Interaction logic for SignIn.xaml
@@ -29,10 +20,27 @@ namespace Muse2
             InitializeComponent();
         }
 
+        #region Minimize, Close, Drag
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+        private void MinimizeImage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+        private void btnClose_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        #endregion
+
         public SignIn(UserVM loggedInUser)
         {
             InitializeComponent();
-
             _loggedInUser = loggedInUser;
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -64,17 +72,13 @@ namespace Muse2
             else
             {
                 btnBack.Content = "Sign Up";
-                
+
                 // check if it we are on main screen to turn forgot password back to forgot password
 
+                frmMain.Navigate(pages["frmSignIn"]);
                 if (txtSubHeader.Text.Equals("Control what you listen to."))
                 {
-                    frmMain.Navigate(pages["frmSignIn"]);
                     btnForgotPassword.Content = "Forgot Password";
-                }
-                else
-                {
-                    frmMain.Navigate(pages["frmSignIn"]);
                 }
             }
         }
