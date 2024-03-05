@@ -538,29 +538,41 @@ namespace Muse2
         public void Play(Song selectedSong)
         {
             pgLibrary libraryPage = (pgLibrary)pages["frmLibrary"];
-            songNumber = libraryPage.songNumber;
-            var newSelectedSong = mediaPlayer.Source.AbsolutePath.Replace("%20", " ").Replace("/", "\\");
-            if (sliderSongLength.Value != 00.00 && selectedSong.Mp3FilePath == newSelectedSong)
+            int librarySongNumber = libraryPage.songNumber;
+            if(librarySongNumber == songNumber)
             {
-                TimeSpan currentPosition = mediaPlayer.Position;
-                lblCurrentTime.Content = currentPosition.ToString(@"mm\:ss");
+                mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
+                CurrentSongHelper(songNumber);
                 mediaPlayer.Play();
                 btnPlay.Visibility = Visibility.Hidden;
                 btnPause.Visibility = Visibility.Visible;
-                timer.Interval = TimeSpan.FromSeconds(1);
-                timer.Tick += Timer_Tick;
                 timer.Start();
-                return;
             }
             else
             {
-                mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
+                var newSelectedSong = mediaPlayer.Source.AbsolutePath.Replace("%20", " ").Replace("/", "\\");
+                if (sliderSongLength.Value != 00.00 && selectedSong.Mp3FilePath == newSelectedSong)
+                {
+                    TimeSpan currentPosition = mediaPlayer.Position;
+                    lblCurrentTime.Content = currentPosition.ToString(@"mm\:ss");
+                    mediaPlayer.Play();
+                    btnPlay.Visibility = Visibility.Hidden;
+                    btnPause.Visibility = Visibility.Visible;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += Timer_Tick;
+                    timer.Start();
+                    return;
+                }
+                else
+                {
+                    mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
+                }
+                CurrentSongHelper(selectedSong);
+                mediaPlayer.Play();
+                btnPlay.Visibility = Visibility.Hidden;
+                btnPause.Visibility = Visibility.Visible;
+                timer.Start();
             }
-            CurrentSongHelper(selectedSong);
-            mediaPlayer.Play();
-            btnPlay.Visibility = Visibility.Hidden;
-            btnPause.Visibility = Visibility.Visible;
-            timer.Start();
         }
         private void Rewind()
         {
@@ -580,22 +592,39 @@ namespace Muse2
         }
         private void Next()
         {
-            if (isEnabledShuffle == true)
-            {
-                int minShuffledIndex = 0;
-                int maxShuffledIndex = userSongs.Count;
+            songNumber++;
+            selectedSong = userSongs[songNumber + 1];
+            CurrentSongHelper(selectedSong);
+            //// check to see if the list is beyond the index
+            //if (songNumber < userSongs.Count - 1)
+            //{
+            //    songNumber = songNumber + 1;
+            //}
+            //else
+            //{
+            //    songNumber = 0;
+            //}
+            ////if (isEnabledShuffle == true)
+            ////{
+            ////    int minShuffledIndex = 0;
+            ////    int maxShuffledIndex = userSongs.Count;
 
-                int shuffledSongIndex = shuffledSongNumber.Next(minShuffledIndex, maxShuffledIndex);
-                songNumber = shuffledSongIndex;
-            }
-            // check to see if the list is beyond the index
-            songNumber = (songNumber < userSongs.Count - 1) ? songNumber + 1 : 0;
-            CurrentSongHelper(songNumber);
-            if (btnPause.IsVisible)
-            {
-                Play(songNumber);
-            }
-            selectedSong = userSongs[songNumber];
+            ////    int shuffledSongIndex = shuffledSongNumber.Next(minShuffledIndex, maxShuffledIndex);
+            ////    songNumber = shuffledSongIndex;
+            ////}
+            //CurrentSongHelper(songNumber);
+            //if (btnPause.IsVisible)
+            //{
+            //    selectedSong = userSongs[songNumber];
+            //    Play(songNumber);
+            //}
+            //else
+            //{
+            //    selectedSong = userSongs[songNumber];
+            //    Play(songNumber);
+            //    Pause();
+            //}
+            //selectedSong = userSongs[songNumber];
         }
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
