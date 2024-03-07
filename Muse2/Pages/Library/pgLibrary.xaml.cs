@@ -25,6 +25,7 @@ namespace Muse2.Pages.Library
         private ContextMenu contextMenu;
         Window mainWindow = null;
         List<Song> filteredSongs = new List<Song>();
+        private Song selectedSong = new Song();
 
         public pgLibrary(UserVM loggedInUser)
         {
@@ -166,7 +167,7 @@ namespace Muse2.Pages.Library
                 song = grdLibrary.SelectedItem as Song;
                 if (Application.Current.MainWindow is MainWindow s)
                 {
-                    s.Play(song);
+                    s.Play(song, this);
                 }
             }
         }
@@ -237,7 +238,7 @@ namespace Muse2.Pages.Library
                 MessageBox.Show("Select a song.");
             }
         }
-        private void DeleteOneOrMoreSongs()
+        private void DeleteOneOrMoreSongs(Song selectedSong)
         {
             var song = grdLibrary.SelectedItem as Song;
 
@@ -256,7 +257,7 @@ namespace Muse2.Pages.Library
                         {
                             try
                             {
-                                if (selectedItem is Song selectedSong)
+                                if (selectedItem is Song s)
                                 {
                                     _songManager.DeleteSong(selectedSong.SongID);
                                     songNumber = grdLibrary.Items.IndexOf(grdLibrary.SelectedItem);
@@ -288,7 +289,7 @@ namespace Muse2.Pages.Library
                                         filteredSongs = userSongs.Where(x => x.Title.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
                                         grdLibrary.ItemsSource = filteredSongs;
                                     }
-                                    mainWin.CurrentSongHelper(songNumber);
+                                    mainWin.CurrentSongHelper(selectedSong);
                                     mainWin.Pause();
                                 }
                             }
@@ -348,7 +349,7 @@ namespace Muse2.Pages.Library
         }
         private void mnuDeleteSong_Click(object sender, RoutedEventArgs e)
         {
-            DeleteOneOrMoreSongs();
+            DeleteOneOrMoreSongs(selectedSong);
         }
         #endregion
         private void grdLibrary_PreviewKeyDown(object sender, KeyEventArgs e)

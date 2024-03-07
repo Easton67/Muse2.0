@@ -267,6 +267,323 @@ namespace Muse2
                 return;
             }
         }
+        private void GetAccountAndRoles()
+        {
+            // set account
+            btnProfileName.Content = loggedInUser.ProfileName;
+            btnProfileName.Visibility = Visibility.Visible;
+
+            // set menus for specific roles
+            //mnuAlbum.Visibility = Visibility.Visible;
+            mnuPlaylist.Visibility = Visibility.Visible;
+            mnuFile.Visibility = Visibility.Visible;
+            mnuSong.Visibility = Visibility.Visible;
+            mnuAccount.Visibility = Visibility.Visible;
+            mnuControls.Visibility = Visibility.Visible;
+            mnuViewProfile.Visibility = Visibility.Visible;
+            mnuResetPassword.Visibility = Visibility.Visible;
+            foreach (var role in loggedInUser.Roles)
+            {
+                if (role.ToString() == "Admin")
+                {
+                    mnuAdmin.Visibility = Visibility.Visible;
+                    break;
+                }
+            }
+        }
+        #endregion
+        #region Menu Items
+        private void mnuShuffleOn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void mnuShuffleOff_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void mnuNewPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            var addPlaylist = new AddPlaylist(loggedInUser);
+            addPlaylist.ShowDialog();
+            playlistListRepopulation();
+        }   
+        private void mnuPlay_Click(object sender, RoutedEventArgs e)
+        {
+            Play(selectedSong, null);
+        }
+        private void mnuPause_Click(object sender, RoutedEventArgs e)
+        {
+            btnPlay.Visibility = Visibility.Visible;
+            btnPause.Visibility = Visibility.Hidden;
+            timer.Stop();
+            mediaPlayer.Pause();
+        }
+        private void mnuNext_Click(object sender, RoutedEventArgs e)
+        {
+            Next();
+        }
+        private void mnuRewind_Click(object sender, RoutedEventArgs e)
+        {
+            // if the song is not at the start, rewind it
+            if (mediaPlayer.Position.ToString(@"mm\:ss") != "00:00")
+            {
+                mediaPlayer.Stop();
+                mediaPlayer.Play();
+                return;
+            }
+            songNumber = (songNumber <= 0) ? userSongs.Count - 1 : songNumber - 1;
+            CurrentSongHelper(selectedSong);
+            if (btnPause.IsVisible)
+            {
+                mediaPlayer.Play();
+            }
+        }
+        private void mnuViewProfile_Click(object sender, RoutedEventArgs e)
+        {
+            mediaPlayer.Stop();
+            timer.Stop();
+            mediaPlayer.Pause();
+            var profileWindow = new Profile(loggedInUser, _songManager);
+            profileWindow.ShowDialog();
+            loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
+            updateUIForUserLogin();
+        }
+        private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
+        {
+            mediaPlayer = null;
+            this.Close();
+        }
+        private void mnuAddSongToLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            var AddSong = new AddSong(loggedInUser);
+            AddSong.ShowDialog();
+            songListRepopulation();
+        }
+        private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
+        {
+            SignIn signInWindow = new SignIn(loggedInUser);
+            signInWindow.Show();
+            signInWindow.NavigateToResetPassword();
+        }
+        private void mnuCreateNewAlbum_Click(object sender, RoutedEventArgs e)
+        {
+            var addAlbum = new AddAlbum(loggedInUser);
+            addAlbum.ShowDialog();
+            songListRepopulation();
+        }
+        private void mnuViewAllSongs_Click(object sender, RoutedEventArgs e)
+        {
+            updateUIForUserLogin();
+        }
+        private void mnuSignUp_Click(object sender, RoutedEventArgs e)
+        {
+            SignIn signInWindow = new SignIn(loggedInUser);
+            signInWindow.Show();
+            signInWindow.NavigateToSignUp();
+        }
+        private void mnuViewAllUsers_Click(object sender, RoutedEventArgs e)
+        {
+            frmMain.Navigate(pages["frmAdmin"]);
+            frmListOfPlaylists.Navigate(pages["frmUsers"]);
+        }
+        #endregion
+        private void btnProfileName_Click(object sender, RoutedEventArgs e)
+        {
+            mediaPlayer.Stop();
+            timer.Stop();
+            mediaPlayer.Pause();
+            var profileWindow = new Profile(loggedInUser, _songManager);
+            profileWindow.ShowDialog();
+            UserVM updatedUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
+            try
+            {
+                var AccountImage = new BitmapImage(new System.Uri(updatedUser.ImageFilePath));
+                defaultimgAccount.Visibility = Visibility.Hidden;
+                imgAccount.Visibility = Visibility.Visible;
+                imgAccount.Source = AccountImage;
+            }
+            catch (Exception)
+            {
+                imgAccount.Source = null;
+                imgAccount.Visibility = Visibility.Hidden;
+                defaultimgAccount.Visibility = Visibility.Visible;
+                GetAccountAndRoles();
+                return;
+            }
+        }
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        #region Song Events
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            UpdateCurrentTimeLabel();
+        }
+        private void UpdateCurrentTimeLabel()
+        {
+            TimeSpan currentPosition = mediaPlayer.Position;
+            lblCurrentTime.Content = currentPosition.ToString(@"mm\:ss");
+        }
+        public Song GetCurrentSong(Song librarySong, Page callingPage)
+        {
+            if (callingPage is pgLibrary)
+            {
+                pgLibrary libraryPage = (pgLibrary)callingPage;
+                librarySong = userSongs[libraryPage.songNumber];
+            }
+            return librarySong;
+        }
+        private void sliderSongLength_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            SongCurrentPosition = e.NewValue;
+            mediaPlayer.Position = TimeSpan.FromSeconds(SongCurrentPosition);
+            barSongLength.Value = SongCurrentPosition;
+            sliderSongLength.Value = SongCurrentPosition;
+            timer.Interval = TimeSpan.FromSeconds(SongCurrentPosition);
+            lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
+        }
+        private void btnViewSong_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var ViewSong = new ViewSong(selectedSong);
+            ViewSong.ShowDialog();
+        }
+        private void btnQueue_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void btnPause_Click(object sender, RoutedEventArgs e)
+        {
+            Pause();
+        }
+        private void btnPlay_Click(object sender, RoutedEventArgs e)
+        {
+            Play(selectedSong, null);
+        }
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            Next();
+        }
+        private void btnRewind_Click(object sender, RoutedEventArgs e)
+        {
+            Rewind();
+        }
+        private void btnShuffle_Click(object sender, RoutedEventArgs e)
+        {
+            if (isEnabledShuffle == false)
+            {
+                isEnabledShuffle = true;
+                Next();
+            }
+        }
+        #endregion
+        # region Main Song Methods
+        public void Pause()
+        {
+            btnPlay.Visibility = Visibility.Visible;
+            btnPause.Visibility = Visibility.Hidden;
+            timer.Stop();
+            mediaPlayer.Pause();
+        }
+        public void Play(Song librarySong, Page callingPage)
+        {
+            selectedSong = GetCurrentSong(librarySong, callingPage);
+           
+            if (sliderSongLength.Value != 00.00)
+            {
+                TimeSpan currentPosition = mediaPlayer.Position;
+                lblCurrentTime.Content = currentPosition.ToString(@"mm\:ss");
+                mediaPlayer.Play();
+                btnPlay.Visibility = Visibility.Hidden;
+                btnPause.Visibility = Visibility.Visible;
+                timer.Interval = TimeSpan.FromSeconds(1);
+                timer.Tick += Timer_Tick;
+                timer.Start();
+            }
+            else
+            {
+                mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
+            }
+            CurrentSongHelper(selectedSong);
+            btnPlay.Visibility = Visibility.Hidden;
+            btnPause.Visibility = Visibility.Visible;
+            mediaPlayer.Play();
+            timer.Start();
+        }
+        private void Next()
+        {
+            // long one-liner just to find the next song in the list without using a new variable
+            selectedSong = userSongs[userSongs.IndexOf(selectedSong) + 1];
+            barSongLength.Value = 00.00;
+            sliderSongLength.Value = 00.00;
+            CurrentSongHelper(selectedSong);
+            mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
+            if (btnPause.Visibility == Visibility.Visible)
+            {
+                mediaPlayer.Play();
+                timer.Start();
+            }
+            else
+            {
+                mediaPlayer.Stop();
+                timer.Stop();
+            }
+        }
+        private void Rewind()
+        {
+            selectedSong = userSongs[userSongs.IndexOf(selectedSong) - 1];
+            Play(selectedSong, null);
+            barSongLength.Value = 00.00;
+            sliderSongLength.Value = 00.00;
+        }
+        #endregion
+        #region Song Control Helpers
+        public void CurrentSongHelper(Song selectedSong)
+        {
+            try
+            {
+                lblSongTitle.Content = selectedSong.Title;
+                lblSongArtist.Content = selectedSong.Artist;
+                imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
+                try
+                {
+                    imgCoverArt.Source = (selectedSong.ImageFilePath.Length > 1) ?
+                        new BitmapImage(new System.Uri(selectedSong.ImageFilePath)) :
+                        new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
+                    "Please make sure your image file exists",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
+                "Please make sure your song file exists",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        private void UpdateSongPlayCount()
+        {
+            var SongID = userSongs[songNumber].SongID;
+            int NewPlays = userSongs[songNumber].Plays + 1;
+            try
+            {
+                _songManager.UpdatePlaysBySongID(SongID, NewPlays);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Plays not updated",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+        #endregion
+        #region Playlist
         private void playlistListRepopulation()
         {
             // set the playlists
@@ -336,403 +653,6 @@ namespace Muse2
             //    return;
             //}
         }
-        private void GetAccountAndRoles()
-        {
-            // set account
-            btnProfileName.Content = loggedInUser.ProfileName;
-            btnProfileName.Visibility = Visibility.Visible;
-
-            // set menus for specific roles
-            //mnuAlbum.Visibility = Visibility.Visible;
-            mnuPlaylist.Visibility = Visibility.Visible;
-            mnuFile.Visibility = Visibility.Visible;
-            mnuSong.Visibility = Visibility.Visible;
-            mnuAccount.Visibility = Visibility.Visible;
-            mnuControls.Visibility = Visibility.Visible;
-            mnuViewProfile.Visibility = Visibility.Visible;
-            mnuResetPassword.Visibility = Visibility.Visible;
-            foreach (var role in loggedInUser.Roles)
-            {
-                if (role.ToString() == "Admin")
-                {
-                    mnuAdmin.Visibility = Visibility.Visible;
-                    break;
-                }
-            }
-        }
-        #endregion
-        #region Menu Items
-        private void mnuShuffleOn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void mnuShuffleOff_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void mnuNewPlaylist_Click(object sender, RoutedEventArgs e)
-        {
-            var addPlaylist = new AddPlaylist(loggedInUser);
-            addPlaylist.ShowDialog();
-            playlistListRepopulation();
-        }   
-        private void mnuPlay_Click(object sender, RoutedEventArgs e)
-        {
-            btnPlay.Visibility = Visibility.Hidden;
-            btnPause.Visibility = Visibility.Visible;
-            mediaPlayer.Play();
-            timer.Start();
-        }
-        private void mnuPause_Click(object sender, RoutedEventArgs e)
-        {
-            btnPlay.Visibility = Visibility.Visible;
-            btnPause.Visibility = Visibility.Hidden;
-            timer.Stop();
-            mediaPlayer.Pause();
-        }
-        private void mnuNext_Click(object sender, RoutedEventArgs e)
-        {
-            Next();
-        }
-        private void mnuRewind_Click(object sender, RoutedEventArgs e)
-        {
-            // if the song is not at the start, rewind it
-            if (mediaPlayer.Position.ToString(@"mm\:ss") != "00:00")
-            {
-                mediaPlayer.Stop();
-                mediaPlayer.Play();
-                return;
-            }
-            songNumber = (songNumber <= 0) ? userSongs.Count - 1 : songNumber - 1;
-            CurrentSongHelper(songNumber);
-            if (btnPause.IsVisible)
-            {
-                mediaPlayer.Play();
-            }
-        }
-        private void mnuViewProfile_Click(object sender, RoutedEventArgs e)
-        {
-            mediaPlayer.Stop();
-            timer.Stop();
-            mediaPlayer.Pause();
-            var profileWindow = new Profile(loggedInUser, _songManager);
-            profileWindow.ShowDialog();
-            loggedInUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
-            updateUIForUserLogin();
-            // grdUsers.Visibility = Visibility.Hidden;
-        }
-        private void mnuExitApplcation_Click(object sender, RoutedEventArgs e)
-        {
-            mediaPlayer = null;
-            this.Close();
-        }
-        private void mnuAddSongToLibrary_Click(object sender, RoutedEventArgs e)
-        {
-            var AddSong = new AddSong(loggedInUser);
-            AddSong.ShowDialog();
-            songListRepopulation();
-        }
-        private void mnuResetPassword_Click(object sender, RoutedEventArgs e)
-        {
-            SignIn signInWindow = new SignIn(loggedInUser);
-            signInWindow.Show();
-            signInWindow.NavigateToResetPassword();
-        }
-        private void mnuCreateNewAlbum_Click(object sender, RoutedEventArgs e)
-        {
-            var addAlbum = new AddAlbum(loggedInUser);
-            addAlbum.ShowDialog();
-            songListRepopulation();
-        }
-        private void mnuViewAllSongs_Click(object sender, RoutedEventArgs e)
-        {
-            updateUIForUserLogin();
-        }
-        private void mnuSignUp_Click(object sender, RoutedEventArgs e)
-        {
-            SignIn signInWindow = new SignIn(loggedInUser);
-            signInWindow.Show();
-            signInWindow.NavigateToSignUp();
-        }
-        private void mnuViewAllUsers_Click(object sender, RoutedEventArgs e)
-        {
-            frmMain.Navigate(pages["frmAdmin"]);
-            frmListOfPlaylists.Navigate(pages["frmUsers"]);
-        }
-        #endregion
-        private void btnProfileName_Click(object sender, RoutedEventArgs e)
-        {
-            mediaPlayer.Stop();
-            timer.Stop();
-            mediaPlayer.Pause();
-            var profileWindow = new Profile(loggedInUser, _songManager);
-            profileWindow.ShowDialog();
-            UserVM updatedUser = _userManager.GetUserVMByEmail(loggedInUser.Email);
-            try
-            {
-                var AccountImage = new BitmapImage(new System.Uri(updatedUser.ImageFilePath));
-                defaultimgAccount.Visibility = Visibility.Hidden;
-                imgAccount.Visibility = Visibility.Visible;
-                imgAccount.Source = AccountImage;
-            }
-            catch (Exception)
-            {
-                imgAccount.Source = null;
-                imgAccount.Visibility = Visibility.Hidden;
-                defaultimgAccount.Visibility = Visibility.Visible;
-                GetAccountAndRoles();
-                return;
-            }
-        }
-        private void btnLogout_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-        #region Song Controls
-        private void sliderSongLength_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            SongCurrentPosition = e.NewValue;
-            mediaPlayer.Position = TimeSpan.FromSeconds(SongCurrentPosition);
-            barSongLength.Value = SongCurrentPosition;
-            timer.Interval = TimeSpan.FromSeconds(SongCurrentPosition);
-            lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
-        }
-        private void btnQueue_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void btnViewSong_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            var ViewSong = new ViewSong(selectedSong);
-            ViewSong.ShowDialog();
-        }
-        private void btnPause_Click(object sender, RoutedEventArgs e)
-        {
-            Pause();
-        }
-        public void Pause()
-        {
-            btnPlay.Visibility = Visibility.Visible;
-            btnPause.Visibility = Visibility.Hidden;
-            timer.Stop();
-            mediaPlayer.Pause();
-        }
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            UpdateCurrentTimeLabel();
-        }
-        private void UpdateCurrentTimeLabel()
-        {
-            TimeSpan currentPosition = mediaPlayer.Position;
-            lblCurrentTime.Content = currentPosition.ToString(@"mm\:ss");
-        }
-        private void Play(int songNumber)
-        {
-            mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
-            CurrentSongHelper(songNumber);
-            mediaPlayer.Play();
-            btnPlay.Visibility = Visibility.Hidden;
-            btnPause.Visibility = Visibility.Visible;
-            timer.Start();
-        }
-        public void Play(Song selectedSong)
-        {
-            pgLibrary libraryPage = (pgLibrary)pages["frmLibrary"];
-            int librarySongNumber = libraryPage.songNumber;
-            if(librarySongNumber == songNumber)
-            {
-                mediaPlayer.Open(new Uri(userSongs[songNumber].Mp3FilePath));
-                CurrentSongHelper(songNumber);
-                mediaPlayer.Play();
-                btnPlay.Visibility = Visibility.Hidden;
-                btnPause.Visibility = Visibility.Visible;
-                timer.Start();
-            }
-            else
-            {
-                var newSelectedSong = mediaPlayer.Source.AbsolutePath.Replace("%20", " ").Replace("/", "\\");
-                if (sliderSongLength.Value != 00.00 && selectedSong.Mp3FilePath == newSelectedSong)
-                {
-                    TimeSpan currentPosition = mediaPlayer.Position;
-                    lblCurrentTime.Content = currentPosition.ToString(@"mm\:ss");
-                    mediaPlayer.Play();
-                    btnPlay.Visibility = Visibility.Hidden;
-                    btnPause.Visibility = Visibility.Visible;
-                    timer.Interval = TimeSpan.FromSeconds(1);
-                    timer.Tick += Timer_Tick;
-                    timer.Start();
-                    return;
-                }
-                else
-                {
-                    mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
-                }
-                CurrentSongHelper(selectedSong);
-                mediaPlayer.Play();
-                btnPlay.Visibility = Visibility.Hidden;
-                btnPause.Visibility = Visibility.Visible;
-                timer.Start();
-            }
-        }
-        private void Rewind()
-        {
-            // if the song is not at the start, rewind it
-            if (mediaPlayer.Position.ToString(@"mm\:ss") != "00:00")
-            {
-                mediaPlayer.Stop();
-                mediaPlayer.Play();
-                return;
-            }
-            songNumber = (songNumber <= 0) ? userSongs.Count - 1 : songNumber - 1;
-            CurrentSongHelper(songNumber);
-            if (btnPause.IsVisible)
-            {
-                mediaPlayer.Play();
-            }
-        }
-        private void Next()
-        {
-            songNumber++;
-            selectedSong = userSongs[songNumber + 1];
-            CurrentSongHelper(selectedSong);
-            //// check to see if the list is beyond the index
-            //if (songNumber < userSongs.Count - 1)
-            //{
-            //    songNumber = songNumber + 1;
-            //}
-            //else
-            //{
-            //    songNumber = 0;
-            //}
-            ////if (isEnabledShuffle == true)
-            ////{
-            ////    int minShuffledIndex = 0;
-            ////    int maxShuffledIndex = userSongs.Count;
-
-            ////    int shuffledSongIndex = shuffledSongNumber.Next(minShuffledIndex, maxShuffledIndex);
-            ////    songNumber = shuffledSongIndex;
-            ////}
-            //CurrentSongHelper(songNumber);
-            //if (btnPause.IsVisible)
-            //{
-            //    selectedSong = userSongs[songNumber];
-            //    Play(songNumber);
-            //}
-            //else
-            //{
-            //    selectedSong = userSongs[songNumber];
-            //    Play(songNumber);
-            //    Pause();
-            //}
-            //selectedSong = userSongs[songNumber];
-        }
-        private void btnPlay_Click(object sender, RoutedEventArgs e)
-        {
-            Play(selectedSong);
-        }
-        private void btnNext_Click(object sender, RoutedEventArgs e)
-        {
-            Next();
-        }
-        private void btnRewind_Click(object sender, RoutedEventArgs e)
-        {
-            Rewind();
-        }
-        private void btnShuffle_Click(object sender, RoutedEventArgs e)
-        {
-            if (isEnabledShuffle == false)
-            {
-                isEnabledShuffle = true;
-                Next();
-            }
-        }
-        #endregion
-        #region Song Control Helpers
-        private void GetSongCover(Song selectedSong)
-        {
-            try
-            {
-                imgCoverArt.Source = (selectedSong.ImageFilePath.Length > 1) ?
-                    new BitmapImage(new System.Uri(selectedSong.ImageFilePath)) :
-                    new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
-                "Please make sure your image file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        private void GetSongCover(int songNumber)
-        {
-            try
-            {
-                imgCoverArt.Source = (userSongs[songNumber].ImageFilePath.Length > 1) ?
-                    new BitmapImage(new System.Uri(userSongs[songNumber].ImageFilePath)) :
-                    new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
-                "Please make sure your image file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        public void CurrentSongHelper(Song selectedSong)
-        {
-            sliderSongLength.Value = 00.00;
-            try
-            {
-                lblSongTitle.Content = selectedSong.Title;
-                lblSongArtist.Content = selectedSong.Artist;
-                imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
-                GetSongCover(selectedSong);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
-                "Please make sure your song file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        public void CurrentSongHelper(int songNumber)
-        {
-            sliderSongLength.Value = 00.00;
-            try
-            {
-                lblSongTitle.Content = userSongs[songNumber].Title;
-                lblSongArtist.Content = userSongs[songNumber].Artist;
-                imgExplicit.Visibility = (userSongs[songNumber].Explicit) ? Visibility.Visible : Visibility.Hidden;
-                GetSongCover(songNumber);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
-                "Please make sure your song file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        private void UpdateSongPlayCount()
-        {
-            var SongID = userSongs[songNumber].SongID;
-            int NewPlays = userSongs[songNumber].Plays + 1;
-            try
-            {
-                _songManager.UpdatePlaysBySongID(SongID, NewPlays);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Plays not updated",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
-        #endregion
-        #region Playlist
         private void txtDataGridHeaderEdit_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return || e.Key == Key.Enter)
