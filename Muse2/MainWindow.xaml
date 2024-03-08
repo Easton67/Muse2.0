@@ -193,8 +193,7 @@
                         Foreground="{StaticResource clrSecondary}" 
                         Margin="0,5,0,5" 
                         ValueChanged="sliderSongLength_ValueChanged" 
-                        Height="10">
-            </Slider>
+                        Height="10"/>
             <Button x:Name="btnNext" 
                     HorizontalAlignment="Center" 
                     Grid.Row="1" 

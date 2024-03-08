@@ -1,0 +1,50 @@
+﻿@using Muse3.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<main aria-labelledby="title">
+    <div id="login-container">
+        <img id="login-muse-logo" src="~/Images/museV3Logo.png" alt="Muse Logo" />
+        <form id="form-login" class="form" action="">
+            @Html.ValidationSummary(true, "", new { @class = "invalid" })
+            <div class="form-container">
+                <div>
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "invalid" })
+                </div>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-email-password-input", placeholder = "Email" })
+                <br />
+                <div>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "invalid" })
+                </div>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-email-password-input", placeholder = "Password" })
+            </div>
+            <br />
+            <div class="row">
+                <div>
+                    <input id="submit" type="submit" value="Log in" class="btn bg-purple" />
+                </div>
+            </div>
+        </form>
+        <br />
+        <div class="footer-buttons-container">
+            @Html.ActionLink("Sign Up", "Register", new { @class = "footer-buttons" })
+            @Html.ActionLink("Forgot Password", "Register", new { @class = "footer-buttons" })
+        </div>
+        <br>
+        <br>
+    </div>
+    @*<div class="row">
+        <div class="offset-md-2 col-md-10">
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            </div>
+        </div>
+    </div>*@
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

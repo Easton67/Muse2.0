@@ -41,7 +41,8 @@ namespace Muse2
         private bool isEnabledShuffle;
         private Song selectedSong;
         Dictionary<string, Page> pages = new Dictionary<string, Page>();
-        double SongCurrentPosition;
+        private double SongCurrentPosition;
+        private bool isSliderDragging = false;
 
         public MainWindow(UserVM LoggedInUser)
         {
@@ -77,6 +78,7 @@ namespace Muse2
 
                 sliderSongLength.Minimum = 00.00;
                 sliderSongLength.Maximum = SongLengthInSeconds;
+                sliderSongLength.Value = SongCurrentPosition;
 
                 if (SongCurrentPosition > 0)
                 {
@@ -436,12 +438,16 @@ namespace Muse2
         }
         private void sliderSongLength_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            SongCurrentPosition = e.NewValue;
-            mediaPlayer.Position = TimeSpan.FromSeconds(SongCurrentPosition);
-            barSongLength.Value = SongCurrentPosition;
-            sliderSongLength.Value = SongCurrentPosition;
-            timer.Interval = TimeSpan.FromSeconds(SongCurrentPosition);
-            lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
+            if (isSliderDragging)
+            {
+                SongCurrentPosition = e.NewValue;
+                mediaPlayer.Position = TimeSpan.FromSeconds(SongCurrentPosition);
+                sliderSongLength.Value = SongCurrentPosition;
+                barSongLength.Value = SongCurrentPosition;
+                timer.Interval = TimeSpan.FromSeconds(SongCurrentPosition);
+                lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
+                timer.Start();
+            }
         }
         private void btnViewSong_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -488,8 +494,7 @@ namespace Muse2
         public void Play(Song librarySong, Page callingPage)
         {
             selectedSong = GetCurrentSong(librarySong, callingPage);
-           
-            if (sliderSongLength.Value != 00.00)
+            if (mediaPlayer.Position >= TimeSpan.FromSeconds(1))
             {
                 TimeSpan currentPosition = mediaPlayer.Position;
                 lblCurrentTime.Content = currentPosition.ToString(@"mm\:ss");
@@ -500,10 +505,7 @@ namespace Muse2
                 timer.Tick += Timer_Tick;
                 timer.Start();
             }
-            else
-            {
-                mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
-            }
+            mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
             CurrentSongHelper(selectedSong);
             btnPlay.Visibility = Visibility.Hidden;
             btnPause.Visibility = Visibility.Visible;
@@ -526,11 +528,17 @@ namespace Muse2
             else
             {
                 mediaPlayer.Stop();
-                timer.Stop();
             }
         }
         private void Rewind()
         {
+            if(mediaPlayer.Position >= TimeSpan.FromSeconds(1))
+            {
+                mediaPlayer.Stop();
+                mediaPlayer.Play();
+                return;
+            }
+
             selectedSong = userSongs[userSongs.IndexOf(selectedSong) - 1];
             Play(selectedSong, null);
             barSongLength.Value = 00.00;
