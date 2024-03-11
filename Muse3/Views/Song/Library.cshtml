@@ -1,0 +1,70 @@
+﻿@model IEnumerable<DataObjects.Song>
+
+@{
+    ViewBag.Title = "Library";
+}
+
+<h2>Library</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table bg-dark text-light">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageFilePath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Artist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Album)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.YearReleased)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Explicit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Plays)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <img style="height: 50px; width: 50px;" src="@Url.Content(item.ImageFilePath)" alt="Song Image">
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Artist)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Album)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YearReleased)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Explicit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plays)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.SongID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.SongID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.SongID })
+        </td>
+    </tr>
+}
+
+</table>

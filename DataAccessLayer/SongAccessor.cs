@@ -47,23 +47,11 @@ namespace DataAccessLayer
         public List<Song> SelectSongsByUserID(int UserID)
         {
             List<Song> songs = new List<Song>();
-
-            //connection
             var conn = SqlConnectionProvider.GetConnection();
-
-            //command text
             var cmdText = "sp_select_songs_by_UserID";
-
-            //command
             var cmd = new SqlCommand(cmdText, conn);
-
-            //command type
             cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
             cmd.Parameters.Add("@UserID", SqlDbType.Int);
-
-            // Parameter Values
             cmd.Parameters["@UserID"].Value = UserID;
 
             try

@@ -32,14 +32,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                    <li>@Html.ActionLink("Song", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Song", "Library", "Song", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Album", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Playlist", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Playlist", "ViewAllPlaylists", "Playlist", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Friends", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Account", "Contact", "Account", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Controls", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Reviews", "ViewAllReviews", "Review", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Help", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Admin", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Admin", "ViewAllUsers", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                     @*<li>@Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</li>*@
                     @Html.Partial("_LoginPartial")
                 </ul>
@@ -59,10 +60,9 @@
         <footer class="text-center">
             <p>&copy; @DateTime.Now.Year - Muse v3.0 - Easton67</p>
         </footer>
-    </div>
-
+    </div>  
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        @RenderSection("scripts", required: false)
 </body>
 </html>
