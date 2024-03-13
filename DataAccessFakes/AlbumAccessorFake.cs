@@ -27,6 +27,10 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public List<Album> SelectAllAlbums()
+        {
+            throw new NotImplementedException();
+        }
         public int UpdateAlbum(Album oldAlbum, Album newAlbum)
         {
             throw new NotImplementedException();

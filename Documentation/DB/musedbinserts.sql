@@ -60,11 +60,8 @@ GO
 
 print '' print '*** inserting Song test records ***'	
 GO
-INSERT INTO [dbo].[Song] 
-    ([Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Plays], [UserID])
-VALUES
-    ('Hotline Bling', 'views.jpg', 'Hotline_Bling.mp3', 2015, 
-     'You used to call me on my cell phone.
+SET IDENTITY_INSERT [dbo].[Song] ON
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100000, N'Hotline Bling', N'views.jpg', N'Hotline_Bling.mp3', 2015, N'You used to call me on my cell phone.
 You used to, you used to
 Yeah
 You used to call me on my cell phone
@@ -127,9 +124,8 @@ And I know when that hotline bling
 That can only mean one thing
 I know when that hotline bling
 That can only mean one thing
-Ever since I left the city' , 0, 0, 100000),
-    ('In My Feelings', 'scorpion.jpg', 'In_My_Feelings.mp3', 2018,
-'Trap, TrapMoneyBenny
+Ever since I left the city', 0, N'Unknown', 0, 100000, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100001, N'In My Feelings', N'scorpion.jpg', N'In_My_Feelings.mp3', 2018, N'Trap, TrapMoneyBenny
 This shit got me in my feelings
 Gotta be real with it, yup
 Kiki, do you love me? Are you riding?
@@ -210,9 +206,8 @@ What are yall talking about?
 You dont know that? I dont even care
 I need a photo with Drake
 Because my Instagrams weak as fuck
-Im just being real, my shit look', 0, 0, 100000),
-    ('Gods Plan', 'scorpion.jpg', 'GodsPlan.mp3', 2018,
-'And, they wishin and wishin and wishin and wishin
+Im just being real, my shit look', 0, N'Unknown', 0, 100000, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100002, N'Gods Plan', N'scorpion.jpg', N'GodsPlan.mp3', 2018, N'And, they wishin and wishin and wishin and wishin
 They wishin on me, yeah
 I been movin calm, dont start no trouble with me
 Tryna keep it peaceful is a struggle for me
@@ -264,9 +259,8 @@ Bad things
 Its a lot of bad things
 That they wishin and wishin and wishin and wishin
 They wishin on me
-	Yeah', 0, 0, 100000),
-    ('Started From the Bottom', 'nothingwasthesame.jpg', 'Started_From_the_Bottom.mp3', 2013, 
-'Started
+	Yeah', 0, N'Unknown', 0, 100000, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100003, N'Started From the Bottom', N'nothingwasthesame.jpg', N'Started_From_the_Bottom.mp3', 2013, N'Started
 (Zombie on the track)
 Started from the bottom, now were here
 Started from the bottom, now my whole team fuckin here
@@ -319,8 +313,8 @@ Started from the bottom, now the whole team here, *****
 Started from the bottom, now were here
 Started from the bottom, now my whole team here, *****
 Started from the bottom, now were here
-Started from the bottom, now the whole team here, *****', 0, 0,100000),
-    ('Nonstop', 'scorpion.jpg', 'Nonstop.mp3', 2018, 'Look, I just flipped the switch (flipped, flipped)
+Started from the bottom, now the whole team here, *****', 0, N'Unknown', 0, 100000, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100004, N'Nonstop', N'scorpion.jpg', N'Nonstop.mp3', 2018, N'Look, I just flipped the switch (flipped, flipped)
 I dont know nobody else thats doin this
 Bodies start to drop, ayy, hit the floor
 Now they wanna know me since I hit the top, ayy
@@ -393,10 +387,10 @@ From smokin the chicken, the bass is kickin
 My head is spinnin, from smokin the chicken, the bass is kickin
 My head is spinnin, from smokin the chicken, the bass is kickin
 My head is spinnin
-This the flow that got the block hot, shit got super hot', 1, 10,100000),
-	('Cant Tell Me Nothing', 'Graduation.jpg', 'CantTellMeNothing.mp3', 2007, '… La, la, la-la (yeah)
+This the flow that got the block hot, shit got super hot', 1, N'Unknown', 10, 100000, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100005, N'Cant Tell Me Nothing', N'Graduation.jpg', N'CantTellMeNothing.mp3', 2007, N'â€¦ La, la, la-la (yeah)
 Wait til I get my money right (oh, oh, oh, oh, oh)
-… I had a dream I could buy my way to Heaven
+â€¦ I had a dream I could buy my way to Heaven
 When I awoke, I spent that on a necklace (oh, oh, oh, oh, oh)
 I told God Id be back in a second
 Man, its so hard not to act reckless
@@ -412,7 +406,7 @@ Im just saying how I feel, man
 I aint one of the Cosbys, I aint go to Hell, man (oh, oh, oh, oh, oh)
 I guess the money should have changed him
 I guess I should have forgot where I came from
-… La, la, la-la (ayy)
+â€¦ La, la, la-la (ayy)
 Wait til I get my money right
 La, la, la-la (yeah)
 Then you cant tell me nothing, right?
@@ -420,7 +414,7 @@ Excuse me? Was you saying something?
 Uh uh, you cant tell me nothing (yeah)
 (Ha ha) you cant tell me nothing (yeah, yeah, yeah)
 Uh uh, you cant tell me nothing (oh, oh, oh, oh, oh)
-… Let up the suicide doors
+â€¦ Let up the suicide doors
 This is my life, homie, you decide yours (oh, oh, oh, oh, oh)
 I know that Jesus died for us
 But I couldnt tell you who decide wars
@@ -428,7 +422,7 @@ So I parallel double park that motherfucker sideways
 Old folks talking bout back in my day (oh, oh, oh, oh, oh)
 But, homie, this is my day, class started two hours ago
 Oh, am I late? (Oh, oh, oh, oh, oh)
-… No, I already graduated
+â€¦ No, I already graduated
 And you can live through anything if Magic made it (oh, oh, oh, oh, oh)
 They say I talk with so much emphasis
 Ooh, they so sensitive
@@ -436,7 +430,7 @@ Dont ever fix yo lips like collagen
 And then say something where you gonna end up apologin (oh, oh, oh, oh, oh)
 Let me know if its a problem man
 Aight man, holla then
-… La, la, la-la (ayy)
+â€¦ La, la, la-la (ayy)
 Wait til I get my money right
 La, la, la-la (yeah)
 Then you cant tell me nothing, right?
@@ -444,7 +438,7 @@ Excuse me? Was you saying something?
 Uh uh, you cant tell me nothing (yeah)
 (Ha ha) you cant tell me nothing (yeah, yeah, yeah)
 Uh uh, you cant tell me nothing (oh, oh, oh, oh, oh)
-… Let the champagne splash
+â€¦ Let the champagne splash
 Let that man get cash
 Let that man get passed
 He ont even stop to get gas
@@ -454,7 +448,7 @@ How he move in a room full of nos?
 How he stay faithful in a room full of hoes?
 Must be the Pharaohs, he in tune with his soul
 So when he buried in a tomb full of gold
-… Treasure, whats yo pleasure?
+â€¦ Treasure, whats yo pleasure?
 Life is a, uh, dependin how you dress her
 So if the Devil wear Prada, Adam, Eve wear nada
 Im in between but way more fresher
@@ -462,7 +456,7 @@ With way less effort
 Cause when you try hard, its when you die hard
 Yall homies lookin like, why God?
 When they reminisce over you, my God
-… La, la, la-la (ayy)
+â€¦ La, la, la-la (ayy)
 Wait til I get my money right
 La, la, la-la (yeah)
 Then you cant tell me nothing, right?
@@ -470,17 +464,17 @@ Excuse me? Was you saying something?
 Uh uh, you cant tell me nothing (yeah)
 (Ha ha) you cant tell me nothing (yeah, yeah, yeah)
 Uh uh, you cant tell me nothing (oh, oh, oh, oh, oh)
-… La, la, la-la (ayy)
+â€¦ La, la, la-la (ayy)
 Wait til I get my money right
 La, la, la-la (yeah)
 Then you cant tell me nothing, right? (Im serious, *****)
 Ayy
 Yeah, ha, ha, yeah, yeah
-… Nah, Im serious *****, I got money
+â€¦ Nah, Im serious *****, I got money
 Oh, oh, oh, oh, oh, G.O.O.D. got it made
 Oh, oh, oh, oh, oh, G.O.O.D. got it made
-… Oh, oh, oh, oh, oh, G.O.O.D. got it made', 1, 345, 100001),
-	('Solo', 'blond.jpeg', 'Solo.mp3', 2016, 'Hand me a towel, Im dirty dancing by myself
+â€¦ Oh, oh, oh, oh, oh, G.O.O.D. got it made', 1, N'Unknown', 345, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100006, N'Solo', N'blond.jpeg', N'Solo.mp3', 2016, N'Hand me a towel, Im dirty dancing by myself
 Gone off tabs of that acid
 Form me a circle, watch my Jagger
 Might lose my jacket and hit a solo
@@ -537,8 +531,8 @@ Ah (solo, solo)
 By myself
 (Solo)
 (Solo, solo)
-(Solo, solo)', 1, 1, 100001),
-    ('Feel No Ways', 'views.jpg', 'FeelNoWays.mp3', 2016, 'I should be downtown, whipping on the way to you
+(Solo, solo)', 1, N'Unknown', 1, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100007, N'Feel No Ways', N'views.jpg', N'FeelNoWays.mp3', 2016, N'I should be downtown, whipping on the way to you
 You got something that belongs to me
 Your body language says it all
 Despite the things you said to me
@@ -575,8 +569,8 @@ Yeah, yeah, yeah
 Feel a way, feel a way, young ***** feel a way
 Ive stopped listening to things you say
 Feel a way, feel a way, young ***** feel a way
-Ive stopped listening to things you say', 1, 4124, 100001),
-    ('NO BYSTANDERS', 'astroworld.jpg', 'NOBYSTANDERS.mp3', 2018, 'The party never ends
+Ive stopped listening to things you say', 1, N'Unknown', 4124, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100008, N'NO BYSTANDERS', N'astroworld.jpg', N'NOBYSTANDERS.mp3', 2018, N'The party never ends
 In a motel, layin with my sins, yeah
 Im tryna get revenge
 Youll be all out of love in the end
@@ -667,8 +661,8 @@ Fuck the club up, fuck the club up (bitch)
 Fuck the club up, fuck the club up
 They know me when they see me, *****, ah!
 Fuck the club up, fuck the club up (yeah)
-Uh', 1, 1, 100001),
-    ('Rocket Man', 'HonkyChateau.jpg', 'RocketMan.mp3', 1972, 'Roll them bleeding tapings
+Uh', 1, N'Unknown', 1, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100009, N'Rocket Man', N'HonkyChateau.jpg', N'RocketMan.mp3', 1972, N'Roll them bleeding tapings
 The Leslie, the Leslie mic is still on
 The Leslie mic is still on, apparently
 Thank you
@@ -724,9 +718,8 @@ And I think its gonna be a long, long time
 And I think its gonna be a long, long time
 And I think its gonna be a long, long time
 And I think its gonna be a long, long time
-Oh, I think its gonna be a long, long time', 0, 1, 100001),
-    ('3005', 'becausetheinternet.jpg', '3005.mp3', 2013, 
-'No matter what you say or what you do
+Oh, I think its gonna be a long, long time', 0, N'Unknown', 1, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100010, N'3005', N'becausetheinternet.jpg', N'3005.mp3', 2013, N'No matter what you say or what you do
 When Im alone, Id rather be with you
 Fuck these other *****s, Ill be right by your side
 Till 3005, hold up
@@ -807,8 +800,8 @@ Hold up (Hold up), hold up (Hold up)
 Hold up (Hold up), hold up (Hold up)
 Hold up
 We did it! Yay!
-***** you so thirsty', 1, 1, 100001),
-    ('No More Parties in LA', 'thelifeofpablo.jpg', 'NoMorePartiesInLA.mp3', 2016, 'La di da da-a, da-a (I like this flavor)
+***** you so thirsty', 1, N'Unknown', 1, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100011, N'No More Parties in LA', N'thelifeofpablo.jpg', N'NoMorePartiesInLA.mp3', 2016, N'La di da da-a, da-a (I like this flavor)
 La da da da di da da-a, la-a
 Let me tell you, Im out here
 From a very far away place
@@ -947,8 +940,8 @@ No more (Los Angeles)
 Im out here from a very far away place
 All for a chance to be a star
 Nowhere seems to be too far
-SWISH', 1, 1, 100001),
-    ('Baby Pluto', 'eternalatake.jpg', 'BabyPluto.mp3', 2020, 'I turned to an addict, I bought me a Patek
+SWISH', 1, N'Unknown', 1, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100012, N'Baby Pluto', N'eternalatake.jpg', N'BabyPluto.mp3', 2020, N'I turned to an addict, I bought me a Patek
 I bought her a baby one
 Yeah, I bought me a Maybach, it came with two doors
 Yeah, thats the Mercedes one (for sure)
@@ -1043,8 +1036,8 @@ Yeah, count up a half a mil, Im behind the store
 Yeah, she gone off that molly like she aint ever take a pill before
 You actin too tough like your homie aint never get killed before
 What the
-Yo, what the fuck was that?', 1, 1, 100001),
-    ('Metro Spider', 'heroesandvillians.jpg', 'MetroSpider.mp3', 2022, 'Yeah
+Yo, what the fuck was that?', 1, N'Unknown', 1, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100013, N'Metro Spider', N'heroesandvillians.jpg', N'MetroSpider.mp3', 2022, N'Yeah
 Metro Boomin
 Heroes & Villains, bruh
 Somebody gotta be bad, somebody gotta be good, you feel me?
@@ -1105,8 +1098,8 @@ Yeah, little, little on little, look like a fuckin biker
 I been fresh as hell every time you see me, on sight
 Anything happen, my kids got Ms, so everything alright
 I done got used takin pills and bein up all night
-Metro Boomin want some more, *****', 1, 1, 100001),
-    ('Flex (feat. Leven Kali)', 'playboicarti.jpg', 'Flex.mp3', 2017, 'All of these bitches, they mad, ooh
+Metro Boomin want some more, *****', 1, N'Unknown', 1, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100014, N'Flex (feat. Leven Kali)', N'playboicarti.jpg', N'Flex.mp3', 2017, N'All of these bitches, they mad, ooh
 All of these *****s, they mad, ooh
 All of these bitches, they mad, ooh
 All of these *****s, they mad, ooh
@@ -1204,8 +1197,8 @@ Might sing on a bitch
 I might just sing on this shit
 I might just sing on this shit
 I might sing on this shit
-I might just sing on this shit', 1, 1, 100001),
-    ('Claymore (feat. Smino)', 'thehouseisburning.jpg', 'Claymore.mp3', 2020, 'Is you running or exercising, baby? (Yeah)
+I might just sing on this shit', 1, N'Unknown', 1, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100015, N'Claymore (feat. Smino)', N'thehouseisburning.jpg', N'Claymore.mp3', 2020, N'Is you running or exercising, baby? (Yeah)
 Keep it one, one
 Claymore this way, its almost like control
 Claymore this way
@@ -1265,7 +1258,64 @@ Claymore this way (do, do, do-do)
 Is you running or exercising, baby?
 Keep it one, one
 Claymore this way, its almost like control
-Claymore this way', 1, 1, 100001)								
+Claymore this way', 1, N'Unknown', 1, 100001, NULL, NULL, NULL, N'2024-03-11')
+INSERT INTO [dbo].[Song] ([SongID], [Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID], [DateUploaded], [DateAdded]) VALUES (100016, N'The Things We Do For Love', N'10cc - The Things We Do For Love.png', N'10cc - The Things We Do For Love.mp3', 2023, N'
+[Verse 1]
+Too many broken hearts have fallen in the river
+Too many lonely souls have drifted out to sea
+You lay your bets and then you pay the price
+
+[Refrain]
+The things we do for love
+The things we do for love
+
+[Verse 2]
+Communication is the problem to the answer
+You''ve got her number
+And your hand is on the phone
+The weather''s turned and all the lines are down
+
+[Refrain]
+The things we do for love
+The things we do for love
+
+[Chorus]
+Like walking in the rain and the snow
+When there''s nowhere to go
+And you''re feelin'' like a part of you is dying
+And you''re looking for the answer in her eyes
+You think you''re gonna break up
+Then she says she wants to make up
+Ooh you made me love you
+Ooh you''ve got a way
+Ooh you had me crawling up the wall
+See 10cc LiveGet tickets as low as $72You might also like{Bridge}
+
+[Chorus]
+Like walking in the rain and the snow
+When there''s nowhere to go
+And you''re feelin'' like a part of you is dying
+And you''re looking for the answer in her eyes
+You think you''re gonna break up
+Then she says she wants to make up
+Ooh you made me love you
+Ooh you''ve got a way
+Ooh you had me crawling up the wall
+
+[Verse 3]
+A compromise would surely help the situation
+Agree to disagree
+But disagree to part
+When after all it''s just a compromise of
+
+[Refrain]
+The things we do for love
+The things we do for love
+The things we do for love
+The things we do for love
+The things we do for love
+The things we do for love
+The things we do for love....', 0, N'Unknown', 0, 100001, NULL, 100017, NULL, N'2024-03-12')
 GO
 
 print '' print '*** inserting Album test records ***'
@@ -1385,5 +1435,3 @@ VALUES
 	(4, "Amazing", 100001, 100012),
 	(3, "Pretty good", 100001, 100013)
 GO
-
-

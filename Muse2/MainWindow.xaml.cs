@@ -42,7 +42,6 @@ namespace Muse2
         private Song selectedSong;
         Dictionary<string, Page> pages = new Dictionary<string, Page>();
         private double SongCurrentPosition;
-        private bool isSliderDragging = false;
 
         public MainWindow(UserVM LoggedInUser)
         {
@@ -438,16 +437,13 @@ namespace Muse2
         }
         private void sliderSongLength_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (isSliderDragging)
-            {
-                SongCurrentPosition = e.NewValue;
-                mediaPlayer.Position = TimeSpan.FromSeconds(SongCurrentPosition);
-                sliderSongLength.Value = SongCurrentPosition;
-                barSongLength.Value = SongCurrentPosition;
-                timer.Interval = TimeSpan.FromSeconds(SongCurrentPosition);
-                lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
-                timer.Start();
-            }
+            SongCurrentPosition = e.NewValue;
+            mediaPlayer.Position = TimeSpan.FromSeconds(SongCurrentPosition);
+            sliderSongLength.Value = SongCurrentPosition;
+            barSongLength.Value = SongCurrentPosition;
+            timer.Interval = TimeSpan.FromSeconds(SongCurrentPosition);
+            lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
+            timer.Start();
         }
         private void btnViewSong_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

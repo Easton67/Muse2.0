@@ -31,6 +31,7 @@ namespace Muse2.Pages.AddSong
         public bool isExplicit;
         public string genre;
         public int plays = 0;
+        private string selectedFolder;
         private string songfilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles";
         private string imageFilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -126,13 +127,16 @@ namespace Muse2.Pages.AddSong
             lblPlays.Visibility = Visibility.Hidden;
             txtPlays.Visibility = Visibility.Hidden;
 
+            lblMp3File.Content = "Folder";
+
             btnConfirm.Visibility = Visibility.Visible;
 
-            string selectedFolder = OpenFolderDialog();
+            selectedFolder = OpenFolderDialog();
+
+            lblMp3File.Content = "Playlist Folder";
 
             if (!string.IsNullOrEmpty(selectedFolder))
             {
-                lblMp3File.Content = "Playlist Folder";
                 txtMp3FilePath.Text = Path.GetFileName(selectedFolder);
             }
         }
@@ -150,7 +154,7 @@ namespace Muse2.Pages.AddSong
 
                 DialogResult result = folderDialog.ShowDialog();
 
-                if (result == DialogResult.OK && CheckFolderContents(folderDialog.SelectedPath))
+                if (result == DialogResult.OK)
                 {
                     return folderDialog.SelectedPath;
                 }
@@ -172,17 +176,14 @@ namespace Muse2.Pages.AddSong
         {
             songTitle = txtTitle.Text;
         }
-
         private void txtArtist_LostFocus(object sender, RoutedEventArgs e)
         {
             artistName = txtArtist.Text;
         }
-
         private void txtAlbum_LostFocus(object sender, RoutedEventArgs e)
         {
             albumName = txtAlbum.Text;
         }
-
         private void txtYear_LostFocus(object sender, RoutedEventArgs e)
         {
             if(txtYear.Text != "")
@@ -190,33 +191,28 @@ namespace Muse2.Pages.AddSong
                 yearReleased = int.Parse(txtYear.Text);
             }
         }
-
         private void chkExplicit_LostFocus(object sender, RoutedEventArgs e)
         {
             isExplicit = (bool)chkExplicit.IsChecked;
         }
-
         private void cboGenre_LostFocus(object sender, RoutedEventArgs e)
         {
             genre = cboGenre.Text;
         }
-
         private void txtPlays_LostFocus(object sender, RoutedEventArgs e)
         {
             plays = int.Parse(txtPlays.Text);
         }
-
         private void txtMp3FilePath_LostFocus(object sender, RoutedEventArgs e)
         {
             mp3FileName =  txtMp3FilePath.Text;
         }
-
         #endregion
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             btnConfirm.Visibility = Visibility.Hidden;
             btnAddFolder.Visibility = Visibility.Visible;
-            playlistFolderPath = txtMp3FilePath.Text;
+            playlistFolderPath = selectedFolder;
 
             if (txtMp3FilePath.Text.Equals(""))
             {
@@ -289,7 +285,14 @@ namespace Muse2.Pages.AddSong
                                     }
                                     catch (Exception ex)
                                     {
-                                        System.Windows.MessageBox.Show($"Error copying file '{file}': {ex.Message}");
+                                        if(ex.Message.ToLower().Contains("primary"))
+                                        {
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            System.Windows.MessageBox.Show($"Error copying file '{file}': {ex.Message}");
+                                        }
                                     }
                                 }
                                 else
@@ -313,7 +316,14 @@ namespace Muse2.Pages.AddSong
                                 }
                                 catch (Exception ex)
                                 {
-                                    System.Windows.MessageBox.Show($"Error copying file '{file}': {ex.Message}");
+                                    if (ex.Message.ToLower().Contains("primary"))
+                                    {
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        System.Windows.MessageBox.Show($"Error copying file '{file}': {ex.Message}");
+                                    }
                                 }
                                 break;
                             case ".txt":
@@ -349,7 +359,14 @@ namespace Muse2.Pages.AddSong
                     }
                     catch (Exception ex)
                     {
-                        System.Windows.MessageBox.Show(ex.Message + "\n\n" + ex.InnerException?.Message);
+                        if (ex.Message.ToLower().Contains("primary"))
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            System.Windows.MessageBox.Show("Error adding song to playlist.");
+                        }
                     }
                 }
                 catch (Exception)

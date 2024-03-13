@@ -36,7 +36,6 @@
         </StackPanel>
         <Menu Grid.Row="0" 
               Padding="20px, 0px" 
-              Background="{StaticResource clrTertiary}" 
               Opacity="0.69">
             <MenuItem x:Name="mnuFile" Header="File">
                 <MenuItem x:Name="mnuExitApplcation" Header="Exit Application" Click="mnuExitApplcation_Click"/>

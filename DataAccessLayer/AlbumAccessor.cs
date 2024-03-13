@@ -42,6 +42,43 @@ namespace DataAccessLayer
             }
             return rows;
         }
+        public List<Album> SelectAllAlbums()
+        {
+            List<Album> albums = new List<Album>();
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_albums";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var Album = new Album
+                    {
+                        AlbumID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultAlbumImg : reader.GetString(2),
+                        Description = reader.GetString(3)
+                    };
+                    albums.Add(Album);
+                }
+                return albums;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public List<Album> SelectAlbumByAlbumID(int AlbumID)
         {
             List<Album> Albums = new List<Album>();

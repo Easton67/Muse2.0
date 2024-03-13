@@ -11,6 +11,7 @@ namespace LogicLayer
     {
         bool CreateAlbum(Album album);
         List<Album> SelectAlbumByAlbumID(int AlbumID);
+        List<Album> SelectAllAlbums();
         bool UpdateAlbum(Album oldAlbum, Album newAlbum);
         bool DeleteAlbum(int albumId);
     }

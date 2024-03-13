@@ -669,5 +669,20 @@ AS
 	END
 GO
 
+/* sp_select_all_albums */
+
+print '' print '*** creating sp_select_all_albums ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_albums]
+AS
+	BEGIN
+		SELECT  [AlbumID], 
+				[Title], 
+				[ImageFilePath],
+				[Description]
+		FROM	[Album]
+	END
+GO
+
 
 

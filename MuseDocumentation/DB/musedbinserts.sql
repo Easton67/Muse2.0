@@ -58,8 +58,10 @@ VALUES
 	('Isaiah Rashad')
 GO
 
+
 print '' print '*** inserting Song test records ***'	
 GO
+
 INSERT INTO [dbo].[Song] 
     ([Title], [ImageFilePath], [Mp3FilePath], [YearReleased], [Lyrics], [Explicit], [Plays], [UserID])
 VALUES
@@ -394,6 +396,7 @@ My head is spinnin, from smokin the chicken, the bass is kickin
 My head is spinnin, from smokin the chicken, the bass is kickin
 My head is spinnin
 This the flow that got the block hot, shit got super hot', 1, 10,100000),
+
 	('Cant Tell Me Nothing', 'Graduation.jpg', 'CantTellMeNothing.mp3', 2007, '… La, la, la-la (yeah)
 Wait til I get my money right (oh, oh, oh, oh, oh)
 … I had a dream I could buy my way to Heaven

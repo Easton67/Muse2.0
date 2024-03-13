@@ -45,6 +45,20 @@ namespace LogicLayer
             }
             return albums;
         }
+        public List<Album> SelectAllAlbums()
+        {
+            List<Album> albums = new List<Album>();
+
+            try
+            {
+                albums = _albumAccessor.SelectAllAlbums();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Album not found", ex);
+            }
+            return albums;
+        }
         public bool UpdateAlbum(Album oldAlbum, Album newAlbum)
         {
             bool result = false;

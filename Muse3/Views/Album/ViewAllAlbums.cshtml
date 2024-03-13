@@ -9,13 +9,13 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table bg-dark text-light">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.ImageFilePath)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ImageFilePath)
+            @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
@@ -26,18 +26,18 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @Html.DisplayFor(modelItem => item.ImageFilePath)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ImageFilePath)
+            @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AlbumID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AlbumID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AlbumID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.AlbumID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.AlbumID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.AlbumID })
         </td>
     </tr>
 }

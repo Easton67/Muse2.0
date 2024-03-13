@@ -17,7 +17,7 @@ namespace Muse3.Controllers
         {
             try
             {
-                //albums = _albumManager.SelectAllAlbums();
+                albums = _albumManager.SelectAllAlbums();
             }
             catch (Exception)
             {

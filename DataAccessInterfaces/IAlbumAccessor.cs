@@ -13,6 +13,7 @@ namespace DataAccessInterfaces
         List<Album> SelectAlbumByAlbumID(int AlbumID);
         int UpdateAlbum(Album oldAlbum, Album newAlbum);
         int DeleteAlbum(int albumId);
+        List<Album> SelectAllAlbums();
 
     }
 }

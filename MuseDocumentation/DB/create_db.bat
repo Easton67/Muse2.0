@@ -1,8 +1,8 @@
 ECHO off
 
-sqlcmd -S E67\SQLEXPRESS -E -i C:\Users\67Eas\source\repos\Muse2\MuseDocumentation\DB\musedb.sql
-sqlcmd -S E67\SQLEXPRESS -E -i C:\Users\67Eas\source\repos\Muse2\MuseDocumentation\DB\musedbinserts.sql
-sqlcmd -S E67\SQLEXPRESS -E -i C:\Users\67Eas\source\repos\Muse2\MuseDocumentation\DB\musedbsprocs.sql
+sqlcmd -S E67\SQLEXPRESS -E -i musedb.sql
+sqlcmd -S E67\SQLEXPRESS -E -i musedbinserts.sql
+sqlcmd -S E67\SQLEXPRESS -E -i musedbsprocs.sql
 
 
 rem server is localhost
