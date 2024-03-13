@@ -253,98 +253,122 @@ namespace Muse2.Pages.AddSong
             {
                 try
                 {
-                    string[] songFolder = Directory.GetFiles(subfolder);
+                    string[] songFiles = Directory.GetFiles(subfolder);
 
                     string artist = "Unknown";
                     string songTitle = "Unknown";
                     string imageFilePath = "defaultAlbumImage.png";
                     string lyrics = "No Lyrics Provided.";
 
-                    foreach (string file in songFolder)
-                    {
-                        string extension = System.IO.Path.GetExtension(file);
+                    string mp3FilePath = null;
+                    string txtFilePath = null;
 
-                        switch (extension.ToLower())
+                    // Collect necessary file paths
+                    foreach (string file in songFiles)
+                    {
+                        string extension = Path.GetExtension(file).ToLower();
+                        switch (extension)
                         {
                             case ".mp3":
-
-                                if (file.Contains(" - "))
+                                mp3FilePath = file;
+                                break;
+                            case ".png":
+                                imageFilePath = file;
+                                break;
+                            case ".txt":
+                                if (file.Contains("information.txt"))
                                 {
                                     try
                                     {
-                                        string newmp3FileLocation = System.IO.Path.Combine(songfilesLocation, System.IO.Path.GetFileName(file));
-                                        File.Copy(file, newmp3FileLocation, true);
-                                        var unsplitSongTitle = System.IO.Path.GetFileNameWithoutExtension(file);
-                                        mp3FileName = System.IO.Path.GetFileName(file);
+                                        string[] lines = File.ReadAllLines(file);
 
-                                        string[] parts = unsplitSongTitle.Split('-');
-                                        string artistPart = parts[0].Trim();
-                                        string songPart = parts[1].Trim();
-                                        artist = artistPart;
-                                        songTitle = songPart;
+                                        foreach (string line in lines)
+                                        {
+                                            if (line.StartsWith("Title:"))
+                                            {
+                                                songTitle = line.Substring("Title:".Length).Trim();
+                                            }
+                                            else if (line.StartsWith("Artist:"))
+                                            {
+                                                artist = line.Substring("Artist:".Length).Trim();
+                                            }
+                                            else if (line.StartsWith("Album Name:"))
+                                            {
+                                                albumName = line.Substring("Album Name:".Length).Trim();
+                                            }
+                                            else if (line.StartsWith("Genres:"))
+                                            {
+                                                genre = line.Substring("Genres:".Length).Trim();
+                                            }
+                                        }
                                     }
                                     catch (Exception ex)
                                     {
-                                        if(ex.Message.ToLower().Contains("primary"))
-                                        {
-                                            return;
-                                        }
-                                        else
-                                        {
-                                            System.Windows.MessageBox.Show($"Error copying file '{file}': {ex.Message}");
-                                        }
+                                        System.Windows.MessageBox.Show($"Error reading text file '{txtFilePath}': {ex.Message}");
                                     }
                                 }
                                 else
                                 {
-                                    string newmp3FileLocation = System.IO.Path.Combine(songfilesLocation, System.IO.Path.GetFileName(file));
-                                    File.Copy(file, newmp3FileLocation, true);
-                                    var unsplitSongTitle = System.IO.Path.GetFileNameWithoutExtension(file);
-                                    mp3FileName = unsplitSongTitle + ".mp3";
-
-                                    artist = "Unknown";
-                                    songTitle = unsplitSongTitle;
-                                }
-                                break;
-                            case ".png":
-
-                                try
-                                {
-                                    string newPngFileLocation = System.IO.Path.Combine(imageFilesLocation, System.IO.Path.GetFileName(file));
-                                    File.Copy(file, newPngFileLocation, true);
-                                    imageFilePath = System.IO.Path.GetFileName(file);
-                                }
-                                catch (Exception ex)
-                                {
-                                    if (ex.Message.ToLower().Contains("primary"))
+                                    if(new FileInfo(file).Length > 0)
                                     {
-                                        return;
-                                    }
-                                    else
-                                    {
-                                        System.Windows.MessageBox.Show($"Error copying file '{file}': {ex.Message}");
+                                        lyrics = File.ReadAllText(file);
                                     }
                                 }
-                                break;
-                            case ".txt":
-
-                                lyrics = File.ReadAllText(file);
                                 break;
                         }
                     }
+
+                    if (!string.IsNullOrEmpty(mp3FilePath))
+                    {
+                        try
+                        {
+                            string newMp3FileLocation = Path.Combine(songfilesLocation, Path.GetFileName(mp3FilePath));
+                            File.Copy(mp3FilePath, newMp3FileLocation, true);
+
+                            string unsplitSongTitle = Path.GetFileNameWithoutExtension(mp3FilePath);
+                            if (unsplitSongTitle.Contains(" - "))
+                            {
+                                string[] parts = unsplitSongTitle.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
+                                if (parts.Length == 2)
+                                {
+                                    artist = parts[0].Trim();
+                                    songTitle = parts[1].Trim();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Windows.MessageBox.Show($"Error copying MP3 file '{mp3FilePath}': {ex.Message}");
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(imageFilePath))
+                    {
+                        try
+                        {
+                            string newPngFileLocation = Path.Combine(imageFilesLocation, Path.GetFileName(imageFilePath));
+                            File.Copy(imageFilePath, newPngFileLocation, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Windows.MessageBox.Show($"Error copying PNG file '{imageFilePath}': {ex.Message}");
+                        }
+                    }
+
                     try
                     {
                         var newSong = new Song()
                         {
+                            DateAdded = DateTime.Now,
                             Title = songTitle,
-                            ImageFilePath = imageFilePath,
-                            Mp3FilePath = mp3FileName,
+                            ImageFilePath = Path.GetFileName(imageFilePath),
+                            Mp3FilePath = Path.GetFileName(mp3FilePath),
                             YearReleased = 2023,
                             Lyrics = lyrics,
                             Explicit = false,
                             Plays = 0,
                             UserID = _loggedInUser.UserID,
-                            Album = "",
+                            Album = albumName,
                             Artist = artist,
                         };
 
@@ -359,7 +383,7 @@ namespace Muse2.Pages.AddSong
                     }
                     catch (Exception ex)
                     {
-                        if (ex.Message.ToLower().Contains("primary"))
+                        if (ex.InnerException.ToString().Contains("pk"))
                         {
                             return;
                         }

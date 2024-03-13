@@ -17,7 +17,7 @@ namespace Muse3.Controllers
         {
             try
             {
-                songs = _songManager.SelectSongsByUserID(100000);
+                songs = _songManager.SelectSongsByUserID(100001);
             }
             catch (Exception)
             {

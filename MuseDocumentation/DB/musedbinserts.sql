@@ -1389,4 +1389,3 @@ VALUES
 	(3, "Pretty good", 100001, 100013)
 GO
 
-
