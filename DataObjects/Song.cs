@@ -23,6 +23,8 @@ namespace DataObjects
         public string Lyrics { get; set; }
         [DisplayName("Explicit")]
         public bool Explicit { get; set; }
+        [DisplayName("Genre")]
+        public string Genre { get; set; }
         [DisplayName("Plays")]
         public int Plays { get; set; }
         [DisplayName("User ID")]
@@ -32,7 +34,7 @@ namespace DataObjects
         [DisplayName("Album")]
         public string Album { get; set; }
         [DisplayName("Date Uploaded")]
-        public DateTime DateUploaded { get; set; }
+        public DateTime? DateUploaded { get; set; }
         [DisplayName("Date Added")]
         public DateTime DateAdded { get; set; }
     }

@@ -212,5 +212,19 @@ namespace LogicLayer
         {
             throw new NotImplementedException();
         }
+        public List<UserFriend> SelectFriendsByUserID(int userID)
+        {
+            List <UserFriend> allFriends = new List<UserFriend>();  
+
+            try
+            {
+                allFriends = _userAccessor.SelectFriendsByUserID(userID);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to find friends lol.", ex);
+            }
+            return allFriends;
+        }
     }
 }

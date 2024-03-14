@@ -8,7 +8,7 @@ namespace DataAccessFakes
 {
     public class UserAccessorFake : IUserAccessor
     {
-        // create a few fake users for testing
+        // fake users for testing
         private List<UserVM> fakeUsers = new List<UserVM>();
         private List<User> fakeUsersNoRoles = new List<User>();
         private List<string> passwordHashes = new List<string>();
@@ -273,6 +273,11 @@ namespace DataAccessFakes
         }
 
         public UserPass SelectPasswordHashByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<UserFriend> IUserAccessor.SelectFriendsByUserID(int UserID)
         {
             throw new NotImplementedException();
         }

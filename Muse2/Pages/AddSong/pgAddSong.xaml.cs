@@ -2,6 +2,7 @@
 using LogicLayer;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -22,6 +23,8 @@ namespace Muse2.Pages.AddSong
         private List<DataObjects.Playlist> userPlaylists = null;
         private Playlist _playlist = null;
         private Song _song = null;
+        private SongManager sm = new SongManager();
+        private PlaylistManager pm = new PlaylistManager();
         public string mp3FileName;
         private string playlistFolderPath;
         public string songTitle;
@@ -36,6 +39,7 @@ namespace Muse2.Pages.AddSong
         private string imageFilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         Regex numericRegex = new Regex("[^0-9]+");
+
 
         public pgAddSong(UserVM loggedInUser)
         {
@@ -292,13 +296,29 @@ namespace Muse2.Pages.AddSong
                                             {
                                                 artist = line.Substring("Artist:".Length).Trim();
                                             }
+                                            else if (line.StartsWith("Release Year:"))
+                                            {
+                                                if(line.Substring("Release Year:".Length).Trim().Equals("Release year not found"))
+                                                {
+                                                    yearReleased = 2023;
+                                                }
+                                                else
+                                                {
+                                                    // get rid of the text, grab the datetime, and get only the year from it
+                                                    yearReleased = (DateTime.ParseExact(line.Substring("Release Year:".Length).Trim(), "dd MMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture)).Year;
+                                                }
+                                            }
                                             else if (line.StartsWith("Album Name:"))
                                             {
                                                 albumName = line.Substring("Album Name:".Length).Trim();
                                             }
-                                            else if (line.StartsWith("Genres:"))
+                                            else if (line.StartsWith("Genre:"))
                                             {
-                                                genre = line.Substring("Genres:".Length).Trim();
+                                                genre = line.Substring("Genre:".Length).Trim();
+                                            }
+                                            else if (line.StartsWith("Explicit:"))
+                                            {
+                                                isExplicit = bool.Parse(line.Substring("Explicit:".Length).Trim().ToLower());
                                             }
                                         }
                                     }
@@ -357,25 +377,27 @@ namespace Muse2.Pages.AddSong
 
                     try
                     {
-                        var newSong = new Song()
+                        var newSong = new Song()  
                         {
-                            DateAdded = DateTime.Now,
+                            DateAdded = DateTime.Now.Date,
                             Title = songTitle,
                             ImageFilePath = Path.GetFileName(imageFilePath),
                             Mp3FilePath = Path.GetFileName(mp3FilePath),
-                            YearReleased = 2023,
+                            YearReleased = yearReleased,
                             Lyrics = lyrics,
-                            Explicit = false,
+                            Explicit = isExplicit,
+                            Genre = genre,
                             Plays = 0,
                             UserID = _loggedInUser.UserID,
                             Album = albumName,
                             Artist = artist,
                         };
 
-                        var sm = new SongManager();
-                        var pm = new PlaylistManager();
                         bool result = sm.InsertSong(newSong);
-                        numberOfSongsAdded++;
+                        if(result == true)
+                        {
+                            numberOfSongsAdded++;
+                        }
 
                         userSongs = sm.SelectSongsByUserID(_loggedInUser.UserID);
                         _song = userSongs.FirstOrDefault(s => s.Title == newSong.Title);
@@ -383,14 +405,14 @@ namespace Muse2.Pages.AddSong
                     }
                     catch (Exception ex)
                     {
-                        if (ex.InnerException.ToString().Contains("pk"))
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            System.Windows.MessageBox.Show("Error adding song to playlist.");
-                        }
+                        //if (ex.InnerException.ToString().Contains("pk"))
+                        //{
+                        //    return;
+                        //}
+                        //else
+                        //{
+                        //    System.Windows.MessageBox.Show("Error adding song to playlist.");
+                        //}
                     }
                 }
                 catch (Exception)

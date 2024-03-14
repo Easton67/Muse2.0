@@ -162,7 +162,7 @@ namespace DataAccessLayer
 
             var conn = SqlConnectionProvider.GetConnection();
             var cmdText = "sp_delete_Album";
-            var cmd = new SqlCommand(cmdText, conn);
+            SqlCommand cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.Add("@AlbumID", SqlDbType.Int);
@@ -171,7 +171,6 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-
                 rows = cmd.ExecuteNonQuery();
 
                 if (rows == 0)

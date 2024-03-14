@@ -12,6 +12,7 @@ namespace DataAccessInterfaces
         int InsertSong(Song song);
         List<Song> SelectSongsByUserID(int UserID);
         List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID);
+        List<string> SelectAllGenres();
         int UpdateSong(Song oldSong, Song newSong);
         int UpdatePlaysBySongID(int songID, int plays);
         int DeleteSong(int SongID);

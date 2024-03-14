@@ -38,35 +38,29 @@ CREATE TABLE [dbo].[User] (
 )
 GO
 
-/* Friend Table */
-print '' print '*** creating Friend table ***'
-GO
-CREATE TABLE [dbo].[Friend] (
-	[FriendID]			[int] IDENTITY(100000,1)   NOT NULL,
-	[DayAddedAsFriend]	[date]              NULL,
-	CONSTRAINT[pk_FriendID] PRIMARY KEY([FriendID])
-)
-
 /* UserFriend Table */
 print '' print '*** creating UserFriend table ***'
 GO
 CREATE TABLE [dbo].[UserFriend] (
-	[UserID]	[int]				    NOT NULL,
-	[FriendID]	[int]				    NOT NULL,
+	[UserID]			[int]				       NOT NULL,
+	[FriendID]			[int]                      NOT NULL,
+	[DayAddedAsFriend]	[date]              	   NULL	
 	
-	CONSTRAINT [fk_UserFriend_UserID] FOREIGN KEY([UserID])
-		REFERENCES [dbo].[User]([UserID]),
-		
-	CONSTRAINT [fk_UserFriend_FriendID] FOREIGN KEY([FriendID])
-		REFERENCES [dbo].[Friend]([FriendID]),
-		
-	CONSTRAINT [pk_UserFriend] PRIMARY KEY([UserID], [FriendID])
+    CONSTRAINT [fk_UserFriend_UserID] FOREIGN KEY([UserID])
+        REFERENCES [dbo].[User]([UserID]),
+    
+    CONSTRAINT [fk_UserFriend_FriendID] FOREIGN KEY([FriendID])
+        REFERENCES [dbo].[User]([UserID]),
+    
+    CONSTRAINT [pk_UserFriend] PRIMARY KEY([UserID], [FriendID]),
+    
+    CONSTRAINT [u_UserFriend_Unique] UNIQUE([UserID], [FriendID])
 )
 
 
 
 /* Role Table */
-print '' print '*** creating role table ***'
+print '' print '*** creating Role table ***'
 GO
 CREATE TABLE [dbo].[Role] (
 	[RoleID]	[nvarchar](50)
@@ -127,13 +121,13 @@ CREATE TABLE [dbo].[Song] (
     [YearReleased]   [int]						 DEFAULT 2023,
     [Lyrics]         [nvarchar](max)		     DEFAULT 'No Lyrics Provided',
     [Explicit]       [bit]						 NOT NULL DEFAULT 0,
-    [Genre]          [nvarchar](200)			 NULL DEFAULT "Unknown",
+    [Genre]          [nvarchar](200)			 NULL DEFAULT "None",
     [Plays]          [int]						 NOT NULL DEFAULT 0,
 	[UserID]		 [int],
 	[ArtistID]		 [nvarchar](200),
-	[AlbumID]		 [int]						 NULL,
-    [DateUploaded]   [date]                  	 NULL,
-	[DateAdded]      [date]                  NOT NULL DEFAULT GETDATE(),
+	[AlbumID]		 [int]						     NULL,
+    [DateUploaded]   [DATETIME]                  	 NULL,
+	[DateAdded]      [DATETIME]                  	 NOT NULL DEFAULT GETDATE(),
 	CONSTRAINT [fk_Song_UserID] FOREIGN KEY([UserID])
         REFERENCES [dbo].[User]([UserID]), 
 	CONSTRAINT [fk_Song_AlbumID] FOREIGN KEY([AlbumID])

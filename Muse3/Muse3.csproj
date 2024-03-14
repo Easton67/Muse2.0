@@ -176,6 +176,7 @@
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\SongController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -915,6 +916,7 @@
     <Content Include="Views\Playlist\ViewAllPlaylists.cshtml" />
     <Content Include="Views\Review\ViewAllReviews.cshtml" />
     <Content Include="Views\Album\ViewAllAlbums.cshtml" />
+    <Content Include="Views\User\ViewAllFriends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

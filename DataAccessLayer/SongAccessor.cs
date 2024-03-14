@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DataAccessLayer
 {
@@ -24,10 +25,12 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@YearReleased", song.YearReleased);
             cmd.Parameters.AddWithValue("@Lyrics", song.Lyrics);
             cmd.Parameters.AddWithValue("@Explicit", song.Explicit);
+            cmd.Parameters.AddWithValue("@Genre", song.Genre);
             cmd.Parameters.AddWithValue("@Plays", song.Plays);
             cmd.Parameters.AddWithValue("@UserID", song.UserID);
             cmd.Parameters.AddWithValue("@ArtistID", song.Artist);
             cmd.Parameters.AddWithValue("@AlbumTitle", song.Album);
+            cmd.Parameters.AddWithValue("@DateAdded", song.DateAdded);
 
             try
             {
@@ -71,10 +74,14 @@ namespace DataAccessLayer
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
                         Explicit = reader.GetBoolean(6),
-                        Plays = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
-                        UserID = reader.GetInt32(8),
-                        Artist = reader.GetString(9),
-                        Album = reader.IsDBNull(10) ? "" : reader.GetString(10)
+                        Genre = reader.GetString(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        UserID = reader.GetInt32(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
+                        DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
+                        DateAdded = reader.GetDateTime(13)
+
                     };
                     songs.Add(song);
                 }
@@ -103,7 +110,6 @@ namespace DataAccessLayer
 
             cmd.Parameters.Add("@UserID", SqlDbType.Int);
             cmd.Parameters.Add("@PlaylistID", SqlDbType.Int);
-
             cmd.Parameters["@UserID"].Value = UserID;
             cmd.Parameters["@PlaylistID"].Value = PlaylistID;
 
@@ -146,32 +152,18 @@ namespace DataAccessLayer
         {
             int rows = 0;
 
-            //connection
             var conn = SqlConnectionProvider.GetConnection();
-
-            //command text
             var cmdText = "sp_update_song_plays";
-
-            //command
             var cmd = new SqlCommand(cmdText, conn);
-
-            //command type
             cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
             cmd.Parameters.Add("@SongID", SqlDbType.Int);
             cmd.Parameters.Add("@NewPlays", SqlDbType.Int);
-
-            // Parameter Values
             cmd.Parameters["@SongID"].Value = SongID;
             cmd.Parameters["@NewPlays"].Value = Plays;
 
             try
             {
-                // open the connection
                 conn.Open();
-
-                // an update is executed nonquery - returns an int
                 rows = cmd.ExecuteNonQuery();
 
                 if (rows == 0)
@@ -281,6 +273,34 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return rows;
+        }
+        public List<string> SelectAllGenres()
+        {
+            List<String> genres = new List<String>();
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_genres_from_songs";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    genres.Add(reader.GetString(0));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return genres;
         }
     }
 }

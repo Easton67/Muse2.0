@@ -35,4 +35,8 @@ namespace DataObjects
     {
         public string PasswordHash { get; set; }
     }
+    public class UserFriend : User
+    {
+        public DateTime DateAddedAsFriend { get; set; }
+    }
 }

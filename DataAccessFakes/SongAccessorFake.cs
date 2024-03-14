@@ -152,5 +152,9 @@ namespace DataAccessFakes
 
             return rows;
         }
+        public List<string> SelectAllGenres()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

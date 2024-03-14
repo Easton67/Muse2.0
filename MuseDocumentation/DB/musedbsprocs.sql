@@ -287,18 +287,21 @@ GO
 
 print '' print '*** creating sp_insert_song ***'
 GO
+
 CREATE PROCEDURE [dbo].[sp_insert_song]
 (
-	@Title 			[nvarchar](180),
-	@ImageFilePath  [nvarchar](500),
-	@Mp3FilePath 	[nvarchar](500),
-	@YearReleased 	[int],
-	@Lyrics 	    [text],
-	@Explicit 		[bit],
-	@Plays 			[int],
-	@UserID 		[int],
-    @ArtistID      	[nvarchar](200),
-	@AlbumTitle     [nvarchar](255)
+    @Title          NVARCHAR(180),
+    @ImageFilePath  NVARCHAR(500),
+    @Mp3FilePath    NVARCHAR(500),
+    @YearReleased   INT,
+    @Lyrics         TEXT,
+    @Explicit       BIT,
+    @Genre          NVARCHAR(150),
+    @Plays          INT,
+    @UserID         INT,
+    @ArtistID       NVARCHAR(200),
+    @AlbumTitle     NVARCHAR(255),
+    @DateAdded      DATETIME
 )
 AS
 	BEGIN
@@ -321,21 +324,24 @@ AS
 
 		INSERT INTO [dbo].[Song] 
 			([Title], [Mp3FilePath], [ImageFilePath], [YearReleased], [Lyrics], 
-			[Explicit], [Plays], [UserID], [AlbumID])
-		VALUES (@Title, @Mp3FilePath, @ImageFilePath, @YearReleased, @Lyrics, 
-			@Explicit, @Plays, @UserID, @AlbumID)
+			[Explicit], [Genre], [Plays], [UserID], [AlbumID], [DateAdded])
+		VALUES 
+			(@Title, @Mp3FilePath, @ImageFilePath, @YearReleased, @Lyrics, 
+			@Explicit, @Genre, @Plays, @UserID, @AlbumID, @DateAdded);
 
 		SET @SongID = SCOPE_IDENTITY()
 
 		INSERT INTO [dbo].[SongArtist] 
 			([SongID], [ArtistID])
-		VALUES (@SongID, @ArtistID)
+		VALUES 
+			(@SongID, @ArtistID)
 
-		IF @AlbumID IS NOT NULL
+		IF @AlbumID IS NOT NULL AND @AlbumID <> ''
 		BEGIN
 			INSERT INTO [dbo].[SongAlbum] 
 				([SongID], [AlbumID])
-			VALUES (@SongID, @AlbumID)
+			VALUES 
+				(@SongID, @AlbumID)
 		END
 	END
 GO
@@ -350,9 +356,21 @@ CREATE PROCEDURE [dbo].[sp_select_songs_by_UserID]
 )
 AS	
 	BEGIN
-		SELECT	[Song].[SongID], [Song].[Title],[Song].[ImageFilePath],[Song].[Mp3FilePath],[Song].[YearReleased],
-		[Song].[Lyrics],[Song].[Explicit], [Song].[Plays],[Song].[UserID], [SongArtist].[ArtistID],
-		[Album].[Title]
+		SELECT	[Song].[SongID], 
+				[Song].[Title],
+				[Song].[ImageFilePath],
+				[Song].[Mp3FilePath],
+				[Song].[YearReleased],
+				[Song].[Lyrics],
+				[Song].[Explicit], 
+				[Song].[Genre],
+				[Song].[Plays],
+				[Song].[UserID],				
+				[SongArtist].[ArtistID],
+				[Album].[Title],
+				[Song].[DateUploaded],
+				[Song].[DateAdded]
+  
 		FROM	[Song] JOIN [User] ON [Song].[UserID] = [User].[UserID]
 					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
 					   LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
@@ -681,6 +699,42 @@ AS
 				[ImageFilePath],
 				[Description]
 		FROM	[Album]
+	END
+GO
+
+/* sp_select_friends_from_UserID */
+
+print '' print '*** creating sp_select_friends_from_UserID ***'
+GO
+
+CREATE PROCEDURE [dbo].[sp_select_friends_from_UserID]
+(
+    @UserID [int]
+)
+AS
+	BEGIN
+		SELECT  [User].[UserID],
+				[User].[ProfileName], 
+				[User].[FirstName], 
+				[User].[LastName], 
+				[User].[Email], 
+				[User].[ImageFilePath], 
+				[User].[Active], 
+				[User].[MinutesListened], 
+				[UserFriend].[DayAddedAsFriend]
+		FROM    [UserFriend]
+		INNER JOIN [User] ON [UserFriend].[FriendID] = [User].[UserID]
+		WHERE   [UserFriend].[UserID] = @UserID
+	END
+GO
+
+/* sp_select_friends_from_UserID */
+
+CREATE PROCEDURE [dbo].[sp_select_all_genres_from_songs]
+AS
+	BEGIN
+		SELECT DISTINCT [Genre]
+		FROM [Song]
 	END
 GO
 

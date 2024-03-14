@@ -46,13 +46,30 @@ namespace LogicLayer
             }
             return songs;
         }
+        public List<string> SelectAllGenres()
+        {
+            List<string> genres = new List<string>();
+
+            try
+            {
+                genres = _songAccessor.SelectAllGenres();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Playlist not found", ex);
+            }
+            return genres;
+        }
         public bool InsertSong(Song newSong)
         {
             bool result = false;
 
             try
             {
-                result = (1 == _songAccessor.InsertSong(newSong));
+                if (_songAccessor.InsertSong(newSong) >= 1)
+                {
+                    result = true;
+                }
             }
             catch (Exception ex)
             {
@@ -102,5 +119,6 @@ namespace LogicLayer
             }
             return result;
         }
+    
     }
 }

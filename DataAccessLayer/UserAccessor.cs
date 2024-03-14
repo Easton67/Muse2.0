@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer;
-using DataAccessInterfaces;
+﻿using DataAccessInterfaces;
 using DataObjects;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace DataAccessLayer
 {
@@ -17,7 +14,6 @@ namespace DataAccessLayer
         public int InsertUser(User user, string password)
         {
             int rows = 0;
-
             var conn = SqlConnectionProvider.GetConnection();
             var cmdText = "sp_create_new_user";
             var cmd = new SqlCommand(cmdText, conn);
@@ -45,34 +41,19 @@ namespace DataAccessLayer
         public int AuthenticateUserWithEmailAndPasswordHash(string email, string passwordHash)
         {
             int rows = 0;
-
-            // start with a connection object
             var conn = SqlConnectionProvider.GetConnection();
-
-            // set the command text
             var commandText = "sp_authenticate_user";
-
-            // create the command object
             var cmd = new SqlCommand(commandText, conn);
-
-            // set the command text
             cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
             cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100);
             cmd.Parameters.Add("@PasswordHash", SqlDbType.NVarChar, 100);
-
-            // we Need to set the parameter values
             cmd.Parameters["@Email"].Value = email;
             cmd.Parameters["@PasswordHash"].Value = passwordHash;
 
-            // now that we are all set up, we execute command in a try-catch-finally
             try
             {
-                // open the connection
                 conn.Open();
 
-                // execute the command and capture the result
                 rows = Convert.ToInt32(cmd.ExecuteScalar());
             }
             catch (Exception ex)
@@ -90,29 +71,19 @@ namespace DataAccessLayer
         public UserPass SelectPasswordHashByEmail(string email)
         {
             UserPass userPass = new UserPass();
-
             var conn = SqlConnectionProvider.GetConnection();
-
             var cmdText = "sp_select_passwordHash_by_Email";
-
             var cmd = new SqlCommand(cmdText, conn);
-
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100);
-
             cmd.Parameters["@Email"].Value = email;
 
             try
             {
                 conn.Open();
-
                 var reader = cmd.ExecuteReader();
-
-                //process the results
                 if (reader.HasRows)
                 {
-                    //change if to while if multiple rows
                     if (reader.Read())
                     {
                         userPass.PasswordHash = reader.GetString(0);
@@ -136,19 +107,12 @@ namespace DataAccessLayer
         public UserVM SelectUserVMByEmail(string email)
         {
             UserVM userVM = new UserVM();
-
             var conn = SqlConnectionProvider.GetConnection();
-
             var cmdText = "sp_select_user_by_Email";
-
             var cmd = new SqlCommand(cmdText, conn);
-
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100);
-
             cmd.Parameters["@Email"].Value = email;
-
             try
             {
                 conn.Open();
@@ -156,10 +120,8 @@ namespace DataAccessLayer
                 var reader = cmd.ExecuteReader();
                 string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-                //process the results
                 if (reader.HasRows)
                 {
-                    //change if to while if multiple rows
                     if (reader.Read())
                     {
                         userVM.UserID = reader.GetInt32(0);
@@ -190,21 +152,15 @@ namespace DataAccessLayer
         public List<User> SelectAllUsers()
         {
             List<User> allUsers = new List<User>();
-
             var conn = SqlConnectionProvider.GetConnection();
-
             var cmdText = "sp_select_all_users";
-
             var cmd = new SqlCommand(cmdText, conn);
-
             cmd.CommandType = CommandType.StoredProcedure;
 
             try
             {
                 conn.Open();
-
                 var reader = cmd.ExecuteReader();
-
                 while (reader.Read())
                 {
                     var user = new User
@@ -236,23 +192,16 @@ namespace DataAccessLayer
             List<string> roles = new List<string>();
 
             var conn = SqlConnectionProvider.GetConnection();
-
             var cmdText = "sp_select_role_by_UserID";
-
             var cmd = new SqlCommand(cmdText, conn);
-
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.Add("@UserID", SqlDbType.Int);
-
             cmd.Parameters["@UserID"].Value = userID;
 
             try
             {
                 conn.Open();
-
                 var reader = cmd.ExecuteReader();
-
                 if (reader.HasRows)
                 {
                     while (reader.Read())
@@ -260,7 +209,6 @@ namespace DataAccessLayer
                         roles.Add(reader.GetString(0));
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -280,7 +228,6 @@ namespace DataAccessLayer
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // Add parameters
             cmd.Parameters.AddWithValue("@UserID", newUser.UserID);
             cmd.Parameters.AddWithValue("@NewFirstName", newUser.FirstName);
             cmd.Parameters.AddWithValue("@NewLastName", newUser.LastName);
@@ -436,5 +383,50 @@ namespace DataAccessLayer
 
             return rows;
         }
+
+        #region FriendAccessors
+        public List<UserFriend> SelectFriendsByUserID(int userID)
+        {
+            List<UserFriend> friends = new List<UserFriend>();
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_friends_from_UserID";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters["@UserID"].Value = userID;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    UserFriend userFriend = new UserFriend();
+
+                    userFriend.UserID = reader.GetInt32(0);
+                    userFriend.ProfileName = reader.GetString(1);
+                    userFriend.FirstName = reader.GetString(2);
+                    userFriend.LastName = reader.GetString(3);
+                    userFriend.Email = reader.GetString(4);
+                    userFriend.ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\" + reader.GetString(5);
+                    userFriend.Active = reader.GetBoolean(6);
+                    userFriend.MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7);
+                    userFriend.DateAddedAsFriend = reader.GetDateTime(8);
+                    friends.Add(userFriend); 
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return friends;
+        }
+        #endregion
     }
 }
