@@ -16,5 +16,6 @@ namespace LogicLayer
         bool UpdatePlaysBySongID(int SongID, int Plays);
         bool DeleteSong(int SongID);
         List<string> SelectAllGenres();
+        Song SelectSongBySongID(int UserID, int SongID);
     }
 }

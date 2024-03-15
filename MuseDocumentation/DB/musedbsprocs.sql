@@ -738,5 +738,39 @@ AS
 	END
 GO
 
+/* sp_select_song_by_SongID */
+
+print '' print '*** creating sp_select_song_by_SongID ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_song_by_SongID]
+(
+	@UserID			[int],
+	@SongID			[int]
+)
+AS	
+	BEGIN
+		SELECT	[Song].[SongID], 
+				[Song].[Title],
+				[Song].[ImageFilePath],
+				[Song].[Mp3FilePath],
+				[Song].[YearReleased],
+				[Song].[Lyrics],
+				[Song].[Explicit], 
+				[Song].[Genre],
+				[Song].[Plays],
+				[Song].[UserID],				
+				[SongArtist].[ArtistID],
+				[Album].[Title],
+				[Song].[DateUploaded],
+				[Song].[DateAdded]
+  
+		FROM	[Song] JOIN [User] ON [Song].[UserID] = [User].[UserID]
+					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
+					   LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
+					   LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
+		WHERE 	@UserID = [User].[UserID]
+	END
+GO
+
 
 

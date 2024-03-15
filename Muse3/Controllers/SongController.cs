@@ -30,7 +30,18 @@ namespace Muse3.Controllers
         // GET: Song/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Song song = null;
+
+            try
+            {
+                song = _songManager.SelectSongBySongID(100001, id);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return View(song);
         }
 
         // GET: Song/Create
@@ -38,7 +49,7 @@ namespace Muse3.Controllers
         {
             return View();
         }
-
+        
         // POST: Song/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)

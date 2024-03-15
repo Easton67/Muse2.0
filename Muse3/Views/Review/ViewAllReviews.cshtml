@@ -9,19 +9,25 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table bg-dark text-light">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewedSong.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewedSong.Artist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewedSong.Album)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewedSong.YearReleased)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Rating)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Message)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SongID)
         </th>
         <th></th>
     </tr>
@@ -29,21 +35,27 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.ReviewedSong.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReviewedSong.Artist)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReviewedSong.Album)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReviewedSong.YearReleased)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Rating)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Message)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SongID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ReviewID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReviewID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ReviewID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ReviewID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ReviewID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ReviewID })
         </td>
     </tr>
 }

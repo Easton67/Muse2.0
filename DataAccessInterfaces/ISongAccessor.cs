@@ -16,5 +16,6 @@ namespace DataAccessInterfaces
         int UpdateSong(Song oldSong, Song newSong);
         int UpdatePlaysBySongID(int songID, int plays);
         int DeleteSong(int SongID);
+        Song SelectSongBySongID(int UserID, int SongID);
     }
 }

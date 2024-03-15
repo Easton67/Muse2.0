@@ -11,7 +11,11 @@ namespace Muse3.Controllers
     public class ReviewController : Controller
     {
         private ReviewManager _reviewManager = new ReviewManager();
-        List<Review> reviews = new List<Review>();
+        private SongManager _songManager = new SongManager();
+
+        List<Review> reviews = new List<Review>(); 
+        List<Song> songs = new List<Song>();
+
         // GET: Review
         public ActionResult ViewAllReviews()
         {

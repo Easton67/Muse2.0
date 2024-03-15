@@ -2,88 +2,46 @@
 
 @{
     ViewBag.Title = "Library";
+    string newImageFilePath = "";
 }
-
-<h2>Library</h2>
-
-<div class="row mx-5 row-cols-lg-10">
-        @foreach (var item in Model) { 
-            <div class="col my-4 inline" style="display: flex; align-items: center;">
-                <img style="height: 100px; width: 100px;" src="@Url.Content(item.ImageFilePath)" alt="Song Image">
-                <div class="mx-3">
-                    <br>
-                    <div class="d-inline-block">
-                        <p>@Html.DisplayFor(modelItem => item.Title)<img style="filter: invert(100%); width: 10px; height: 10px" src="~/Images/explicit.png" /></p>
-                    </div>
-                    <p>@Html.DisplayFor(modelItem => item.Artist)</p>
-                    <p>@Html.DisplayFor(modelItem => item.Album)</p>
-                </div>
-            </div>
-    }   
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <h2 class="sticky-lg-top">Library</h2>
+        </div>
+    </div>
 </div>
-
-
-
-
-@*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table bg-dark text-light">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageFilePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Artist)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Album)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YearReleased)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Explicit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Plays)
-            </th>
-            <th></th>
-        </tr>
-
+<div class="row mx-5 row-cols- lg-10">
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                <img style="height: 50px; width: 50px;" src="@Url.Content(item.ImageFilePath)" alt="Song Image">
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Artist)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Album)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YearReleased)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Explicit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Plays)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.SongID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.SongID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.SongID })
-            </td>
-        </tr>
-    }
+        <div id="library-cards-container" class="col my-4 inline w-auto">
+            <img class="album-img" src="/Images/@Path.GetFileName(item.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)">
+            <div class="mx-5" style="width: 300px;">
+                <br>
+                <div class="d-inline-block" style="white-space: nowrap!important;">
+                    <p>
+                        @{
+                            string title = item.Title.Length >= 30 ? item.Title.Substring(0, 29) + "..." : item.Title;
+                            string album = item.Album.Length >= 30 ? item.Album.Substring(0, 29) + "..." : item.Album;
+                            string artist = item.Artist.Length >= 30 ? item.Artist.Substring(0, 29) + "..." : item.Artist;
+                        }
 
-    </table>*@
+
+                        @title<img style="filter: invert(100%); padding-left: 4px; padding-bottom: 2px; width: 13px; height: 13px" src="~/Images/explicit.png" />
+                    </p>
+                </div>
+                <p>@album</p>
+                <p>@artist</p>
+            </div>
+            <div class="text-right">
+                @Html.ActionLink("Edit", "Edit", new { id = item.SongID })
+                <br />
+                <br />
+                @Html.ActionLink("Details", "Details", new { id = item.SongID })
+                <br />
+                <br />
+                @Html.ActionLink("Delete", "Delete", new { id = item.SongID })
+            </div>
+        </div>
+    }
+</div>

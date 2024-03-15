@@ -119,6 +119,19 @@ namespace LogicLayer
             }
             return result;
         }
-    
+        public Song SelectSongBySongID(int UserID, int SongID)
+        {
+            Song song = new Song();
+
+            try
+            {
+                song = _songAccessor.SelectSongBySongID(UserID, SongID);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not found.", ex);
+            }
+            return song;
+        }
     }
 }

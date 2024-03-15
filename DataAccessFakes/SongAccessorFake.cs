@@ -156,5 +156,9 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public Song SelectSongBySongID(int UserID, int SongID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

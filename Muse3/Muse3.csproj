@@ -207,6 +207,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\bigvec.jpg" />
+    <Content Include="Images\blond.jpeg" />
     <Content Include="Images\dark-purple-pattern-with-curved-lines-vector.jpg" />
     <Content Include="Images\defaultAlbumImage.png" />
     <Content Include="Images\explicit.png" />
@@ -917,6 +918,7 @@
     <Content Include="Views\Review\ViewAllReviews.cshtml" />
     <Content Include="Views\Album\ViewAllAlbums.cshtml" />
     <Content Include="Views\User\ViewAllFriends.cshtml" />
+    <Content Include="Views\Song\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

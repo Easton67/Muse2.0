@@ -57,7 +57,7 @@ def get_genre_and_cover_and_album_name(artist_name, track_name):
 
         # Get album name
         album = track.get_album()
-        album_name = album.get_title() if album else None
+        album_name = album.get_title() if album else "Unknown"
         
         # Get album cover image URL from Last.fm
         album_cover = album.get_cover_image() if album else None

@@ -1,0 +1,123 @@
+﻿@model DataObjects.Song
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Html.DisplayNameFor(model => model.Title)</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageFilePath)
+        </dt>
+
+        <dd>
+            <image src="@Html.DisplayFor(model => model.ImageFilePath)" alt="album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)"></image>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mp3FilePath)
+        </dt>
+
+        <dd>
+            <audio controls>
+                <source src="@Html.DisplayFor(model => model.Mp3FilePath)" type="audio/mpeg">
+            </audio>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YearReleased)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearReleased)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lyrics)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lyrics)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Explicit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Explicit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Plays)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plays)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Artist)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Artist)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Album)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Album)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateUploaded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateUploaded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateAdded)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
