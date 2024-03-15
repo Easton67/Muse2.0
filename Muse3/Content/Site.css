@@ -2,6 +2,18 @@
     height: auto;
 }
 
+body {
+    height: 100%;
+    background-image: url('../images/bigvec.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(.4em);
+    background-attachment: fixed;
+    font-family: Arial;
+    font-weight: Bold;
+    color: white;
+}
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -42,13 +54,6 @@ textarea {
     background-repeat: no-repeat;
     backdrop-filter: blur(.4em);
 }
-
-body {
-    color: white;
-    font-family: Arial;
-    font-weight: Bold;
-}
-
 
 /* Navbar */
 
@@ -128,6 +133,12 @@ body {
     border: 5px solid white;
     width: 200px;
     height: 200px;
+    -webkit-user-drag: none;
+}
+
+.album-img:hover {
+    opacity: 0.5;
+    background-color: white;
 }
 
 /* Login Page */
