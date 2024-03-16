@@ -64,7 +64,7 @@ namespace DataAccessLayer
                         AlbumID = reader.GetInt32(0),
                         Title = reader.GetString(1),
                         ImageFilePath = reader.IsDBNull(2) ? defaultAlbumImg : reader.GetString(2),
-                        Description = reader.GetString(3)
+                        Description = reader.IsDBNull(3) ? "No description." : reader.GetString(3),
                     };
                     albums.Add(Album);
                 }

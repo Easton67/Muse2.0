@@ -58,7 +58,7 @@ VALUES
 	('Isaiah Rashad')
 GO
 
-
+/*
 print '' print '*** inserting Song test records ***'	
 GO
 
@@ -1337,6 +1337,35 @@ VALUES
 	(100015, 'Isaiah Rashad')
 GO
 
+print '' print '*** inserting PlaylistSong test records ***'
+GO
+INSERT INTO [dbo].[PlaylistSong] 
+    ([PlaylistID], [SongID])
+VALUES
+	(100000, 100000),
+	(100001, 100001),
+	(100002, 100002),
+	(100003, 100003),
+	(100004, 100004)
+GO
+
+
+print '' print '*** inserting Review test records ***'
+GO
+INSERT INTO [dbo].[Review] 
+    ([Rating], [Message], [UserID], [SongID])
+VALUES
+	(5, "Loved it", 100001, 100010),
+	(4, "Amazing", 100001, 100009),
+	(3, "Pretty good", 100001, 100008),
+	(2, "Lame", 100001, 100007),
+	(1, "Trash", 100001, 100006),
+	(5, "Loved it!", 100001, 100015),
+	(4, "Amazing", 100001, 100012),
+	(3, "Pretty good", 100001, 100013)
+GO
+*/
+
 print '' print '*** inserting Playlist test records ***'
 GO
 INSERT INTO [dbo].[Playlist] 
@@ -1360,33 +1389,6 @@ VALUES
 	('Winter', 'winter.jpg', 'Snow', 100001),
 	('Spring', 'spring.png', 'Renewal', 100001),
 	('Summer', 'summer.jpg', 'Sunshine', 100001)
-GO
-
-print '' print '*** inserting PlaylistSong test records ***'
-GO
-INSERT INTO [dbo].[PlaylistSong] 
-    ([PlaylistID], [SongID])
-VALUES
-	(100000, 100000),
-	(100001, 100001),
-	(100002, 100002),
-	(100003, 100003),
-	(100004, 100004)
-GO
-
-print '' print '*** inserting Review test records ***'
-GO
-INSERT INTO [dbo].[Review] 
-    ([Rating], [Message], [UserID], [SongID])
-VALUES
-	(5, "Loved it", 100001, 100010),
-	(4, "Amazing", 100001, 100009),
-	(3, "Pretty good", 100001, 100008),
-	(2, "Lame", 100001, 100007),
-	(1, "Trash", 100001, 100006),
-	(5, "Loved it!", 100001, 100015),
-	(4, "Amazing", 100001, 100012),
-	(3, "Pretty good", 100001, 100013)
 GO
 
 print '' print '*** inserting UserFriend test records ***'

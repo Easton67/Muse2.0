@@ -13,7 +13,7 @@ namespace Muse3.Controllers
         private AlbumManager _albumManager = new AlbumManager();
         List<Album> albums = new List<Album>();
         // GET: Album
-        public ActionResult ViewAllAlbums()
+        public ActionResult Albums()
         {
             try
             {

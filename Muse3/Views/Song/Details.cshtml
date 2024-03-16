@@ -7,7 +7,7 @@
 <div class="mx-5 my-4 d-flex justify-content-between">
     <div class="d-flex justify-content-between">
         <div>
-            <img id="album-img-edit" src="/Images/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)">
+            <img id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)">
         </div>
         <div class="fs-5 px-5 mt-4">
             <p>@Model.Title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /> by @Html.DisplayFor(model => model.Artist)</p>

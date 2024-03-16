@@ -10,7 +10,7 @@
     {
         <div id="library-cards-container" class="col my-4 inline w-auto">
             <div id="image-container" class="image-container" data-image-songID="@item.SongID">
-                <img id="album-img" class="album-img" src="/Images/@Path.GetFileName(item.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)" data-songid="@item.SongID">
+                <img id="album-img" class="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)" data-songid="@item.SongID">
                 <button id="library-play-button" class="library-play-button">
                     <img src="~/Images/play.png" />
                 </button><br />

@@ -1,4 +1,4 @@
-﻿html{
+﻿html {
     height: auto;
 }
 
@@ -86,17 +86,17 @@ textarea {
     margin-bottom: 3em;
 }
 
-    .slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 50px;
-        height: 50px;
-        border: 0;
-        border-radius: 8px;
-        background: url('../images/becausetheinternet.jpg') center/100% 100%;
-        object-fit: cover;
-        cursor: pointer;
-    }
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 50px;
+    height: 50px;
+    border: 0;
+    border-radius: 8px;
+    background: url('../images/becausetheinternet.jpg') center/100% 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
 
 .bg-purple-radial-background {
     background: radial-gradient(circle, rgba(46,34,76,1) 0%, rgba(38,37,37,.9) 100%);
@@ -157,6 +157,14 @@ audio {
     opacity: .8
 }
 
+#album-img-edit {
+    border-radius: 10px;
+    border: none;
+    width: 400px;
+    height: 400px;
+    -webkit-user-drag: none;
+}
+
 .library-play-button:Hover {
     cursor: pointer;
     opacity: .5
@@ -192,12 +200,6 @@ audio {
     margin-top: -31px;
 }
 
-#album-img-edit {
-    border-radius: 10px;
-    border: none;
-    width: 400px;
-    height: 400px;
-}
 /* Login Page */
 #login-container {
     background-color: rgba(255, 255, 255, 0.2);

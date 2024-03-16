@@ -104,7 +104,7 @@ CREATE TABLE [dbo].[Album] (
 	[Title] 		[nvarchar](100)          	 NOT NULL DEFAULT 'Unknown',
 	[ImageFilePath] [nvarchar](500)              DEFAULT 
 	'defaultAlbumImage.png',
-	[Description] 	[nvarchar](max)
+	[Description] 	[nvarchar](max)				 NULL, 
 	CONSTRAINT[pk_AlbumID] PRIMARY KEY([AlbumID])
 )
 GO

@@ -42,8 +42,11 @@ namespace Muse2.Pages.Library
 
             songListRepopulation();
             playlistListRepopulation();
-
-            song = userSongs[0];
+            if(userSongs.Count() >= 1)
+            {
+                song = userSongs[0];
+                return;
+            }
         }
         private void AddSongToQueue()
         {

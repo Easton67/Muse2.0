@@ -12,7 +12,7 @@
 <div class="mx-5 my-4 d-flex justify-content-between">
     <div class="d-flex justify-content-between">
         <div>
-            <img onclick="openFileDialog()" id="album-img-edit" src="/Images/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)" data-songid="@Model.SongID">
+            <img onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)" data-songid="@Model.SongID">
             <input type="file" id="imageFilePath" style="display: none;" onchange="handleImageSelection(event)" accept="image/png" />
             <p class="mt-2">Added: @Model.DateAdded.Date.ToShortDateString()</p>
             <div class="col-md-10" style="display: none;">

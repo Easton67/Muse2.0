@@ -9,19 +9,6 @@
     <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
 <body>
-    @*<div class="col-10 d-flex justify-content-center my-5">
-            <div class="slider-buttons">
-                <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
-                    <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(707.704 10466.905) rotate(180)" fill="#fff" />
-                </svg>
-            </div>
-            <input class="slider" type="range" min="1" max="100" value="50" id="myRange">
-            <div class="slider-buttons">
-                <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
-                    <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(-681 -10447.9)" fill="#fff" />
-                </svg>
-            </div>
-        </div>*@
     <nav class="navbar sticky-lg-top navbar-expand-lg navbar-dark bg-purple-radial-background">
         <div class="container-fluid">
             <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "" })">
@@ -33,7 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li>@Html.ActionLink("Song", "Library", "Song", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Album", "ViewAllAlbums", "Album", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Album", "Albums", "Album", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Playlist", "ViewAllPlaylists", "Playlist", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Account", "Contact", "Account", new { area = "" }, new { @class = "nav-link" })</li>
@@ -69,6 +56,19 @@
         @RenderBody()
         <hr />
         <footer class="text-center">
+            @*<div class="col-10 d-flex justify-content-center my-5">
+            <div class="slider-buttons">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
+                    <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(707.704 10466.905) rotate(180)" fill="#fff" />
+                </svg>
+            </div>
+            <input class="slider" type="range" min="1" max="100" value="50" id="myRange">
+            <div class="slider-buttons">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
+                    <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(-681 -10447.9)" fill="#fff" />
+                </svg>
+            </div>
+        </div>*@
             <p>&copy; @DateTime.Now.Year - Muse v3.0 - Easton67</p>
         </footer>
     </div>
