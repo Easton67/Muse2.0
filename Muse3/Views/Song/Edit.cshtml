@@ -1,0 +1,130 @@
+﻿@model DataObjects.Song
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.SongID)
+<div class="mx-5 my-4 d-flex justify-content-between">
+    <div class="d-flex justify-content-between">
+        <div>
+            <img onclick="openFileDialog()" id="album-img-edit" src="/Images/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)" data-songid="@Model.SongID">
+            <input type="file" id="imageFilePath" style="display: none;" onchange="handleImageSelection(event)" accept="image/png" />
+            <p class="mt-2">Added: @Model.DateAdded.Date.ToShortDateString()</p>
+            <div class="col-md-10" style="display: none;">
+                @Html.EditorFor(model => model.Plays, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="fs-5 px-5 song-form-edit">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                <br>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Album, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                <br>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Album, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Album, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Artist, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                <br>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Artist, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Artist, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                Year Released
+                <br>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.YearReleased, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.YearReleased, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+
+        </div>
+        <div class="fs-5 px-5 song-form-edit">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                <br>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Plays, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                <br>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Plays, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div>
+                <br />
+                <input type="submit" value="Save" class="btn bg-purple text-light w-75 fs-5" />
+            </div>
+        </div>
+    </div>    
+    <div style="width: 30rem; height: 200px;">
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Lyrics
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        @Html.DisplayFor(model => model.Lyrics)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    function openFileDialog() {
+        document.getElementById('imageFilePath').click();
+    }
+
+    function handleImageSelection(event) {
+        // 0 since we are grabbing only 1 file
+        const imageFilePath = event.target.files[0];
+        if (imageFilePath) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const albumImgEdit = document.getElementById('album-img-edit');
+                albumImgEdit.src = e.target.result;
+            };
+            // changes file path to url to use as source
+            reader.readAsDataURL(imageFilePath);
+        }
+    }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

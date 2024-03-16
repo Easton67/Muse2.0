@@ -768,7 +768,7 @@ AS
 					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
 					   LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
 					   LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
-		WHERE 	@UserID = [User].[UserID]
+		WHERE 	@UserID = [User].[UserID] AND @SongID = [Song].[SongID]
 	END
 GO
 

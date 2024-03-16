@@ -4,120 +4,45 @@
     ViewBag.Title = "Details";
 }
 
-<h2>@Html.DisplayNameFor(model => model.Title)</h2>
-
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageFilePath)
-        </dt>
-
-        <dd>
-            <image src="@Html.DisplayFor(model => model.ImageFilePath)" alt="album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)"></image>
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mp3FilePath)
-        </dt>
-
-        <dd>
-            <audio controls>
-                <source src="@Html.DisplayFor(model => model.Mp3FilePath)" type="audio/mpeg">
-            </audio>
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.YearReleased)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.YearReleased)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Lyrics)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Lyrics)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Explicit)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Explicit)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Genre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Plays)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Plays)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Artist)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Artist)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Album)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Album)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateUploaded)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateUploaded)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateAdded)
-        </dd>
-
-    </dl>
+<div class="mx-5 my-4 d-flex justify-content-between">
+    <div class="d-flex justify-content-between">
+        <div>
+            <img id="album-img-edit" src="/Images/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)">
+        </div>
+        <div class="fs-5 px-5 mt-4">
+            <p>@Model.Title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /> by @Html.DisplayFor(model => model.Artist)</p>
+            <p>@Html.DisplayFor(model => model.Album)</p>
+            <p>@Html.DisplayFor(model => model.Artist)</p>
+            <p>@Html.DisplayFor(model => model.YearReleased)</p>
+            <p>@Html.DisplayFor(model => model.Genre)</p>
+        </div>
+        <div class="fs-5 px-5 mt-4">
+            <p>
+                @Html.DisplayFor(model => model.Plays) plays
+            </p>
+            <p>Added: @Model.DateAdded.Date.ToShortDateString()</p>
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
+                @Html.ActionLink("Delete", "Delete", new { id = Model.SongID }) . 
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        </div>
+    </div>
+    <div style="width: 30rem; height: 200px;">
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Lyrics
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        @Html.DisplayFor(model => model.Lyrics)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

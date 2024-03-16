@@ -20,7 +20,7 @@ namespace Muse2.Pages.AddSong
     {
         private UserVM _loggedInUser = null;
         private List<Song> userSongs = null;
-        private List<DataObjects.Playlist> userPlaylists = null;
+        private List<Playlist> userPlaylists = null;
         private Playlist _playlist = null;
         private Song _song = null;
         private SongManager sm = new SongManager();
@@ -38,6 +38,8 @@ namespace Muse2.Pages.AddSong
         private string songfilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles";
         private string imageFilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        private string Muse3SongFilesDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent + "\\Muse3\\MuseConfig\\SongFiles";
+        private string Muse3AlbumArtDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent + "\\Muse3\\MuseConfig\\AlbumArt";
         Regex numericRegex = new Regex("[^0-9]+");
 
 
@@ -77,6 +79,7 @@ namespace Muse2.Pages.AddSong
 
                     // Copy the selected MP3 file to SongFiles
                     string newFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(mp3FileName));
+                    File.Copy(newFilePath, Path.Combine(Muse3SongFilesDirectory, Path.GetFileName(newFilePath)), true);
                     File.Copy(mp3FileName, newFilePath, true);
 
                     mp3FileName = System.IO.Path.GetFileName(newFilePath);
@@ -342,8 +345,9 @@ namespace Muse2.Pages.AddSong
                     {
                         try
                         {
-                            string newMp3FileLocation = Path.Combine(songfilesLocation, Path.GetFileName(mp3FilePath));
-                            File.Copy(mp3FilePath, newMp3FileLocation, true);
+                            // Copying the new song into both Muse2 and Muse 3
+                            File.Copy(mp3FilePath, Path.Combine(songfilesLocation, Path.GetFileName(mp3FilePath)), true);
+                            File.Copy(mp3FilePath, Path.Combine(Muse3SongFilesDirectory, Path.GetFileName(mp3FilePath)), true);
 
                             string unsplitSongTitle = Path.GetFileNameWithoutExtension(mp3FilePath);
                             if (unsplitSongTitle.Contains(" - "))
@@ -366,8 +370,8 @@ namespace Muse2.Pages.AddSong
                     {
                         try
                         {
-                            string newPngFileLocation = Path.Combine(imageFilesLocation, Path.GetFileName(imageFilePath));
-                            File.Copy(imageFilePath, newPngFileLocation, true);
+                            File.Copy(imageFilePath, Path.Combine(imageFilesLocation, Path.GetFileName(imageFilePath)), true);
+                            File.Copy(imageFilePath, Path.Combine(Muse3AlbumArtDirectory, Path.GetFileName(imageFilePath)), true);
                         }
                         catch (Exception ex)
                         {

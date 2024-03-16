@@ -69,7 +69,18 @@ namespace Muse3.Controllers
         // GET: Song/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Song song = null;
+
+            try
+            {
+                song = _songManager.SelectSongBySongID(100001, id);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return View(song);
         }
 
         // POST: Song/Edit/5

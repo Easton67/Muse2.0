@@ -2,6 +2,18 @@
     height: auto;
 }
 
+body {
+    height: 100%;
+    background-image: url('../images/bigvec.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(.4em);
+    background-attachment: fixed;
+    font-family: Arial;
+    font-weight: Bold;
+    color: white;
+}
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -42,13 +54,6 @@ textarea {
     background-repeat: no-repeat;
     backdrop-filter: blur(.4em);
 }
-
-body {
-    color: white;
-    font-family: Arial;
-    font-weight: Bold;
-}
-
 
 /* Navbar */
 
@@ -116,6 +121,17 @@ body {
 }
 
 /* Library Page */
+audio {
+    padding: 10px; 
+    margin-left: 0px;
+    border-radius: 5px;
+    display: none;
+}
+
+.hr-underline {
+    border: 1px solid;
+    border-width: 3px 0;
+}
 
 #library-cards-container {
     display: flex;
@@ -128,8 +144,55 @@ body {
     border: 5px solid white;
     width: 200px;
     height: 200px;
+    -webkit-user-drag: none;
 }
 
+.album-img:Hover {
+    cursor: pointer;
+    opacity: .8
+}
+
+.library-play-button:Hover {
+    cursor: pointer;
+    opacity: .5
+}
+
+#library-play-button {
+    position: fixed;
+    margin-left: -9rem;
+    margin-top: 3.5rem;
+    border-radius: 50px;
+    padding: 20px;
+    background-color: black;
+    border: 1px solid black;
+}
+
+#library-play-button img
+{
+    width: 50px;
+    height: 50px;
+}
+
+.song-info-div 
+{
+    width: 300px;
+}
+
+.song-info-div div {
+    white-space: nowrap !important;
+    font-size: 30px;
+}
+
+.song-form-edit{
+    margin-top: -31px;
+}
+
+#album-img-edit {
+    border-radius: 10px;
+    border: none;
+    width: 400px;
+    height: 400px;
+}
 /* Login Page */
 #login-container {
     background-color: rgba(255, 255, 255, 0.2);
