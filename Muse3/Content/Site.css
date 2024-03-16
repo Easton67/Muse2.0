@@ -147,6 +147,11 @@ audio {
     -webkit-user-drag: none;
 }
 
+.album-img:hover {
+    opacity: 0.5;
+    background-color: white;
+}
+
 .album-img:Hover {
     cursor: pointer;
     opacity: .8
