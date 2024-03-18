@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Details";
 }
-@*test*@
+
 <div class="mx-5 my-4 d-flex justify-content-between">
     <div class="d-flex justify-content-between">
         <div>
@@ -22,8 +22,9 @@
             </p>
             <p>Added: @Model.DateAdded.Date.ToShortDateString()</p>
             <p>
+                @Html.ActionLink("Write a Review", "ViewAllReviews", "Review", new { area = "" }) .
                 @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
-                @Html.ActionLink("Delete", "Delete", new { id = Model.SongID }) . 
+                @Html.ActionLink("Delete", "Delete", new { id = Model.SongID }) .
                 @Html.ActionLink("Back to List", "Index")
             </p>
         </div>
@@ -43,6 +44,7 @@
                 </div>
             </div>
         </div>
+        <audio style="display: inline!important" controls src="/MuseConfig/SongFiles/@Path.GetFileName(@Model.Mp3FilePath)></audio>
     </div>
 </div>
 

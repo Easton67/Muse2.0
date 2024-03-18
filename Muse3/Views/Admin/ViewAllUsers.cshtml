@@ -38,7 +38,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ImageFilePath)
+            <img style="width: 100px; height: 100px; border-radius: 50px;" src="~/MuseConfig/ProfileImages/@Path.GetFileName(item.ImageFilePath)" alt="Image of @item.ProfileName" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Email)

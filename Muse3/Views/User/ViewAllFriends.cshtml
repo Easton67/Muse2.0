@@ -12,6 +12,9 @@
 <table class="table bg-dark text-light">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.ImageFilePath)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.ProfileName)
         </th>
         <th>
@@ -22,9 +25,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageFilePath)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Active)
@@ -38,29 +38,29 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ProfileName)
+            <img style="width: 100px; height: 100px; border-radius: 50px;" src="~/MuseConfig/ProfileImages/@Path.GetFileName(item.ImageFilePath)" alt="Image of @item.ProfileName" />
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            <p class="mt-4">@Html.DisplayFor(modelItem => item.ProfileName)</p>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
+            <p class="mt-4">@Html.DisplayFor(modelItem => item.Email)</p>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastName)
+            <p class="mt-4">@Html.DisplayFor(modelItem => item.FirstName)</p>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ImageFilePath)
+            <p class="mt-4">@Html.DisplayFor(modelItem => item.LastName)</p>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Active)
+            <p class="mt-4">@Html.DisplayFor(modelItem => item.Active)</p>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MinutesListened)
+            <p class="mt-4">@Html.DisplayFor(modelItem => item.MinutesListened)</p>
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.UserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
+            @Html.ActionLink("Details", "Details", new { id = item.UserID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
         </td>
     </tr>
 }

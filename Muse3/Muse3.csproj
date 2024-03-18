@@ -979,6 +979,42 @@
     <Content Include="MuseConfig\AlbumArt\Your Heart.png" />
     <Content Include="MuseConfig\AlbumArt\Yung Gravy &amp; bbno%24 - Rotisserie %28prod. downtime%29.png" />
     <Content Include="MuseConfig\AlbumArt\Zacari - Butterflight.png" />
+    <Content Include="MuseConfig\PlaylistImages\april.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\august.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\autumn.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\car.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\day.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\december.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\defaultAlbumImage.png" />
+    <Content Include="MuseConfig\PlaylistImages\eldenring.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\february.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\january.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\july.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\june.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\march.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\may.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\museBackground.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\night.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\november.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\october.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\september.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\spring.png" />
+    <Content Include="MuseConfig\PlaylistImages\summer.jpg" />
+    <Content Include="MuseConfig\PlaylistImages\winter.jpg" />
+    <Content Include="MuseConfig\ProfileImages\account.png" />
+    <Content Include="MuseConfig\ProfileImages\defaultAccount.png" />
+    <Content Include="MuseConfig\ProfileImages\donaldGlover.jpg" />
+    <Content Include="MuseConfig\ProfileImages\drake.jpg" />
+    <Content Include="MuseConfig\ProfileImages\eltonJohn.jpg" />
+    <Content Include="MuseConfig\ProfileImages\frankocean.jpg" />
+    <Content Include="MuseConfig\ProfileImages\isaiahRashad.jpg" />
+    <Content Include="MuseConfig\ProfileImages\jim.png" />
+    <Content Include="MuseConfig\ProfileImages\metroboomin.jpg" />
+    <Content Include="MuseConfig\ProfileImages\muse.png" />
+    <Content Include="MuseConfig\ProfileImages\playboiCarti.jpg" />
+    <Content Include="MuseConfig\ProfileImages\travisScott.jpg" />
+    <Content Include="MuseConfig\ProfileImages\uzi.jpg" />
+    <Content Include="MuseConfig\ProfileImages\ye.jpg" />
     <Content Include="MuseConfig\SongFiles\ LUCKI &amp; Future - LUCKI &amp; Future - KAPITOL DENIM.mp3" />
     <Content Include="MuseConfig\SongFiles\0 To 100 ⧸ The Catch Up.mp3" />
     <Content Include="MuseConfig\SongFiles\03’ Adolescence.mp3" />
@@ -1888,15 +1924,15 @@
     <Content Include="Views\Admin\ViewAllUsers.cshtml" />
     <Content Include="Views\Playlist\ViewAllPlaylists.cshtml" />
     <Content Include="Views\Review\ViewAllReviews.cshtml" />
-    <Content Include="Views\Album\ViewAllAlbums.cshtml" />
+    <Content Include="Views\Album\Albums.cshtml" />
     <Content Include="Views\User\ViewAllFriends.cshtml" />
     <Content Include="Views\Song\Details.cshtml" />
     <Content Include="Views\Song\Edit.cshtml" />
+    <Content Include="Views\Review\Details.cshtml" />
+    <Content Include="Views\Review\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="MuseConfig\PlaylistImages\" />
-    <Folder Include="MuseConfig\ProfileImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
