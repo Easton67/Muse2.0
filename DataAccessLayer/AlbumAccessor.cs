@@ -79,9 +79,9 @@ namespace DataAccessLayer
                 conn.Close();
             }
         }
-        public List<Album> SelectAlbumByAlbumID(int AlbumID)
+        public Album SelectAlbumByAlbumID(int AlbumID)
         {
-            List<Album> Albums = new List<Album>();
+            Album album = new Album();
 
             var conn = SqlConnectionProvider.GetConnection();
             var cmdText = "sp_select_Album_by_AlbumID";
@@ -96,18 +96,21 @@ namespace DataAccessLayer
 
                 var reader = cmd.ExecuteReader();
 
-                while (reader.Read())
+                if (reader.HasRows)
                 {
-                    var Album = new Album
+                    reader.Read();
+                    album = new Album
                     {
                         AlbumID = reader.GetInt32(0),
                         Title = reader.GetString(1),
                         ImageFilePath = reader.IsDBNull(2) ? defaultAlbumImg : reader.GetString(2),
-                        Description = reader.GetString(3)
+                        Description = reader.IsDBNull(3) ? "No description." : reader.GetString(3),
                     };
-                    Albums.Add(Album);
                 }
-                return Albums;
+                else
+                {
+                    throw new ArgumentException("Song not found");
+                }
             }
             catch (Exception ex)
             {
@@ -117,6 +120,7 @@ namespace DataAccessLayer
             {
                 conn.Close();
             }
+            return album;
         }
         public int UpdateAlbum(Album oldAlbum, Album newAlbum)
         {

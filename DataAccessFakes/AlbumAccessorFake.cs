@@ -23,7 +23,7 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
-        public List<Album> SelectAlbumByAlbumID(int AlbumID)
+        public Album SelectAlbumByAlbumID(int AlbumID)
         {
             throw new NotImplementedException();
         }

@@ -31,19 +31,19 @@ namespace LogicLayer
             }
             return result;
         }
-        public List<Album> SelectAlbumByAlbumID(int AlbumID)
+        public Album SelectAlbumByAlbumID(int AlbumID)
         {
-            List<Album> albums = new List<Album>();
+            Album album = new Album();
 
             try
             {
-                _albumAccessor.SelectAlbumByAlbumID(AlbumID);
+                album = _albumAccessor.SelectAlbumByAlbumID(AlbumID);
             }
             catch (Exception ex)
             {
                 throw new ApplicationException("Album not found", ex);
             }
-            return albums;
+            return album;
         }
         public List<Album> SelectAllAlbums()
         {

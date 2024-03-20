@@ -8,48 +8,38 @@ using System.Web.Mvc;
 
 namespace Muse3.Controllers
 {
-    public class AdminController : Controller
+    public class ProfileController : Controller
     {
-        private UserManager _userManager = new UserManager();
-        private List<User> users = new List<User>();
-        public ActionResult ViewAllUsers()
+        UserManager _userManager = new UserManager();
+        // GET: Profile
+        public ActionResult Index()
         {
-            try
-            {
-                users = _userManager.SelectAllUsers();
-            }
-            catch (Exception)
-            {   
-                throw;
-            }
-            return View(users);
+            return View();
         }
 
-        // GET: Admin/Details/5
-        public ActionResult Details(string id)
+        // GET: Profile/Details/5
+        public ActionResult Details(string email = "67Easton@gmail.com")
         {
             User user = new User();
 
             try
             {
-                user = _userManager.GetUserVMByEmail("67Easton@gmail.com");
+                user = _userManager.GetUserVMByEmail(email);
             }
             catch (Exception ex)
             {
-
                 throw;
             }
-
             return View(user);
         }
 
-        // GET: Admin/Create
+        // GET: Profile/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Create
+        // POST: Profile/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -65,13 +55,13 @@ namespace Muse3.Controllers
             }
         }
 
-        // GET: Admin/Edit/5
+        // GET: Profile/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Admin/Edit/5
+        // POST: Profile/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -87,13 +77,13 @@ namespace Muse3.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
+        // GET: Profile/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Admin/Delete/5
+        // POST: Profile/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

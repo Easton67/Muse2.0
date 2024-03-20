@@ -30,7 +30,19 @@ namespace Muse3.Controllers
         // GET: Album/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Album album = new Album();
+
+            try
+            {
+                album = _albumManager.SelectAlbumByAlbumID(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return View(album);
         }
 
         // GET: Album/Create

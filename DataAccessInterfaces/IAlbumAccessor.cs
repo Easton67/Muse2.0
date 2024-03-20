@@ -10,10 +10,9 @@ namespace DataAccessInterfaces
     public interface IAlbumAccessor
     {
         int CreateAlbum(Album album);
-        List<Album> SelectAlbumByAlbumID(int AlbumID);
+        Album SelectAlbumByAlbumID(int AlbumID);
         int UpdateAlbum(Album oldAlbum, Album newAlbum);
         int DeleteAlbum(int albumId);
         List<Album> SelectAllAlbums();
-
     }
 }

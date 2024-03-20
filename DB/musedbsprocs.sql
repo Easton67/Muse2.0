@@ -85,11 +85,14 @@ CREATE PROCEDURE [dbo].[sp_select_all_users]
 AS	
  	BEGIN
 		SELECT [UserID], 
-		[ProfileName], [Email], 
-		[FirstName], [LastName], 
-		[ImageFilePath], [Active], 
-		[MinutesListened]
-		FROM	[User]
+			   [ProfileName], 
+			   [Email], 
+			   [FirstName], 
+			   [LastName], 
+			   [ImageFilePath], 
+			   [Active], 
+			   [MinutesListened]
+		FROM   [User]
 	END
 GO
 
