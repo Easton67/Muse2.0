@@ -27,7 +27,7 @@ namespace LogicLayerTests
             int actualSongCount = 0;
 
             // act
-            actualSongCount = _playlistManager.SelectPlaylistByUserID(testID).Count;
+            actualSongCount = _playlistManager.SelectPlaylistsByUserID(testID).Count;
 
 
             // assert

@@ -71,6 +71,39 @@
             <p>&copy; @DateTime.Now.Year - Muse v3.0 - Easton67</p>
         </footer>
     </div>
+    <script>
+        document.querySelectorAll(".album-img").forEach(function (img) {
+            // adding a click event to each image
+            img.addEventListener("click", function () {
+                // goes to the location of the song/details/songID
+                window.location.href = "/Song/Details/" + this.getAttribute("data-songid");
+            });
+        });
+
+        function listView() {
+            document.getElementById("library-grid-view").style.display = "none";
+            document.getElementById("library-list-view").style.display = "";
+        }
+
+        function gridView() {
+            document.getElementById("library-grid-view").style.display = "";
+            document.getElementById("library-list-view").style.display = "none";
+        }
+
+        document.querySelectorAll(".library-play-button").forEach(function (button) {
+            button.addEventListener("click", function () {
+                var playorpauseimg = this.querySelector("img");
+                if (playorpauseimg.src.endsWith("pause.png")) {
+                    // going from the button to the parent div, find the audio and pause it
+                    this.parentNode.querySelector("audio").pause();
+                    this.parentNode.querySelector("button").querySelector("img").src = "/Images/play.png";
+                } else {
+                    this.parentNode.querySelector("audio").play();
+                    this.parentNode.querySelector("button").querySelector("img").src = "/Images/pause.png";
+                }
+            });
+        });
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

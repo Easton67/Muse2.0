@@ -1,6 +1,6 @@
 ﻿﻿@model IEnumerable<DataObjects.Song>
 
-@{ 
+@{
     ViewBag.Title = "Library";
     int charLimit = 20;
     var mp3FilePath = "";
@@ -13,9 +13,86 @@
         songs.Add(item);
     }
 }
+<div>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for song...">    
+    <button onclick="listView()">listView</button>
+    <button onclick="gridView()">gridView</button>
+</div>
 
+
+@*list view*@
+<div id="library-list-view" style="display: none;">
+    <table class="table bg-dark text-white">
+        <tr>
+            <th>
+                <p class="text-nowrap">Album Art</p> 
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Album)
+            </th>
+            <th>
+                <p class="text-nowrap">Year Released</p>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plays)
+            </th>
+            <th>
+                <p class="text-nowrap">Date Added</p>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art" data-songid="@item.SongID">
+                    <button id="library-play-button" class="library-play-button list-view-library-play-button">
+                        <img id="library-play-img" src="~/Images/play.png" />
+                    </button><br />
+                    <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(item.Mp3FilePath)" data-audio-songid="@item.SongID"></audio>
+                </td>
+                <td>
+                    <p style="white-space: nowrap;">@Html.DisplayFor(modelItem => item.Title)<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /></p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Album)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.YearReleased)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Plays)
+                </td>
+                <td>
+                    @item.DateAdded.ToShortDateString()
+                </td>
+                <td>
+                    @Html.ActionLink("Remove", "Delete", new { id = item.SongID })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+@*grid view*@
 <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(mp3FilePath) data-audio-songid="@songID"></audio>
-<div class="row mx-5 row-cols- lg-10">
+<div id="library-grid-view" class="row mx-5 row-cols- lg-10">
     @foreach (var item in Model)
     {
         <div id="library-cards-container" class="col my-4 inline w-auto">
@@ -45,26 +122,3 @@
         </div>
     }
 </div>
-<script>
-    document.querySelectorAll(".album-img").forEach(function (img) {
-        // adding a click event to each image
-        img.addEventListener("click", function () {
-            // goes to the location of the song/details/songID
-            window.location.href = "/Song/Details/" + this.getAttribute("data-songid");
-        });
-    });
-
-    document.querySelectorAll(".library-play-button").forEach(function (button) {
-        button.addEventListener("click", function () {
-            var playorpauseimg = this.querySelector("img");
-            if (playorpauseimg.src.endsWith("pause.png")) {
-                // going from the button to the parent div, find the audio and pause it
-                this.parentNode.querySelector("audio").pause();
-                this.parentNode.querySelector("button").querySelector("img").src = "/Images/play.png";
-            } else {
-                this.parentNode.querySelector("audio").play();
-                this.parentNode.querySelector("button").querySelector("img").src = "/Images/pause.png";
-            }
-        });
-    });
-</script>

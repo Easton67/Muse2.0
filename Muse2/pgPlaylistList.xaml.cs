@@ -44,7 +44,7 @@ namespace Muse2
             // set the playlists
             try
             {
-                List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
+                List<Playlist> playlists = _playlistManager.SelectPlaylistsByUserID(_loggedInUser.UserID);
 
                 contextMenu = new ContextMenu();
 
@@ -141,7 +141,7 @@ namespace Muse2
             addPlaylist.ShowDialog();
             try
             {
-                grdPlaylists.ItemsSource = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
+                grdPlaylists.ItemsSource = _playlistManager.SelectPlaylistsByUserID(_loggedInUser.UserID);
                 playlistListRepopulation();
             }
             catch (Exception ex)

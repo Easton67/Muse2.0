@@ -96,6 +96,65 @@ namespace DataAccessLayer
                 conn.Close();
             }
         }
+        public Review SelectReviewByReviewID(int userID, int reviewID)
+        {
+            Review review = null;
+            Song song = null;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_review_by_ReviewID";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserID", userID);
+            cmd.Parameters.AddWithValue("@ReviewID", reviewID);
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    song = new Song
+                    {
+                        SongID = reader.GetInt32(4),
+                        Title = reader.GetString(5),
+                        YearReleased = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
+                        Artist = reader.GetString(7),
+                        ImageFilePath = reader.IsDBNull(8) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(8),
+                        Mp3FilePath = reader.GetString(9),
+                        Explicit = reader.GetBoolean(10),
+                    };
+
+                    review = new Review
+                    {
+                        ReviewID = reader.GetInt32(0),
+                        Rating = reader.IsDBNull(1) ? 0 : reader.GetInt32(1),
+                        Message = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                        UserID = reader.GetInt32(3),
+                        SongID = reader.GetInt32(4),
+                        ReviewedSong = song
+                    };
+                }
+                else
+                {
+                    throw new ArgumentException("Review not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return (review);
+        }
         public int UpdateReview(Review oldReview, Review newReview)
         {
             int rows = 0;

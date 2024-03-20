@@ -11,6 +11,7 @@ namespace DataAccessInterfaces
     {
         int CreateReview(Review review);
         List<Review> SelectReviewsByUserID(int userID);
+        Review SelectReviewByReviewID(int userID, int reviewID);
         int UpdateReview(Review oldReview, Review newReview);
         int DeleteReview(int reviewID);
 

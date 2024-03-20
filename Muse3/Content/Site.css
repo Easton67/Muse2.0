@@ -12,8 +12,6 @@ body {
     font-family: Arial;
     font-weight: Bold;
     color: white;
-
-
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -81,6 +79,7 @@ textarea {
 }
 
 /* Slider */
+
 .slidercontainer {
     width: auto;
 }
@@ -128,8 +127,43 @@ textarea {
 }
 
 /* Library Page */
+
+#list-view-img-container
+{
+    width: 70px;
+    height: 70px;
+}
+
+#list-view-img-container img
+{
+    border: none;
+    width: 70px;
+    height: 70px;
+}
+
+.list-view-library-play-button {
+    width: 40px !important;
+    height: 40px !important;
+    margin-left: -55px !important;
+    margin-top: 15px !important;
+}
+
+.list-album-img {
+    width: 70px !important;
+    height: 70px !important;
+    border: none !important;
+}
+
+#library-play-img {
+    width: auto !important;
+    margin-bottom: 5px !important;
+    margin-top: -19px !important;
+    margin-left: -8px !important;
+    height: 20px !important;
+}
+
 audio {
-    padding: 10px; 
+    padding: 10px;
     margin-left: 0px;
     border-radius: 5px;
     display: none;
@@ -205,6 +239,35 @@ audio {
 
 .song-form-edit{
     margin-top: -31px;
+}
+
+/* Song Edit */
+
+#lyrics {
+    background-color: transparent;
+    border-radius: 5px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    height: 600px;
+    padding-left: 30px;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+    height: 20px;
+}
+
+::-webkit-scrollbar:hover {
+    cursor: crosshair;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: mediumpurple;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 /* Login Page */

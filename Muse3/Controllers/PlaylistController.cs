@@ -8,15 +8,22 @@ using System.Web.Mvc;
 
 namespace Muse3.Controllers
 {
+    public class PlaylistDetailsViewModel
+    {
+        public Playlist Playlist { get; set; }
+        public List<Song> Songs { get; set; }
+    }
+
     public class PlaylistController : Controller
     {
         private PlaylistManager _playlistManager = new PlaylistManager();
+        private SongManager _songManager = new SongManager();
         private List<Playlist> playlists = new List<Playlist>();
         public ActionResult ViewAllPlaylists()
         {
             try
             {
-                playlists = _playlistManager.SelectPlaylistByUserID(100000);
+                playlists = _playlistManager.SelectPlaylistsByUserID(100000);
             }
             catch (Exception)
             {
@@ -29,7 +36,20 @@ namespace Muse3.Controllers
         // GET: Playlist/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            PlaylistDetailsViewModel viewModel = new PlaylistDetailsViewModel();
+
+            try
+            {
+                viewModel.Playlist = _playlistManager.SelectPlaylistByUserID(100000, id);
+                viewModel.Songs = _songManager.SelectSongsByPlaylistID(100001, viewModel.Playlist.PlaylistID);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return View(viewModel);
         }
 
         // GET: Playlist/Create
@@ -40,39 +60,61 @@ namespace Muse3.Controllers
 
         // POST: Playlist/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Playlist playlist)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _playlistManager.CreatePlaylist(playlist);
+                    return RedirectToAction("ViewAllPlaylists");
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View(playlist);
             }
         }
 
         // GET: Playlist/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Playlist playlist = null;
+
+            try
+            {
+                playlist = _playlistManager.SelectPlaylistByUserID(100000, id);
+                Session["oldPlaylist"] = playlist;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return View(playlist);
         }
 
         // POST: Playlist/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Playlist playlist)
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    Playlist oldPlaylist = (Playlist)Session["oldPlaylist"];
+                    _playlistManager.UpdatePlaylist(oldPlaylist, playlist);
+                }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewAllPlaylists");
             }
             catch
             {
-                return View();
+                return View(playlist);
             }
         }
 

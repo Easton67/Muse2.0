@@ -80,5 +80,10 @@ namespace DataAccessFakes
             int removedCount = fakeReviews.RemoveAll(review => review.ReviewID == reviewID);
             return removedCount;
         }
+
+        public Review SelectReviewByReviewID(int userID, int reviewID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

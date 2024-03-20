@@ -75,5 +75,19 @@ namespace LogicLayer
             }
             return reviews;
         }
+        public Review SelectReviewByReviewID(int userID, int reviewID)
+        {
+            Review review = new Review();
+
+            try
+            {
+                review = _reviewAccessor.SelectReviewByReviewID(userID, reviewID);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Review not Added", ex);
+            }
+            return review;
+        }
     }
 }

@@ -52,17 +52,27 @@ namespace Muse3.Controllers
         
         // POST: Song/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Song song)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _songManager.InsertSong(song);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                if (ex.InnerException.Message.ToLower().Contains("primary"))
+                {
+                    ModelState.AddModelError("SongID", "Song already exists");
+                }
+                return View(song);
             }
         }
 
@@ -74,6 +84,7 @@ namespace Muse3.Controllers
             try
             {
                 song = _songManager.SelectSongBySongID(100001, id);
+                Session["oldSong"] = song;
             }
             catch (Exception ex)
             {
@@ -85,17 +96,21 @@ namespace Muse3.Controllers
 
         // POST: Song/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Song song)
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    Song oldSong = (Song)Session["oldSong"];
+                    _songManager.UpdateSong(oldSong, song);
+                }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Library");
             }
             catch
             {
-                return View();
+                return View(song);
             }
         }
 

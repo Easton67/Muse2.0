@@ -11,7 +11,8 @@ namespace DataAccessInterfaces
     {
         int CreatePlaylist(Playlist newPlaylist);
         int InsertSongIntoPlaylist(int songID, int playlistID);
-        List<Playlist> SelectPlaylistByUserID(int userId);
+        Playlist SelectPlaylistByUserID(int userId, int playlistID);
+        List<Playlist> SelectPlaylistsByUserID(int userId);
         int UpdatePlaylist(Playlist oldPlaylist, Playlist newPlaylist);
         int DeletePlaylist(int playlistID);
         int RemoveSongFromPlaylist(int songID);

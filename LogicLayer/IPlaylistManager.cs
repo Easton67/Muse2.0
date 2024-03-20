@@ -11,7 +11,8 @@ namespace LogicLayer
     {
         bool InsertSongIntoPlaylist(int songID, int playlistID);
         bool CreatePlaylist(Playlist newPlaylist);
-        List<Playlist> SelectPlaylistByUserID(int userId);
+        Playlist SelectPlaylistByUserID(int userId, int playlistID);
+        List<Playlist> SelectPlaylistsByUserID(int userId);
         bool UpdatePlaylist(Playlist oldPlaylist, Playlist newPlaylist);
         bool DeletePlaylist(int playlistID);
     }

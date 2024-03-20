@@ -53,13 +53,27 @@ namespace LogicLayer
             }
             return result;
         }
-        public List<Playlist> SelectPlaylistByUserID(int userId)
+        public Playlist SelectPlaylistByUserID(int userId, int playlistID)
+        {
+            Playlist playlist = new Playlist();
+
+            try
+            {
+                playlist = _playlistAccessor.SelectPlaylistByUserID(userId, playlistID);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Playlists not found", ex);
+            }
+            return playlist;
+        }
+        public List<Playlist> SelectPlaylistsByUserID(int userId)
         {
             List<Playlist> playlists = new List<Playlist>();
 
             try
             {
-                playlists = _playlistAccessor.SelectPlaylistByUserID(userId);
+                playlists = _playlistAccessor.SelectPlaylistsByUserID(userId);
             }
             catch (Exception ex)
             {

@@ -246,7 +246,7 @@ namespace Muse2.Pages.AddSong
 
                 var pm = new PlaylistManager();
                 pm.CreatePlaylist(newPlaylist);
-                userPlaylists = pm.SelectPlaylistByUserID(_loggedInUser.UserID);
+                userPlaylists = pm.SelectPlaylistsByUserID(_loggedInUser.UserID);
                 _playlist = userPlaylists.FirstOrDefault(p => p.Title == txtTitle.Text);
             }
             catch (Exception ex) 

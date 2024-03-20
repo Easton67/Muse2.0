@@ -11,10 +11,8 @@ namespace Muse3.Controllers
     public class ReviewController : Controller
     {
         private ReviewManager _reviewManager = new ReviewManager();
-        private SongManager _songManager = new SongManager();
 
-        List<Review> reviews = new List<Review>(); 
-        List<Song> songs = new List<Song>();
+        List<Review> reviews = new List<Review>();
 
         // GET: Review
         public ActionResult ViewAllReviews()
@@ -33,7 +31,19 @@ namespace Muse3.Controllers
         // GET: Review/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Review review = new Review();
+
+            try
+            {
+                review = _reviewManager.SelectReviewByReviewID(100000, id);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return View(review);
         }
 
         // GET: Review/Create
@@ -44,39 +54,61 @@ namespace Muse3.Controllers
 
         // POST: Review/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Review review)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _reviewManager.CreateReview(review);
+                    return RedirectToAction("ViewAllReviews");
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
-            }
+                return View(review);
+            }   
         }
 
         // GET: Review/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Review review = null;
+
+            try
+            {
+                review = _reviewManager.SelectReviewByReviewID(100000, id);
+                Session["oldReview"] = review;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return View(review);
         }
 
         // POST: Review/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Review review)
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    Review oldReview = (Review)Session["oldReview"];
+                    _reviewManager.UpdateReview(oldReview, review);
+                }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewAllReviews");
             }
             catch
             {
-                return View();
+                return View(review);
             }
         }
 

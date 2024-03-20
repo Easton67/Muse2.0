@@ -11,6 +11,7 @@ namespace LogicLayer
     {
         bool CreateReview(Review review);
         List<Review> SelectReviewByUserID(int userID);
+        Review SelectReviewByReviewID(int userID, int reviewID);
         bool UpdateReview(Review oldReview, Review newReview);
         bool DeleteReview(int reviewID);
     }

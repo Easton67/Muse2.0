@@ -1,0 +1,22 @@
+﻿@model Muse3.Controllers.PlaylistDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1>Playlist Details</h1>
+<img src="~/MuseConfig/PlaylistImages/@Path.GetFileName(@Model.Playlist.ImageFilePath)" alt="Cover photo for @Model.Playlist.Title playlist."/>
+<h2>@Model.Playlist.Title</h2>
+<p>Description: @Model.Playlist.Description</p>
+
+<h3>Songs</h3>
+<ul>
+    @foreach (var song in Model.Songs)
+    {
+        <li>@song.Title - @song.Artist</li>
+    }
+</ul>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -17,5 +17,10 @@ namespace Muse3
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        void Session_Start(object sender, EventArgs e)
+        {
+            System.Web.HttpContext.Current.Session["test"] = DateTime.Now.ToLongDateString();
+        }
     }
 }

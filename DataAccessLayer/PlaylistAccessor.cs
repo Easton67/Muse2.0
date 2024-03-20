@@ -3,12 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 using DataAccessInterfaces;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace DataAccessLayer
 {
@@ -71,26 +66,14 @@ namespace DataAccessLayer
             }
             return rows;
         }
-        public List<Playlist> SelectPlaylistByUserID(int userId)
+        public List<Playlist> SelectPlaylistsByUserID(int userId)
         {
             List<Playlist> playlists = new List<Playlist>();
-
-            //connection
             var conn = SqlConnectionProvider.GetConnection();
-
-            //command text
             var cmdText = "sp_select_playlists_by_UserID";
-
-            //command
             var cmd = new SqlCommand(cmdText, conn);
-
-            //command type
             cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
             cmd.Parameters.Add("@UserID", SqlDbType.Int);
-
-            // Parameter Values
             cmd.Parameters["@UserID"].Value = userId;
 
             try
@@ -114,7 +97,6 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                // Handle the exception or log it
                 throw ex;
             }
             finally
@@ -122,6 +104,51 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return playlists;
+        }
+        public Playlist SelectPlaylistByUserID(int userId, int playlistID)
+        {
+            Playlist playlist = new Playlist();
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_playlist_by_UserID";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters["@UserID"].Value = userId;
+            cmd.Parameters.Add("@PlaylistID", SqlDbType.Int);
+            cmd.Parameters["@PlaylistID"].Value = playlistID;
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    playlist = new Playlist
+                    {
+                        PlaylistID = reader.GetInt32(0),
+                        Title = reader.IsDBNull(1) ? "Playlist" : reader.GetString(1),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages\\" + reader.GetString(2),
+                        Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                        UserID = reader.GetInt32(4)
+                    };
+                }
+                else
+                {
+                    throw new ArgumentException("Playlist not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return playlist;
         }
         public int DeletePlaylist(int playlistID)
         {
@@ -164,23 +191,30 @@ namespace DataAccessLayer
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@PlaylistID", oldPlaylist.PlaylistID);
-            cmd.Parameters.AddWithValue("@NewTitle", newPlaylist.Title);
-            cmd.Parameters.AddWithValue("@NewImageFilePath", newPlaylist.ImageFilePath);
-            cmd.Parameters.AddWithValue("@NewDescription", newPlaylist.Description);
-            cmd.Parameters.AddWithValue("@OldTitle", oldPlaylist.Title);
-            cmd.Parameters.AddWithValue("@OldImageFilePath", oldPlaylist.ImageFilePath);
-            cmd.Parameters.AddWithValue("@OldDescription", oldPlaylist.Description);
+            // Add parameters
+            cmd.Parameters.Add("@PlaylistID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewTitle", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@NewImageFilePath", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@NewDescription", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@OldTitle", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@OldImageFilePath", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@OldDescription", SqlDbType.NVarChar);
+
+            cmd.Parameters["@PlaylistID"].Value =  oldPlaylist.PlaylistID;
+            cmd.Parameters["@NewTitle"].Value =  newPlaylist.Title;
+            cmd.Parameters["@NewImageFilePath"].Value =  newPlaylist.ImageFilePath;
+            cmd.Parameters["@NewDescription"].Value =  newPlaylist.Description;
+            cmd.Parameters["@OldTitle"].Value =  oldPlaylist.Title;
+            cmd.Parameters["@OldImageFilePath"].Value =  oldPlaylist.ImageFilePath;
+            cmd.Parameters["@OldDescription"].Value =  oldPlaylist.Description;
 
             try
             {
                 conn.Open();
-
                 rows = cmd.ExecuteNonQuery();
-
                 if (rows == 0)
                 {
-                    throw new ArgumentException("Could not update your playlist.");
+                    throw new ArgumentException("Could not update playlist.");
                 }
             }
             catch (Exception ex)

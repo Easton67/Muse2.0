@@ -56,7 +56,7 @@ namespace Muse2
             // set the playlists
             try
             {
-                playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
+                playlists = _playlistManager.SelectPlaylistsByUserID(_loggedInUser.UserID);
 
                 contextMenu = new ContextMenu();
 
@@ -250,7 +250,7 @@ namespace Muse2
 
                     try
                     {
-                        List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(_loggedInUser.UserID);
+                        List<Playlist> playlists = _playlistManager.SelectPlaylistsByUserID(_loggedInUser.UserID);
                         int songID = userSongs[songNumber].SongID;
                         int playlistID = playlists[index].PlaylistID;
 

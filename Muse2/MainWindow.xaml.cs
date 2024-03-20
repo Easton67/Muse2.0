@@ -593,7 +593,7 @@ namespace Muse2
             // set the playlists
             //try
             //{
-            //    List<Playlist> playlists = _playlistManager.SelectPlaylistByUserID(loggedInUser.UserID);
+            //    List<Playlist> playlists = _playlistManager.SelectPlaylistsByUserID(loggedInUser.UserID);
 
             //    contextMenu = new ContextMenu();
 

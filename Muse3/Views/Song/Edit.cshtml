@@ -15,6 +15,9 @@
             <img onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)" data-songid="@Model.SongID">
             <input type="file" id="imageFilePath" style="display: none;" onchange="handleImageSelection(event)" accept="image/png" />
             <p class="mt-2">Added: @Model.DateAdded.Date.ToShortDateString()</p>
+            <div>
+                @Html.ActionLink("Back to List", "Library")
+            </div>
             <div class="col-md-10" style="display: none;">
                 @Html.EditorFor(model => model.Plays, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
@@ -84,27 +87,12 @@
             </div>
         </div>
     </div>    
-    <div style="width: 30rem; height: 200px;">
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        Lyrics
-                    </button>
-                </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                        @Html.DisplayFor(model => model.Lyrics)
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div style="width: 500px; height: 300px;">
+        <textarea id="lyrics">@Model.Lyrics</textarea>
     </div>
 </div>
 }
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 <script>
     function openFileDialog() {
         document.getElementById('imageFilePath').click();

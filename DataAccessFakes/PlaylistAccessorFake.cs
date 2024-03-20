@@ -46,7 +46,7 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
-        public List<Playlist> SelectPlaylistByUserID(int userId)
+        public List<Playlist> SelectPlaylistsByUserID(int userId)
         {
             return fakePlaylists.FindAll(p => p.UserID == userId);
         }
@@ -59,6 +59,10 @@ namespace DataAccessFakes
             throw new NotImplementedException();
         }
         public int UpdatePlaylist(Playlist oldPlaylist, Playlist newPlaylist)
+        {
+            throw new NotImplementedException();
+        }
+        public Playlist SelectPlaylistByUserID(int userId, int playlistID)
         {
             throw new NotImplementedException();
         }

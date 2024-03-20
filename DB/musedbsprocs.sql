@@ -495,6 +495,31 @@ AS
 	END
 GO
 
+/* sp_select_review_by_ReviewID */
+
+print '' print '*** creating sp_select_review_by_ReviewID ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_review_by_ReviewID]
+(
+	@UserID [int],
+	@ReviewID [int]
+)
+AS
+	BEGIN
+		SELECT [Review].[ReviewID], [Review].[Rating], 
+			[Review].[Message], [Review].[UserID], 
+			[Song].[SongID], [Song].[Title], 
+			[Song].[YearReleased], [SongArtist].[ArtistID], 
+			[Song].[ImageFilePath], [Song].[Mp3FilePath], 
+			[Song].[Explicit]
+		FROM [dbo].[Review]
+		JOIN [dbo].[Song] ON [Review].[SongID] = [Song].[SongID]
+		JOIN [dbo].[SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
+		WHERE [Review].[UserID] = @UserID
+		AND [Review].[ReviewID] = @ReviewID
+	END
+GO
+
 /* sp_update_review */
 
 print '' print '*** creating sp_update_review ***'
@@ -574,6 +599,23 @@ AS
 	END
 GO
 
+/* sp_select_playlist_by_UserID */
+
+print '' print '*** creating sp_select_playlist_by_UserID ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_playlist_by_UserID]
+(
+	@UserID			[int],
+    @PlaylistID     [int]
+)
+AS	
+	BEGIN
+		SELECT	[PlaylistID], [Title], [Playlist].[ImageFilePath], [Description], [User].[UserID]
+		FROM	[Playlist] JOIN [User] ON [Playlist].[UserID] = [User].[UserID]
+		WHERE 	@UserID = [User].[UserID] AND @PlaylistID = [Playlist].[PlaylistID]
+	END
+GO
+
 /* sp_update_playlist */
 
 print '' print '*** creating sp_update_playlist ***'
@@ -581,11 +623,11 @@ GO
 CREATE PROCEDURE [dbo].[sp_update_playlist]
 (
 	@PlaylistID		  [int],
-	@NewTitle 		  [nvarchar](180),
-	@NewImageFilePath [nvarchar](500),
-	@NewDescription   [nvarchar](max),
-	@OldTitle         [nvarchar](180),
-	@OldImageFilePath [nvarchar](500),
+	@NewTitle 		  [nvarchar](180), 
+	@NewImageFilePath [nvarchar](500), 
+	@NewDescription   [nvarchar](max), 
+	@OldTitle         [nvarchar](180), 
+	@OldImageFilePath [nvarchar](500), 
 	@OldDescription   [nvarchar](max)
 )
 AS
