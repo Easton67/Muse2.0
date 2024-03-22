@@ -32,6 +32,76 @@
 
     </dl>
 </div>
+
+<div class="pt-3">
+    <table class="table text-white" style="background-color: rgb(255 255 255 / 15%);">
+        <tr class="text-nowrap fw-bold">
+            <th>
+                Album Art
+            </th>
+            <th style="text-align: center;">
+                Title
+            </th>
+            <th>
+                Artist
+            </th>
+            <th>
+                Album
+            </th>
+            <th>
+                Year Released
+            </th>
+            <th>
+                Genre
+            </th>
+            <th>
+                Plays
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var song in Model.Songs)
+        {
+            <tr class="playlist-table">
+                <td class="playlist-table-border">
+                    <img id="album-img" class="album-img list-album-img" src="/MuseConfig/PlaylistImages/@Path.GetFileName(song.ImageFilePath)" alt="Album art" data-songid="@song.SongID">
+                    <button id="library-play-button" class="library-play-button list-view-library-play-button">
+                        <img id="library-play-img" src="~/Images/play.png" />
+                    </button><br />
+                    <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(song.Mp3FilePath)" data-audio-songid="@song.SongID"></audio>
+                </td>
+                @{
+                    string title = song.Title.Length >= charLimit ? song.Title.Substring(0, charLimit) + "..." : song.Title;
+                    string album = song.Album.Length >= charLimit ? song.Album.Substring(0, charLimit) + "..." : song.Album;
+                    string artist = song.Artist.Length >= charLimit ? song.Artist.Substring(0, charLimit) + "..." : song.Artist;
+                }
+                <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                    <p style="white-space: nowrap;">@title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /></p>
+                </td>
+                <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                    @Html.ActionLink(@artist, "Details", "Artist", new { id = song.Artist, style = "color: white; text-decoration: none;" })
+                </td>
+                <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                    @Html.ActionLink(@album, "Details", "Album", new { id = song.Album, style = "color: white; text-decoration: none;" })
+                </td>
+                <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                    @song.YearReleased
+                </td>
+                <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                    @*@song.Genre*@
+                </td>
+                <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                    @song.Plays
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+</div>
+<div class="pt-5"></div>
+
+
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.AlbumID }) |
     @Html.ActionLink("Back to List", "Index")

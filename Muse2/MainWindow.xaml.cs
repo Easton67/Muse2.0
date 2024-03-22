@@ -200,16 +200,21 @@ namespace Muse2
             }
             try
             {
-                int userSongsCount = _songManager.SelectSongsByUserID(loggedInUser.UserID).Count();
+                userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
 
-                if (userSongsCount > 0)
+                if (userSongs.Count() > 0)
                 {
-                    userSongs = _songManager.SelectSongsByUserID(loggedInUser.UserID);
-
                     // load the first song in the list
                     selectedSong = userSongs[songNumber];
                     btnViewSong.Visibility = Visibility.Visible;
-                    imgCoverArt.Source = new BitmapImage(new System.Uri(selectedSong.ImageFilePath));
+                    try
+                    {
+                        imgCoverArt.Source = new BitmapImage(new System.Uri(selectedSong.ImageFilePath));
+                    }
+                    catch (Exception)
+                    {
+                        imgCoverArt.Source = new BitmapImage(new System.Uri(baseDirectory + "\\MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
+                    }
                     mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
                     imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
                     lblSongTitle.Content = selectedSong.Title;

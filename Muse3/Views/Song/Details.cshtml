@@ -7,7 +7,10 @@
 <div class="mx-5 my-4 d-flex justify-content-between">
     <div class="d-flex justify-content-between">
         <div>
-            <img onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art">
+            @*https://micku7zu.github.io/vanilla-tilt.js/*@
+            <div class="your-element" data-tilt>
+                <img onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art">
+            </div>
             <p class="mt-2">Added: @Model.DateAdded.Date.ToShortDateString()</p>
             <div>
                 @Html.ActionLink("Library", "Library")

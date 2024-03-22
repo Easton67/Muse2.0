@@ -25,6 +25,7 @@ namespace Muse2.Pages.AddSong
         private Song _song = null;
         private SongManager sm = new SongManager();
         private PlaylistManager pm = new PlaylistManager();
+        private AlbumManager am = new AlbumManager();
         public string mp3FileName;
         private string playlistFolderPath;
         public string songTitle;
@@ -396,6 +397,16 @@ namespace Muse2.Pages.AddSong
                             Album = albumName,
                             Artist = artist,
                         };
+
+                        //var newAlbum = new Album()
+                        //{
+                        //    Title = albumName,
+                        //    Description = "No Description.",
+                        //    Genre = genre,
+                        //    Artist = artist,
+                        //};
+
+                        //am.CreateAlbum(newAlbum);
 
                         bool result = sm.InsertSong(newSong);
                         if(result == true)

@@ -87,8 +87,15 @@ CREATE TABLE [dbo].[UserRole] (
 print '' print '*** creating Artist table ***'
 GO
 CREATE TABLE [dbo].[Artist] (
-	[ArtistID] 		[nvarchar](200) 			NOT NULL,
-	[UserID]		[int]
+	[ArtistID] 		  [nvarchar](200) 			 NOT NULL,
+	[ImageFilePath]   [nvarchar](500)            DEFAULT 
+	'defaultAccount.png',
+	[FirstName] 	  [nvarchar](50)             DEFAULT 'Unknown',
+	[LastName] 		  [nvarchar](50)             DEFAULT 'Unknown',
+	[Description]     [nvarchar](max)			 NULL DEFAULT "",
+	[isLiked]         [bit]			             DEFAULT 0,
+	[DateOfBirth] 	  [DateTime]				 Default '2000-01-01',				 
+	[UserID]		  [int],
 
 	CONSTRAINT [fk_Artist_UserID] FOREIGN KEY([UserID])
 		REFERENCES [dbo].[User]([UserID]),
@@ -102,9 +109,13 @@ GO
 CREATE TABLE [dbo].[Album] (
 	[AlbumID] 		[int] IDENTITY(100000,1)     NOT NULL,
 	[Title] 		[nvarchar](100)          	 NOT NULL DEFAULT 'Unknown',
+	[ArtistID] 		[nvarchar](200)          	 NOT NULL DEFAULT 'Unknown',
 	[ImageFilePath] [nvarchar](500)              DEFAULT 
 	'defaultAlbumImage.png',
 	[Description] 	[nvarchar](max)				 NULL, 
+	CONSTRAINT [fk_Album_ArtistID] FOREIGN KEY([ArtistID])
+		REFERENCES [dbo].[Artist]([ArtistID]),
+
 	CONSTRAINT[pk_AlbumID] PRIMARY KEY([AlbumID])
 )
 GO
@@ -125,9 +136,10 @@ CREATE TABLE [dbo].[Song] (
     [Plays]          [int]						 NOT NULL DEFAULT 0,
 	[UserID]		 [int],
 	[ArtistID]		 [nvarchar](200),
-	[AlbumID]		 [int]						     NULL,
-    [DateUploaded]   [DATETIME]                  	 NULL,
-	[DateAdded]      [DATETIME]                  	 NOT NULL DEFAULT GETDATE(),
+	[AlbumID]		 [int]						 NULL,
+    [DateUploaded]   [DATETIME]                  NULL,
+	[DateAdded]      [DATETIME]                  NOT NULL DEFAULT GETDATE(),
+	[isLiked]        [bit]			             DEFAULT 0,
 	CONSTRAINT [fk_Song_UserID] FOREIGN KEY([UserID])
         REFERENCES [dbo].[User]([UserID]), 
 	CONSTRAINT [fk_Song_AlbumID] FOREIGN KEY([AlbumID])
@@ -158,8 +170,9 @@ print '' print '*** creating SongArtist table ***'
 GO
 CREATE TABLE [dbo].[SongArtist] 
 (
-	[SongID]      [int]					     NOT NULL,
-	[ArtistID]    [nvarchar](200) 			 NOT NULL,
+	[SongID]        [int]					     NOT NULL,
+	[ArtistID]      [nvarchar](200) 			 NOT NULL,
+	[isFeaturing]	[bit]  					     DEFAULT 0,
 	CONSTRAINT [fk_SongArtist_SongID] FOREIGN KEY([SongID])
 		REFERENCES [dbo].[Song]([SongID]) ON DELETE CASCADE,
 		
@@ -175,7 +188,7 @@ CREATE TABLE [dbo].[Playlist] (
 	[PlaylistID]  [int] IDENTITY(100000,1)     NOT NULL,
 	[Title]	[nvarchar](50)					   NOT NULL DEFAULT 'Playlist',
 	[ImageFilePath] [nvarchar](500)            DEFAULT 
-	'C:\Users\67Eas\Downloads\defaultAlbumImage.png',
+	'defaultAlbumImage.png',
 	[Description] [nvarchar](max)			   NULL DEFAULT "",
 	[UserID] [int]
 	
@@ -193,7 +206,8 @@ GO
 CREATE TABLE [dbo].[PlaylistSong] 
 (
 	[PlaylistID]      [int]						 NOT NULL,
-	[SongID]  		  [int]			 		     NOT NULL
+	[SongID]  		  [int]			 		     NOT NULL,
+	[TimeAdded]  	  [DateTime]			     NOT NULL
 	
 	CONSTRAINT [fk_PlaylistSong_SongID] FOREIGN KEY([SongID])
 		REFERENCES [dbo].[Song]([SongID]) ON DELETE CASCADE,

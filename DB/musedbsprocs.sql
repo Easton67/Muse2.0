@@ -293,18 +293,18 @@ GO
 
 CREATE PROCEDURE [dbo].[sp_insert_song]
 (
-    @Title          NVARCHAR(180),
-    @ImageFilePath  NVARCHAR(500),
-    @Mp3FilePath    NVARCHAR(500),
-    @YearReleased   INT,
-    @Lyrics         TEXT,
-    @Explicit       BIT,
-    @Genre          NVARCHAR(150),
-    @Plays          INT,
-    @UserID         INT,
-    @ArtistID       NVARCHAR(200),
-    @AlbumTitle     NVARCHAR(255),
-    @DateAdded      DATETIME
+    @Title          [nvarchar](180),
+    @ImageFilePath  [nvarchar](500),
+    @Mp3FilePath    [nvarchar](500),
+    @YearReleased   [int],
+    @Lyrics         [text],
+    @Explicit       [bit],
+    @Genre          [nvarchar](150),
+    @Plays          [int],
+    @UserID         [int],
+    @ArtistID       [nvarchar](200),
+    @AlbumTitle     [nvarchar](255),
+    @DateAdded      [datetime]
 )
 AS
 	BEGIN
@@ -314,7 +314,8 @@ AS
 		-- Check if the album exists based on title
 		SELECT @AlbumID = AlbumID
 		FROM [dbo].[Album]
-		WHERE [Title] = @AlbumTitle;
+		WHERE [Title] = @AlbumTitle
+		AND [ArtistID] = @ArtistID ;
 
 		-- If the album doesn't exist, insert a new one
 		IF @AlbumID IS NULL
@@ -339,6 +340,7 @@ AS
 		VALUES 
 			(@SongID, @ArtistID)
 
+		-- <> meaning not equal to 
 		IF @AlbumID IS NOT NULL AND @AlbumID <> ''
 		BEGIN
 			INSERT INTO [dbo].[SongAlbum] 
@@ -645,6 +647,11 @@ AS
 		AND [Description] = @OldDescription
 	END
 GO
+
+
+
+
+
 
 /* sp_delete_playlist */
 

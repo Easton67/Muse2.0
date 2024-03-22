@@ -81,7 +81,6 @@ namespace DataAccessLayer
                         Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
                         DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
                         DateAdded = reader.GetDateTime(13)
-
                     };
                     songs.Add(song);
                 }

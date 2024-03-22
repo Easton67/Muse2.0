@@ -23,7 +23,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <img style="margin-left: 10px; width: 100px; height: 100px; border: none;" id="album-img" class="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title)">
+            <img style="margin-left: 10px; width: 100px; height: 100px; border: none; border-radius: 8px;" id="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title)">
         </td>
         <td>
             <p class="mt-4">@Html.DisplayFor(modelItem => item.Title)</p>

@@ -56,18 +56,18 @@
         @RenderBody()
         <footer class="text-center">
             @*<div class="col-10 d-flex justify-content-center my-5">
-                <div class="slider-buttons">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
-                        <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(707.704 10466.905) rotate(180)" fill="#fff" />
-                    </svg>
-                </div>
-                <input class="slider" type="range" min="1" max="100" value="50" id="myRange">
-                <div class="slider-buttons">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
-                        <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(-681 -10447.9)" fill="#fff" />
-                    </svg>
-                </div>
-            </div>*@
+                    <div class="slider-buttons">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
+                            <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(707.704 10466.905) rotate(180)" fill="#fff" />
+                        </svg>
+                    </div>
+                    <input class="slider" type="range" min="1" max="100" value="50" id="myRange">
+                    <div class="slider-buttons">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
+                            <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(-681 -10447.9)" fill="#fff" />
+                        </svg>
+                    </div>
+                </div>*@
             <p>&copy; @DateTime.Now.Year - Muse v3.0 - Easton67</p>
         </footer>
     </div>
@@ -105,6 +105,7 @@
         });
     </script>
     @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/vanilla-tilt.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
