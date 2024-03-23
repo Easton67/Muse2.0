@@ -110,9 +110,12 @@ CREATE TABLE [dbo].[Album] (
 	[AlbumID] 		[int] IDENTITY(100000,1)     NOT NULL,
 	[Title] 		[nvarchar](100)          	 NOT NULL DEFAULT 'Unknown',
 	[ArtistID] 		[nvarchar](200)          	 NOT NULL DEFAULT 'Unknown',
+	[IsExplicit]    [bit]                        DEFAULT 0, 
 	[ImageFilePath] [nvarchar](500)              DEFAULT 
 	'defaultAlbumImage.png',
 	[Description] 	[nvarchar](max)				 NULL, 
+	[YearReleased] 	[int]				 		 DEFAULT 2002, 
+	[DateAdded] 	[DateTime]
 	CONSTRAINT [fk_Album_ArtistID] FOREIGN KEY([ArtistID])
 		REFERENCES [dbo].[Artist]([ArtistID]),
 

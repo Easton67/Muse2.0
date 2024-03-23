@@ -214,15 +214,19 @@ GO
 CREATE PROCEDURE [dbo].[sp_insert_album]
 (
 	@Title			[nvarchar](100),
+	@IsExplicit	    [bit],
+	@ArtistID		[nvarchar](200),
 	@ImageFilePath  [nvarchar](500),
-	@Description 	[text]
+	@Description 	[text],
+	@YearReleased   [int]
 )
 AS
 	BEGIN
+		DECLARE @DateAdded DATETIME = GETDATE()
 		INSERT INTO [dbo].[Album]
-			([Title], [ImageFilePath], [Description])
+			([Title], [ArtistID], [ImageFilePath], [Description], [YearReleased], [DateAdded])
 		VALUES
-			(@Title, @ImageFilePath, @Description)
+			(@Title, @ArtistID, @ImageFilePath, @Description, @YearReleased, @DateAdded)
 	END
 GO
 
@@ -236,7 +240,14 @@ CREATE PROCEDURE [dbo].[sp_select_album_by_AlbumID]
 )
 AS
 	BEGIN
-		SELECT [AlbumID], [Title], [ImageFilePath], [Description]
+		SELECT [AlbumID], 
+			   [Title], 
+			   [ArtistID], 
+			   [IsExplicit], 
+			   [ImageFilePath], 
+			   [Description], 
+			   [YearReleased], 
+			   [DateAdded]
 		FROM [Album]
 		WHERE [AlbumID] = @AlbumID
 	END
@@ -648,11 +659,6 @@ AS
 	END
 GO
 
-
-
-
-
-
 /* sp_delete_playlist */
 
 print '' print '*** creating sp_delete_playlist ***'
@@ -709,7 +715,7 @@ GO
 
 /* sp_insert_song_into_playlist */
 
-print '' print '*** creating sp_insert_song_into_playlist ***'
+PRINT '' PRINT '*** creating sp_insert_song_into_playlist ***'
 GO
 CREATE PROCEDURE [dbo].[sp_insert_song_into_playlist]
 (
@@ -717,11 +723,13 @@ CREATE PROCEDURE [dbo].[sp_insert_song_into_playlist]
     @PlaylistID [int]
 )
 AS
-	BEGIN
-		INSERT INTO [dbo].[PlaylistSong] 
-			([SongID], [PlaylistID])
-		VALUES (@SongID, @PlaylistID)
-	END
+    BEGIN
+        DECLARE @TimeAdded DATETIME = GETDATE()
+
+        INSERT INTO [dbo].[PlaylistSong] 
+            ([SongID], [PlaylistID], [TimeAdded])
+        VALUES (@SongID, @PlaylistID, @TimeAdded)
+    END
 GO
 
 /* sp_remove_song_from_playlist */
@@ -748,8 +756,12 @@ AS
 	BEGIN
 		SELECT  [AlbumID], 
 				[Title], 
+				[ArtistID],
+				[isExplicit],
 				[ImageFilePath],
-				[Description]
+				[Description],
+				[YearReleased],
+				[DateAdded]
 		FROM	[Album]
 	END
 GO
@@ -821,6 +833,98 @@ AS
 					   LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
 					   LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
 		WHERE 	@UserID = [User].[UserID] AND @SongID = [Song].[SongID]
+	END
+GO
+
+/* Artist Stored Procedures */
+
+/* sp_select_artist_by_artist_id */
+
+print '' print '*** creating sp_select_artist_by_artist_id ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_artist_by_artist_id]
+(
+	@ArtistID	    [int]
+)
+AS	
+	BEGIN
+		SELECT  [ArtistID], 		
+				[ImageFilePath],
+				[FirstName],
+				[LastName],		
+				[Description],    
+				[isLiked],       
+				[DateOfBirth]
+		FROM	[Artist] 
+		WHERE 	[ArtistID] = @ArtistID
+	END
+GO
+
+/* sp_select_all_artists */
+
+print '' print '*** creating sp_select_all_artists ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_artists]
+AS	
+	BEGIN
+		SELECT  [ArtistID], 		
+				[ImageFilePath],
+				[FirstName],
+				[LastName],		
+				[Description],    
+				[isLiked],       
+				[DateOfBirth]
+		FROM	[Artist]
+	END
+GO
+
+/* sp_select_songs_by_artist_id */
+
+print '' print '*** creating sp_select_songs_by_artist_id ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_songs_by_artist_id]
+(
+	@ArtistID	    [int]
+)
+AS	
+	BEGIN
+		SELECT	[Song].[SongID], 
+				[Song].[Title],
+				[Song].[ImageFilePath],
+				[Song].[Mp3FilePath],
+				[Song].[YearReleased],
+				[Song].[Lyrics],
+				[Song].[Explicit], 
+				[Song].[Genre],
+				[Song].[Plays],
+				[Song].[UserID],				
+				[SongArtist].[ArtistID],
+				[Album].[Title],
+				[Song].[DateUploaded],
+				[Song].[DateAdded]
+  
+		FROM	[Song] JOIN [User] ON [Song].[UserID] = [User].[UserID]
+					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
+					   LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
+					   LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
+		WHERE 	@ArtistID = [SongArtist].[ArtistID]
+	END
+GO
+
+/* sp_update_artist */
+
+/* sp_delete_artist */
+
+print '' print '*** creating sp_delete_artist ***'
+GO
+CREATE PROCEDURE [dbo].[sp_delete_artist]
+(
+	@ArtistID [nvarchar]
+)
+AS	
+	BEGIN
+		Delete	[Artist]
+		WHERE 	[ArtistID] = @ArtistID
 	END
 GO
 

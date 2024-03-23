@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessInterfaces
+namespace LogicLayer
 {
-    public interface IArtistAccessor
+    public interface IArtistManager
     {
         Artist SelectArtistByArtistID(string artistID);
     }

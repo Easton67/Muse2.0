@@ -4,41 +4,46 @@
     ViewBag.Title = "Albums";
 }
 
-<p>
+
+<button class="btn-add">
     @Html.ActionLink("Add Album", "Create")
-</p>
-<table class="table bg-dark text-light">
+</button>
+
+<table class="table text-light">
     <tr>
         <th>
-            <p style="margin-left: 20px;">@Html.DisplayNameFor(model => model.ImageFilePath)</p>
+            <p>@Html.DisplayNameFor(model => model.ImageFilePath)</p>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.ArtistID)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th></th>
     </tr>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <img style="margin-left: 10px; width: 100px; height: 100px; border: none; border-radius: 8px;" id="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title)">
-        </td>
-        <td>
-            <p class="mt-4">@Html.DisplayFor(modelItem => item.Title)</p>
-        </td>
-        <td>
-            <p class="mt-4">@Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            <p class="mt-4">
-                @Html.ActionLink("Edit", "Edit", new { id = item.AlbumID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.AlbumID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.AlbumID })
-            </p>
-        </td>
-    </tr>
-}
+    @foreach (var album in Model)
+    {
+        <tr>
+            <td>
+                <img src="/MuseConfig/AlbumArt/@Path.GetFileName(album.ImageFilePath)" alt="Album art for @album.Title">
+            </td>
+            <td>
+                <p class="mt-4">@Html.ActionLink(album.Title, "Details", new { id = album.AlbumID, style = "color: white; text-decoration: none;" })</p>
+            </td>
+            <td>
+                <p class="mt-4">@Html.ActionLink(album.ArtistID, "Details", "Artist", new { id = album.ArtistID, style = "color: white; text-decoration: none;" })</p>
+            </td>
+            <td>
+                <p class="mt-4">
+                    @Html.ActionLink("Edit", "Edit", new { id = album.AlbumID }) |
+                    @Html.ActionLink("Details", "Details", new { id = album.AlbumID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = album.AlbumID })
+                </p>
+            </td>
+        </tr>
+    }
 
 </table>

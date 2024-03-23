@@ -13,11 +13,21 @@ namespace Muse3.Controllers
         private SongManager _songManager = new SongManager();
         private UserManager _userManager = new UserManager();
         List<Song> songs = new List<Song>();
-        public ActionResult Library()
+
+        public ActionResult Library(string searchText)
         {
+            List<Song> songs = new List<Song>();
+
             try
             {
-                songs = _songManager.SelectSongsByUserID(100001);
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    songs = _songManager.SelectSongsByUserID(100001).Where(x => x.Title.ToLower().Contains(searchText)).ToList();
+                }
+                else
+                {
+                    songs = _songManager.SelectSongsByUserID(100001);
+                }
             }
             catch (Exception)
             {

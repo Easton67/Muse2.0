@@ -1358,8 +1358,8 @@ GO
 INSERT INTO [dbo].[Playlist] 
     ([Title], [ImageFilePath], [Description], [UserID])
 VALUES
-	('Night', 'night.jpeg', 'Perfect playlist for once it gets dark out', 100000),
-	('Day', 'day.jpeg', 'Great for when its nice and sunny outside', 100000),
+	('Night', 'night.jpg', 'Perfect playlist for once it gets dark out', 100000),
+	('Day', 'day.jpg', 'Great for when its nice and sunny outside', 100000),
 	('January', 'january.jpg', 'Fresh Start', 100000),
 	('February', 'february.jpg', 'Chilly Days', 100000),
 	('March', 'march.jpg', 'Transition', 100000),

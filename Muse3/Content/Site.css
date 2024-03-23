@@ -2,6 +2,27 @@
     height: auto;
 }
 
+.bg-dark-transparent {
+    background-color: rgb(255 255 255 / 15%);
+}
+
+img {
+    -webkit-user-drag: none;
+}
+
+.explicit-white {
+    filter: invert(100%);
+    padding-left: 4px;
+    width: 20px;
+    height: 16px
+}
+
+.icon {
+    height: 70px;
+    width: 70px;
+    filter: invert(100%);
+}
+
 body {
     height: 100%;
     background-image: url('../images/bigvec.jpg');
@@ -19,8 +40,6 @@ body {
     flex-direction: column;
 }
 
-
-/* Set padding to keep content from hitting the edges */
 .body-content {
     margin-top: 15px;
     padding-left: 15px;
@@ -29,6 +48,49 @@ body {
 
 .bg-purple {
     background-color: rgba(120, 107, 176, 1)
+}
+
+/* Details pages / create button */
+
+table {
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+    background-color: rgb(255 255 255 / 15%) !important;
+    border-bottom: 3px solid white !important;
+}
+
+th {
+    color: white;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+td {
+    font-size: 20px;
+    border-top: 3px solid white;
+    color: white;
+    white-space: nowrap;
+}
+
+td img {
+    margin-left: 10px;
+    width: 100px;
+    height: 100px;
+    border: none;
+    border-radius: 8px;
+}
+
+.btn-add {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    color: white !important;
+    background-color: rgb(255 255 255 / 15%) !important;
+    padding: .5em 1em .5em 1em !important;
+    border-radius: 30px !important;
+    font-weight: bold !important;
 }
 
 
@@ -157,8 +219,9 @@ textarea {
 #library-play-img {
     width: auto !important;
     margin-bottom: 5px !important;
-    margin-top: -19px !important;
+    margin-top: -25px !important;
     margin-left: -8px !important;
+    border-radius: 0px !important;
     height: 20px !important;
 }
 
@@ -185,7 +248,6 @@ audio {
     border: 5px solid white;
     width: 200px;
     height: 200px;
-    -webkit-user-drag: none;
 }
 
 .album-img:hover {
@@ -203,7 +265,6 @@ audio {
     border: none;
     width: 400px;
     height: 400px;
-    -webkit-user-drag: none;
 }
 
 .library-play-button:Hover {
@@ -343,6 +404,3 @@ footer {
 
 /* Playlist */
 
-.playlist-table-border {
-    border-top: 3px solid white !important;
-}

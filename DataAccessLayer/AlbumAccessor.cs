@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace DataAccessLayer
 {
@@ -18,18 +19,20 @@ namespace DataAccessLayer
             int rows = 0;
 
             var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_create_Album";
+            var cmdText = "sp_insert_album";
             var cmd = new SqlCommand(cmdText, conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@AlbumID", album.AlbumID);
             cmd.Parameters.AddWithValue("@Title", album.Title);
+            cmd.Parameters.AddWithValue("@IsExplicit", album.isExplicit);
+            cmd.Parameters.AddWithValue("@ArtistID", album.ArtistID);
             cmd.Parameters.AddWithValue("@ImageFilePath", album.ImageFilePath);
             cmd.Parameters.AddWithValue("@Description", album.Description);
+            cmd.Parameters.AddWithValue("@YearReleased", album.YearReleased);
 
             try
             {
-                conn.Open();
+                conn.Open();    
                 rows = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -63,8 +66,12 @@ namespace DataAccessLayer
                     {
                         AlbumID = reader.GetInt32(0),
                         Title = reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? defaultAlbumImg : reader.GetString(2),
-                        Description = reader.IsDBNull(3) ? "No description." : reader.GetString(3),
+                        ArtistID = reader.GetString(2),
+                        isExplicit = reader.GetBoolean(3),
+                        ImageFilePath = reader.IsDBNull(4) ? defaultAlbumImg : reader.GetString(4),
+                        Description = reader.IsDBNull(5) ? "No description." : reader.GetString(5),
+                        YearReleased = reader.IsDBNull(6) ? 2002 : reader.GetInt32(6),
+                        DateAdded = reader.IsDBNull(7) ? DateTime.Now.Date : reader.GetDateTime(7)
                     };
                     albums.Add(Album);
                 }
@@ -103,13 +110,17 @@ namespace DataAccessLayer
                     {
                         AlbumID = reader.GetInt32(0),
                         Title = reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? defaultAlbumImg : reader.GetString(2),
-                        Description = reader.IsDBNull(3) ? "No description." : reader.GetString(3),
+                        ArtistID = reader.GetString(2),
+                        isExplicit = reader.GetBoolean(3),
+                        ImageFilePath = reader.IsDBNull(4) ? defaultAlbumImg : reader.GetString(4),
+                        Description = reader.IsDBNull(5) ? "No description." : reader.GetString(5),
+                        YearReleased = reader.IsDBNull(6) ? 2002 : reader.GetInt32(6),
+                        DateAdded = reader.IsDBNull(7) ? DateTime.Now.Date : reader.GetDateTime(7)
                     };
                 }
                 else
                 {
-                    throw new ArgumentException("Song not found");
+                    throw new ArgumentException("Album not found");
                 }
             }
             catch (Exception ex)

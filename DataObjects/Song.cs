@@ -37,5 +37,6 @@ namespace DataObjects
         public DateTime? DateUploaded { get; set; }
         [DisplayName("Date Added")]
         public DateTime DateAdded { get; set; }
+        public bool isLiked { get; set; }
     }
 }

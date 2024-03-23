@@ -2,17 +2,17 @@
 
 @{
     ViewBag.Title = "ViewAllPlaylists";
+    ViewBag.Hero = "All Playlists";
 }
 
-<h2>Playlists</h2>
-
-<p>
+<button class="btn-add">
     @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table bg-dark text-white">
+</button>
+
+<table class="table">
     <tr>
         <th>
-            <p class="text-nowrap">Playlist artwork</p>
+            <p>Playlist artwork</p>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
@@ -20,25 +20,19 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            <img style="width: 50px; height: 50px;" src="~/MuseConfig/PlaylistImages/@Path.GetFileName(item.ImageFilePath)" alt="Album art for @item.Title playlist." />
+            <img src="~/MuseConfig/PlaylistImages/@Path.GetFileName(item.ImageFilePath)" alt="Art for @item.Title playlist." />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserID)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.PlaylistID }) |

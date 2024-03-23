@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
+    <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
@@ -207,16 +208,20 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\grid-icon.svg" />
     <Content Include="Images\bigvec.jpg" />
     <Content Include="Images\blond.jpeg" />
     <Content Include="Images\dark-purple-pattern-with-curved-lines-vector.jpg" />
     <Content Include="Images\defaultAlbumImage.png" />
     <Content Include="Images\explicit.png" />
+    <Content Include="Images\heart-icon.svg" />
+    <Content Include="Images\list-icon.svg" />
     <Content Include="Images\museFavIcon.ico" />
     <Content Include="Images\museLogoClassic.png" />
     <Content Include="Images\museV3Logo.png" />
     <Content Include="Images\pause.png" />
     <Content Include="Images\play.png" />
+    <Content Include="Images\search.svg" />
     <Content Include="MuseConfig\AlbumArt\0 To 100 ⧸ The Catch Up.png" />
     <Content Include="MuseConfig\AlbumArt\03’ Adolescence.png" />
     <Content Include="MuseConfig\AlbumArt\10 Bands.png" />
@@ -1877,6 +1882,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\vanilla-tilt.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1925,7 +1931,6 @@
     <Content Include="Views\Admin\ViewAllUsers.cshtml" />
     <Content Include="Views\Playlist\ViewAllPlaylists.cshtml" />
     <Content Include="Views\Review\ViewAllReviews.cshtml" />
-    <Content Include="Views\Album\Albums.cshtml" />
     <Content Include="Views\User\ViewAllFriends.cshtml" />
     <Content Include="Views\Song\Details.cshtml" />
     <Content Include="Views\Song\Edit.cshtml" />
@@ -1936,14 +1941,20 @@
     <Content Include="Views\Playlist\Create.cshtml" />
     <Content Include="Views\Playlist\Edit.cshtml" />
     <Content Include="Views\Review\Edit.cshtml" />
-    <Content Include="Views\Album\Details.cshtml" />
-    <Content Include="Views\Album\Create.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
     <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Playlist\Delete.cshtml" />
     <Content Include="Views\Review\Delete.cshtml" />
     <Content Include="Views\Admin\Details.cshtml" />
     <Content Include="Views\Profile\Details.cshtml" />
+    <Content Include="Views\Artist\Index.cshtml" />
+    <Content Include="Views\Artist\Details.cshtml" />
+    <Content Include="Views\Artist\Create.cshtml" />
+    <Content Include="Views\Artist\Edit.cshtml" />
+    <Content Include="Views\Artist\Delete.cshtml" />
+    <Content Include="Views\Album\Details.cshtml" />
+    <Content Include="Views\Album\Create.cshtml" />
+    <Content Include="Views\Album\Albums.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

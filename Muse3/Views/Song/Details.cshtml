@@ -17,23 +17,61 @@
             </div>
         </div>
         <div class="fs-5 px-5 mt-4">
-            <p>@Model.Title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /></p>
-            <p>Album: @Html.DisplayFor(model => model.Album)</p>
-            <p>Artist: @Html.DisplayFor(model => model.Artist)</p>
+            <p>@Model.Title
+                @if (Model.Explicit.Equals(0))
+                {
+                <img class="explicit-white" src="~/Images/explicit.png" />
+                }
+            </p>
+            @if (Model.Album.Length.Equals(0))
+            {
+                <p>Album: Unknown</p>
+            }
+            else
+            {
+                <p>Album: @Html.DisplayFor(model => model.Album)</p>
+            }
+            @if (Model.Artist.Length.Equals(0))
+            {
+                <p>Artist: Unknown</p>
+            }
+            else
+            {
+                <p>Artist: @Html.DisplayFor(model => model.Artist)</p>
+            }
             <p>Year Released: @Html.DisplayFor(model => model.YearReleased)</p>
-            <p>Genre: @Html.DisplayFor(model => model.Genre)</p>
+            @if (Model.Genre.Length.Equals(0))
+            {
+                <p>Genre: None</p>
+            }
+            else
+            {
+                <p>Genre: @Html.DisplayFor(model => model.Genre)</p>
+            }
         </div>
         <div class="fs-5 px-5 mt-4">
-            <p>
-                @Html.DisplayFor(model => model.Plays) plays
-            </p>
+            @if (Model.Plays.Equals(0))
+            {
+                <p>No plays</p>
+            }
+            else if (Model.Plays.Equals(1))
+            {
+                <p>1 play</p>
+            }
+            else
+            {
+                <p>
+                    @Html.DisplayFor(model => model.Plays) plays
+                </p>
+            }
+
             <p class="text-nowrap">
                 @Html.ActionLink("Write a Review", "Create", "Review", new { area = "" }) .
                 @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
                 @Html.ActionLink("Delete", "Delete", new { id = Model.SongID })
             </p>
         </div>
-        <div style="height: 300px;">
+        <div>
             <textarea readonly="readonly" style="height: 600px;" id="lyrics">@Model.Lyrics</textarea>
         </div>
     </div>

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlbumAccessorFake.cs" />
+    <Compile Include="ArtistAccessorFakes.cs" />
     <Compile Include="PlaylistAccessorFake.cs" />
     <Compile Include="ReviewAccessFake.cs" />
     <Compile Include="SongAccessorFake.cs" />

@@ -6,19 +6,19 @@
     var mp3FilePath = "";
     string songID = "";
 }
-<div>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for song...">    
-    <button onclick="listView()">listView</button>
-    <button onclick="gridView()">gridView</button>
+<div class="d-flex px-5 pt-3">
+    <input id="songSearchBox" style="border-radius: 70px;" class="px-3" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for song...">
+    <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
+    <img onclick="listView()" class="icon px-3" src="~/Images/list-icon.svg" />
+    <img onclick="gridView()" class="icon px-3" src="~/Images/grid-icon.svg" />
 </div>
 
-
 @*list view*@
-<div id="library-list-view" style="display: none;">
-    <table class="table bg-dark text-white">
+<div id="library-list-view" class="pt-4" style="display: none;">
+    <table class="table">
         <tr>
             <th>
-                <p class="text-nowrap">Album Art</p> 
+                <p class="text-nowrap">Album Art</p>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
@@ -54,14 +54,32 @@
                     </button><br />
                     <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(item.Mp3FilePath)" data-audio-songid="@item.SongID"></audio>
                 </td>
+                @{
+                    string title = item.Title.Length >= charLimit ? item.Title.Substring(0, charLimit) + "..." : item.Title;
+                    string album = item.Album.Length >= charLimit ? item.Album.Substring(0, charLimit) + "..." : item.Album;
+                    string artist = item.Artist.Length >= charLimit ? item.Artist.Substring(0, charLimit) + "..." : item.Artist;
+                }
                 <td>
-                    <p style="white-space: nowrap;">@Html.DisplayFor(modelItem => item.Title)<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /></p>
+                    <p class="text-nowrap">
+                        @title
+                        @if (item.Explicit == true)
+                        {
+                            <img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" />
+                        }
+                    </p>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Artist)
+                    @artist
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Album)
+                    @if (album.Length.Equals(0))
+                    {
+                        <p>Unknown</p>
+                    }
+                    else
+                    {
+                        @album
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.YearReleased)
@@ -100,13 +118,17 @@
             <div class="mx-5 song-info-div">
                 <br>
                 <div class="d-inline-block" style="white-space: nowrap!important; font-size: 30px;">
-                    <p>
-                        @{
-                            string title = item.Title.Length >= charLimit ? item.Title.Substring(0, charLimit) + "..." : item.Title;
-                            string album = item.Album.Length >= charLimit ? item.Album.Substring(0, charLimit) + "..." : item.Album;
-                            string artist = item.Artist.Length >= charLimit ? item.Artist.Substring(0, charLimit) + "..." : item.Artist;
+                    @{
+                        string title = item.Title.Length >= charLimit ? item.Title.Substring(0, charLimit) + "..." : item.Title;
+                        string album = item.Album.Length >= charLimit ? item.Album.Substring(0, charLimit) + "..." : item.Album;
+                        string artist = item.Artist.Length >= charLimit ? item.Artist.Substring(0, charLimit) + "..." : item.Artist;
+                    }
+                    <p class="text-nowrap">
+                        @title
+                        @if (item.Explicit == true)
+                        {
+                            <img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" />
                         }
-                        @title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" />
                     </p>
                     <p>@album</p>
                     <p>@artist</p>
@@ -115,3 +137,12 @@
         </div>
     }
 </div>
+<script>
+    function searchForSong() {
+        var title = document.getElementById("songSearchBox").value.trim().toLowerCase();
+        var libraryURL = '@Url.Action("Library", "Song")' + '?searchText=' + encodeURIComponent(title);
+        window.location.href = libraryURL;
+    };
+</script>
+
+

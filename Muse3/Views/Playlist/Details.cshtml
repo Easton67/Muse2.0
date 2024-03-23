@@ -9,7 +9,7 @@
 <div class="px-3">
     <div class="d-flex">
         <div class="your-element" data-tilt>
-            <img style="width: 200px; height: 200px; border-radius: 10px;" onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.Playlist.ImageFilePath)" alt="Album art">
+            <img style="width: 200px; height: 200px; border-radius: 10px;" onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/PlaylistImages/@Path.GetFileName(@Model.Playlist.ImageFilePath)" alt="Album art">
         </div>
         <div class="px-3">
             <h2>@Model.Playlist.Title</h2>
@@ -17,8 +17,11 @@
         </div>
     </div>
 
-    <div class="pt-3">
-        <table class="table text-white" style="background-color: rgb(255 255 255 / 15%);">
+    <button class="btn-add">
+        @Html.ActionLink("Add Song", "Create", "Song")
+    </button>
+    <div>
+        <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
             <tr class="text-nowrap fw-bold">
                 <th>
                     Album Art
@@ -41,13 +44,12 @@
                 <th>
                     Plays
                 </th>
-                <th></th>
             </tr>
             @foreach (var song in Model.Songs)
             {
-                    <tr class="playlist-table">
+                <tr class="playlist-table">
                     <td class="playlist-table-border">
-                        <img id="album-img" class="album-img list-album-img" src="/MuseConfig/PlaylistImages/@Path.GetFileName(song.ImageFilePath)" alt="Album art" data-songid="@song.SongID">
+                        <img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(song.ImageFilePath)" alt="Album art" data-songid="@song.SongID">
                         <button id="library-play-button" class="library-play-button list-view-library-play-button">
                             <img id="library-play-img" src="~/Images/play.png" />
                         </button><br />

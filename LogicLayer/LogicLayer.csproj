@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlbumManager.cs" />
+    <Compile Include="ArtistManager.cs" />
     <Compile Include="IAlbumManager.cs" />
+    <Compile Include="IArtistManager.cs" />
     <Compile Include="IPlaylistManager.cs" />
     <Compile Include="IReviewManager.cs" />
     <Compile Include="ISongManager.cs" />

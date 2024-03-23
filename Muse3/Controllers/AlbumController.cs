@@ -42,7 +42,7 @@ namespace Muse3.Controllers
             try
             {
                 viewModel.album = _albumManager.SelectAlbumByAlbumID(id);
-                //viewModel.songs = _songManager.SelectSongsByAlbumID(id);
+                viewModel.songs = _songManager.SelectSongsByUserID(id).Where(x => x.Album == viewModel.album.Title).ToList();
             }
             catch (Exception ex)
             {
@@ -61,17 +61,23 @@ namespace Muse3.Controllers
 
         // POST: Album/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Album album)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _albumManager.CreateAlbum(album);
+                    return RedirectToAction("Albums");
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View(album);
             }
         }
 

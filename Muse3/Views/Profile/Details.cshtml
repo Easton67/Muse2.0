@@ -47,7 +47,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ImageFilePath)
+            <img onclick="openFileDialog()" id="album-img-edit" src="~/MuseConfig/ProfileImages/@Path.GetFileName(@Model.ImageFilePath)" alt="Profile picture">
         </dd>
 
         <dt>

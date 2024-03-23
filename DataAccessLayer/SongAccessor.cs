@@ -153,15 +153,10 @@ namespace DataAccessLayer
         public List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID)
         {
             List<Song> songs = new List<Song>();
-
             var conn = SqlConnectionProvider.GetConnection();
-
             var cmdText = "sp_select_songs_by_PlaylistID";
-
             var cmd = new SqlCommand(cmdText, conn);
-
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.Add("@UserID", SqlDbType.Int);
             cmd.Parameters.Add("@PlaylistID", SqlDbType.Int);
             cmd.Parameters["@UserID"].Value = UserID;
