@@ -32,6 +32,9 @@
         </div>
 
         <div class="form-group">
+            <button classf="btn-add">
+                Add Album Art
+            </button>
             @Html.LabelFor(model => model.ImageFilePath, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ImageFilePath, new { htmlAttributes = new { @class = "form-control" } })

@@ -16,12 +16,13 @@
                 @Html.ActionLink("Library", "Library")
             </div>
         </div>
-        <div class="fs-5 px-5 mt-4">
-            <p>@Model.Title
-                @if (Model.Explicit.Equals(0))
-                {
+        <div class="fs-3 px-5 mt-4">
+            <p>
+                @Model.Title
+            @if (Model.Explicit.Equals(0))
+            {
                 <img class="explicit-white" src="~/Images/explicit.png" />
-                }
+            }
             </p>
             @if (Model.Album.Length.Equals(0))
             {
@@ -29,7 +30,7 @@
             }
             else
             {
-                <p>Album: @Html.DisplayFor(model => model.Album)</p>
+                <p>Album: @Html.ActionLink(Model.Album, "Details", "Artist", new { id = Model.Album, style = "color: white; text-decoration: none;" })</p>
             }
             @if (Model.Artist.Length.Equals(0))
             {
@@ -48,8 +49,8 @@
             {
                 <p>Genre: @Html.DisplayFor(model => model.Genre)</p>
             }
-        </div>
-        <div class="fs-5 px-5 mt-4">
+        </div>  
+        <div class="fs-3 px-5 mt-4">
             @if (Model.Plays.Equals(0))
             {
                 <p>No plays</p>

@@ -2,7 +2,9 @@
 using LogicLayer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Web;
 using System.Web.Mvc;
 
@@ -113,7 +115,25 @@ namespace Muse3.Controllers
                 if (ModelState.IsValid)
                 {
                     Song oldSong = (Song)Session["oldSong"];
-                    _songManager.UpdateSong(oldSong, song);
+                    var newSong = new Song()
+                    {
+                        Title = song.Title,
+                        ImageFilePath = song.Title,
+                        Mp3FilePath = song.Title,
+                        YearReleased = song.YearReleased,
+                        Lyrics = song.Lyrics,
+                        Explicit = song.Explicit,
+                        Genre = song.Genre,
+                        Plays = song.Plays,
+                        UserID = song.UserID,
+                        Artist = song.Artist,
+                        Album = song.Album,
+                        DateUploaded = null,
+                        DateAdded = DateTime.Now,
+                        isLiked = false,
+                    };
+
+                    _songManager.UpdateSong(oldSong, newSong);
                 }
 
                 return RedirectToAction("Library");
