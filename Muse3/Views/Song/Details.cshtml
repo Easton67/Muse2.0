@@ -66,11 +66,11 @@
                 </p>
             }
 
-            <p class="text-nowrap">
-                @Html.ActionLink("Write a Review", "Create", "Review", new { area = "" }) .
-                @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
-                @Html.ActionLink("Delete", "Delete", new { id = Model.SongID })
-            </p>
+        <p class="text-nowrap">
+            @Html.ActionLink("Write a Review", "Create", "Review", new { area = "" } ) . 
+            @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
+            @Html.ActionLink("Delete", "Delete", new { id = Model.SongID })
+        </p>
         </div>
         <div>
             <textarea readonly="readonly" style="height: 600px;" id="lyrics">@Model.Lyrics</textarea>

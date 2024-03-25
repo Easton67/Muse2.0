@@ -70,7 +70,6 @@ audio::-webkit-media-controls-timeline-container {
 }
 /* Audio 
 audio::-webkit-media-controls-mute-button
-
 audio::-webkit-media-controls-timeline
 audio::-webkit-media-controls-volume-slider-container
 audio::-webkit-media-controls-volume-slider
@@ -334,6 +333,16 @@ audio {
 /* Song Edit */
 
 #lyrics {
+    background-color: transparent;
+    border-radius: 5px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    height: 600px;
+    padding-left: 30px;
+}
+
+div textarea {
     background-color: transparent;
     border-radius: 5px;
     font-size: 30px;

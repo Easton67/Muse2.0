@@ -95,23 +95,7 @@
 }
 
 <script>
-    function openFileDialog() {
-        document.getElementById('imageFilePath').click();
-    }
-
-    function handleImageSelection(event) {
-        // 0 since we are grabbing only 1 file
-        const imageFilePath = event.target.files[0];
-        if (imageFilePath) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const albumImgEdit = document.getElementById('album-img-edit');
-                albumImgEdit.src = e.target.result;
-            };
-            // changes file path to url to use as source
-            reader.readAsDataURL(imageFilePath);
-        }
-    }
+    
 </script>
 
 @section Scripts {

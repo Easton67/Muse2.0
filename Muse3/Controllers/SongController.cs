@@ -68,10 +68,27 @@ namespace Muse3.Controllers
         {
             try
             {
+                var newSong = new Song()
+                {
+                    Title = song.Title,
+                    ImageFilePath = song.ImageFilePath,
+                    Mp3FilePath = song.Mp3FilePath,
+                    YearReleased = song.YearReleased,
+                    Lyrics = song.Lyrics,
+                    Explicit = song.Explicit,
+                    Genre = song.Genre,
+                    Plays = song.Plays,
+                    UserID = 100000,
+                    Artist = song.Artist,
+                    Album = song.Album,
+                    DateUploaded = null,
+                    DateAdded = DateTime.Now,
+                    isLiked = false,
+                };
                 if (ModelState.IsValid)
                 {
-                    _songManager.InsertSong(song);
-                    return RedirectToAction("Index");
+                    _songManager.InsertSong(newSong);
+                    return RedirectToAction("Library");
                 }
                 else
                 {

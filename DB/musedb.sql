@@ -88,13 +88,13 @@ print '' print '*** creating Artist table ***'
 GO
 CREATE TABLE [dbo].[Artist] (
 	[ArtistID] 		  [nvarchar](200) 			 NOT NULL,
-	[ImageFilePath]   [nvarchar](500)            DEFAULT 
+	[ImageFilePath]   [nvarchar](500)            NULL DEFAULT 
 	'defaultAccount.png',
-	[FirstName] 	  [nvarchar](50)             DEFAULT 'Unknown',
-	[LastName] 		  [nvarchar](50)             DEFAULT 'Unknown',
+	[FirstName] 	  [nvarchar](50)             NULL DEFAULT 'Unknown',
+	[LastName] 		  [nvarchar](50)             NULL DEFAULT 'Unknown',
 	[Description]     [nvarchar](max)			 NULL DEFAULT "",
-	[isLiked]         [bit]			             DEFAULT 0,
-	[DateOfBirth] 	  [DateTime]				 Default '2000-01-01',				 
+	[isLiked]         [bit]			             NULL DEFAULT 0,
+	[DateOfBirth] 	  [DateTime]				 NULL Default '2000-01-01',				 
 	[UserID]		  [int],
 
 	CONSTRAINT [fk_Artist_UserID] FOREIGN KEY([UserID])

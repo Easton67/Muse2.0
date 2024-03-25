@@ -1937,7 +1937,6 @@
     <Content Include="Views\Review\Details.cshtml" />
     <Content Include="Views\Review\Create.cshtml" />
     <Content Include="Views\Playlist\Details.cshtml" />
-    <Content Include="Views\Song\Create.cshtml" />
     <Content Include="Views\Playlist\Create.cshtml" />
     <Content Include="Views\Playlist\Edit.cshtml" />
     <Content Include="Views\Review\Edit.cshtml" />
@@ -1955,6 +1954,7 @@
     <Content Include="Views\Album\Details.cshtml" />
     <Content Include="Views\Album\Create.cshtml" />
     <Content Include="Views\Album\Albums.cshtml" />
+    <Content Include="Views\Song\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

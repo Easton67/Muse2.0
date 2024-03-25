@@ -7,11 +7,16 @@
     string songID = "";
 }
 <div class="d-flex px-5 pt-3">
+    <button class="btn-add mx-3">
+        @Html.ActionLink("Add Song", "Create")
+    </button>
     <input id="songSearchBox" style="border-radius: 70px;" class="px-3" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for song...">
     <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
     <img onclick="listView()" class="icon px-3" src="~/Images/list-icon.svg" />
     <img onclick="gridView()" class="icon px-3" src="~/Images/grid-icon.svg" />
 </div>
+
+
 
 @*list view*@
 <div id="library-list-view" class="pt-4" style="display: none;">
@@ -137,44 +142,7 @@
         </div>
     }
 </div>
-    @*<div class="sticky-bottom bg-dark pt-5">
-        <audio class="w-100 p-5 h-50 bg-transparent" controls style="display: block !important;" src="/MuseConfig/SongFiles/Comethazine - Air Max.mp3"></audio>
-    </div>*@
-
-    @*<button style="margin: 0px !important;" id="library-play-button" class="library-play-button">
-        <img src="~/Images/play.png" />
-    </button>
-    <div>
-        <div class="w-100 py-5 d-flex justify-content-center gap-3 my-5 text-center">
-            <div class="slider-buttons mr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
-                    <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(707.704 10466.905) rotate(180)" fill="#fff" />
-                </svg>
-            </div>
-            <div>
-                <input class="w-100" type="range" min="1" max="100" value="50" id="myRange">
-            </div>
-            <div class="slider-buttons ml-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="26.703" height="19.005" viewBox="0 0 26.703 19.005">
-                    <path id="Union_10" data-name="Union 10" d="M690.578,10464.9v-2.029l-6.586,3.764A2,2,0,0,1,681,10464.9v-15a2,2,0,0,1,2.992-1.736l6.586,3.764v-2.027a2,2,0,0,1,2.992-1.736l13.124,7.5a2,2,0,0,1,0,3.471l-13.124,7.5a1.994,1.994,0,0,1-2.992-1.734Z" transform="translate(-681 -10447.9)" fill="#fff" />
-                </svg>
-            </div>
-            <audio controls style="display: none;"></audio>
-        </div>
-    </div>*@
-<!--</div>-->
-
 <script>
-    var mp3s = [];
-    @foreach (var song in Model)
-    {
-        <text>mp3s.push(@Path.GetFileName(song.Mp3FilePath));</text>
-    }
-
-    var currentSongIndex = 0;
-
-    var audio = document.getElementById("thisSong")
-
     function searchForSong() {
         var title = document.getElementById("songSearchBox").value.trim().toLowerCase();
         var libraryURL = '@Url.Action("Library", "Song")' + '?searchText=' + encodeURIComponent(title);
