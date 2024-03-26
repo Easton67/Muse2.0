@@ -30,7 +30,6 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@UserID", song.UserID);
             cmd.Parameters.AddWithValue("@ArtistID", song.Artist);
             cmd.Parameters.AddWithValue("@AlbumTitle", song.Album);
-            cmd.Parameters.AddWithValue("@DateAdded", song.DateAdded);
 
             try
             {

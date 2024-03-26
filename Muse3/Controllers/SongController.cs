@@ -3,6 +3,7 @@ using LogicLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Web;
@@ -14,6 +15,8 @@ namespace Muse3.Controllers
     {
         private SongManager _songManager = new SongManager();
         private UserManager _userManager = new UserManager();
+        private string songfilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles";
+        private string imageFilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt";
         List<Song> songs = new List<Song>();
 
         public ActionResult Library(string searchText)
@@ -64,35 +67,52 @@ namespace Muse3.Controllers
         
         // POST: Song/Create
         [HttpPost]
-        public ActionResult Create(Song song)
+        public ActionResult Create(Song song, HttpPostedFileBase mp3File, HttpPostedFileBase imageFile)
         {
             try
             {
-                var newSong = new Song()
+                // checking if files are there
+                if (mp3File != null && imageFile != null)
                 {
-                    Title = song.Title,
-                    ImageFilePath = song.ImageFilePath,
-                    Mp3FilePath = song.Mp3FilePath,
-                    YearReleased = song.YearReleased,
-                    Lyrics = song.Lyrics,
-                    Explicit = song.Explicit,
-                    Genre = song.Genre,
-                    Plays = song.Plays,
-                    UserID = 100000,
-                    Artist = song.Artist,
-                    Album = song.Album,
-                    DateUploaded = null,
-                    DateAdded = DateTime.Now,
-                    isLiked = false,
-                };
-                if (ModelState.IsValid)
-                {
-                    _songManager.InsertSong(newSong);
-                    return RedirectToAction("Library");
+                    // copy image to museConfig
+                    var mp3 = Path.GetFileName(mp3File.FileName);
+                    var mp3FilePath = Path.Combine(songfilesLocation, mp3);
+                    mp3File.SaveAs(mp3FilePath);
+
+                    var image = Path.GetFileName(imageFile.FileName);
+                    var imageFilePath = Path.Combine(imageFilesLocation, image);
+                    imageFile.SaveAs(imageFilePath);
+
+                    var newSong = new Song()
+                    {
+                        Title = song.Title,
+                        ImageFilePath = song.ImageFilePath,
+                        Mp3FilePath = song.Mp3FilePath,
+                        YearReleased = song.YearReleased,
+                        Lyrics = song.Lyrics,
+                        Explicit = song.Explicit,
+                        Genre = song.Genre,
+                        Plays = song.Plays,
+                        UserID = 100001,
+                        Artist = song.Artist,
+                        Album = song.Album,
+                        DateUploaded = null,
+                        DateAdded = DateTime.Now,
+                        isLiked = false,
+                    };
+                    if (ModelState.IsValid)
+                    {
+                        _songManager.InsertSong(newSong);
+                        return RedirectToAction("Library");
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
                 else
                 {
-                    throw new Exception();
+                    return View(song);
                 }
             }
             catch (Exception ex)

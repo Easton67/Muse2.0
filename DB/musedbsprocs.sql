@@ -329,9 +329,9 @@ CREATE PROCEDURE [dbo].[sp_insert_into_SongArtist]
 AS
 	BEGIN
 		INSERT INTO [dbo].[SongArtist] 
-				([SongID], [ArtistID])
+				([SongID], [ArtistID], [isFeaturing])
 		VALUES 
-				(@SongID, @ArtistID)
+				(@SongID, @ArtistID, 0)
 	END
 GO
 
@@ -348,14 +348,14 @@ CREATE PROCEDURE [dbo].[sp_insert_into_SongAlbum]
 AS
 	BEGIN
 		INSERT INTO [dbo].[SongAlbum] 
-				([SongID], [AlbumID], [isFeaturing])
+				([SongID], [AlbumID])
 		VALUES 
-				(@SongID, @AlbumID, 0)
+				(@SongID, @AlbumID)
 	END
 GO
 
 
-/* sp_insert_song */
+/* sp_insert_song
 
 print '' print '*** creating sp_insert_song ***'
 GO
@@ -391,6 +391,83 @@ AS
 		VALUES 
 			(@Title, @Mp3FilePath, @ImageFilePath, @YearReleased, @Lyrics, 
 			@Explicit, @Genre, @Plays, @UserID, @ArtistID, @AlbumID)
+	END
+GO
+ */
+
+print '' print '*** creating sp_insert_song ***'
+GO
+
+CREATE PROCEDURE [dbo].[sp_insert_song]
+(
+    @Title           nvarchar(180),
+    @ImageFilePath   nvarchar(500),
+    @Mp3FilePath     nvarchar(500),
+    @YearReleased    int,
+    @Lyrics          text,
+    @Explicit        bit,
+    @Genre           nvarchar(150),
+    @Plays           int,
+    @UserID          int,
+    @ArtistID        nvarchar(200),
+    @AlbumTitle      nvarchar(255)
+)
+AS
+	BEGIN
+		DECLARE @SongID INT
+		DECLARE @AlbumID INT
+
+		-- check if @artistID already exists
+		IF NOT EXISTS (SELECT 1 FROM [dbo].[Artist] WHERE [ArtistID] = @ArtistID)
+		BEGIN
+			INSERT INTO [dbo].[Artist] ([ArtistID])
+			VALUES (@ArtistID)
+		END
+
+		-- get albumID from the albumtitle and the artist
+		SELECT @AlbumID = AlbumID
+		FROM [dbo].[Album]
+		WHERE [Title] = @AlbumTitle
+		AND [ArtistID] = @ArtistID
+
+		-- make new album if it doesnt exist
+		IF @AlbumID IS NULL
+		BEGIN
+			INSERT INTO [dbo].[Album] 
+				([Title], [ArtistID])
+			VALUES (@AlbumTitle, @ArtistID)
+
+			SELECT @AlbumID = SCOPE_IDENTITY()
+		END
+
+		-- insert song
+		INSERT INTO [dbo].[Song] 
+			([Title], [Mp3FilePath], [ImageFilePath], [YearReleased], [Lyrics], 
+			[Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID])
+		VALUES 
+			(@Title, @Mp3FilePath, @ImageFilePath, @YearReleased, @Lyrics, 
+			@Explicit, @Genre, @Plays, @UserID, @ArtistID, @AlbumID)
+
+		-- get song id from the created song
+		SELECT @SongID = SCOPE_IDENTITY()
+
+		-- add to SongArtist table
+		IF @ArtistID IS NOT NULL AND @ArtistID <> ''
+		BEGIN
+			INSERT INTO [dbo].[SongArtist] 
+				([SongID], [ArtistID])
+			VALUES 
+				(@SongID, @ArtistID)
+		END
+
+		-- add to SongAlbum table
+		IF @AlbumID IS NOT NULL AND @AlbumID <> ''
+		BEGIN
+			INSERT INTO [dbo].[SongAlbum] 
+				([SongID], [AlbumID])
+			VALUES 
+				(@SongID, @AlbumID)
+		END
 	END
 GO
 
