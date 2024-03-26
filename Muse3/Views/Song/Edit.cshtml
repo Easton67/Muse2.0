@@ -4,98 +4,124 @@
     ViewBag.Title = "Edit";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(Html.BeginForm("Edit", "Song", FormMethod.Post, new { enctype = "multipart/form-data" })))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.SongID)
-<div class="mx-5 my-4 d-flex justify-content-between">
-    <div class="d-flex justify-content-between">
-        <div>
-            <img onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)" data-songid="@Model.SongID">
-            <input type="file" id="imageFilePath" style="display: none;" onchange="handleImageSelection(event)" accept="image/png" />
-            <p class="mt-2">Added: @Model.DateAdded.Date.ToShortDateString()</p>
+    <div class="mx-5 my-4 d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
             <div>
-                @Html.ActionLink("Back to List", "Library")
-            </div>
-            <div class="col-md-10" style="display: none;">
-                @Html.EditorFor(model => model.Plays, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="fs-5 px-5 song-form-edit">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
-                <br>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <image onclick="openFileDialog()" 
+                               onchange="handleImageSelection(event)" 
+                               id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)" 
+                               alt="Album art for @Model.Album by @Model.Artist" ></image>
+                        <input type="file" 
+                               name="imageFile" 
+                               class="form-control" 
+                               style="display: none;"
+                               accept="image/png" />
+                        @Html.ValidationMessageFor(model => model.ImageFilePath, "", new { @class = "text-danger fs-5" })
+                    </div>
                 </div>
-            </div>
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(model => model.Album, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
-                <br>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Album, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Album, "", new { @class = "text-danger" })
+                <p class="mt-2">Added: @Model.DateAdded.Date.ToShortDateString()</p>
+                <div>
+                    @Html.ActionLink("Back to List", "Library")
                 </div>
-            </div>
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(model => model.Artist, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
-                <br>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Artist, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Artist, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="form-group">
-                Year Released
-                <br>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.YearReleased, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.YearReleased, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-
-        </div>
-        <div class="fs-5 px-5 song-form-edit">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
-                <br>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(model => model.Plays, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
-                <br>
-                <div class="col-md-10">
+                <div class="col-md-10" style="display: none;">
                     @Html.EditorFor(model => model.Plays, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <br />
-            <div>
+            <div class="fs-5 px-5 song-form-edit">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                    <br>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
                 <br />
-                <input type="submit" value="Save" class="btn bg-purple text-light w-75 fs-5" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Album, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                    <br>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Album, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Album, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Artist, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                    <br>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Artist, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Artist, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    Year Released
+                    <br>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.YearReleased, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.YearReleased, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+
+            </div>
+            <div class="fs-5 px-5 song-form-edit">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                    <br>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Plays, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                    <br>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Plays, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <br />
+                    <input type="submit" value="Save" class="btn bg-purple text-light w-75 fs-5" />
+                </div>
+            </div>
+            <div style="width: 500px; height: 300px;">
+                <textarea id="lyrics">@Model.Lyrics</textarea>
             </div>
         </div>
-        <div style="width: 500px; height: 300px;">
-            <textarea id="lyrics">@Model.Lyrics</textarea>
-        </div>
-    </div>    
-    
-</div>
+    </div>
 }
 
 <script>
-    
+    function openFileDialog() {
+        document.getElementById('album-img-edit').click();
+    }
+
+    function handleImageSelection(event) {
+        // 0 since we are grabbing only 1 file
+        const imageFilePath = event.target.files[0];
+        if (imageFilePath) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const albumImgEdit = document.getElementById('album-img-edit');
+                albumImgEdit.src = e.target.result;
+            };
+            // changes file path to url to use as source
+            reader.readAsDataURL(imageFilePath);
+        }
+    }
 </script>
 
 @section Scripts {

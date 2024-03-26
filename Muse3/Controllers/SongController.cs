@@ -145,7 +145,7 @@ namespace Muse3.Controllers
 
         // POST: Song/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Song song)
+        public ActionResult Edit(int id, Song song, HttpPostedFileBase imageFile)
         {
             try
             {
@@ -155,14 +155,14 @@ namespace Muse3.Controllers
                     var newSong = new Song()
                     {
                         Title = song.Title,
-                        ImageFilePath = song.Title,
-                        Mp3FilePath = song.Title,
+                        ImageFilePath = Path.GetFileName(imageFile.FileName).ToString(),
+                        Mp3FilePath = song.Mp3FilePath,
                         YearReleased = song.YearReleased,
                         Lyrics = song.Lyrics,
                         Explicit = song.Explicit,
                         Genre = song.Genre,
                         Plays = song.Plays,
-                        UserID = song.UserID,
+                        UserID = 100001,
                         Artist = song.Artist,
                         Album = song.Album,
                         DateUploaded = null,

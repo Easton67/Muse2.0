@@ -7,16 +7,14 @@
     string songID = "";
 }
 <div class="d-flex px-5 pt-3">
-    <button class="btn-add mx-3">
-        @Html.ActionLink("Add Song", "Create")
+    <button class="btn-add mx-3" onclick="window.location.href='@Url.Action("Create", "Song")'">
+        Add Song
     </button>
-    <input id="songSearchBox" style="border-radius: 70px;" class="px-3" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for song...">
+    <input id="songSearchBox" style="border-radius: 70px;" class="px-3" type="text" onkeyup="myFunction()" placeholder="Search for song...">
     <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
     <img onclick="listView()" class="icon px-3" src="~/Images/list-icon.svg" />
     <img onclick="gridView()" class="icon px-3" src="~/Images/grid-icon.svg" />
 </div>
-
-
 
 @*list view*@
 <div id="library-list-view" class="pt-4" style="display: none;">
