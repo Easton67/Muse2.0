@@ -7,7 +7,9 @@
 }
 
 img {
+    /* makes this unhighlightable and undraggable */
     -webkit-user-drag: none;
+    user-select: none;
 }
 
 .explicit-white {
@@ -23,9 +25,17 @@ img {
     filter: invert(100%);
 }
 
+.icon:hover {
+    cursor: pointer;
+}
+
 .favorite {
     height: 30px;
     width: 30px;
+}
+
+.favorite:hover {
+    cursor: pointer;
 }
 
 .unfilled {
@@ -59,35 +69,6 @@ body {
     background-color: rgba(120, 107, 176, 1)
 }
 
-audio::-webkit-media-controls-panel {
-
-}
-
-audio::-webkit-media-controls-play-button {
-    
-}
-
-audio::-webkit-media-controls-current-time-display{
-    font-size: 30px;
-}
-
-audio::-webkit-media-controls-time-remaining-display {
-    font-size: 30px;
-}
-audio::-webkit-media-controls-timeline-container {
-
-}
-/* Audio 
-audio::-webkit-media-controls-mute-button
-audio::-webkit-media-controls-timeline
-audio::-webkit-media-controls-volume-slider-container
-audio::-webkit-media-controls-volume-slider
-audio::-webkit-media-controls-seek-back-button
-audio::-webkit-media-controls-seek-forward-button
-audio::-webkit-media-controls-fullscreen-button
-audio::-webkit-media-controls-rewind-button
-audio::-webkit-media-controls-return-to-realtime-button
-*/
 /* Details pages / create button */
 table {
     border-top-left-radius: 8px !important;

@@ -16,6 +16,29 @@
     <img onclick="gridView()" class="icon px-3" src="~/Images/grid-icon.svg" />
 </div>
 
+@*delete modal*@
+<div class="modal text-light" id="delete-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title delete-message" id="modal-title"></h5>
+                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Delete", "Song", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="delete-song-id" name="id" value="" />
+
+                    <div class="form-actions">
+                        <input id="confirm-delete-button" type="submit" value="Delete" class="btn btn-danger" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 @*list view*@
 <div id="library-list-view" class="pt-4" style="display: none;">
     <table class="table">
@@ -47,6 +70,9 @@
             <th>
                 <p class="text-nowrap">Date Added</p>
             </th>
+            <th>
+                <p class="text-nowrap">Delete</p>
+            </th>
             <th></th>
         </tr>
 
@@ -70,7 +96,7 @@
                         @title
                         @if (item.Explicit == true)
                         {
-                            <img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" />
+                            <img class="explicit-white" src="~/Images/explicit.png" />
                         }
                     </p>
                 </td>
@@ -97,20 +123,26 @@
                     @Html.DisplayFor(modelItem => item.Plays)
                 </td>
                 <td>
-                    @if (item.isLiked.Equals(1))
-                    {
-                        <img class="favorite unfilled" src="~/Images/heart-icon.svg" />
-                    }
-                    else
-                    {
-                        <img class="favorite" src="~/Images/heart-icon-filled.svg" />
-                    }
+                    <img onclick="favorite(this)" class="favorite unfilled" src="~/Images/heart-icon.svg" />
+                    @*@if (item.isLiked.Equals(1))
+                        {
+                            <img onclick="favorite()" class="favorite unfilled" src="~/Images/heart-icon.svg" />
+                        }
+                        else
+                        {
+                            <img onlcick="favorite()" class="favorite" src="~/Images/heart-icon-filled.svg" />
+                        }*@
                 </td>
                 <td>
                     @item.DateAdded.ToShortDateString()
                 </td>
                 <td>
-                    @Html.ActionLink("Remove", "Delete", new { id = item.SongID })
+                    <button class="delete-button"
+                            style="border: none; color: white; background-color: transparent; font-size: 20px;" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#delete-modal" 
+                            data-song-id="@item.SongID" 
+                            data-song-name="@item.Title">Delete</button>
                 </td>
             </tr>
         }
@@ -143,7 +175,7 @@
                         @title
                         @if (item.Explicit == true)
                         {
-                            <img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" />
+                            <img class="explicit-white" src="~/Images/explicit.png" />
                         }
                     </p>
                     <p>@album</p>
@@ -159,4 +191,29 @@
         var libraryURL = '@Url.Action("Library", "Song")' + '?searchText=' + encodeURIComponent(title);
         window.location.href = libraryURL;
     };
+
+    function favorite(element) {
+        if (element.classList.contains('unfilled')) {
+                element.src = "/Images/heart-icon-filled.svg";
+            element.classList.remove('unfilled');
+        } else {
+                element.src = "/Images/heart-icon.svg";
+            element.classList.add('unfilled');
+        }
+    }
+
+    var deleteButtons = document.querySelectorAll('.delete-button');
+
+    // add a click event to all delete buttons
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var deleteMessage = document.querySelector('.delete-message');
+            var songName = button.getAttribute('data-song-name');
+            var songID = document.getElementById('delete-song-id');
+            songID.value = button.getAttribute('data-song-id');
+            deleteMessage.textContent = "Are you sure you want to delete " + songName + "?";
+        });
+    });
+
+    
 </script>

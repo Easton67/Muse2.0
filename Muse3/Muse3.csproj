@@ -215,9 +215,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\grid-icon.svg" />
     <Content Include="Images\bigvec.jpg" />
-    <Content Include="Images\blond.jpeg" />
-    <Content Include="Images\dark-purple-pattern-with-curved-lines-vector.jpg" />
-    <Content Include="Images\defaultAlbumImage.png" />
     <Content Include="Images\explicit.png" />
     <Content Include="Images\heart-icon-filled.svg" />
     <Content Include="Images\heart-icon.svg" />
