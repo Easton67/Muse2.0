@@ -98,7 +98,9 @@
                 </div>
             </div>
             <div style="width: 500px; height: 300px;">
-                <textarea id="lyrics">@Model.Lyrics</textarea>
+                <div style="width: 500px; height: 300px;">
+                    @Html.TextAreaFor(model => model.Lyrics, new { @class = "form-control", rows = "4", id = "lyrics" })
+                </div>
             </div>
         </div>
     </div>

@@ -24,12 +24,16 @@
                     <li>@Html.ActionLink("Album", "Albums", "Album", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Playlist", "ViewAllPlaylists", "Playlist", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Account", "Details", "Profile", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Controls", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Reviews", "ViewAllReviews", "Review", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Help", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Admin", "ViewAllUsers", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                    @{ 
+                       if (User.IsInRole("Manager"))
+                       {
+                       <li>@Html.ActionLink("Admin", "ViewAllUsers", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                       }
+                    }
                     @Html.Partial("_LoginPartial")
                 </ul>
                 <div class="mt-3">

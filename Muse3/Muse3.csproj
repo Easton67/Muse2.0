@@ -182,6 +182,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202403262014206_InitialCreate.cs" />
+    <Compile Include="Migrations\202403262014206_InitialCreate.designer.cs">
+      <DependentUpon>202403262014206_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -214,6 +219,7 @@
     <Content Include="Images\dark-purple-pattern-with-curved-lines-vector.jpg" />
     <Content Include="Images\defaultAlbumImage.png" />
     <Content Include="Images\explicit.png" />
+    <Content Include="Images\heart-icon-filled.svg" />
     <Content Include="Images\heart-icon.svg" />
     <Content Include="Images\list-icon.svg" />
     <Content Include="Images\museFavIcon.ico" />
@@ -1955,6 +1961,7 @@
     <Content Include="Views\Album\Create.cshtml" />
     <Content Include="Views\Album\Albums.cshtml" />
     <Content Include="Views\Song\Create.cshtml" />
+    <Content Include="Views\Song\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2002,6 +2009,11 @@
       <Project>{299986c3-0f65-4c23-bb2b-7711bb18e53d}</Project>
       <Name>LogicLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202403262014206_InitialCreate.resx">
+      <DependentUpon>202403262014206_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

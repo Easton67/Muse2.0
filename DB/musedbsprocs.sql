@@ -354,47 +354,6 @@ AS
 	END
 GO
 
-
-/* sp_insert_song
-
-print '' print '*** creating sp_insert_song ***'
-GO
-
-CREATE PROCEDURE [dbo].[sp_insert_song]
-(
-    @Title          [nvarchar](180),
-    @ImageFilePath  [nvarchar](500),
-    @Mp3FilePath    [nvarchar](500),
-    @YearReleased   [int],
-    @Lyrics         [text],
-    @Explicit       [bit],
-    @Genre          [nvarchar](150),
-    @Plays          [int],
-    @UserID         [int],
-    @ArtistID       [nvarchar](200),
-    @AlbumTitle     [nvarchar](255)
-)
-AS
-	BEGIN
-		DECLARE @SongID INT
-		DECLARE @AlbumID INT
-
-		-- Get AlbumID from Title and Artist Name
-		SELECT @AlbumID = AlbumID
-		FROM [dbo].[Album]
-		WHERE [Title] = @AlbumTitle
-		AND [ArtistID] = @ArtistID 
-
-		INSERT INTO [dbo].[Song] 
-			([Title], [Mp3FilePath], [ImageFilePath], [YearReleased], [Lyrics], 
-			[Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID])
-		VALUES 
-			(@Title, @Mp3FilePath, @ImageFilePath, @YearReleased, @Lyrics, 
-			@Explicit, @Genre, @Plays, @UserID, @ArtistID, @AlbumID)
-	END
-GO
- */
-
 print '' print '*** creating sp_insert_song ***'
 GO
 

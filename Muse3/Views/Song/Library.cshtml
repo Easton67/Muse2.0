@@ -42,6 +42,9 @@
                 @Html.DisplayNameFor(model => model.Plays)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.isLiked)
+            </th>
+            <th>
                 <p class="text-nowrap">Date Added</p>
             </th>
             <th></th>
@@ -92,6 +95,16 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Plays)
+                </td>
+                <td>
+                    @if (item.isLiked.Equals(1))
+                    {
+                        <img class="favorite unfilled" src="~/Images/heart-icon.svg" />
+                    }
+                    else
+                    {
+                        <img class="favorite" src="~/Images/heart-icon-filled.svg" />
+                    }
                 </td>
                 <td>
                     @item.DateAdded.ToShortDateString()

@@ -268,10 +268,7 @@ namespace DataAccessLayer
 
             try
             {
-                // open the connection
                 conn.Open();
-
-                // an update is executed nonquery - returns an int
                 rows = cmd.ExecuteNonQuery();
 
                 if (rows == 0)

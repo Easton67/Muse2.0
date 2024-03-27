@@ -155,8 +155,8 @@ namespace Muse3.Controllers
                     var newSong = new Song()
                     {
                         Title = song.Title,
-                        ImageFilePath = Path.GetFileName(imageFile.FileName).ToString(),
-                        Mp3FilePath = song.Mp3FilePath,
+                        ImageFilePath = (imageFile != null) ? Path.GetFileName(imageFile.FileName).ToString() : oldSong.ImageFilePath,
+                        Mp3FilePath = oldSong.Mp3FilePath,
                         YearReleased = song.YearReleased,
                         Lyrics = song.Lyrics,
                         Explicit = song.Explicit,
@@ -184,22 +184,33 @@ namespace Muse3.Controllers
         // GET: Song/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Song song = null;
+
+            try
+            {
+                song = _songManager.SelectSongBySongID(100001, id);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            return View(song);
         }
 
         // POST: Song/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Song song)
         {
             try
             {
-                // TODO: Add delete logic here
+                _songManager.DeleteSong(id);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Library");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Library");
             }
         }
     }
