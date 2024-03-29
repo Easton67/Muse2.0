@@ -86,8 +86,8 @@ namespace Muse3.Controllers
                     var newSong = new Song()
                     {
                         Title = song.Title,
-                        ImageFilePath = song.ImageFilePath,
-                        Mp3FilePath = song.Mp3FilePath,
+                        ImageFilePath = image,
+                        Mp3FilePath = mp3,
                         YearReleased = song.YearReleased,
                         Lyrics = song.Lyrics,
                         Explicit = song.Explicit,
@@ -112,7 +112,7 @@ namespace Muse3.Controllers
                 }
                 else
                 {
-                    return View(song);
+                    return RedirectToAction("Library");
                 }
             }
             catch (Exception ex)
@@ -151,11 +151,12 @@ namespace Muse3.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    // checking if files are there
                     Song oldSong = (Song)Session["oldSong"];
                     var newSong = new Song()
                     {
                         Title = song.Title,
-                        ImageFilePath = (imageFile != null) ? Path.GetFileName(imageFile.FileName).ToString() : oldSong.ImageFilePath,
+                        ImageFilePath = (imageFile != null) ? Path.GetFileName(imageFile.FileName) : Path.GetFileName(oldSong.ImageFilePath),
                         Mp3FilePath = oldSong.Mp3FilePath,
                         YearReleased = song.YearReleased,
                         Lyrics = song.Lyrics,
@@ -169,10 +170,8 @@ namespace Muse3.Controllers
                         DateAdded = DateTime.Now,
                         isLiked = false,
                     };
-
                     _songManager.UpdateSong(oldSong, newSong);
                 }
-
                 return RedirectToAction("Library");
             }
             catch

@@ -8,10 +8,14 @@
     {
         @Html.AntiForgeryToken()
         <div id="login-container">
-            <img id="login-muse-logo" src="~/Images/museV3Logo.png" alt="Muse Logo" />
+            @*<img id="login-muse-logo" src="~/Images/museV3Logo.png" alt="Muse Logo" />*@
             <form id="form-login" class="form" action="">
                 @Html.ValidationSummary(true, "", new { @class = "invalid" })
                 <div class="form-container">
+
+
+
+
                     <div>
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "invalid" })
                     </div>
@@ -36,8 +40,8 @@
             </form>
             <br />
             <div class="footer-buttons-container">
-                @Html.ActionLink("Sign Up", "Register", new { @class = "footer-buttons" })
-                @Html.ActionLink("Forgot Password", "Register", new { @class = "footer-buttons" })
+                @Html.ActionLink("Forgot Password?", "ForgotPassword", null, new { @class = "mx-5 login-footer-links" })
+                @Html.ActionLink("Login", "Login", null, new { @class = "mx-5 login-footer-links" })
             </div>
             <br>
             <br>

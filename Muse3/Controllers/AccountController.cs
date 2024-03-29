@@ -151,24 +151,70 @@ namespace Muse3.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                LogicLayer.UserManager _um = new LogicLayer.UserManager();
+                try
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    if (_um.FindUser(model.Email))
+                    {
+                        var authenticated = _um.AuthenticateUser(model.Email, model.Password);
+                        if (authenticated == true)
+                        {
+                            // this requires the user to use the same password as the one in the internal db
+                            var oldUser = _um.GetUserVMByEmail(model.Email);
+                            var user = new ApplicationUser
+                            {
+                                // populate these fields with existing data from old user
+                                GivenName = oldUser.FirstName,
+                                FamilyName = oldUser.LastName,
+                                UserID = oldUser.UserID,
+                                // ProfileName = oldUser.ProfileName,
+                                // MinutesListened = oldUser.MinutesListened,
 
-                    return RedirectToAction("Index", "Home");
+                                UserName = model.Email,
+                                Email = model.Email,
+                            };
+                            // create the user with the identity system UserManager normally
+                            var result = await UserManager.CreateAsync(user, model.Password);
+                            if (result.Succeeded)
+                            {
+                                // usr the oldUser.Roles list to add the internally assigned roles to the user
+                                foreach (var role in oldUser.Roles)
+                                {
+                                    UserManager.AddToRole(user.Id, role);
+                                }
+                                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                return RedirectToAction("Library", "Song");
+                            }
+                            AddErrors(result);
+                        }
+                    }
+                    else // not an existing user, create a user without roles
+                    {
+                        var user = new ApplicationUser
+                        {
+                            // We will uncomment the following two lines later, once our ViewModel and 
+                            // our View are updated to ask for them:
+                            // GivenName = model.GivenName.
+                            // FamilyName = model.FamilyName
+                            UserName = model.Email,
+                            Email = model.Email,
+                        };
+                        var result = await UserManager.CreateAsync(user, model.Password);
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToAction("Library", "Song");
+                        }
+                        AddErrors(result);
+                    }
                 }
-                AddErrors(result);
+                catch (Exception)
+                {
+                    // creating old user failed, probably because AuthenticateUser failed
+                    return View(model);
+                }
             }
-
-            // If we got this far, something failed, redisplay form
+            //modelstate was not valid
             return View(model);
         }
 

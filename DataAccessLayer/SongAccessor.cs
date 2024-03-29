@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace DataAccessLayer
@@ -238,33 +239,28 @@ namespace DataAccessLayer
             cmd.CommandType = CommandType.StoredProcedure;
 
             // Add parameters
-            cmd.Parameters.Add("@SongID", SqlDbType.Int);
-            cmd.Parameters.Add("@NewTitle", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewImageFilePath", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewYearReleased", SqlDbType.Int);
-            cmd.Parameters.Add("@NewLyrics", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewExplicit", SqlDbType.Bit);
-            cmd.Parameters.Add("@NewPlays", SqlDbType.Int);
-            cmd.Parameters.Add("@OldTitle", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@OldImageFilePath", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@OldYearReleased", SqlDbType.Int);
-            cmd.Parameters.Add("@OldLyrics", SqlDbType.Text);
-            cmd.Parameters.Add("@OldExplicit", SqlDbType.Bit);
-            cmd.Parameters.Add("@OldPlays", SqlDbType.Int);
+            cmd.Parameters.AddWithValue("@SongID", oldSong.SongID);
+            cmd.Parameters.AddWithValue("@NewTitle", newSong.Title);
+            cmd.Parameters.AddWithValue("@NewImageFilePath", newSong.ImageFilePath);
+            cmd.Parameters.AddWithValue("@NewYearReleased", newSong.YearReleased);
+            cmd.Parameters.AddWithValue("@NewLyrics", newSong.Lyrics);
+            cmd.Parameters.AddWithValue("@NewExplicit", newSong.Explicit);
+            cmd.Parameters.AddWithValue("@NewGenre", newSong.Genre); 
+            cmd.Parameters.AddWithValue("@NewPlays", newSong.Plays);
+            cmd.Parameters.AddWithValue("@NewArtistID", newSong.Artist); 
+            cmd.Parameters.AddWithValue("@NewAlbumTitle", newSong.Album); 
+            cmd.Parameters.AddWithValue("@NewIsLiked", newSong.isLiked);
 
-            cmd.Parameters["@SongID"].Value = newSong.SongID;
-            cmd.Parameters["@NewTitle"].Value = newSong.Title;
-            cmd.Parameters["@NewImageFilePath"].Value = newSong.ImageFilePath;
-            cmd.Parameters["@NewYearReleased"].Value = newSong.YearReleased;
-            cmd.Parameters["@NewLyrics"].Value = newSong.Lyrics;
-            cmd.Parameters["@NewExplicit"].Value = newSong.Explicit;
-            cmd.Parameters["@NewPlays"].Value = newSong.Plays;
-            cmd.Parameters["@OldTitle"].Value = oldSong.Title;
-            cmd.Parameters["@OldImageFilePath"].Value = oldSong.ImageFilePath;
-            cmd.Parameters["@OldYearReleased"].Value = oldSong.YearReleased;
-            cmd.Parameters["@OldLyrics"].Value = oldSong.Lyrics;
-            cmd.Parameters["@OldExplicit"].Value = oldSong.Explicit;
-            cmd.Parameters["@OldPlays"].Value = oldSong.Plays;
+            cmd.Parameters.AddWithValue("@OldTitle", oldSong.Title);
+            cmd.Parameters.AddWithValue("@OldImageFilePath", oldSong.ImageFilePath);
+            cmd.Parameters.AddWithValue("@OldYearReleased", oldSong.YearReleased);
+            cmd.Parameters.AddWithValue("@OldLyrics", oldSong.Lyrics);
+            cmd.Parameters.AddWithValue("@OldExplicit", oldSong.Explicit);
+            cmd.Parameters.AddWithValue("@OldGenre", oldSong.Genre);
+            cmd.Parameters.AddWithValue("@OldPlays", oldSong.Plays);
+            cmd.Parameters.AddWithValue("@OldArtistID", oldSong.Artist);
+            cmd.Parameters.AddWithValue("@OldAlbumTitle", oldSong.Album);
+            cmd.Parameters.AddWithValue("@OldIsLiked", oldSong.isLiked);
 
             try
             {

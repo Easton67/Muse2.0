@@ -4,6 +4,28 @@
     ViewBag.Title = "Details";
 }
 
+@*delete modal*@
+<div class="modal text-light" id="delete-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5>Are you sure you want to delete @Model.Title?</h5>
+                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Delete", "Song", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.SongID" />
+                    <div class="form-actions">
+                        <input id="confirm-delete-button" type="submit" value="Delete" class="btn btn-danger" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="mx-5 my-4 d-flex justify-content-between">
     <div class="d-flex justify-content-between">
         <div>
@@ -19,10 +41,10 @@
         <div class="fs-3 px-5 mt-4">
             <p>
                 @Model.Title
-            @if (Model.Explicit.Equals(0))
-            {
-                <img class="explicit-white" src="~/Images/explicit.png" />
-            }
+                @if (Model.Explicit.Equals(0))
+                {
+                    <img class="explicit-white" src="~/Images/explicit.png" />
+                }
             </p>
             @if (Model.Album.Length.Equals(0))
             {
@@ -49,7 +71,7 @@
             {
                 <p>Genre: @Html.DisplayFor(model => model.Genre)</p>
             }
-        </div>  
+        </div>
         <div class="fs-3 px-5 mt-4">
             @if (Model.Plays.Equals(0))
             {
@@ -61,20 +83,26 @@
             }
             else
             {
-                <p>
+                <p> 
                     @Html.DisplayFor(model => model.Plays) plays
                 </p>
             }
+            <br />
+            
 
-        <p class="text-nowrap">
-            @Html.ActionLink("Write a Review", "Create", "Review", new { area = "" } ) . 
-            @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
-            @Html.ActionLink("Delete", "Delete", new { id = Model.SongID })
-        </p>
+            <p class="text-nowrap">
+                @Html.ActionLink("Write a Review", "Create", "Review", new { area = "" }) .
+                @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
+                <button class="delete-button fw-semibold text-danger"
+                        style="border: none; color: white; background-color: transparent; font-size: 30px;"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete-modal">
+                    Delete
+                </button>
+            </p>
         </div>
         <div>
             <textarea readonly="readonly" style="height: 600px;" id="lyrics">@Model.Lyrics</textarea>
         </div>
     </div>
 </div>
-

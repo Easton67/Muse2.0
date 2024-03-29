@@ -186,6 +186,18 @@
     <Compile Include="Migrations\202403262014206_InitialCreate.designer.cs">
       <DependentUpon>202403262014206_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202403282019138_ProfileName.cs" />
+    <Compile Include="Migrations\202403282019138_ProfileName.designer.cs">
+      <DependentUpon>202403282019138_ProfileName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403282020387_AddedUserFields.cs" />
+    <Compile Include="Migrations\202403282020387_AddedUserFields.designer.cs">
+      <DependentUpon>202403282020387_AddedUserFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403282023368_ChangeEmployeeIDToUserID.cs" />
+    <Compile Include="Migrations\202403282023368_ChangeEmployeeIDToUserID.designer.cs">
+      <DependentUpon>202403282023368_ChangeEmployeeIDToUserID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -2010,6 +2022,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202403262014206_InitialCreate.resx">
       <DependentUpon>202403262014206_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403282019138_ProfileName.resx">
+      <DependentUpon>202403282019138_ProfileName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403282020387_AddedUserFields.resx">
+      <DependentUpon>202403282020387_AddedUserFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403282023368_ChangeEmployeeIDToUserID.resx">
+      <DependentUpon>202403282023368_ChangeEmployeeIDToUserID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

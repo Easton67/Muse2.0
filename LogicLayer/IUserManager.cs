@@ -9,6 +9,7 @@ namespace LogicLayer
 {
     public interface IUserManager
     {
+        bool FindUser(string email);
         bool InsertUser(User user, string password);
         UserVM LoginUser(string email, string password);
         // public helper methods

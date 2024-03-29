@@ -13,7 +13,6 @@ namespace LogicLayer
     public class UserManager : IUserManager
     {
         private IUserAccessor _userAccessor = null;
-
         public UserManager()
         {
             _userAccessor = new UserAccessor();
@@ -225,6 +224,17 @@ namespace LogicLayer
                 throw new ApplicationException("Unable to find friends lol.", ex);
             }
             return allFriends;
+        }
+        public bool FindUser(string email)
+        {
+            try
+            {
+                return _userAccessor.SelectUserVMByEmail(email) != null;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Database Error", ex);
+            }
         }
     }
 }

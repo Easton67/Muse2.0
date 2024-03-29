@@ -359,22 +359,22 @@ GO
 
 CREATE PROCEDURE [dbo].[sp_insert_song]
 (
-    @Title           nvarchar(180),
-    @ImageFilePath   nvarchar(500),
-    @Mp3FilePath     nvarchar(500),
-    @YearReleased    int,
-    @Lyrics          text,
-    @Explicit        bit,
-    @Genre           nvarchar(150),
-    @Plays           int,
-    @UserID          int,
-    @ArtistID        nvarchar(200),
-    @AlbumTitle      nvarchar(255)
+    @Title           [nvarchar](180),
+    @ImageFilePath   [nvarchar](500),
+    @Mp3FilePath     [nvarchar](500),
+    @YearReleased    [int],
+    @Lyrics          [text],
+    @Explicit        [bit],
+    @Genre           [nvarchar](150),
+    @Plays           [int],
+    @UserID          [int],
+    @ArtistID        [nvarchar](200),
+    @AlbumTitle      [nvarchar](255)
 )
 AS
 	BEGIN
-		DECLARE @SongID INT
-		DECLARE @AlbumID INT
+		DECLARE @SongID [int]
+		DECLARE @AlbumID [int]
 
 		-- check if @artistID already exists
 		IF NOT EXISTS (SELECT 1 FROM [dbo].[Artist] WHERE [ArtistID] = @ArtistID)
@@ -453,7 +453,8 @@ AS
 				[SongArtist].[ArtistID],
 				[Album].[Title],
 				[Song].[DateUploaded],
-				[Song].[DateAdded]
+				[Song].[DateAdded],
+				[Song].[isLiked]
   
 		FROM	[Song] JOIN [User] ON [Song].[UserID] = [User].[UserID]
 					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
@@ -463,43 +464,92 @@ AS
 	END
 GO
 
-/* sp_update_song */
-
 print '' print '*** creating sp_update_song ***'
 GO
 CREATE PROCEDURE [dbo].[sp_update_song]
 (
-	@SongID [int],
-	@NewTitle [nvarchar](180),
-	@NewImageFilePath [nvarchar](500),
-	@NewYearReleased [int],
-	@NewLyrics [nvarchar](max),
-	@NewExplicit [bit],
-	@NewPlays [int],
-	@OldTitle [nvarchar](180),
-	@OldImageFilePath [nvarchar](500),
-	@OldYearReleased [int],
-	@OldLyrics [nvarchar](max),
-	@OldExplicit [bit],
-	@OldPlays [int]
+    @SongID int,
+    @NewTitle nvarchar(180),
+    @NewImageFilePath nvarchar(500),
+    @NewYearReleased int,
+    @NewLyrics nvarchar(max),
+    @NewExplicit bit,
+    @NewGenre nvarchar(200),
+    @NewPlays int,
+    @NewArtistID nvarchar(200),
+    @NewAlbumTitle nvarchar(255),
+    @NewIsLiked bit,
+
+    @OldTitle nvarchar(180),
+    @OldImageFilePath nvarchar(500),
+    @OldYearReleased int,
+    @OldLyrics nvarchar(max),
+    @OldExplicit bit,
+    @OldGenre nvarchar(200),
+    @OldPlays int,
+    @OldArtistID nvarchar(200),
+    @OldAlbumTitle nvarchar(255),
+    @OldIsLiked bit
 )
 AS
 	BEGIN
+		DECLARE @AlbumID int
+
+		-- check if @artistID already exists
+		IF NOT EXISTS (SELECT 1 FROM [dbo].[Artist] WHERE [ArtistID] = @NewArtistID)
+		BEGIN
+			INSERT INTO [dbo].[Artist] ([ArtistID])
+			VALUES (@NewArtistID)
+		END
+
+		-- get albumID from the albumtitle and the artist
+		SELECT @AlbumID = AlbumID
+		FROM [dbo].[Album]
+		WHERE [Title] = @NewAlbumTitle
+		AND [ArtistID] = @NewArtistID
+
+		-- make new album if it doesn't exist
+		IF @AlbumID IS NULL
+		BEGIN
+			INSERT INTO [dbo].[Album]
+				([Title], [ArtistID])
+			VALUES (@NewAlbumTitle, @NewArtistID)
+
+			SELECT @AlbumID = SCOPE_IDENTITY()
+		END
+
+		-- Update the song
 		UPDATE [Song]
 		SET [Title] = @NewTitle,
 			[ImageFilePath] = @NewImageFilePath,
 			[YearReleased] = @NewYearReleased,
 			[Lyrics] = @NewLyrics,
 			[Explicit] = @NewExplicit,
-			[Plays] = @NewPlays
+			[Genre] = @NewGenre,
+			[Plays] = @NewPlays,
+			[ArtistID] = @NewArtistID,
+			[AlbumID] = @AlbumID,
+			[IsLiked] = @NewIsLiked
 		WHERE [SongID] = @SongID
-		AND [Title] = @OldTitle
-		AND [ImageFilePath] = @OldImageFilePath
-		AND [YearReleased] = @OldYearReleased
-		AND [Lyrics] = @OldLyrics
-		AND [Explicit] = @OldExplicit
-		AND [Plays] = @OldPlays
-	END
+
+		-- add to SongArtist table
+		IF @NewArtistID IS NOT NULL AND @NewArtistID <> ''
+		BEGIN
+			INSERT INTO [dbo].[SongArtist]
+				([SongID], [ArtistID])
+			VALUES
+				(@SongID, @NewArtistID)
+		END
+
+		-- add to SongAlbum table
+		IF @AlbumID IS NOT NULL
+		BEGIN
+			INSERT INTO [dbo].[SongAlbum]
+				([SongID], [AlbumID])
+			VALUES
+				(@SongID, @AlbumID)
+		END
+    END
 GO
 
 /* sp_update_song_plays */
