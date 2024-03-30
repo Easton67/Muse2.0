@@ -14,5 +14,9 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public List<Song> SelectSongsByArtistID(int SongID, int ArtistID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

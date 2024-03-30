@@ -64,6 +64,9 @@ namespace Muse3.Models
 
     public class RegisterViewModel
     {
+        [Display(Name = "ProfileName")]
+        public string ProfileName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

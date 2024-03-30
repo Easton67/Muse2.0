@@ -91,6 +91,20 @@ namespace LogicLayer
             }
             return result;
         }
+        public bool UpdateFavoriteStatus(int SongID, bool newIsLiked)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _songAccessor.UpdateFavoriteStatus(SongID, newIsLiked));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song favorite status not updated.", ex);
+            }
+            return result;
+        }
         public bool UpdatePlaysBySongID(int SongID, int Plays)
         {
             bool result = false;

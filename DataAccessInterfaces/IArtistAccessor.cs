@@ -10,5 +10,6 @@ namespace DataAccessInterfaces
     public interface IArtistAccessor
     {
         Artist SelectArtistByArtistID(string artistID);
+        List<Song> SelectSongsByArtistID(int SongID, int ArtistID);
     }
 }

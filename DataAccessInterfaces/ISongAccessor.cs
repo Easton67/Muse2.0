@@ -15,6 +15,7 @@ namespace DataAccessInterfaces
         List<string> SelectAllGenres();
         int UpdateSong(Song oldSong, Song newSong);
         int UpdatePlaysBySongID(int songID, int plays);
+        int UpdateFavoriteStatus(int SongID, bool newIsLiked);
         int DeleteSong(int SongID);
         Song SelectSongBySongID(int UserID, int SongID);
     }

@@ -46,7 +46,7 @@
             <th>
                 <p class="text-nowrap">Album Art</p>
             </th>
-            <th>
+            <th> 
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
@@ -93,7 +93,7 @@
                 }
                 <td>
                     <p class="text-nowrap">
-                        @title
+                        @Html.ActionLink(title, "Details", new { id = item.SongID })
                         @if (item.Explicit == true)
                         {
                             <img class="explicit-white" src="~/Images/explicit.png" />
@@ -137,7 +137,7 @@
                     @item.DateAdded.ToShortDateString()
                 </td>
                 <td>
-                    <button class="delete-button"
+                    <button class="delete-button text-danger"
                             style="border: none; color: white; background-color: transparent; font-size: 20px;" 
                             data-bs-toggle="modal" 
                             data-bs-target="#delete-modal" 

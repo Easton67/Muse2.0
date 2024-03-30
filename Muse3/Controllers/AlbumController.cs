@@ -42,7 +42,7 @@ namespace Muse3.Controllers
             try
             {
                 viewModel.album = _albumManager.SelectAlbumByAlbumID(id);
-                viewModel.songs = _songManager.SelectSongsByUserID(id).Where(x => x.Album == viewModel.album.Title).ToList();
+                viewModel.songs = _songManager.SelectSongsByUserID(id).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
             }
             catch (Exception ex)
             {

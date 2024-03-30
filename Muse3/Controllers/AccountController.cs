@@ -187,25 +187,26 @@ namespace Muse3.Controllers
                             }
                             AddErrors(result);
                         }
-                    }
-                    else // not an existing user, create a user without roles
-                    {
-                        var user = new ApplicationUser
+                        else // not an existing user, create a user without roles
                         {
-                            // We will uncomment the following two lines later, once our ViewModel and 
-                            // our View are updated to ask for them:
-                            // GivenName = model.GivenName.
-                            // FamilyName = model.FamilyName
-                            UserName = model.Email,
-                            Email = model.Email,
-                        };
-                        var result = await UserManager.CreateAsync(user, model.Password);
-                        if (result.Succeeded)
-                        {
-                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return RedirectToAction("Library", "Song");
+                            var user = new ApplicationUser
+                            {
+                                // We will uncomment the following two lines later, once our ViewModel and 
+                                // our View are updated to ask for them:
+                                // GivenName = model.GivenName.
+                                // FamilyName = model.FamilyName
+                                ProfileName = model.ProfileName,
+                                UserName = model.Email,
+                                Email = model.Email,
+                            };
+                            var result = await UserManager.CreateAsync(user, model.Password);
+                            if (result.Succeeded)
+                            {
+                                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                return RedirectToAction("Library", "Song");
+                            }
+                            AddErrors(result);
                         }
-                        AddErrors(result);
                     }
                 }
                 catch (Exception)
@@ -214,7 +215,7 @@ namespace Muse3.Controllers
                     return View(model);
                 }
             }
-            //modelstate was not valid
+            // model state was not valid
             return View(model);
         }
 

@@ -12,10 +12,11 @@
             <form id="form-login" class="form" action="">
                 @Html.ValidationSummary(true, "", new { @class = "invalid" })
                 <div class="form-container">
-
-
-
-
+                    <div>
+                        @Html.ValidationMessageFor(m => m.ProfileName, "", new { @class = "invalid" })
+                    </div>
+                    @Html.TextBoxFor(m => m.ProfileName, new { @class = "form-control", placeholder = "Profile Name" })
+                    <br />
                     <div>
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "invalid" })
                     </div>

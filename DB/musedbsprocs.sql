@@ -55,8 +55,15 @@ CREATE PROCEDURE [dbo].[sp_select_user_by_Email]
 )
 AS	
  	BEGIN
-		SELECT [UserID], [ProfileName], [Email], [FirstName], [LastName], [ImageFilePath], [Active], [MinutesListened]
-		FROM	[User]
+		SELECT [UserID], 
+			   [ProfileName], 
+			   [Email], 
+			   [FirstName], 
+			   [LastName], 
+			   [ImageFilePath], 
+			   [Active], 
+			   [MinutesListened]
+		FROM   [User]
 		WHERE	@Email = [Email]
 	END
 GO
@@ -149,8 +156,7 @@ CREATE PROCEDURE [dbo].[sp_update_user]
 	@OldMinutesListened [int],	
 	@NewMinutesListened [int],
 	@OldActive 			[bit],
-	@NewActive 			[bit]
-		
+	@NewActive 			[bit]	
 )
 AS	
 	BEGIN
@@ -230,6 +236,38 @@ AS
 	END
 GO
 
+/* sp_insert_song_into_album */
+
+PRINT '' PRINT '*** creating sp_insert_song_into_album ***'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_song_into_album]
+(
+    @SongID     [int],
+    @AlbumID    [int]
+)
+AS
+    BEGIN
+        INSERT INTO [dbo].[SongAlbum] 
+            ([SongID], [AlbumID])
+        VALUES (@SongID, @AlbumID)
+    END
+GO
+
+/* sp_remove_song_from_album */
+
+print '' print '*** creating sp_remove_song_from_album ***'
+GO
+CREATE PROCEDURE [dbo].[sp_remove_song_from_album]
+(
+	@SongID [int]
+)
+AS
+	BEGIN
+		DELETE FROM [SongAlbum]
+		WHERE [SongID] = @SongID
+	END
+GO
+
 /* sp_select_album_by_AlbumID */
 
 print '' print '*** creating sp_select_album_by_AlbumID ***'
@@ -250,6 +288,45 @@ AS
 			   [DateAdded]
 		FROM [Album]
 		WHERE [AlbumID] = @AlbumID
+	END
+GO
+
+/* sp_select_songs_by_AlbumID*/
+
+print '' print '*** creating sp_select_songs_by_AlbumID ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_songs_by_AlbumID]
+(
+    @UserID     [int],
+    @AlbumID [int]
+)
+AS
+	BEGIN
+		SELECT
+			[Song].[SongID], 
+				[Song].[Title],
+				[Song].[ImageFilePath],
+				[Song].[Mp3FilePath],
+				[Song].[YearReleased],
+				[Song].[Lyrics],
+				[Song].[Explicit], 
+				[Song].[Genre],
+				[Song].[Plays],
+				[Song].[UserID],				
+				[SongArtist].[ArtistID],
+				[Album].[Title],
+				[Song].[DateUploaded],
+				[Song].[DateAdded],
+				[Song].[isLiked]
+		FROM
+			[Song]
+		JOIN [User] ON [Song].[UserID] = [User].[UserID]
+		JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
+		LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
+		LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
+		WHERE
+			[Song].[UserID] = @UserID
+			AND [Album].[AlbumID] = @AlbumID
 	END
 GO
 
@@ -552,6 +629,23 @@ AS
     END
 GO
 
+/* sp_update_favorite_song */
+
+print '' print '*** creating sp_update_favorite_song ***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_favorite_song]
+(
+	@SongID	[int],
+	@NewisLiked [bit]
+)
+AS	
+	BEGIN
+		UPDATE [Song]
+		SET	[isLiked] = @NewisLiked
+		WHERE 	[SongID] = @SongID 
+	END
+GO
+
 /* sp_update_song_plays */
 
 print '' print '*** creating sp_update_song_plays ***'
@@ -806,17 +900,21 @@ CREATE PROCEDURE [dbo].[sp_select_songs_by_PlaylistID]
 AS
 	BEGIN
 		SELECT
-			[Song].[SongID],
-			[Song].[Title],
-			[Song].[ImageFilePath],
-			[Song].[Mp3FilePath],
-			[Song].[YearReleased],
-			[Song].[Lyrics],
-			[Song].[Explicit],
-			[Song].[Plays],
-			[Song].[UserID],
-			[SongArtist].[ArtistID],
-			[Album].[Title]
+			[Song].[SongID], 
+				[Song].[Title],
+				[Song].[ImageFilePath],
+				[Song].[Mp3FilePath],
+				[Song].[YearReleased],
+				[Song].[Lyrics],
+				[Song].[Explicit], 
+				[Song].[Genre],
+				[Song].[Plays],
+				[Song].[UserID],				
+				[SongArtist].[ArtistID],
+				[Album].[Title],
+				[Song].[DateUploaded],
+				[Song].[DateAdded],
+				[Song].[isLiked]
 		FROM
 			[Song]
 		JOIN [User] ON [Song].[UserID] = [User].[UserID]
@@ -910,7 +1008,7 @@ AS
 	END
 GO
 
-/* sp_select_friends_from_UserID */
+/* sp_select_all_genres_from_songs */
 
 CREATE PROCEDURE [dbo].[sp_select_all_genres_from_songs]
 AS
@@ -944,7 +1042,8 @@ AS
 				[SongArtist].[ArtistID],
 				[Album].[Title],
 				[Song].[DateUploaded],
-				[Song].[DateAdded]
+				[Song].[DateAdded],
+				[Song].[isLiked]
   
 		FROM	[Song] JOIN [User] ON [Song].[UserID] = [User].[UserID]
 					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
@@ -956,11 +1055,11 @@ GO
 
 /* Artist Stored Procedures */
 
-/* sp_select_artist_by_artist_id */
+/* sp_select_artist_by_ArtistID */
 
-print '' print '*** creating sp_select_artist_by_artist_id ***'
+print '' print '*** creating sp_select_artist_by_ArtistID ***'
 GO
-CREATE PROCEDURE [dbo].[sp_select_artist_by_artist_id]
+CREATE PROCEDURE [dbo].[sp_select_artist_by_ArtistID]
 (
 	@ArtistID	    [int]
 )
@@ -996,11 +1095,11 @@ AS
 	END
 GO
 
-/* sp_select_songs_by_artist_id */
+/* sp_select_songs_by_ArtistID */
 
-print '' print '*** creating sp_select_songs_by_artist_id ***'
+print '' print '*** creating sp_select_songs_by_ArtistID ***'
 GO
-CREATE PROCEDURE [dbo].[sp_select_songs_by_artist_id]
+CREATE PROCEDURE [dbo].[sp_select_songs_by_ArtistID]
 (
 	@ArtistID	    [int]
 )
@@ -1019,7 +1118,8 @@ AS
 				[SongArtist].[ArtistID],
 				[Album].[Title],
 				[Song].[DateUploaded],
-				[Song].[DateAdded]
+				[Song].[DateAdded],
+				[Song].[isLiked]
   
 		FROM	[Song] JOIN [User] ON [Song].[UserID] = [User].[UserID]
 					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]

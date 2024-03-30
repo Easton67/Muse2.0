@@ -10,9 +10,11 @@ namespace LogicLayer
     public interface IAlbumManager
     {
         bool CreateAlbum(Album album);
-        List<Album> SelectAlbumByAlbumID(int AlbumID);
+        bool InsertSongIntoAlbumID(int songID, int albumID);
+        Album SelectAlbumByAlbumID(int AlbumID);
         List<Album> SelectAllAlbums();
         bool UpdateAlbum(Album oldAlbum, Album newAlbum);
         bool DeleteAlbum(int albumId);
+        bool RemoveSongFromAlbum(int songID);
     }
 }

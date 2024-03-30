@@ -31,6 +31,24 @@ namespace LogicLayer
             }
             return result;
         }
+        public bool InsertSongIntoAlbumID(int songID, int albumID)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _albumAccessor.InsertSongIntoAlbumID(songID, albumID));
+                if (result == false)
+                {
+                    throw new ArgumentException("Song may already exist");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not Added", ex);
+            }
+            return result;
+        }
         public Album SelectAlbumByAlbumID(int AlbumID)
         {
             Album album = new Album();
@@ -84,6 +102,20 @@ namespace LogicLayer
             catch (Exception ex)
             {
                 throw new ApplicationException("Album not deleted", ex);
+            }
+            return result;
+        }
+        public bool RemoveSongFromAlbum(int songID)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _albumAccessor.RemoveSongFromAlbum(songID));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Song not removed.", ex);
             }
             return result;
         }

@@ -23,6 +23,14 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public int InsertSongIntoAlbumID(int songID, int albumID)
+        {
+            throw new NotImplementedException();
+        }
+        public int RemoveSongFromAlbum(int songID)
+        {
+            throw new NotImplementedException();
+        }
         public Album SelectAlbumByAlbumID(int AlbumID)
         {
             throw new NotImplementedException();

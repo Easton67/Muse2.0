@@ -160,5 +160,9 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public int UpdateFavoriteStatus(int SongID, bool newIsLiked)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

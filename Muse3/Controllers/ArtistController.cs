@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataObjects;
+using LogicLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +10,7 @@ namespace Muse3.Controllers
 {
     public class ArtistController : Controller
     {
+        ArtistManager _artistManager = new ArtistManager();
         // GET: Artist
         public ActionResult Index()
         {
@@ -15,9 +18,19 @@ namespace Muse3.Controllers
         }
 
         // GET: Artist/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            Artist artist = new Artist();
+            try
+            {
+                _artistManager.SelectArtistByArtistID(id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View(artist);
         }
 
         // GET: Artist/Create

@@ -47,42 +47,22 @@ namespace DataAccessLayer
             }
             return rows;
         }
-        public List<Song> SelectSongsByUserID(int UserID)
+        public List<string> SelectAllGenres()
         {
-            List<Song> songs = new List<Song>();
+            List<String> genres = new List<String>();
+
             var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_select_songs_by_UserID";
+            var cmdText = "sp_select_all_genres_from_songs";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@UserID", SqlDbType.Int);
-            cmd.Parameters["@UserID"].Value = UserID;
 
             try
             {
                 conn.Open();
-
                 var reader = cmd.ExecuteReader();
-
                 while (reader.Read())
                 {
-                    var song = new Song
-                    {
-                        SongID = reader.GetInt32(0),
-                        Title = reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
-                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(3),
-                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
-                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
-                        Explicit = reader.GetBoolean(6),
-                        Genre = reader.GetString(7),
-                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
-                        UserID = reader.GetInt32(9),
-                        Artist = reader.GetString(10),
-                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
-                        DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
-                        DateAdded = reader.GetDateTime(13)
-                    };
-                    songs.Add(song);
+                    genres.Add(reader.GetString(0));
                 }
             }
             catch (Exception ex)
@@ -93,7 +73,7 @@ namespace DataAccessLayer
             {
                 conn.Close();
             }
-            return songs;
+            return genres;
         }
         public Song SelectSongBySongID(int UserID, int SongID)
         {
@@ -131,8 +111,8 @@ namespace DataAccessLayer
                         Artist = reader.GetString(10),
                         Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
                         DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
-                        DateAdded = reader.GetDateTime(13)
-
+                        DateAdded = reader.GetDateTime(13),
+                        isLiked = reader.GetBoolean(14)
                     };
                 }
                 else
@@ -149,6 +129,55 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return song;
+        }
+        public List<Song> SelectSongsByUserID(int UserID)
+        {
+            List<Song> songs = new List<Song>();
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_songs_by_UserID";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters["@UserID"].Value = UserID;
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var song = new Song
+                    {
+                        SongID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
+                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(3),
+                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
+                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
+                        Explicit = reader.GetBoolean(6),
+                        Genre = reader.GetString(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        UserID = reader.GetInt32(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
+                        DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
+                        DateAdded = reader.GetDateTime(13),
+                        isLiked = reader.GetBoolean(14)
+                    };
+                    songs.Add(song);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return songs;
         }
         public List<Song> SelectSongsByPlaylistID(int UserID, int PlaylistID)
         {
@@ -175,14 +204,69 @@ namespace DataAccessLayer
                         SongID = reader.GetInt32(0),
                         Title = reader.GetString(1),
                         ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
-                        Mp3FilePath = reader.GetString(3),
+                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(3),
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
                         Explicit = reader.GetBoolean(6),
-                        Plays = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
-                        UserID = reader.GetInt32(8),
-                        Artist = reader.GetString(9),
-                        Album = reader.IsDBNull(10) ? "" : reader.GetString(10)
+                        Genre = reader.GetString(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        UserID = reader.GetInt32(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
+                        DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
+                        DateAdded = reader.GetDateTime(13),
+                        isLiked = reader.GetBoolean(14)
+                    };
+                    songs.Add(song);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return songs;
+        }
+        public List<Song> SelectSongsByAlbumID(int UserID, int AlbumID)
+        {
+            List<Song> songs = new List<Song>();
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_songs_by_AlbumID";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@PlaylistID", SqlDbType.Int);
+            cmd.Parameters["@UserID"].Value = UserID;
+            cmd.Parameters["@AlbumID"].Value = AlbumID;
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var song = new Song
+                    {
+                        SongID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
+                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(3),
+                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
+                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
+                        Explicit = reader.GetBoolean(6),
+                        Genre = reader.GetString(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        UserID = reader.GetInt32(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
+                        DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
+                        DateAdded = reader.GetDateTime(13),
+                        isLiked = reader.GetBoolean(14)
                     };
                     songs.Add(song);
                 }
@@ -218,6 +302,39 @@ namespace DataAccessLayer
                 if (rows == 0)
                 {
                     throw new ArgumentException("Could not update song's play count.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        public int UpdateFavoriteStatus(int SongID, bool newIsLiked)
+        {
+            int rows = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_update_song_plays";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@SongID", SqlDbType.Int);
+            cmd.Parameters.Add("@NewisLiked", SqlDbType.Bit);
+            cmd.Parameters["@SongID"].Value = SongID;
+            cmd.Parameters["@NewisLiked"].Value = newIsLiked;
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Could not favorite or unfavorite song.");
                 }
             }
             catch (Exception ex)
@@ -314,34 +431,6 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return rows;
-        }
-        public List<string> SelectAllGenres()
-        {
-            List<String> genres = new List<String>();
-
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_select_all_genres_from_songs";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            try
-            {
-                conn.Open();
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    genres.Add(reader.GetString(0));
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return genres;
         }
     }
 }
