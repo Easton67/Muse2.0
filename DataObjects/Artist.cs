@@ -15,6 +15,5 @@ namespace DataObjects
         public string Description { get; set; }
         public bool isLiked { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public int UserID { get; set; }
     }
 }

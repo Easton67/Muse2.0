@@ -372,6 +372,24 @@ AS
 	END
 GO
 
+/* sp_select_albumid_from_albumtitle */
+
+print '' print '*** creating sp_select_albumid_from_albumtitle ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_albumid_from_albumtitle]
+(
+	@AlbumTitle [nvarchar](100),
+	@ArtistID   [nvarchar](200)
+)
+AS	
+	BEGIN
+		SELECT TOP 1 [AlbumID]
+		FROM [Album]
+		WHERE [Title] = @AlbumTitle
+		AND   [ArtistID] = @ArtistID
+	END
+GO
+
 /* Song Stored Procedures */
 
 /* sp_retrieve_title_from_albumId */
@@ -1061,7 +1079,7 @@ print '' print '*** creating sp_select_artist_by_ArtistID ***'
 GO
 CREATE PROCEDURE [dbo].[sp_select_artist_by_ArtistID]
 (
-	@ArtistID	    [int]
+	@ArtistID	    [nvarchar](200)
 )
 AS	
 	BEGIN
@@ -1145,6 +1163,10 @@ AS
 		WHERE 	[ArtistID] = @ArtistID
 	END
 GO
+
+
+
+
 
 
 

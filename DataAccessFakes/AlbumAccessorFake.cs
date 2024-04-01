@@ -35,6 +35,10 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+        public int SelectAlbumIDFromTitle(string albumTitle, string artistID)
+        {
+            throw new NotImplementedException();
+        }
         public List<Album> SelectAllAlbums()
         {
             throw new NotImplementedException();

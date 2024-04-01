@@ -10,6 +10,10 @@ namespace DataAccessFakes
 {
     public class ArtistAccessorFakes : IArtistAccessor
     {
+        public List<Artist> SelectAllArtists()
+        {
+            throw new NotImplementedException();
+        }
         public Artist SelectArtistByArtistID(string artistID)
         {
             throw new NotImplementedException();

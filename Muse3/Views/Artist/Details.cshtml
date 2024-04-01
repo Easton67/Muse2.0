@@ -1,74 +1,78 @@
-﻿@model DataObjects.Artist
+﻿@model Muse3.Controllers.ArtistDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
+    int charLimit = 30;
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Artist</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageFilePath)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ImageFilePath)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.isLiked)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.isLiked)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserID)
-        </dd>
-
-    </dl>
+<div class="px-3">
+    <div class="d-flex">
+        <img style="width: 200px; height: 200px; border-radius: 10px;" src="/MuseConfig/ProfileImages/@Path.GetFileName(@Model.artist.ImageFilePath)" alt="Photo of @Model.artist.ArtistID">
+        <div class="px-3">
+            <h2>@Model.artist.ArtistID</h2>
+            <p>Birthday: @Model.artist.DateOfBirth.Value</p>
+            <p>Description: @Model.artist.Description</p>
+        </div>
+    </div>
+    <div class="mt-5">
+        <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
+            <tr class="text-nowrap fw-bold">
+                <th>
+                    Album Art
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Album
+                </th>
+                <th>
+                    Year Released
+                </th>
+                <th>
+                    Genre
+                </th>
+                <th>
+                    Plays
+                </th>
+            </tr>
+            @foreach (var song in Model.songs)
+            {
+                <tr class="playlist-table">
+                    <td class="playlist-table-border">
+                        <img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(song.ImageFilePath)" alt="Album art" data-songid="@song.SongID">
+                        <button id="library-play-button" class="library-play-button list-view-library-play-button">
+                            <img id="library-play-img" src="~/Images/play.png" />
+                        </button><br />
+                        <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(song.Mp3FilePath)" data-audio-songid="@song.SongID"></audio>
+                    </td>
+                    @{
+                        string title = song.Title.Length >= charLimit ? song.Title.Substring(0, charLimit) + "..." : song.Title;
+                        string album = song.Album.Length >= charLimit ? song.Album.Substring(0, charLimit) + "..." : song.Album;
+                        string artist = song.Artist.Length >= charLimit ? song.Artist.Substring(0, charLimit) + "..." : song.Artist;
+                    }
+                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                        <p style="white-space: nowrap;">@title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /></p>
+                    </td>
+                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                        <a href="@Url.Action("DetailsFromArtistAndTitle", "Album", new { albumTitle = song.Album, artistID = song.Artist })">
+                            @album
+                        </a>
+                    </td>
+                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                        @song.YearReleased
+                    </td>
+                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                        @song.Genre
+                    </td>
+                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                        @song.Plays
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ArtistID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="pt-5"></div>
+
+

@@ -86,6 +86,44 @@ namespace DataAccessLayer
                 conn.Close();
             }
         }
+        public int SelectAlbumIDFromTitle(string albumTitle, string artistID)
+        {
+            int albumID = 0;
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_albumid_from_albumtitle";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@AlbumTitle", albumTitle);
+            cmd.Parameters.AddWithValue("@ArtistID", artistID);
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    albumID = reader.GetInt32(0);
+                }
+                else
+                {
+                    throw new ArgumentException("AlbumID not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return albumID;
+        }
         public int InsertSongIntoAlbumID(int songID, int albumID)
         {
             int rows = 0;

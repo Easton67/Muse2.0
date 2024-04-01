@@ -11,5 +11,6 @@ namespace LogicLayer
     {
         Artist SelectArtistByArtistID(string artistID);
         List<Song> SelectSongByArtistID(string artistID);
+        List<Artist> SelectAllArtists();
     }
 }

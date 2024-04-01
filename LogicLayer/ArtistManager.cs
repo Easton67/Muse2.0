@@ -4,6 +4,7 @@ using DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace LogicLayer
             }
             return artist;
         }
-        List<Song> SelectSongsByArtistID(int SongID, int ArtistID)
+        public List<Song> SelectSongsByArtistID(int SongID, int ArtistID)
         {
             List<Song> songs = new List<Song>();
 
@@ -48,6 +49,21 @@ namespace LogicLayer
                 throw new ApplicationException("Playlist not found", ex);
             }
             return songs;
+        }
+
+        public List<Artist> SelectAllArtists()
+        {
+            List<Artist> artists = new List<Artist>();
+
+            try
+            {
+                artists = _artistAccessor.SelectAllArtists();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Artists not found", ex);
+            }
+            return artists;
         }
     }
 }

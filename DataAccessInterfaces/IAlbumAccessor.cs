@@ -12,6 +12,7 @@ namespace DataAccessInterfaces
         int CreateAlbum(Album album); 
         int InsertSongIntoAlbumID(int songID, int albumID);
         Album SelectAlbumByAlbumID(int AlbumID);
+        int SelectAlbumIDFromTitle(string albumTitle, string artistID);
         List<Album> SelectAllAlbums();
         int UpdateAlbum(Album oldAlbum, Album newAlbum);
         int DeleteAlbum(int albumId);

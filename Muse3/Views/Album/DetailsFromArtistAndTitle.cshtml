@@ -1,24 +1,24 @@
-﻿@model Muse3.Controllers.PlaylistDetailsViewModel
+﻿@model Muse3.Controllers.AlbumDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
-    ViewBag.Hero = "Playlist";
+    ViewBag.Hero = "Album";
     int charLimit = 30;
 }
 
 <div class="px-3">
     <div class="d-flex">
         <div class="your-element" data-tilt>
-            <img style="width: 200px; height: 200px; border-radius: 10px;" onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/PlaylistImages/@Path.GetFileName(@Model.Playlist.ImageFilePath)" alt="Album art">
+            <img style="width: 200px; height: 200px; border-radius: 10px;" onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(Model.album.ImageFilePath)" alt="Album art">
         </div>
         <div class="px-3">
-            <h2>@Model.Playlist.Title</h2>
-            <p>Description: @Model.Playlist.Description</p>
+            <h2>@Model.album.Title</h2>
+            <p>Description: @Model.album.Description</p>
         </div>
     </div>
 
     <button class="btn-add">
-        @Html.ActionLink("Add Song", "Create", "Song")
+        Add Song
     </button>
     <div>
         <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
@@ -45,7 +45,7 @@
                     Plays
                 </th>
             </tr>
-            @foreach (var song in Model.Songs)
+            @foreach (var song in Model.songs)
             {
                 <tr class="playlist-table">
                     <td class="playlist-table-border">
@@ -60,23 +60,23 @@
                         string album = song.Album.Length >= charLimit ? song.Album.Substring(0, charLimit) + "..." : song.Album;
                         string artist = song.Artist.Length >= charLimit ? song.Artist.Substring(0, charLimit) + "..." : song.Artist;
                     }
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        <p style="white-space: nowrap;">@title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /></p>
+                    <td>
+                        <p class="mt-4">@title<img class="explicit-white" src="~/Images/explicit.png" /></p>
                     </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @Html.ActionLink(@artist, "Details", "Artist", new { id = song.Artist, style = "color: white; text-decoration: none;" })
+                    <td>
+                        <p class="mt-4">@Html.ActionLink(@artist, "Details", "Artist", new { id = song.Artist, style = "color: white; text-decoration: none;" })</p>
                     </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @Html.ActionLink(@album, "Details", "Album", new { id = song.Album, style = "color: white; text-decoration: none;" })
+                    <td>
+                        <p class="mt-4">@Html.ActionLink(@album, "Details", "Album", new { id = song.Album, style = "color: white; text-decoration: none;" })</p>
                     </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @song.YearReleased
+                    <td>
+                        <p class="mt-4">@song.YearReleased</p>
                     </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @song.Genre
+                    <td>
+                        @*@song.Genre*@
                     </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @song.Plays
+                    <td>
+                        <p class="mt-4">@song.Plays</p>
                     </td>
                 </tr>
             }
@@ -84,3 +84,4 @@
     </div>
 </div>
 <div class="pt-5"></div>
+

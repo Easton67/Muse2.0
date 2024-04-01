@@ -11,5 +11,6 @@ namespace DataAccessInterfaces
     {
         Artist SelectArtistByArtistID(string artistID);
         List<Song> SelectSongsByArtistID(int SongID, int ArtistID);
+        List<Artist> SelectAllArtists();
     }
 }

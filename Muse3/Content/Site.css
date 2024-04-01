@@ -70,6 +70,7 @@ body {
 }
 
 /* Details pages / create button */
+
 table {
     border-top-left-radius: 8px !important;
     border-top-right-radius: 8px !important;
@@ -358,6 +359,7 @@ div textarea {
 }
 
 /* Login Page */
+
 #login-container {
     background-color: rgba(255, 255, 255, 0.2);
     padding: 50px 50px 10px 50px;
@@ -429,4 +431,12 @@ footer {
 }
 
 /* Playlist */
+
+/* Artist */
+
+.artist-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+}
 

@@ -46,16 +46,16 @@ GO
 INSERT INTO [dbo].[Artist] 
     ([ArtistID],[ImageFilePath],[FirstName],[LastName],[Description],[isLiked],[DateOfBirth])
 VALUES
-    ('Drake', 'ye.jpg', 'Aubrey', 'Graham', 'Drake is a Canadian rapper, singer, and songwriter. He is one of the most influential artists of his generation.', 0, '1986-10-24'),
-    ('KanYe', 'drake.jpg', 'Kanye', 'West', 'Kanye West is an American rapper, singer, songwriter, record producer, and fashion designer.', 0, '1977-06-08'),
-    ('Frank Ocean', 'frankOcean.jpg', 'Frank', 'Ocean', 'Frank Ocean is an American singer, songwriter, and record producer. He is known for his genre-bending style and introspective lyrics.', 0, '1987-10-28'),
-    ('Travis Scott', 'travisScott.jpg', 'Travis', 'Scott', 'Travis Scott is an American rapper, singer, songwriter, and record producer. He is known for his energetic live performances and innovative music production.', 0, NULL),
-    ('Elton John', 'eltonJohn.jpg', 'Elton', 'John', 'Sir Elton John is an English singer, songwriter, pianist, and composer. He has been a dominant figure in the music industry for over five decades.', 0, '1947-03-25'),
-    ('Childish Gambino', 'donaldGlover.jpg', 'Donald', 'Glover', 'Childish Gambino is the stage name of Donald Glover, an American actor, comedian, writer, producer, director, musician, and DJ.', 0, NULL),
-    ('Lil Uzi Vert', 'uzi.jpg', 'Symere', 'Woods', 'Lil Uzi Vert is an American rapper, singer, and songwriter known for his unique vocal delivery and eccentric fashion sense.', 0, NULL),
-    ('Metro Boomin', 'metroBoomin.jpg', 'Leland', 'Wayne', 'Metro Boomin is an American record producer, record executive, songwriter, and DJ known for his influential contributions to the hip hop genre.', 0, NULL),
-    ('Playboi Carti', 'playboiCarti.jpg', 'Jordan', 'Carter', 'Playboi Carti is an American rapper, singer, and songwriter known for his melodic style and experimental approach to hip hop.', 0, NULL),
-    ('Isaiah Rashad', 'isaiahRashad.jpg', 'Isaiah', 'McLain', 'Isaiah Rashad is an American rapper and songwriter associated with the Top Dawg Entertainment label.', 0, NULL)
+    ('Drake', 'drake.jpg', 'Aubrey', 'Graham', 'Drake is a Canadian rapper, singer, and songwriter. He is one of the most influential artists of his generation.', 1,'1986-10-24'),
+    ('KanYe', 'ye.jpg', 'Kanye', 'West', 'Kanye West is an American rapper, singer, songwriter, record producer, and fashion designer.', 1,'1977-06-08'),
+    ('Frank Ocean', 'frankOcean.jpg', 'Frank', 'Ocean', 'Frank Ocean is an American singer, songwriter, and record producer. He is known for his genre-bending style and introspective lyrics.', 1,'1987-10-28'),
+    ('Travis Scott', 'travisScott.jpg', 'Travis', 'Scott', 'Travis Scott is an American rapper, singer, songwriter, and record producer. He is known for his energetic live performances and innovative music production.', 1,'1992-04-30'),
+    ('Elton John', 'eltonJohn.jpg', 'Elton', 'John', 'Sir Elton John is an English singer, songwriter, pianist, and composer. He has been a dominant figure in the music industry for over five decades.', 1,'1947-03-25'),
+    ('Childish Gambino', 'donaldGlover.jpg', 'Donald', 'Glover', 'Childish Gambino is the stage name of Donald Glover, an American actor, comedian, writer, producer, director, musician, and DJ.', 1,'1983-09-25'),
+    ('Lil Uzi Vert', 'uzi.jpg', 'Symere', 'Woods', 'Lil Uzi Vert is an American rapper, singer, and songwriter known for his unique vocal delivery and eccentric fashion sense.', 1,'1994-07-31'),
+    ('Metro Boomin', 'metroBoomin.jpg', 'Leland', 'Wayne', 'Metro Boomin is an American record producer, record executive, songwriter, and DJ known for his influential contributions to the hip hop genre.', 1,'1993-09-16'),
+    ('Playboi Carti', 'playboiCarti.jpg', 'Jordan', 'Carter', 'Playboi Carti is an American rapper, singer, and songwriter known for his melodic style and experimental approach to hip hop.', 1,'1996-09-13'),
+    ('Isaiah Rashad', 'isaiahRashad.jpg', 'Isaiah', 'McLain', 'Isaiah Rashad is an American rapper and songwriter associated with the Top Dawg Entertainment label.', 1,'1991-05-16');
 GO
 	  
 print '' print '*** inserting Song test records ***'	

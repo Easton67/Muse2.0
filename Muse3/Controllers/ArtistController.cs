@@ -8,29 +8,46 @@ using System.Web.Mvc;
 
 namespace Muse3.Controllers
 {
+    public class ArtistDetailsViewModel
+    {
+        public Artist artist { get; set; }
+        public List<Song> songs { get; set; }
+    }
     public class ArtistController : Controller
     {
-        ArtistManager _artistManager = new ArtistManager();
+        private ArtistManager _artistManager = new ArtistManager();
+        private SongManager _songManager = new SongManager();
         // GET: Artist
-        public ActionResult Index()
+        public ActionResult Artists()
         {
-            return View();
+            List<Artist> artists = new List<Artist>();
+
+            try
+            {
+                artists = _artistManager.SelectAllArtists();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return View(artists);
         }
 
         // GET: Artist/Details/5
         public ActionResult Details(string id)
         {
-            Artist artist = new Artist();
+            ArtistDetailsViewModel viewModel = new ArtistDetailsViewModel();
+
             try
             {
-                _artistManager.SelectArtistByArtistID(id);
+                viewModel.artist = _artistManager.SelectArtistByArtistID(id);
+                viewModel.songs = _songManager.SelectSongsByUserID(100001).Where(song => song.Artist == viewModel.artist.ArtistID).ToList();
             }
             catch (Exception)
             {
-
                 throw;
             }
-            return View(artist);
+            return View(viewModel);
         }
 
         // GET: Artist/Create
@@ -41,7 +58,7 @@ namespace Muse3.Controllers
 
         // POST: Artist/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Artist artist)
         {
             try
             {

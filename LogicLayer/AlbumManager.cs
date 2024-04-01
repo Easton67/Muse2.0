@@ -63,6 +63,20 @@ namespace LogicLayer
             }
             return album;
         }
+        public int SelectAlbumIDFromTitle(string albumTitle, string artistID)
+        {
+            int albumID;
+
+            try
+            {
+                albumID = _albumAccessor.SelectAlbumIDFromTitle(albumTitle, artistID);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("AlbumID not found", ex);
+            }
+            return albumID;
+        }
         public List<Album> SelectAllAlbums()
         {
             List<Album> albums = new List<Album>();
