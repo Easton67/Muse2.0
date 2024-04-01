@@ -19,7 +19,7 @@ namespace Muse3.Controllers
         {
             try
             {
-                reviews = _reviewManager.SelectReviewsByUserID(100000);
+                reviews = _reviewManager.SelectReviewsByUserID(100001);
             }
             catch (Exception)
             {

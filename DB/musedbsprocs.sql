@@ -488,8 +488,8 @@ AS
 		IF @AlbumID IS NULL
 		BEGIN
 			INSERT INTO [dbo].[Album] 
-				([Title], [ArtistID])
-			VALUES (@AlbumTitle, @ArtistID)
+				([Title], [ArtistID], [ImageFilePath])
+			VALUES (@AlbumTitle, @ArtistID, @ImageFilePath)
 
 			SELECT @AlbumID = SCOPE_IDENTITY()
 		END
