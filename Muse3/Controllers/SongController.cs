@@ -151,7 +151,6 @@ namespace Muse3.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // checking if files are there
                     Song oldSong = (Song)Session["oldSong"];
                     var newSong = new Song()
                     {
@@ -178,23 +177,6 @@ namespace Muse3.Controllers
             {
                 return View(song);
             }
-        }
-
-        // GET: Song/Delete/5
-        public ActionResult Delete(int id)
-        {
-            Song song = null;
-
-            try
-            {
-                song = _songManager.SelectSongBySongID(100001, id);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.ErrorMessage = ex.Message;
-            }
-
-            return View(song);
         }
 
         // POST: Song/Delete/5

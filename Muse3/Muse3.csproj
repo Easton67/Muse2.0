@@ -1956,7 +1956,6 @@
     <Content Include="Views\Playlist\Create.cshtml" />
     <Content Include="Views\Playlist\Edit.cshtml" />
     <Content Include="Views\Review\Edit.cshtml" />
-    <Content Include="Views\Album\Edit.cshtml" />
     <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Playlist\Delete.cshtml" />
     <Content Include="Views\Review\Delete.cshtml" />
@@ -1969,10 +1968,10 @@
     <Content Include="Views\Album\Create.cshtml" />
     <Content Include="Views\Album\Albums.cshtml" />
     <Content Include="Views\Song\Create.cshtml" />
-    <Content Include="Views\Song\Delete.cshtml" />
     <Content Include="Views\Artist\Artists.cshtml" />
     <Content Include="Views\Artist\Details.cshtml" />
     <Content Include="Views\Album\DetailsFromArtistAndTitle.cshtml" />
+    <Content Include="Views\Album\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

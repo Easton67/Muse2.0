@@ -104,7 +104,17 @@ namespace Muse3.Controllers
         // GET: Album/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Album album = new Album();
+
+            try
+            {
+                album = _albumManager.SelectAlbumByAlbumID(id);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return View(album);
         }
 
         // POST: Album/Edit/5

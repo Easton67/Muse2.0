@@ -21,20 +21,26 @@
             @Html.DisplayNameFor(model => model.ArtistID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            Details
         </th>
     </tr>
     @foreach (var album in Model)
     {
         <tr>
             <td>
-                <img src="/MuseConfig/AlbumArt/@Path.GetFileName(album.ImageFilePath)" alt="Album art for @album.Title">
+                <a href="@Url.Action("Details", "Album", new { id = album.AlbumID })">
+                    <img src="/MuseConfig/AlbumArt/@Path.GetFileName(album.ImageFilePath)" alt="Album art for @album.Title">
+                </a>
             </td>
             <td>
-                <p class="mt-4">@Html.ActionLink(album.Title, "Details", new { id = album.AlbumID, style = "color: white; text-decoration: none;" })</p>
+                <p class="mt-4">@Html.ActionLink(album.Title, "Details", new { id = album.AlbumID })</p>
             </td>
             <td>
-                <p class="mt-4">@Html.ActionLink(album.ArtistID, "Details", "Artist", new { id = album.ArtistID, style = "color: white; text-decoration: none;" })</p>
+                <p class="mt-4">
+                    <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = album.ArtistID })">
+                        @album.ArtistID
+                    </a>
+                </p>
             </td>
             <td>
                 <p class="mt-4">
