@@ -340,20 +340,25 @@ CREATE PROCEDURE [dbo].[sp_update_album]
 	@NewTitle		  [nvarchar](100),
 	@NewImageFilePath [nvarchar](500),
 	@NewDescription   [nvarchar](max),
+	@NewYearReleased  [int],
+
 	@OldTitle 		  [nvarchar](100),
 	@OldImageFilePath [nvarchar](500),
-	@OldDescription   [nvarchar](max)
+	@OldDescription   [nvarchar](max),
+	@OldYearReleased  [int]
 )
 AS
 	BEGIN
 		UPDATE [Album] 
 		SET [Title] = @NewTitle, 
 			[ImageFilePath] = @NewImageFilePath, 
-			[Description] = @NewDescription
+			[Description] = @NewDescription,
+			[YearReleased] = @NewYearReleased
 		WHERE [AlbumID] = @AlbumID
 		AND	  [Title] = @OldTitle
 		AND   [ImageFilePath] = @OldImageFilePath 
 		AND   [Description] = @OldDescription
+		AND   [YearReleased] = @OldYearReleased
 	END
 GO
 
@@ -752,11 +757,16 @@ CREATE PROCEDURE [dbo].[sp_select_review_by_ReviewID]
 )
 AS
 	BEGIN
-		SELECT [Review].[ReviewID], [Review].[Rating], 
-			[Review].[Message], [Review].[UserID], 
-			[Song].[SongID], [Song].[Title], 
-			[Song].[YearReleased], [SongArtist].[ArtistID], 
-			[Song].[ImageFilePath], [Song].[Mp3FilePath], 
+		SELECT [Review].[ReviewID], 
+			[Review].[Rating], 
+			[Review].[Message], 
+			[Review].[UserID], 
+			[Song].[SongID], 
+			[Song].[Title], 
+			[Song].[YearReleased], 
+			[SongArtist].[ArtistID], 
+			[Song].[ImageFilePath], 
+			[Song].[Mp3FilePath], 
 			[Song].[Explicit]
 		FROM [dbo].[Review]
 		JOIN [dbo].[Song] ON [Review].[SongID] = [Song].[SongID]
@@ -803,7 +813,7 @@ CREATE PROCEDURE [dbo].[sp_delete_review]
 )
 AS
 	BEGIN
-		DELETE FROM [Reviews]
+		DELETE FROM [Review]
 		WHERE [ReviewID] = @ReviewID
 	END
 GO

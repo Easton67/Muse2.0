@@ -211,9 +211,13 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@NewTitle", newAlbum.Title);
             cmd.Parameters.AddWithValue("@NewImageFilePath", newAlbum.ImageFilePath);
             cmd.Parameters.AddWithValue("@NewDescription", newAlbum.Description);
+            cmd.Parameters.AddWithValue("@NewYearReleased", newAlbum.YearReleased);
+
             cmd.Parameters.AddWithValue("@OldTitle", oldAlbum.Title);
             cmd.Parameters.AddWithValue("@OldImageFilePath", oldAlbum.ImageFilePath);
             cmd.Parameters.AddWithValue("@OldDescription", oldAlbum.Description);
+            cmd.Parameters.AddWithValue("@OldYearReleased", oldAlbum.YearReleased);
+
 
             try
             {

@@ -9,6 +9,7 @@ import pylast
 from profanity import profanity
 from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3
+from bs4 import BeautifulSoup
 
 words_to_replace = [" (Official Audio)", " (Audio)", " [Audio]", " (Official Lyric Video)", " (Unreleased)",
                     " (Official Video)", " (Official Music Video)", " [Official Music Video]",
@@ -29,18 +30,18 @@ genius = lyricsgenius.Genius(api_key, timeout=50)
 network = pylast.LastFMNetwork(api_key=last_fm_api_key, api_secret=last_fm_api_secret)
 
 def get_song_release_year(artist_name, song_title):
-    try:
-        # Get track from Last.fm
-        track = network.get_track(artist_name, song_title)
-        
-        # Get release year
-        release_date = track.get_wiki_published_date()
-        release_year = release_date.split('-')[0] if release_date else "Release year not found"
+        try:
+            # Get track from Last.fm
+            track = network.get_track(artist_name, song_title)
+            
+            # Get release year
+            release_date = track.get_wiki_published_date()
+            release_year = release_date.split('-')[0] if release_date else "Release year not found"
 
-        return release_year
-    except Exception as e:
-        print(f"Error fetching release year from Last.fm: {e}")
-        return "Release year not found"
+            return release_year
+        except Exception as e:
+            print(f"Error fetching release year from Last.fm: {e}")
+            return "Release year not found"
 
 def get_genre_and_cover_and_album_name(artist_name, track_name):
     try:

@@ -1,0 +1,116 @@
+﻿@model IEnumerable<DataObjects.Review>
+
+@{
+    ViewBag.Title = "Reviews";
+}
+
+@*delete modal*@
+<div class="modal text-light" id="delete-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title delete-message" id="modal-title"></h5>
+                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Delete", "Review", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="delete-review-id" name="id" value="" />
+
+                    <div class="form-actions">
+                        <input id="confirm-delete-button" type="submit" value="Delete" class="btn btn-danger" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table bg-dark text-light">
+    <tr>
+        <th>
+            Art
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewedSong.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewedSong.Artist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewedSong.Album)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewedSong.YearReleased)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ReviewedSong.ImageFilePath)" alt="Album art" data-songid="@item.SongID">
+                <button id="library-play-button" class="library-play-button list-view-library-play-button">
+                    <img id="library-play-img" src="~/Images/play.png" />
+                </button><br />
+                <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(item.ReviewedSong.Mp3FilePath)" data-audio-songid="@item.SongID"></audio>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewedSong.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewedSong.Artist)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewedSong.Album)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewedSong.YearReleased)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                <p class="mt-4">
+                    <button class="delete-button fw-bold text-danger"
+                            style="border: none; color: white; background-color: transparent; font-size: 20px;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#delete-modal"
+                            data-review-id="@item.ReviewID"
+                            data-review-name="@item.ReviewedSong.Title">
+                        Delete
+                    </button>
+                </p>
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    var deleteButtons = document.querySelectorAll('.delete-button');
+
+    // add a click event to all delete buttons
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var deleteMessage = document.querySelector('.delete-message');
+            var reviewName = button.getAttribute('data-review-name');
+            var reviewID = document.getElementById('delete-review-id');
+            reviewID.value = button.getAttribute('data-review-id');
+            deleteMessage.textContent = "Are you sure you want to delete " + reviewName + "?";
+        });
+    });
+</script>

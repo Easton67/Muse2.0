@@ -17,6 +17,7 @@ namespace DataObjects
             [DisplayName("Album Art")]
             public string ImageFilePath { get; set; }
             public string Description { get; set; }
+            [DisplayName("Year Released")]
             public int YearReleased { get; set; }
             public DateTime? DateAdded { get; set; }
     }

@@ -10,10 +10,18 @@
         <img style="width: 200px; height: 200px; border-radius: 10px;" src="/MuseConfig/ProfileImages/@Path.GetFileName(@Model.artist.ImageFilePath)" alt="Photo of @Model.artist.ArtistID">
         <div class="px-3">
             <h2>@Model.artist.ArtistID</h2>
+            <p>Name: @Model.artist.FirstName @Model.artist.LastName</p>
             <p>Birthday: @Model.artist.DateOfBirth.Value</p>
             <p>Description: @Model.artist.Description</p>
         </div>
     </div>
+
+    @*albums*@
+
+
+
+
+    @*songs*@
     <div class="mt-5">
         <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
             <tr class="text-nowrap fw-bold">

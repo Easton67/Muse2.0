@@ -15,7 +15,7 @@ namespace Muse3.Controllers
         List<Review> reviews = new List<Review>();
 
         // GET: Review
-        public ActionResult ViewAllReviews()
+        public ActionResult Reviews()
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Muse3.Controllers
                 if (ModelState.IsValid)
                 {
                     _reviewManager.CreateReview(review);
-                    return RedirectToAction("ViewAllReviews");
+                    return RedirectToAction("Reviews");
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace Muse3.Controllers
                     _reviewManager.UpdateReview(oldReview, review);
                 }
 
-                return RedirectToAction("ViewAllReviews");
+                return RedirectToAction("Reviews");
             }
             catch
             {
@@ -120,17 +120,17 @@ namespace Muse3.Controllers
 
         // POST: Review/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Review review)
         {
             try
             {
-                // TODO: Add delete logic here
+                _reviewManager.DeleteReview(id);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Reviews");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Reviews");
             }
         }
     }

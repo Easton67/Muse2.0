@@ -2,6 +2,8 @@
 using LogicLayer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -109,6 +111,7 @@ namespace Muse3.Controllers
             try
             {
                 album = _albumManager.SelectAlbumByAlbumID(id);
+                Session["oldAlbum"] = album;
             }
             catch (Exception ex)
             {
@@ -119,39 +122,47 @@ namespace Muse3.Controllers
 
         // POST: Album/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Album album, HttpPostedFileBase imageFile)
         {
             try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+             {
+                if (ModelState.IsValid)
+                {
+                    var oldAlbum = (Album)Session["oldAlbum"];
+                    var newAlbum = new Album()
+                    {
+                        AlbumID = oldAlbum.AlbumID,
+                        Title = album.Title,
+                        ArtistID = album.ArtistID,
+                        isExplicit = album.isExplicit,
+                        ImageFilePath = (imageFile != null) ? Path.GetFileName(imageFile.FileName) : Path.GetFileName(oldAlbum.ImageFilePath),
+                        Description = album.Description,
+                        YearReleased = album.YearReleased,
+                        DateAdded = album.DateAdded
+                    };
+                    _albumManager.UpdateAlbum(oldAlbum, newAlbum);
+                }
+                return RedirectToAction("Details");
             }
             catch
             {
-                return View();
+                return View(album);
             }
-        }
-
-        // GET: Album/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
 
         // POST: Album/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Album album)
         {
             try
             {
-                // TODO: Add delete logic here
+                _albumManager.DeleteAlbum(id);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Albums");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Albums");
             }
         }
     }

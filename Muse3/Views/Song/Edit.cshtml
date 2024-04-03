@@ -29,16 +29,8 @@
                     </div>
                 </div>
                 <p class="mt-2">Added: @Model.DateAdded.Date.ToShortDateString()</p>
-                <div class="d-flex px-2">
-                    @Html.ActionLink("Back to List", "Library")
-                    <button class="delete-button"
-                            style="border: none; color: white; background-color: transparent; font-size: 20px;"
-                            data-bs-toggle="modal"
-                            data-bs-target="#delete-modal"
-                            data-song-id="@Model.SongID."
-                            data-song-name="@Model.Title">
-                        Delete
-                    </button>
+                <div class="d-flex">
+                    @Html.ActionLink("Back to Library", "Library")
                 </div>
                 <div class="col-md-10" style="display: none;">
                     @Html.EditorFor(model => model.Plays, new { htmlAttributes = new { @class = "form-control" } })
@@ -82,7 +74,6 @@
                     </div>
                 </div>
                 <br />
-
             </div>
             <div class="fs-5 px-5 song-form-edit">
                 <div class="form-group">

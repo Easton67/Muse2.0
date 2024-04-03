@@ -4,6 +4,29 @@
     ViewBag.Title = "Albums";
 }
 
+@*delete modal*@
+<div class="modal text-light" id="delete-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title delete-message" id="modal-title"></h5>
+                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Delete", "Album", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="delete-album-id" name="id" value="" />
+
+                    <div class="form-actions">
+                        <input id="confirm-delete-button" type="submit" value="Delete" class="btn btn-danger" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <button class="btn-add">
     @Html.ActionLink("Add Album", "Create")
@@ -44,12 +67,32 @@
             </td>
             <td>
                 <p class="mt-4">
-                    @Html.ActionLink("Edit", "Edit", new { id = album.AlbumID }) |
-                    @Html.ActionLink("Details", "Details", new { id = album.AlbumID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = album.AlbumID })
+                    <button class="delete-button fw-bold text-danger"
+                            style="border: none; color: white; background-color: transparent; font-size: 20px;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#delete-modal"
+                            data-album-id="@album.AlbumID"
+                            data-album-name="@album.Title">
+                        Delete
+                    </button>
                 </p>
             </td>
         </tr>
     }
 
 </table>
+
+<script>
+    var deleteButtons = document.querySelectorAll('.delete-button');
+
+    // add a click event to all delete buttons
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var deleteMessage = document.querySelector('.delete-message');
+            var albumName = button.getAttribute('data-album-name');
+            var albumID = document.getElementById('delete-album-id');
+            albumID.value = button.getAttribute('data-album-id');
+            deleteMessage.textContent = "Are you sure you want to delete " + albumName + "?";
+        });
+    });
+</script>
