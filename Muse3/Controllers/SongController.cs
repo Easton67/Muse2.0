@@ -3,8 +3,10 @@ using LogicLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.EnterpriseServices.CompensatingResourceManager;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Web;
 using System.Web.Mvc;
@@ -17,9 +19,9 @@ namespace Muse3.Controllers
         private UserManager _userManager = new UserManager();
         private string songfilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles";
         private string imageFilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt";
-        List<Song> songs = new List<Song>();
+        private List<Song> songs = new List<Song>();
 
-        public ActionResult Library(string searchText)
+        public ActionResult Library(string searchText, string ascOrDesc, string sortedProperty, string isFavorite, int? songID)
         {
             List<Song> songs = new List<Song>();
 
@@ -27,7 +29,51 @@ namespace Muse3.Controllers
             {
                 if (!string.IsNullOrEmpty(searchText))
                 {
-                    songs = _songManager.SelectSongsByUserID(100001).Where(x => x.Title.ToLower().Contains(searchText)).ToList();
+                    songs = _songManager.SelectSongsByUserID(100001);
+                    songs = songs.Where(x => x.Title.ToLower().Contains(searchText.ToLower())).ToList();
+                }
+                else
+                {
+                    songs = _songManager.SelectSongsByUserID(100001);
+                }
+                if (sortedProperty != null && ascOrDesc != null)
+                {
+                    if (ascOrDesc == "asc")
+                    {
+                        songs = songs.OrderBy(x => x.GetType().GetProperty(sortedProperty).GetValue(x, null)).ToList();
+                    }
+                    else
+                    {
+                        songs = songs.OrderByDescending(x => x.GetType().GetProperty(sortedProperty).GetValue(x, null)).ToList();
+                    }
+                }
+                if(!string.IsNullOrEmpty(isFavorite))
+                {
+                    bool favoriteOrUnfavorite = (isFavorite == "favorite") ? true : false;
+
+                    _songManager.UpdateFavoriteStatus(songID.Value, favoriteOrUnfavorite);
+
+                    songs = _songManager.SelectSongsByUserID(100001);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return View(songs);
+        }
+
+        public ActionResult LibraryGridView(string searchText)
+        {
+            List<Song> songs = new List<Song>();
+
+            try
+            {
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    songs = _songManager.SelectSongsByUserID(100001);
+                    songs = songs.Where(x => x.Title.ToLower().Contains(searchText.ToLower())).ToList();
                 }
                 else
                 {

@@ -319,7 +319,7 @@ namespace DataAccessLayer
             int rows = 0;
 
             var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_update_song_plays";
+            var cmdText = "sp_update_favorite_song";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@SongID", SqlDbType.Int);

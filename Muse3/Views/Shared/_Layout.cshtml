@@ -52,7 +52,17 @@
             <div class="row justify-content-center">
                 <div class="col">
                     <br />
-                    <h1 class="text-center fw-bold mt-2">@ViewBag.Title</h1>
+                    <h1 class="text-center fw-bold mt-2">
+                        @*if the title doesn't match what I want for the header*@
+                        @if (@ViewBag.Hero != null)
+                        {
+                            @ViewBag.Hero
+                        }
+                        else
+                        {
+                            @ViewBag.Title
+                        }
+                    </h1>
                     <hr class="hr-underline">
                     <br />
                 </div>
@@ -63,7 +73,7 @@
         </div>
         <br />
         <br />
-        <footer class="pt-4 text-center">
+        <footer class="mt-4 text-center text-nowrap">
             <p>&copy; @DateTime.Now.Year - Muse v3.0 - Easton67</p>
         </footer>
     </div>
@@ -75,16 +85,6 @@
                 window.location.href = "/Song/Details/" + this.getAttribute("data-songid");
             });
         });
-
-        function listView() {
-            document.getElementById("library-grid-view").style.display = "none";
-            document.getElementById("library-list-view").style.display = "";
-        }
-
-        function gridView() {
-            document.getElementById("library-grid-view").style.display = "";
-            document.getElementById("library-list-view").style.display = "none";
-        }
 
         document.querySelectorAll(".library-play-button").forEach(function (button) {
             button.addEventListener("click", function () {

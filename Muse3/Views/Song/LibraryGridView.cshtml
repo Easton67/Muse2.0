@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DataObjects.Song>
+
+@{
+    ViewBag.Title = "LibraryGridView";
+    ViewBag.Hero = "Library";
+    int charLimit = 20;
+    var mp3FilePath = "";
+    string songID = "";
+}
+
+<div class="d-flex px-5 pt-3">
+    <button class="btn-add mx-3 br-30" onclick="window.location.href='@Url.Action("Create", "Song")'">
+        Add Song
+    </button>
+    <input id="songSearchBox" style="border-radius: 70px;" class="px-3" type="text" placeholder="Search for song...">
+    <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
+    <img class="icon px-3" src="~/Images/list-icon.svg" onclick="window.location.href='@Url.Action("Library", "Song")'" />
+    <img class="icon px-3" src="~/Images/grid-icon.svg" onclick="window.location.href='@Url.Action("LibraryGridView", "Song")'" />
+</div>
+
+@*grid view*@
+<audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(mp3FilePath) data-audio-songid="@songID"></audio>
+<div id="library-grid-view" class="row mx-5 row-cols- lg-10">
+    @foreach (var item in Model)
+    {
+        <div id="library-cards-container" class="col my-4 inline w-auto">
+            <div id="image-container" class="image-container" data-image-songID="@item.SongID">
+                <img id="album-img" class="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.Artist)" data-songid="@item.SongID">
+                <button id="library-play-button" class="library-play-button">
+                    <img src="~/Images/play.png" />
+                </button><br />
+                <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(item.Mp3FilePath)" data-audio-songid="@item.SongID"></audio>
+                <br />
+            </div>
+            <div class="mx-5 song-info-div">
+                <br>
+                <div class="d-inline-block text-nowrap" sstyle="font-size: 30px;">
+                    @{
+                        string title = item.Title.Length >= charLimit ? item.Title.Substring(0, charLimit) + "..." : item.Title;
+                        string album = item.Album.Length >= charLimit ? item.Album.Substring(0, charLimit) + "..." : item.Album;
+                        string artist = item.Artist.Length >= charLimit ? item.Artist.Substring(0, charLimit) + "..." : item.Artist;
+                    }
+                    <p class="text-nowrap">
+                        @title
+                        @if (item.Explicit == true)
+                        {
+                            <img class="explicit-white" src="~/Images/explicit.png" />
+                        }
+                    </p>
+                    <p>@album</p>
+                    <p>@artist</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    function searchForSong() {
+        var title = document.getElementById("songSearchBox").value.trim().toLowerCase();
+        var libraryURL = '@Url.Action("LibraryGridView", "Song")' + '?searchText=' + encodeURIComponent(title);
+        window.location.href = libraryURL;
+    };
+</script>
