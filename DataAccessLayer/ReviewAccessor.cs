@@ -62,27 +62,33 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
-                    var song = new Song
+                    Song song = new Song
                     {
-                        SongID = reader.GetInt32(4),
-                        Title = reader.GetString(5),
-                        YearReleased = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
-                        Artist = reader.GetString(7),
-                        ImageFilePath = reader.IsDBNull(8) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(8),
-                        Mp3FilePath = reader.GetString(9),
-                        Explicit = reader.GetBoolean(10),
+                        SongID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
+                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(3),
+                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
+                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
+                        Explicit = reader.GetBoolean(6),
+                        Genre = reader.GetString(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        UserID = reader.GetInt32(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
+                        DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
+                        DateAdded = reader.GetDateTime(13),
+                        isLiked = reader.GetBoolean(14)
                     };
 
-                    var review = new Review
+                    Review review = new Review
                     {
-                        ReviewID = reader.GetInt32(0),
-                        Rating = reader.IsDBNull(1) ? 0 : reader.GetInt32(1),
-                        Message = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                        UserID = reader.GetInt32(3),
-                        SongID = reader.GetInt32(4),
+                        ReviewID = reader.GetInt32(15),
+                        Rating = reader.IsDBNull(16) ? 0 : reader.GetInt32(16),
+                        Message = reader.IsDBNull(17) ? "" : reader.GetString(17),
+                        UserID = reader.GetInt32(18),
                         ReviewedSong = song
                     };
-
                     reviews.Add(review);
                 }
                 return reviews;
@@ -121,22 +127,29 @@ namespace DataAccessLayer
 
                     song = new Song
                     {
-                        SongID = reader.GetInt32(4),
-                        Title = reader.GetString(5),
-                        YearReleased = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
-                        Artist = reader.GetString(7),
-                        ImageFilePath = reader.IsDBNull(8) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(8),
-                        Mp3FilePath = reader.GetString(9),
-                        Explicit = reader.GetBoolean(10),
+                        SongID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
+                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(3),
+                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
+                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
+                        Explicit = reader.GetBoolean(6),
+                        Genre = reader.GetString(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        UserID = reader.GetInt32(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
+                        DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
+                        DateAdded = reader.GetDateTime(13),
+                        isLiked = reader.GetBoolean(14)
                     };
 
                     review = new Review
                     {
-                        ReviewID = reader.GetInt32(0),
-                        Rating = reader.IsDBNull(1) ? 0 : reader.GetInt32(1),
-                        Message = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                        UserID = reader.GetInt32(3),
-                        SongID = reader.GetInt32(4),
+                        ReviewID = reader.GetInt32(15),
+                        Rating = reader.IsDBNull(16) ? 0 : reader.GetInt32(1),
+                        Message = reader.IsDBNull(17) ? "" : reader.GetString(2),
+                        UserID = reader.GetInt32(18),
                         ReviewedSong = song
                     };
                 }

@@ -21,11 +21,10 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav text-nowrap">
                     <li>@Html.ActionLink("Library", "Library", "Song", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("All Albums", "Albums", "Album", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("All Artists", "Artists", "Artist", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Albums", "Albums", "Album", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Artists", "Artists", "Artist", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Playlist", "ViewAllPlaylists", "Playlist", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Controls", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Reviews", "Reviews", "Review", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Help", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>

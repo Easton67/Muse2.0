@@ -91,7 +91,9 @@
             
 
             <p class="text-nowrap">
-                @Html.ActionLink("Write a Review", "Edit", "Review", new { id = Model.SongID }) .
+                <a class="mt-4" href="@Url.Action("CreateWithSongProvided", "Review", new { songID = Model.SongID })">
+                    Write a Review
+                </a>
                 @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
                 <button class="delete-button fw-semibold text-danger"
                         style="border: none; color: white; background-color: transparent; font-size: 30px;"

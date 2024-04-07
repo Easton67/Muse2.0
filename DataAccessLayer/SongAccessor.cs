@@ -148,7 +148,7 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
-                    var song = new Song
+                    Song song = new Song
                     {
                         SongID = reader.GetInt32(0),
                         Title = reader.GetString(1),

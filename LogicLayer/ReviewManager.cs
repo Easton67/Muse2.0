@@ -71,7 +71,7 @@ namespace LogicLayer
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Review not Added", ex);
+                throw new ApplicationException("Review not found", ex);
             }
             return reviews;
         }
@@ -85,7 +85,7 @@ namespace LogicLayer
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Review not Added", ex);
+                throw new ApplicationException("Review not found", ex);
             }
             return review;
         }

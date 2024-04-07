@@ -722,7 +722,7 @@ AS
 	END
 GO
 
-/* sp_select_reviews_by_ReviewID */
+/* sp_select_reviews_by_UserID */
 
 print '' print '*** creating sp_select_reviews_by_UserID ***'
 GO
@@ -732,17 +732,32 @@ CREATE PROCEDURE [dbo].[sp_select_reviews_by_UserID]
 )
 AS
 	BEGIN
-		SELECT [Review].[ReviewID], [Review].[Rating], 
-			   [Review].[Message], [Review].[UserID], 
-			   [Song].[SongID], [Song].Title, 
-			   [Song].YearReleased, [SongArtist].ArtistID, 
-			   [Song].ImageFilePath, [Song].Mp3FilePath, 
-			   [Song].Explicit
-		FROM [dbo].[Review]
-		JOIN [dbo].[Song] ON [Review].[SongID] = [Review].[SongID]
+		SELECT [Song].[SongID], 
+			   [Song].[Title],
+			   [Song].[ImageFilePath],
+			   [Song].[Mp3FilePath],
+			   [Song].[YearReleased],
+			   [Song].[Lyrics],
+			   [Song].[Explicit], 
+			   [Song].[Genre],
+			   [Song].[Plays],
+			   [Song].[UserID],				
+			   [SongArtist].[ArtistID],
+			   [Album].[Title],
+			   [Song].[DateUploaded],
+			   [Song].[DateAdded],
+			   [Song].[isLiked],
+			   [Review].[ReviewID], 
+			   [Review].[Rating], 
+			   [Review].[Message], 
+			   [Review].[UserID]
+		FROM [Review]
+		JOIN [Song] ON [Review].[SongID] = [Song].[SongID]
 		JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
+		LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
+		LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
+		JOIN [User] ON [Review].[UserID] = [User].[UserID]
 		WHERE [Review].[UserID] = @UserID
-		AND [Song].SongID = [Review].[SongID]
 	END
 GO
 
@@ -757,22 +772,32 @@ CREATE PROCEDURE [dbo].[sp_select_review_by_ReviewID]
 )
 AS
 	BEGIN
-		SELECT [Review].[ReviewID], 
-			[Review].[Rating], 
-			[Review].[Message], 
-			[Review].[UserID], 
-			[Song].[SongID], 
-			[Song].[Title], 
-			[Song].[YearReleased], 
-			[SongArtist].[ArtistID], 
-			[Song].[ImageFilePath], 
-			[Song].[Mp3FilePath], 
-			[Song].[Explicit]
-		FROM [dbo].[Review]
-		JOIN [dbo].[Song] ON [Review].[SongID] = [Song].[SongID]
-		JOIN [dbo].[SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
+		SELECT [Song].[SongID], 
+			   [Song].[Title],
+			   [Song].[ImageFilePath],
+			   [Song].[Mp3FilePath],
+			   [Song].[YearReleased],
+			   [Song].[Lyrics],
+			   [Song].[Explicit], 
+			   [Song].[Genre],
+			   [Song].[Plays],
+			   [Song].[UserID],				
+			   [SongArtist].[ArtistID],
+			   [Album].[Title],
+			   [Song].[DateUploaded],
+			   [Song].[DateAdded],
+			   [Song].[isLiked],
+			   [Review].[ReviewID], 
+			   [Review].[Rating], 
+			   [Review].[Message], 
+			   [Review].[UserID]
+		FROM [Review]
+		JOIN [Song] ON [Review].[SongID] = [Song].[SongID]
+		JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
+		LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
+		LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
+		JOIN [User] ON [Review].[UserID] = [User].[UserID]
 		WHERE [Review].[UserID] = @UserID
-		AND [Review].[ReviewID] = @ReviewID
 	END
 GO
 
@@ -1173,10 +1198,3 @@ AS
 		WHERE 	[ArtistID] = @ArtistID
 	END
 GO
-
-
-
-
-
-
-

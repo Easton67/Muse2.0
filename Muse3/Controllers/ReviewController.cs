@@ -11,6 +11,7 @@ namespace Muse3.Controllers
     public class ReviewController : Controller
     {
         private ReviewManager _reviewManager = new ReviewManager();
+        private SongManager _songManager = new SongManager();
 
         List<Review> reviews = new List<Review>();
 
@@ -50,6 +51,26 @@ namespace Muse3.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+
+        // GET: Review/Create
+        public ActionResult CreateWithSongProvided(int songID)
+        {
+            Song song = new Song();
+            Review review = new Review();
+
+            try
+            {
+                song = _songManager.SelectSongBySongID(100001, songID);
+                review.ReviewedSong = song;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return View(review);
         }
 
         // POST: Review/Create

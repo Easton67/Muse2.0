@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Reviews";
+    int charLimit = 25;
+    var mp3FilePath = "";
+    string songID = "";
 }
 
 @*delete modal*@
@@ -9,7 +12,7 @@
     <div class="modal-dialog">
         <div class="modal-content bg-dark">
             <div class="modal-header">
-                <h5 class="modal-title delete-message" id="modal-title"></h5>
+                <h5 class="modal-title delete-message" id="modal-title">Are you sure you want to remove this review?</h5>
                 <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-footer">
@@ -17,7 +20,6 @@
                 {
                     @Html.AntiForgeryToken()
                     <input type="hidden" id="delete-review-id" name="id" value="" />
-
                     <div class="form-actions">
                         <input id="confirm-delete-button" type="submit" value="Delete" class="btn btn-danger" />
                     </div>
@@ -30,8 +32,8 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table bg-dark text-light">
-    <tr>
+<table class="table text-light">
+    <tr class="text-nowrap">
         <th>
             Art
         </th>
@@ -51,9 +53,8 @@
             @Html.DisplayNameFor(model => model.Rating)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Message)
+            Options
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -65,36 +66,55 @@
                     <img id="library-play-img" src="~/Images/play.png" />
                 </button><br />
                 <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(item.ReviewedSong.Mp3FilePath)" data-audio-songid="@item.SongID"></audio>
+                @{
+                    string title = item.ReviewedSong.Title.Length >= charLimit ? item.ReviewedSong.Title.Substring(0, charLimit) + "..." : item.ReviewedSong.Title;
+                    string album = item.ReviewedSong.Album.Length >= charLimit ? item.ReviewedSong.Album.Substring(0, charLimit) + "..." : item.ReviewedSong.Album;
+                    string artist = item.ReviewedSong.Artist.Length >= charLimit ? item.ReviewedSong.Artist.Substring(0, charLimit) + "..." : item.ReviewedSong.Artist;
+                }
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewedSong.Title)
+            <td class="pt-4">
+                <p class="text-nowrap">
+                    <a class="mt-4" href="@Url.Action("Details", "Song", new { id = item.ReviewedSong.SongID })">
+                        @title
+                        @if (item.ReviewedSong.Explicit == true)
+                        {
+                            <img class="explicit-white" src="~/Images/explicit.png" />
+                        }
+                    </a>
+                </p>
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewedSong.Artist)
+            <td class="pt-4">
+                <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = item.ReviewedSong.Artist })">
+                    @artist
+                </a>
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewedSong.Album)
+            <td class="pt-4">
+                @if (album.Length.Equals(0))
+                {
+                    <p>Unknown</p>
+                }
+                else
+                {
+                    <a class="mt-4" href="@Url.Action("DetailsFromArtistAndTitle", "Album", new { albumTitle = item.ReviewedSong.Album, artistID = item.ReviewedSong.Artist})">
+                        @album
+                    </a>
+                }
             </td>
-            <td>
+            <td class="pt-4">
                 @Html.DisplayFor(modelItem => item.ReviewedSong.YearReleased)
             </td>
-            <td>
+            <td class="pt-4">
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Message)
-            </td>
-            <td>
-                <p class="mt-4">
-                    <button class="delete-button fw-bold text-danger"
-                            style="border: none; color: white; background-color: transparent; font-size: 20px;"
-                            data-bs-toggle="modal"
-                            data-bs-target="#delete-modal"
-                            data-review-id="@item.ReviewID"
-                            data-review-name="@item.ReviewedSong.Title">
-                        Delete
-                    </button>
-                </p>
+            <td class="pt-4">
+                <button class="delete-button fw-bold text-danger"
+                        style="border: none; color: white; background-color: transparent; font-size: 20px;"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete-modal"
+                        data-review-id="@item.ReviewID"
+                        data-review-name="@item.ReviewedSong.Title">
+                    Remove
+                </button>
             </td>
         </tr>
     }
@@ -107,10 +127,8 @@
     deleteButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             var deleteMessage = document.querySelector('.delete-message');
-            var reviewName = button.getAttribute('data-review-name');
             var reviewID = document.getElementById('delete-review-id');
             reviewID.value = button.getAttribute('data-review-id');
-            deleteMessage.textContent = "Are you sure you want to delete " + reviewName + "?";
         });
     });
 </script>
