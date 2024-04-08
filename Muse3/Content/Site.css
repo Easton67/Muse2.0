@@ -112,6 +112,17 @@ td img {
     font-weight: bold !important;
 }
 
+.btn-generic {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    color: white !important;
+    background-color: rgb(255 255 255 / 15%) !important;
+    padding: .5em 1em .5em 1em !important;
+    border-radius: 30px !important;
+    font-weight: bold !important;
+}
+
+
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */

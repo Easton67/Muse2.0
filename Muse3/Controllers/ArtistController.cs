@@ -12,11 +12,14 @@ namespace Muse3.Controllers
     {
         public Artist artist { get; set; }
         public List<Song> songs { get; set; }
+        public List<Album> albums { get; set; }
     }
     public class ArtistController : Controller
     {
         private ArtistManager _artistManager = new ArtistManager();
         private SongManager _songManager = new SongManager();
+        private AlbumManager _albumManager = new AlbumManager();
+
         // GET: Artist
         public ActionResult Artists()
         {
@@ -42,6 +45,10 @@ namespace Muse3.Controllers
             {
                 viewModel.artist = _artistManager.SelectArtistByArtistID(id);
                 viewModel.songs = _songManager.SelectSongsByUserID(100001).Where(song => song.Artist == viewModel.artist.ArtistID).ToList();
+                viewModel.albums = _albumManager
+                                .SelectAllAlbums()
+                                .Where(album => album.ArtistID == viewModel.artist.ArtistID && !string.Equals(album.Title, "None"))
+                                .ToList();
             }
             catch (Exception)
             {

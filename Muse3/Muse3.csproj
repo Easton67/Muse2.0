@@ -1970,14 +1970,13 @@
     <Content Include="Views\Album\Albums.cshtml" />
     <Content Include="Views\Song\Create.cshtml" />
     <Content Include="Views\Artist\Artists.cshtml" />
-    <Content Include="Views\Artist\Details.cshtml" />
     <Content Include="Views\Album\DetailsFromArtistAndTitle.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
     <Content Include="Views\Song\LibraryGridView.cshtml" />
     <Content Include="Views\Review\CreateWithSongProvided.cshtml" />
     <Content Include="Views\Shared\_SubscriberModal.cshtml" />
     <Content Include="Views\User\ViewUpgradePlans.cshtml" />
-    <Content Include="Views\Album\FilteredAlbums.cshtml" />
+    <Content Include="Views\Artist\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

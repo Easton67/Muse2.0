@@ -356,7 +356,7 @@ namespace Muse2.Pages.AddSong
                                 string[] parts = unsplitSongTitle.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
                                 if (parts.Length == 2)
                                 {
-                                    artist = parts[0].Trim();
+                                    //artist = parts[0].Trim();
                                     songTitle = parts[1].Trim();
                                 }
                             }

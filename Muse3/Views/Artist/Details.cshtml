@@ -16,15 +16,49 @@
         </div>
     </div>
 
+    <div class="mt-3">
+        <button class="btn-generic" onclick="showAlbums()">
+            Albums
+        </button>
+        <button class="btn-generic" onclick="showSongs()">
+            Songs
+        </button>
+    </div>
+
     @*albums*@
-    <button onclick="window.location.href='@Url.Action("FilteredAlbums", "Album", new { artistID = Model.artist.ArtistID } )'">
-        Albums
-    </button>
+    <div id="album-view" class="row mr-5 row-cols- lg-10">
+        <h1 class="pt-3 fw-semibold">Albums</h1>
+        @foreach (var album in Model.albums)
+        {
+            <div id="library-cards-container" class="col my-4 inline w-auto">
+                <a onclick="window.location.href='@Url.Action("Details", "Album", new { id = album.AlbumID })'">
+                    <img id="album-img" class="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(album.ImageFilePath)" alt="Album art for @album.Title by @album.ArtistID" />
+                </a>
 
+                @*<div id="image-container" class="image-container">
+                    <br />
+                </div>*@
+                <div class="mx-5 song-info-div">
+                    <br>
+                    <div class="d-inline-block text-nowrap" style="font-size: 30px;">
+                        <p class="text-nowrap">
+                            @album.Title
+                        </p>
+                        <p class="text-nowrap">
+                            @album.ArtistID
+                        </p>
+                        <p class="text-nowrap">
+                            @album.YearReleased
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 
-
+    <h1 id="song-header" class="pt-3 fw-semibold">Songs</h1>
     @*songs*@
-    <div class="mt-5">
+    <div class="mt-2">
         <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
             <tr class="text-nowrap fw-bold">
                 <th>
@@ -84,5 +118,19 @@
     </div>
 </div>
 <div class="pt-5"></div>
+<script>
+    function showAlbums() {
+        document.querySelector('#table-playlist-songs').style.display = 'none';
+        document.querySelector('#album-view').style.display = 'flex';
+        document.querySelector('#song-header').style.display = 'none';
+    }
+
+    function showSongs() {
+        document.querySelector('#album-view').style.display = 'none';
+        document.querySelector('#table-playlist-songs').style.display = 'table';
+        document.querySelector('#song-header').style.display = 'block';
+    }
+</script>
+
 
 

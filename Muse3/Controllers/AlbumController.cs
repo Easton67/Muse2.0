@@ -36,23 +36,6 @@ namespace Muse3.Controllers
             return View(albums);
         }
 
-        // GET: Album/FilteredAlbums/
-        public ActionResult FilteredAlbums(string artistID)
-        {
-            try
-            {
-                // need to write an sp to select albums by artist id
-                // doing this for now
-                albums = _albumManager.SelectAllAlbums().Where(x => x.ArtistID.Equals(artistID)).ToList();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            return View(albums);
-        }
-
         // GET: Album/Details/
         public ActionResult Details(int id)
         {

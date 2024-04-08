@@ -144,7 +144,9 @@ def download_and_process_playlist(playlist_url, playlist_title):
             info_file_path = os.path.join(song_directory, f"{song}-information.txt")
             with open(info_file_path, "w", encoding="utf-8") as info_file:
                 info_file.write(f"Title: {song}\n")
-                info_file.write(f"Artist: {artist}\n")
+                filtered_artist = artist.replace("&", "and")
+                filtered_artist = filtered_artist.replace(",", "")
+                info_file.write(f"Artist: {filtered_artist}\n")
                 info_file.write(f"Release Year: {release_year}\n")
                 info_file.write(f"Album Name: {album_name}\n")
                 info_file.write(f"Genre: {genres}\n")
