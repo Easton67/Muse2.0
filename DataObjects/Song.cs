@@ -39,5 +39,8 @@ namespace DataObjects
         public DateTime DateAdded { get; set; }
         [DisplayName("Favorite")]
         public bool isLiked { get; set; }
+        [DisplayName("Public")]
+        public bool isPublic { get; set; }
+
     }
 }

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DataObjects.Album>
+
+@{
+    ViewBag.Title = "FilteredAlbums";
+    ViewBag.Hero = "Albums";
+    int charLimit = 25;
+}
+
+
+@*grid view*@
+<div class="row mx-5 row-cols- lg-10">
+    @foreach (var item in Model)
+    {
+        <div id="library-cards-container" class="col my-4 inline w-auto">
+            <div id="image-container" class="image-container">
+                <img id="album-img" class="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art for @Html.DisplayNameFor(model => model.Title) by @Html.DisplayNameFor(model => model.ArtistID)" />
+                <br />
+            </div>
+            <div class="mx-5 song-info-div">
+                <br>
+                <div class="d-inline-block text-nowrap" style="font-size: 30px;">
+                    @{
+                        string title = item.Title.Length >= charLimit ? item.Title.Substring(0, charLimit) + "..." : item.Title;
+                        string artist = item.ArtistID.Length >= charLimit ? item.ArtistID.Substring(0, charLimit) + "..." : item.ArtistID;
+                    }
+                    <p class="text-nowrap">
+                        @title
+                    </p>
+                    <p class="text-nowrap">
+                        @artist
+                    </p>
+                    <p class="text-nowrap">
+                        @item.YearReleased
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

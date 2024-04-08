@@ -13,11 +13,11 @@
     </button>
     <input id="songSearchBox" style="border-radius: 70px;" class="mx-3 px-3" type="text" placeholder="Search for song...">
     <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
-    <img class="icon px-3" src="~/Images/list-icon.svg" onclick="window.location.href='@Url.Action("Library", "Song")'"/>
-    <img class="icon px-3" src="~/Images/grid-icon.svg" onclick="window.location.href='@Url.Action("LibraryGridView", "Song")'"/>
+    <img class="icon px-3" src="~/Images/list-icon.svg" onclick="window.location.href='@Url.Action("Library", "Song")'" />
+    <img class="icon px-3" src="~/Images/grid-icon.svg" onclick="window.location.href='@Url.Action("LibraryGridView", "Song")'" />
 </div>
 
-@*delete modal*@
+@*Libary delete modal*@
 <div class="modal text-light" id="delete-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content bg-dark">
@@ -41,6 +41,12 @@
 </div>
 
 @*list view*@
+<button type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#subscriber-modal">
+    Become a subscriber
+</button>
 <div id="library-list-view" class="pt-4">
     <table class="table">
         <tr>
@@ -50,8 +56,8 @@
             <th>
                 <div class="d-flex">
                     @Html.DisplayNameFor(model => model.Title)
-                    <div  style="margin-top: -3px!important;" class="mx-3">
-                        <img class="arrow arrow-up" src="~/Images/caret-down.png" 
+                    <div style="margin-top: -3px!important;" class="mx-3">
+                        <img class="arrow arrow-up" src="~/Images/caret-down.png"
                              onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Title" })'" />
                         <br />
                         <img class="arrow arrow-down" src="~/Images/caret-down.png"
@@ -108,17 +114,17 @@
                 </div>
             </th>
             @*<th>
-                <div class="d-flex">
-                    @Html.DisplayNameFor(model => model.Plays)
-                    <div style="margin-top: -3px!important;" class="mx-3">
-                        <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Plays" })'" />
-                        <br />
-                        <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Plays" })'" />
+                    <div class="d-flex">
+                        @Html.DisplayNameFor(model => model.Plays)
+                        <div style="margin-top: -3px!important;" class="mx-3">
+                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                 onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Plays" })'" />
+                            <br />
+                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                 onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Plays" })'" />
+                        </div>
                     </div>
-                </div>
-            </th>*@
+                </th>*@
             <th>
                 <div class="d-flex">
                     @Html.DisplayNameFor(model => model.isLiked)
@@ -169,7 +175,7 @@
                 <td>
                     <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = item.Artist })">
                         @artist
-                    </a>    
+                    </a>
                 </td>
                 <td>
                     @if (album.Length.Equals(0))
@@ -190,8 +196,8 @@
                     @Html.DisplayFor(modelItem => item.Genre)
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.Plays)
-                </td>*@
+                        @Html.DisplayFor(modelItem => item.Plays)
+                    </td>*@
                 <td>
                     @if (item.isLiked == true)
                     {
@@ -213,11 +219,13 @@
                 </td>
                 <td>
                     <button class="delete-button fw-semibold text-danger"
-                            style="border: none; color: white; background-color: transparent; font-size: 20px;" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#delete-modal" 
-                            data-song-id="@item.SongID" 
-                            data-song-name="@item.Title">Delete</button>
+                            style="border: none; color: white; background-color: transparent; font-size: 20px;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#delete-modal"
+                            data-song-id="@item.SongID"
+                            data-song-name="@item.Title">
+                        Delete
+                    </button>
                 </td>
             </tr>
         }

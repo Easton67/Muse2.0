@@ -1,6 +1,4 @@
-﻿using DataObjects;
-using LogicLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,57 +6,27 @@ using System.Web.Mvc;
 
 namespace Muse3.Controllers
 {
-    public class UserController : Controller
+    public class Subscriber : Controller
     {
-        private UserManager _userManager = new UserManager();
-        // GET: User
-        public ActionResult ViewAllFriends()
+        // GET: Subscriber
+        public ActionResult Index()
         {
-            List<UserFriend> friends = new List<UserFriend>();
-
-            try
-            {
-                friends = _userManager.SelectFriendsByUserID(100001);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-            return View(friends);
+            return View();
         }
 
-        public ActionResult ViewUpgradePlans()
-        {
-            List<UserFriend> friends = new List<UserFriend>();
-
-            try
-            {
-                friends = _userManager.SelectFriendsByUserID(100001);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-            return View(friends);
-        }
-
-        // GET: User/Details/5
+        // GET: Subscriber/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: User/Create
+        // GET: Subscriber/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Subscriber/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -74,13 +42,13 @@ namespace Muse3.Controllers
             }
         }
 
-        // GET: User/Edit/5
+        // GET: Subscriber/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: User/Edit/5
+        // POST: Subscriber/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -96,13 +64,13 @@ namespace Muse3.Controllers
             }
         }
 
-        // GET: User/Delete/5
+        // GET: Subscriber/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: User/Delete/5
+        // POST: Subscriber/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

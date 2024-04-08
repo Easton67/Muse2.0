@@ -28,10 +28,10 @@ CREATE TABLE [dbo].[User] (
 	[LastName] 		  [nvarchar](50)             DEFAULT 'Unknown',
 	[PasswordHash]	  [nvarchar](100)		     NOT NULL DEFAULT
 	'5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
-	[ImageFilePath]   [nvarchar](500)            NULL DEFAULT 
-	'defaultAccount.png',
+	[ImageFilePath]   [nvarchar](500)            NULL DEFAULT 'defaultAccount.png',
 	[Active]		  [bit]						 NOT NULL DEFAULT 1,
-	[MinutesListened] [int]						 NULL DEFAULT 0
+	[MinutesListened] [int]						 NULL DEFAULT 0,
+	[isPublic]		  [bit]					     DEFAULT 0
 	CONSTRAINT [pk_UserID] PRIMARY KEY ([UserID]),
 	CONSTRAINT [ak_ProfileName] UNIQUE([ProfileName]),
 	CONSTRAINT [ak_Email] UNIQUE([Email])
@@ -143,6 +143,7 @@ CREATE TABLE [dbo].[Song] (
     [DateUploaded]   [DATETIME]                  NULL,
 	[DateAdded]      [DATETIME]                  NOT NULL DEFAULT GETDATE(),
 	[isLiked]        [bit]			             DEFAULT 0,
+	[isPublic]       [bit]			             DEFAULT 0,
 	CONSTRAINT [fk_Song_UserID] FOREIGN KEY([UserID])
         REFERENCES [dbo].[User]([UserID]), 
 	CONSTRAINT [fk_Song_AlbumID] FOREIGN KEY([AlbumID])

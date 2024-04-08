@@ -7,7 +7,7 @@
     string songID = "";
 }
 
-@*delete modal*@
+@*Review delete modal*@
 <div class="modal text-light" id="delete-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content bg-dark">
@@ -61,7 +61,7 @@
     {
         <tr>
             <td>
-                <img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ReviewedSong.ImageFilePath)" alt="Album art" data-songid="@item.SongID">
+                <img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ReviewedSong.ImageFilePath)" alt="Album art" data-songid="@item.ReviewedSong.SongID">
                 <button id="library-play-button" class="library-play-button list-view-library-play-button">
                     <img id="library-play-img" src="~/Images/play.png" />
                 </button><br />
@@ -122,7 +122,6 @@
 
 <script>
     var deleteButtons = document.querySelectorAll('.delete-button');
-
     // add a click event to all delete buttons
     deleteButtons.forEach(function (button) {
         button.addEventListener('click', function () {

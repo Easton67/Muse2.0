@@ -132,6 +132,7 @@ namespace DataAccessLayer
                         userVM.ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\" + reader.GetString(5);
                         userVM.Active = reader.GetBoolean(6);
                         userVM.MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7);
+                        userVM.isPublic = reader.GetBoolean(8);
                     }
                     else
                     {
@@ -173,7 +174,8 @@ namespace DataAccessLayer
                         ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\" + reader.GetString(5),
                         Active = reader.GetBoolean(6),
                         MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
-                    };
+                        isPublic = reader.GetBoolean(8)
+                };
                     allUsers.Add(user);
                 }
             }
@@ -412,7 +414,8 @@ namespace DataAccessLayer
                     userFriend.ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\" + reader.GetString(5);
                     userFriend.Active = reader.GetBoolean(6);
                     userFriend.MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7);
-                    userFriend.DateAddedAsFriend = reader.GetDateTime(8);
+                    userFriend.isPublic = reader.GetBoolean(8);
+                    userFriend.DateAddedAsFriend = reader.GetDateTime(9);
                     friends.Add(userFriend); 
                 }
             }

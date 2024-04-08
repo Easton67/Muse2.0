@@ -112,7 +112,8 @@ namespace DataAccessLayer
                         Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
                         DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
                         DateAdded = reader.GetDateTime(13),
-                        isLiked = reader.GetBoolean(14)
+                        isLiked = reader.GetBoolean(14),
+                        isPublic = reader.GetBoolean(15)
                     };
                 }
                 else
@@ -164,7 +165,8 @@ namespace DataAccessLayer
                         Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
                         DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
                         DateAdded = reader.GetDateTime(13),
-                        isLiked = reader.GetBoolean(14)
+                        isLiked = reader.GetBoolean(14),
+                        isPublic = reader.GetBoolean(15)
                     };
                     songs.Add(song);
                 }

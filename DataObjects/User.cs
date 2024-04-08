@@ -25,6 +25,9 @@ namespace DataObjects
         public bool Active { get; set; }    
         [DisplayName("Minutes Listened")]
         public int MinutesListened { get; set; }
+
+        [DisplayName("Public")]
+        public bool isPublic { get; set; }
     }
 
     public class UserVM : User

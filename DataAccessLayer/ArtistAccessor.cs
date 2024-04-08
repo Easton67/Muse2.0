@@ -125,10 +125,11 @@ namespace DataAccessLayer
                         YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
                         Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
                         Explicit = reader.GetBoolean(6),
-                        Plays = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
-                        UserID = reader.GetInt32(8),
-                        Artist = reader.GetString(9),
-                        Album = reader.IsDBNull(10) ? "" : reader.GetString(10)
+                        Genre = reader.GetString(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        UserID = reader.GetInt32(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11)
                     };
                     songs.Add(song);
                 }

@@ -17,7 +17,9 @@
     </div>
 
     @*albums*@
-
+    <button onclick="window.location.href='@Url.Action("FilteredAlbums", "Album", new { artistID = Model.artist.ArtistID } )'">
+        Albums
+    </button>
 
 
 

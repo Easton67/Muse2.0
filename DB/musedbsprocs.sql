@@ -62,7 +62,8 @@ AS
 			   [LastName], 
 			   [ImageFilePath], 
 			   [Active], 
-			   [MinutesListened]
+			   [MinutesListened],
+			   [isPublic]
 		FROM   [User]
 		WHERE	@Email = [Email]
 	END
@@ -98,7 +99,8 @@ AS
 			   [LastName], 
 			   [ImageFilePath], 
 			   [Active], 
-			   [MinutesListened]
+			   [MinutesListened],
+			   [isPublic]
 		FROM   [User]
 	END
 GO
@@ -211,6 +213,25 @@ AS
 	END
 GO
 
+/* sp_update_online_privacy_status */
+
+print '' print '*** creating sp_update_online_privacy_status ***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_online_privacy_status]
+(
+	@UserID		 [int],
+	@NewisPublic [bit],
+	@OldisPublic [bit]
+)
+AS	
+	BEGIN
+		UPDATE	[User]
+		SET	[isPublic] = @NewisPublic
+		WHERE 	@UserID = [UserID]
+		  AND   @OldisPublic = [isPublic]
+	END
+GO
+
 /* Album Stored Procedures */
 
 /* sp_insert_album */
@@ -268,6 +289,40 @@ AS
 	END
 GO
 
+/* sp_select_songs_by_albumID */
+
+print '' print '*** creating sp_select_songs_by_albumID ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_songs_by_albumID]
+(
+	@AlbumID		[int]
+)
+AS
+	BEGIN
+		SELECT	[Song].[SongID], 
+				[Song].[Title],
+				[Song].[ImageFilePath],
+				[Song].[Mp3FilePath],
+				[Song].[YearReleased],
+				[Song].[Lyrics],
+				[Song].[Explicit], 
+				[Song].[Genre],
+				[Song].[Plays],
+				[Song].[UserID],				
+				[SongArtist].[ArtistID],
+				[Album].[Title],
+				[Song].[DateUploaded],
+				[Song].[DateAdded],
+				[Song].[isLiked],
+				[Song].[isPublic]
+  
+		FROM	[Song] JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
+					   LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
+					   LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
+		WHERE [Album].[AlbumID] = @AlbumID
+	END
+GO
+
 /* sp_select_album_by_AlbumID */
 
 print '' print '*** creating sp_select_album_by_AlbumID ***'
@@ -288,45 +343,6 @@ AS
 			   [DateAdded]
 		FROM [Album]
 		WHERE [AlbumID] = @AlbumID
-	END
-GO
-
-/* sp_select_songs_by_AlbumID*/
-
-print '' print '*** creating sp_select_songs_by_AlbumID ***'
-GO
-CREATE PROCEDURE [dbo].[sp_select_songs_by_AlbumID]
-(
-    @UserID     [int],
-    @AlbumID [int]
-)
-AS
-	BEGIN
-		SELECT
-			[Song].[SongID], 
-				[Song].[Title],
-				[Song].[ImageFilePath],
-				[Song].[Mp3FilePath],
-				[Song].[YearReleased],
-				[Song].[Lyrics],
-				[Song].[Explicit], 
-				[Song].[Genre],
-				[Song].[Plays],
-				[Song].[UserID],				
-				[SongArtist].[ArtistID],
-				[Album].[Title],
-				[Song].[DateUploaded],
-				[Song].[DateAdded],
-				[Song].[isLiked]
-		FROM
-			[Song]
-		JOIN [User] ON [Song].[UserID] = [User].[UserID]
-		JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
-		LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
-		LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
-		WHERE
-			[Song].[UserID] = @UserID
-			AND [Album].[AlbumID] = @AlbumID
 	END
 GO
 
@@ -554,7 +570,8 @@ AS
 				[Album].[Title],
 				[Song].[DateUploaded],
 				[Song].[DateAdded],
-				[Song].[isLiked]
+				[Song].[isLiked],
+				[Song].[isPublic]
   
 		FROM	[Song] JOIN [User] ON [Song].[UserID] = [User].[UserID]
 					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
@@ -1054,6 +1071,7 @@ AS
 				[User].[ImageFilePath], 
 				[User].[Active], 
 				[User].[MinutesListened], 
+				[User].[isPublic], 
 				[UserFriend].[DayAddedAsFriend]
 		FROM    [UserFriend]
 		INNER JOIN [User] ON [UserFriend].[FriendID] = [User].[UserID]
@@ -1096,8 +1114,9 @@ AS
 				[Album].[Title],
 				[Song].[DateUploaded],
 				[Song].[DateAdded],
-				[Song].[isLiked]
-  
+				[Song].[isLiked],
+				[Song].[isPublic]
+
 		FROM	[Song] JOIN [User] ON [Song].[UserID] = [User].[UserID]
 					   JOIN [SongArtist] ON [Song].[SongID] = [SongArtist].[SongID]
 					   LEFT JOIN [SongAlbum] ON [Song].[SongID] = [SongAlbum].[SongID]
@@ -1170,8 +1189,6 @@ AS
 				[Song].[UserID],				
 				[SongArtist].[ArtistID],
 				[Album].[Title],
-				[Song].[DateUploaded],
-				[Song].[DateAdded],
 				[Song].[isLiked]
   
 		FROM	[Song] JOIN [User] ON [Song].[UserID] = [User].[UserID]

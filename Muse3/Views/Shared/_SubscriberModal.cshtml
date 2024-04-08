@@ -1,0 +1,14 @@
+﻿@*subscriber modal*@
+<div class="modal text-light" id="subscriber-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">You must be a subscriber to continue with this.</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="window.location.href='@Url.Action("ViewUpgradePlans", "User")'" class="btn btn-primary" data-bs-dismiss="modal">Become a subscriber!</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Not now</button>
+            </div>
+        </div>
+    </div>
+</div>

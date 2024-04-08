@@ -304,5 +304,54 @@ namespace DataAccessLayer
             }
             return rows;
         }
+        public List<Song> SelectSongsByAlbumID (string AlbumID)
+        {
+            List<Song> songs = new List<Song>();
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_songs_by_albumID";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Song song = new Song
+                    {
+                        SongID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ImageFilePath = reader.IsDBNull(2) ? defaultAlbumImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
+                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(3),
+                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
+                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
+                        Explicit = reader.GetBoolean(6),
+                        Genre = reader.GetString(7),
+                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                        UserID = reader.GetInt32(9),
+                        Artist = reader.GetString(10),
+                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
+                        DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
+                        DateAdded = reader.GetDateTime(13),
+                        isLiked = reader.GetBoolean(14),
+                        isPublic = reader.GetBoolean(15)
+                    };
+                    songs.Add(song);
+                }
+                return songs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

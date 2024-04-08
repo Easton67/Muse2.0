@@ -39,9 +39,9 @@
             </div>
         </div>
         <div class="fs-3 px-5 mt-4">
-            <p>
+            <p class="text-nowrap">
                 @Model.Title
-                @if (Model.Explicit.Equals(0))
+                @if (Model.Explicit == true)
                 {
                     <img class="explicit-white" src="~/Images/explicit.png" />
                 }
@@ -52,7 +52,11 @@
             }
             else
             {
-                <p>Album: @Html.ActionLink(Model.Album, "Details", "Artist", new { id = Model.Album, style = "color: white; text-decoration: none;" })</p>
+                <p>
+                    <a class="mt-4" href="@Url.Action("DetailsFromArtistAndTitle", "Album", new { albumTitle = Model.Album, artistID = Model.Artist})">
+                        Album: @Model.Album
+                    </a>
+                </p>
             }
             @if (Model.Artist.Length.Equals(0))
             {
@@ -60,7 +64,11 @@
             }
             else
             {
-                <p>Artist: @Html.DisplayFor(model => model.Artist)</p>
+                <p>
+                    <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = Model.Artist})">
+                        Artist: @Model.Artist
+                    </a>
+                </p>
             }
             <p>Year Released: @Html.DisplayFor(model => model.YearReleased)</p>
             @if (Model.Genre.Length.Equals(0))
@@ -92,7 +100,7 @@
 
             <p class="text-nowrap">
                 <a class="mt-4" href="@Url.Action("CreateWithSongProvided", "Review", new { songID = Model.SongID })">
-                    Write a Review
+                    Write a Review .
                 </a>
                 @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
                 <button class="delete-button fw-semibold text-danger"

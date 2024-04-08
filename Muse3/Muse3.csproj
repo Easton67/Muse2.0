@@ -178,6 +178,7 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\SongController.cs" />
+    <Compile Include="Controllers\Subscriber.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1974,6 +1975,9 @@
     <Content Include="Views\Album\Edit.cshtml" />
     <Content Include="Views\Song\LibraryGridView.cshtml" />
     <Content Include="Views\Review\CreateWithSongProvided.cshtml" />
+    <Content Include="Views\Shared\_SubscriberModal.cshtml" />
+    <Content Include="Views\User\ViewUpgradePlans.cshtml" />
+    <Content Include="Views\Album\FilteredAlbums.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

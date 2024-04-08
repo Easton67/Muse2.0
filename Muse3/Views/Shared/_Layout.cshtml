@@ -27,6 +27,7 @@
                     <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Reviews", "Reviews", "Review", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Upgrade Account", "ViewUpgradePlans", "User", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Help", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     @{
                         if (User.IsInRole("Manager"))
@@ -68,6 +69,7 @@
             </div>
         </div>
         <div class="px-4">
+            @Html.Partial("_SubscriberModal")
             @RenderBody()
         </div>
         <br />
