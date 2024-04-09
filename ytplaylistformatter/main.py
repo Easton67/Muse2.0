@@ -19,7 +19,7 @@ words_to_replace = [" (Official Audio)", " (Audio)", " [Audio]", " (Official Lyr
                     " (Video Official)", " (Original Song)", " (HQ)", " [Official HD Audio]",
                     " (Official visualizer)", " (Video oficial)", "Feat", "Feat.", "feat.", "feat", " ft.", "ft", "?",
                     "\'", "\"", "(", ")", ":", ",", "\\", "/", "[Legendado]", "[Directed by Cole Bennett]", " - Video Edit", 
-                    "*", '[Clean]', '[clean]', '-', '&', '|', '...']
+                    "*", '[Clean]', '[clean]', '-', '&', '|', '...', '[Clean]']
 
 api_key = "XAhf6ZzYrgiQx4j3DovglzBVz5frEurz6y86RcoHzhvmx5XGJ9JF6O9NpomHmaFg"
 last_fm_api_key = "4fdf3c66636a44cea52bada67b7efd00"

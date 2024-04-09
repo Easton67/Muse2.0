@@ -27,17 +27,16 @@
 
     @*albums*@
     <div id="album-view" class="row mr-5 row-cols- lg-10">
-        <h1 class="pt-3 fw-semibold">Albums</h1>
+        @if (Model.albums.Count() > 0)
+        {
+            <h1 class="pt-3 fw-semibold">Albums</h1>
+        }
         @foreach (var album in Model.albums)
         {
             <div id="library-cards-container" class="col my-4 inline w-auto">
                 <a onclick="window.location.href='@Url.Action("Details", "Album", new { id = album.AlbumID })'">
                     <img id="album-img" class="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(album.ImageFilePath)" alt="Album art for @album.Title by @album.ArtistID" />
                 </a>
-
-                @*<div id="image-container" class="image-container">
-                    <br />
-                </div>*@
                 <div class="mx-5 song-info-div">
                     <br>
                     <div class="d-inline-block text-nowrap" style="font-size: 30px;">
@@ -56,7 +55,15 @@
         }
     </div>
 
-    <h1 id="song-header" class="pt-3 fw-semibold">Songs</h1>
+    <div id="song-header-container">
+        <div class="d-flex pt-3">
+            <h1 class="pt-3 fw-semibold">Songs</h1>
+            <input id="searchBox" class="mx-3 px-3 mt-3" type="text" placeholder="Search for song...">
+            <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
+        </div>
+    </div>
+
+
     @*songs*@
     <div class="mt-2">
         <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
@@ -96,10 +103,14 @@
                         string artist = song.Artist.Length >= charLimit ? song.Artist.Substring(0, charLimit) + "..." : song.Artist;
                     }
                     <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        <p style="white-space: nowrap;">@title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /></p>
+                        <p class="text-nowrap">
+                            <a href="@Url.Action("Details", "Song", new { id = song.SongID })">
+                                @title <img class="explicit-white" src="~/Images/explicit.png" />
+                            </a>
+                        </p>
                     </td>
                     <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        <a href="@Url.Action("DetailsFromArtistAndTitle", "Album", new { albumTitle = song.Album, artistID = song.Artist })">
+                        <a href="@Url.Action("Details", "Album", new { albumTitle = song.Album, artistID = song.Artist })">
                             @album
                         </a>
                     </td>
@@ -119,16 +130,22 @@
 </div>
 <div class="pt-5"></div>
 <script>
+    function searchForSong() {
+        var title = document.getElementById("searchBox").value.trim().toLowerCase();
+        var libraryURL = '@Url.Action("Details", "Artist")' + '?searchText=' + encodeURIComponent(title);
+        window.location.href = libraryURL;
+    };
+
     function showAlbums() {
         document.querySelector('#table-playlist-songs').style.display = 'none';
         document.querySelector('#album-view').style.display = 'flex';
-        document.querySelector('#song-header').style.display = 'none';
+        document.querySelector('#song-header-container').style.display = 'none';
     }
 
     function showSongs() {
         document.querySelector('#album-view').style.display = 'none';
         document.querySelector('#table-playlist-songs').style.display = 'table';
-        document.querySelector('#song-header').style.display = 'block';
+        document.querySelector('#song-header-container').style.display = 'block';
     }
 </script>
 

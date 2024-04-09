@@ -27,14 +27,10 @@ namespace Muse3.Controllers
 
             try
             {
+                songs = _songManager.SelectSongsByUserID(100001);
                 if (!string.IsNullOrEmpty(searchText))
                 {
-                    songs = _songManager.SelectSongsByUserID(100001);
                     songs = songs.Where(x => x.Title.ToLower().Contains(searchText.ToLower())).ToList();
-                }
-                else
-                {
-                    songs = _songManager.SelectSongsByUserID(100001);
                 }
                 if (sortedProperty != null && ascOrDesc != null)
                 {

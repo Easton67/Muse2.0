@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="fs-3 px-5 mt-4">
-            <p class="text-nowrap">
+            <p>
                 @Model.Title
                 @if (Model.Explicit == true)
                 {
@@ -52,9 +52,10 @@
             }
             else
             {
-                <p>
+                <p class="text-nowrap">
+                    Album:
                     <a class="mt-4" href="@Url.Action("DetailsFromArtistAndTitle", "Album", new { albumTitle = Model.Album, artistID = Model.Artist})">
-                        Album: @Model.Album
+                        @Model.Album
                     </a>
                 </p>
             }
@@ -64,9 +65,10 @@
             }
             else
             {
-                <p>
+                <p class="text-nowrap">
+                    Artist: 
                     <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = Model.Artist})">
-                        Artist: @Model.Artist
+                        @Model.Artist
                     </a>
                 </p>
             }
@@ -87,7 +89,7 @@
             }
             else if (Model.Plays.Equals(1))
             {
-                <p>1 play</p>
+                <p>1 play</p>   
             }
             else
             {

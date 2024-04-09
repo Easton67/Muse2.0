@@ -8,20 +8,41 @@
 <div class="px-3">
     <div class="d-flex">
         <div class="your-element" data-tilt>
-            <img style="width: 200px; height: 200px; border-radius: 10px;" onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(Model.album.ImageFilePath)" alt="Album art for @Model.album.Title">
+            @if (Model.album.Title.Equals("Unknown") || Model.album.Title.Equals("None"))
+            {
+                <img style="width: 200px; height: 200px; border-radius: 10px;" src="~/Images/defaultAlbumImage.png" />
+            }
+            else
+            {
+                <img style="width: 200px; height: 200px; border-radius: 10px;" onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(Model.album.ImageFilePath)" alt="Album art for @Model.album.Title">
+            }
         </div>
         <div class="px-3">
             <h2>@Model.album.Title</h2>
-            <h3>@Model.album.ArtistID</h3>
-            <h4>@Model.album.YearReleased</h4>
-            <h4>@Model.album.Description</h4>
+            @if (Model.album.Title.Equals("Unknown") || Model.album.Title.Equals("None"))
+            {
+                <h3>Unknown</h3>
+                <h4>Unknown</h4>
+                <h4>No description.</h4>
+            }
+            else
+            {
+                <h3>@Model.album.ArtistID</h3>
+                <h4>@Model.album.YearReleased</h4>
+                <h4>@Model.album.Description</h4>
+            }
         </div>
     </div>
+
     <div class="d-flex pt-2">
-        <button class="btn-add mx-3" onclick="window.location.href='@Url.Action("Edit", "Album", new { id = Model.album.AlbumID })'">
-            Edit Album
-        </button>
+        @if (!(Model.album.Title.Equals("Unknown") || Model.album.Title.Equals("None")))
+        {
+            <button class="btn-add mx-3" onclick="window.location.href='@Url.Action("Edit", "Album", new { id = Model.album.AlbumID })'">
+                Edit Album
+            </button>
+        }
     </div>
+
     <div class="pt-2">
         <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
             <tr class="text-nowrap fw-bold">

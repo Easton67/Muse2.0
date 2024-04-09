@@ -11,7 +11,7 @@
     <button class="btn-add" onclick="window.location.href='@Url.Action("Create", "Song")'">
         Add Song
     </button>
-    <input id="songSearchBox" style="border-radius: 70px;" class="mx-3 px-3" type="text" placeholder="Search for song...">
+    <input id="searchBox" type="text" placeholder="Search for song...">
     <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
     <img class="icon px-3" src="~/Images/list-icon.svg" onclick="window.location.href='@Url.Action("Library", "Song")'" />
     <img class="icon px-3" src="~/Images/grid-icon.svg" onclick="window.location.href='@Url.Action("LibraryGridView", "Song")'" />
@@ -126,7 +126,7 @@
                     </div>
                 </th>*@
             <th>
-                <div class="d-flex">
+                <div class="d-flex">    
                     @Html.DisplayNameFor(model => model.isLiked)
                 </div>
             </th>
@@ -196,8 +196,8 @@
                     @Html.DisplayFor(modelItem => item.Genre)
                 </td>
                 @*<td>
-                        @Html.DisplayFor(modelItem => item.Plays)
-                    </td>*@
+                    @Html.DisplayFor(modelItem => item.Plays)
+                </td>*@
                 <td>
                     @if (item.isLiked == true)
                     {
@@ -218,8 +218,7 @@
                     @item.DateAdded.ToShortDateString()
                 </td>
                 <td>
-                    <button class="delete-button fw-semibold text-danger"
-                            style="border: none; color: white; background-color: transparent; font-size: 20px;"
+                    <button class="delete-button fw-bold text-danger text-danger bg-transparent border-0"
                             data-bs-toggle="modal"
                             data-bs-target="#delete-modal"
                             data-song-id="@item.SongID"
@@ -234,13 +233,13 @@
 
 <script>
     function searchForSong() {
-        var title = document.getElementById("songSearchBox").value.trim().toLowerCase();
+        var title = document.getElementById("searchBox").value.trim().toLowerCase();
         var libraryURL = '@Url.Action("Library", "Song")' + '?searchText=' + encodeURIComponent(title);
         window.location.href = libraryURL;
     };
 
     function sortAscendingOrDescending() {
-        var title = document.getElementById("songSearchBox").value.trim().toLowerCase();
+        var title = document.getElementById("searchBox").value.trim().toLowerCase();
         var libraryURL = '@Url.Action("Library", "Song")' + '?searchText=' + encodeURIComponent(title);
         window.location.href = libraryURL;
     };

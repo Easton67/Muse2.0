@@ -27,9 +27,13 @@
     </div>
 </div>
 
-<button class="btn-add">
-    @Html.ActionLink("Add Album", "Create")
-</button>
+<div class="d-flex pt-3">
+    <button class="btn-add">
+        @Html.ActionLink("Add Album", "Create")
+    </button>
+    <input id="searchBox" type="text" placeholder="Search for album...">
+    <img onclick="searchForAlbum()" class="icon px-3" src="~/Images/search.svg" />
+</div>
 
 <table class="table text-light">
     <tr>
@@ -66,8 +70,7 @@
             </td>
             <td>
                 <p class="mt-4">
-                    <button class="delete-button fw-bold text-danger"
-                            style="border: none; color: white; background-color: transparent; font-size: 20px;"
+                    <button class="delete-button fw-bold text-danger text-danger bg-transparent border-0"
                             data-bs-toggle="modal"
                             data-bs-target="#delete-modal"
                             data-album-id="@album.AlbumID"
@@ -94,4 +97,10 @@
             deleteMessage.textContent = "Are you sure you want to delete " + albumName + "?";
         });
     });
+
+    function searchForAlbum() {
+        var title = document.getElementById("searchBox").value.trim().toLowerCase();
+        var albumURL = '@Url.Action("Albums", "Album")' + '?searchText=' + encodeURIComponent(title);
+        window.location.href = albumURL;
+    };
 </script>

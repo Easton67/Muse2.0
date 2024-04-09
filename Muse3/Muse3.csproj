@@ -227,6 +227,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\caret-down.png" />
+    <Content Include="Images\defaultAlbumImage.png" />
     <Content Include="Images\grid-icon.svg" />
     <Content Include="Images\bigvec.jpg" />
     <Content Include="Images\explicit.png" />

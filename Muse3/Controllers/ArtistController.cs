@@ -37,7 +37,7 @@ namespace Muse3.Controllers
         }
 
         // GET: Artist/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string id, string searchText)
         {
             ArtistDetailsViewModel viewModel = new ArtistDetailsViewModel();
 
@@ -46,9 +46,13 @@ namespace Muse3.Controllers
                 viewModel.artist = _artistManager.SelectArtistByArtistID(id);
                 viewModel.songs = _songManager.SelectSongsByUserID(100001).Where(song => song.Artist == viewModel.artist.ArtistID).ToList();
                 viewModel.albums = _albumManager
-                                .SelectAllAlbums()
-                                .Where(album => album.ArtistID == viewModel.artist.ArtistID && !string.Equals(album.Title, "None"))
-                                .ToList();
+                                                .SelectAllAlbums()
+                                                .Where(album => album.ArtistID == viewModel.artist.ArtistID && !string.Equals(album.Title, "None") || !string.Equals(album.Title, "Unknown"))
+                                                .ToList();
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    viewModel.songs = viewModel.songs.Where(x => x.Title.ToLower().Contains(searchText.ToLower())).ToList();
+                }
             }
             catch (Exception)
             {
