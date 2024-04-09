@@ -59,7 +59,7 @@
                 </a>
             </td>
             <td>
-                <p class="mt-4">@Html.ActionLink(album.Title, "Details", new { id = album.AlbumID })</p>
+                <p class="mt-4">@Html.ActionLink(album.Title, "Details", new { albumTitle = album.Title,  artistID = album.ArtistID })</p>
             </td>
             <td>
                 <p class="mt-4">

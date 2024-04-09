@@ -189,7 +189,38 @@ namespace DataAccessLayer
             }
             return allUsers;
         }
-        public List<string> SelectRolesByUserID(int userID)
+        public List<string> SelectAllRoles()
+        {
+            List<string> roles = new List<string>();
+
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_roles";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    while (reader.Read())
+                    {
+                        roles.Add(reader.GetString(0));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return roles;
+        }
+        public List<string>SelectRolesByUserID(int userID)
         {
             List<string> roles = new List<string>();
 

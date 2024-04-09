@@ -121,6 +121,18 @@ AS
 	END
 GO
 
+/* sp_select_all_roles */
+
+print '' print '*** creating sp_select_all_roles ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_roles]
+AS	
+	BEGIN
+		SELECT	[RoleID]
+		FROM	[Role]
+	END
+GO
+
 /* sp_update_PasswordHash */
 
 print '' print '*** creating sp_update_PasswordHash ***'
@@ -1088,6 +1100,8 @@ AS
 		FROM [Song]
 	END
 GO
+
+
 
 /* sp_select_song_by_SongID */
 

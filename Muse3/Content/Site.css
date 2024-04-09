@@ -313,8 +313,8 @@ audio {
 #album-img-edit {
     border-radius: 10px;
     border: none;
-    width: 400px;
-    height: 400px;
+    width: 200px;
+    height: 200px;
 }
 
 .library-play-button:Hover {

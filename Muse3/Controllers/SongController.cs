@@ -28,10 +28,12 @@ namespace Muse3.Controllers
             try
             {
                 songs = _songManager.SelectSongsByUserID(100001);
+
                 if (!string.IsNullOrEmpty(searchText))
                 {
                     songs = songs.Where(x => x.Title.ToLower().Contains(searchText.ToLower())).ToList();
                 }
+
                 if (sortedProperty != null && ascOrDesc != null)
                 {
                     if (ascOrDesc == "asc")
@@ -43,6 +45,7 @@ namespace Muse3.Controllers
                         songs = songs.OrderByDescending(x => x.GetType().GetProperty(sortedProperty).GetValue(x, null)).ToList();
                     }
                 }
+
                 if(!string.IsNullOrEmpty(isFavorite))
                 {
                     bool favoriteOrUnfavorite = (isFavorite == "favorite") ? true : false;

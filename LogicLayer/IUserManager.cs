@@ -12,7 +12,6 @@ namespace LogicLayer
         bool FindUser(string email);
         bool InsertUser(User user, string password);
         UserVM LoginUser(string email, string password);
-        // public helper methods
         UserVM GetUserVMByEmail(string email);
         List<string> GetRolesByUserID(int employeeID);
         List<User> SelectAllUsers();
@@ -24,5 +23,6 @@ namespace LogicLayer
         bool UpdateActiveUser(int userID, bool oldActive, bool newActive);
         UserPass ResetPassword(string employeeID);
         List<UserFriend> SelectFriendsByUserID(int UserID);
+        List<string> SelectAllRoles();
     }
 }

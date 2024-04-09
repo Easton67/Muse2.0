@@ -22,5 +22,6 @@ namespace DataAccessInterfaces
         int UpdateActiveUser(int userID, bool oldActive, bool newActive);
         UserPass SelectPasswordHashByEmail(string email);
         List<UserFriend> SelectFriendsByUserID(int UserID);
+        List<string> SelectAllRoles();
     }
 }

@@ -47,6 +47,9 @@
                 {
                     UserName = admin,
                     Email = admin,
+                    ImageFilePath = "defaultAlbumImage.png",
+                    FamilyName = "Admin",
+                    GivenName = "System"
                 };
 
                 IdentityResult result = userManager.Create(user, adminPassword);

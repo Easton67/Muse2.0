@@ -37,5 +37,7 @@ namespace Muse3.Models
         {
             return new ApplicationDbContext();
         }
+
+        // public System.Data.Entity.DbSet<Muse3.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

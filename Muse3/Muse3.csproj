@@ -1946,7 +1946,6 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Song\Library.cshtml" />
-    <Content Include="Views\Admin\ViewAllUsers.cshtml" />
     <Content Include="Views\Playlist\ViewAllPlaylists.cshtml" />
     <Content Include="Views\Review\Reviews.cshtml" />
     <Content Include="Views\User\ViewAllFriends.cshtml" />
@@ -1978,6 +1977,7 @@
     <Content Include="Views\Shared\_SubscriberModal.cshtml" />
     <Content Include="Views\User\ViewUpgradePlans.cshtml" />
     <Content Include="Views\Artist\Details.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,50 +3,62 @@
     ViewBag.Title = "Register";
 }
 
+
 <main aria-labelledby="title">
+
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <div id="login-container">
-            @*<img id="login-muse-logo" src="~/Images/museV3Logo.png" alt="Muse Logo" />*@
-            <form id="form-login" class="form" action="">
-                @Html.ValidationSummary(true, "", new { @class = "invalid" })
-                <div class="form-container">
-                    <div>
-                        @Html.ValidationMessageFor(m => m.ProfileName, "", new { @class = "invalid" })
-                    </div>
-                    @Html.TextBoxFor(m => m.ProfileName, new { @class = "form-control", placeholder = "Profile Name" })
-                    <br />
-                    <div>
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "invalid" })
-                    </div>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-email-password-input", placeholder = "Email" })
-                    <br />
-                    <div>
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "invalid" })
-                    </div>
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control form-email-password-input", placeholder = "Password" })
-                    <br />
-                    <div>
-                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "invalid" })
-                    </div>
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control form-email-password-input", placeholder = "Confirm Password" })
+    <div id="login-container">
+        <img id="login-muse-logo" src="~/Images/museV3Logo.png" alt="Muse Logo" />
+        <form id="form-login" class="form" action="">
+            <div class="form-container">
+                <div>
+                    @Html.ValidationSummary(true, "", new { @class = "invalid" })
+                    @Html.ValidationMessageFor(m => m.ProfileName, "", new { @class = "invalid" })
                 </div>
+                @Html.TextBoxFor(m => m.ProfileName, new { @class = "form-control form-email-password-input", placeholder = "Profile Name" })
                 <br />
-                <div class="row">
-                    <div>
-                        <input id="submit" type="submit" value="Register" class="btn bg-purple" />
-                    </div>
+                <div>
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "invalid" })
                 </div>
-            </form>
-            <br />
-            <div class="footer-buttons-container">
-                @Html.ActionLink("Forgot Password?", "ForgotPassword", null, new { @class = "mx-5 login-footer-links" })
-                @Html.ActionLink("Login", "Login", null, new { @class = "mx-5 login-footer-links" })
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control form-email-password-input", placeholder = "First Name" })
+                <br />
+                <div>
+                    @Html.ValidationMessageFor(m => m.ProfileName, "", new { @class = "invalid" })
+                </div>
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control form-email-password-input", placeholder = "Last Name" })
+                <br />
+                <div>
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "invalid" })
+                </div>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-email-password-input", placeholder = "Email" })
+                <br />
+                <div>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "invalid" })
+                </div>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-email-password-input", placeholder = "Password" })
+                <br />
+                <div>
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "invalid" })
+                </div>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control form-email-password-input", placeholder = "Confirm Password" })
             </div>
-            <br>
-            <br>
+            <br />
+            <div class="row">
+                <div>
+                    <input id="submit" type="submit" value="Register" class="btn bg-purple" />
+                </div>
+            </div>
+        </form>
+        <br />
+        <div class="footer-buttons-container">
+            @Html.ActionLink("Forgot Password?", "ForgotPassword", null, new { @class = "mx-5 login-footer-links" })
+            @Html.ActionLink("Login", "Login", null, new { @class = "mx-5 login-footer-links" })
         </div>
+        <br>
+        <br>
+    </div>
     }
 </main>
 

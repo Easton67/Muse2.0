@@ -67,6 +67,12 @@ namespace Muse3.Models
         [Display(Name = "ProfileName")]
         public string ProfileName { get; set; }
 
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

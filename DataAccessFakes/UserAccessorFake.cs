@@ -281,5 +281,10 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
+
+        public List<string> SelectAllRoles()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

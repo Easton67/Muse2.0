@@ -1,112 +1,119 @@
-﻿using DataObjects;
-using LogicLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using LogicLayer;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Muse3.Models;
 
 namespace Muse3.Controllers
 {
     public class AdminController : Controller
     {
-        private UserManager _userManager = new UserManager();
-        private List<User> users = new List<User>();
-        public ActionResult ViewAllUsers()
+        // private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationUserManager userManager;
+
+        // GET: Admin
+        public ActionResult Index()
         {
-            try
-            {
-                users = _userManager.SelectAllUsers();
-            }
-            catch (Exception)
-            {   
-                throw;
-            }
-            return View(users);
+            //return View(db.ApplicationUsers.ToList());
+            userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            return View (userManager.Users.OrderBy(n => n.FamilyName).ToList());
         }
 
         // GET: Admin/Details/5
         public ActionResult Details(string id)
         {
-            User user = new User();
-
-            try
+            if (id == null)
             {
-                user = _userManager.GetUserVMByEmail("67Easton@gmail.com");
-            }
-            catch (Exception ex)
-            {
-
-                throw;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return View(user);
+            // ApplicationUser applicationUser = db.ApplicationUsers.Find(id);
+            userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser applicationUser = userManager.FindById(id);
+
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            // get a list of roles the user has and put them into a viewbag as roles
+            // along with a list of roles the user doesn't have as noRoles
+            var usrMgr = new LogicLayer.UserManager();
+            var allRoles = usrMgr.SelectAllRoles();
+
+            var roles = userManager.GetRoles(id);
+            var noRoles = allRoles.Except(roles);
+
+            ViewBag.Roles = roles;
+            ViewBag.NoRoles = noRoles;
+
+            return View(applicationUser);
         }
 
-        // GET: Admin/Create
-        public ActionResult Create()
+        public ActionResult RemoveRole(string id, string role)
         {
-            return View();
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.Users.First(u => u.Id == id);
+
+            if(role == "Admin")
+            {
+                var adminUsers = userManager.Users.ToList()
+                    .Where(u => userManager.IsInRole(u.Id, "Admin"))
+                    .ToList().Count();
+
+                if(adminUsers < 2)
+                {
+                    ViewBag.Error = "Cannot remove the last Admin.";
+                }
+                else
+                {
+                    userManager.RemoveFromRole(id, role);
+                }
+            }
+            else
+            {
+                userManager.RemoveFromRole(id, role);
+            }
+
+            // get a list of roles the user has and put them into a viewbag as roles
+            // along with a list of roles the user doesn't have as noRoles
+            var usrMgr = new LogicLayer.UserManager();
+            var allRoles = usrMgr.SelectAllRoles();
+
+            var roles = userManager.GetRoles(id);
+            var noRoles = allRoles.Except(roles);
+
+            ViewBag.Roles = roles;
+            ViewBag.NoRoles = noRoles;
+
+            return View("Details", user);
         }
 
-        // POST: Admin/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult AddRole(string id, string role)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.Users.First(u => u.Id == id);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            userManager.AddToRole(id, role);
 
-        // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+            // get a list of roles the user has and put them into a viewbag as roles
+            // along with a list of roles the user doesn't have as noRoles
+            var usrMgr = new LogicLayer.UserManager();
+            var allRoles = usrMgr.SelectAllRoles();
 
-        // POST: Admin/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+            var roles = userManager.GetRoles(id);
+            var noRoles = allRoles.Except(roles);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            ViewBag.Roles = roles;
+            ViewBag.NoRoles = noRoles;
 
-        // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View("Details", user);
         }
     }
 }

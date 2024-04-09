@@ -27,6 +27,8 @@ INSERT INTO	[dbo].[Role]
 		([RoleID])
 	VALUES
 		('Admin'),
+		('Manager'),
+		('Subscriber'),
 		('User')
 GO
 

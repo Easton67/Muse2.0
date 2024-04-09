@@ -196,7 +196,11 @@ namespace Muse3.Controllers
                                 // GivenName = model.GivenName.
                                 // FamilyName = model.FamilyName
                                 ProfileName = model.ProfileName,
+                                GivenName = model.FirstName,
+                                FamilyName = model.LastName,
                                 UserName = model.Email,
+                                Active = true,
+                                ImageFilePath = "defaultAccount.png",
                                 Email = model.Email,
                             };
                             var result = await UserManager.CreateAsync(user, model.Password);

@@ -8,11 +8,11 @@
     string songID = "";
 }
 
-<div class="d-flex px-5 pt-3">
-    <button class="btn-add mx-3 br-30" onclick="window.location.href='@Url.Action("Create", "Song")'">
+<div class="d-flex pt-3">
+    <button class="btn-add" onclick="window.location.href='@Url.Action("Create", "Song")'">
         Add Song
     </button>
-    <input id="songSearchBox" style="border-radius: 70px;" class="px-3" type="text" placeholder="Search for song...">
+    <input id="searchBox" type="text" placeholder="Search for song...">
     <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
     <img class="icon px-3" src="~/Images/list-icon.svg" onclick="window.location.href='@Url.Action("Library", "Song")'" />
     <img class="icon px-3" src="~/Images/grid-icon.svg" onclick="window.location.href='@Url.Action("LibraryGridView", "Song")'" />

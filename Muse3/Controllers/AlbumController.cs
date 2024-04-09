@@ -40,18 +40,18 @@ namespace Muse3.Controllers
         }
 
         // GET: Album/Details/
-        public ActionResult Details(int id, string albumTitle, string artistID)
+        public ActionResult Details(int? id, string albumTitle, string artistID)
         {
             AlbumDetailsViewModel viewModel = new AlbumDetailsViewModel();
 
             try
             {
-                viewModel.album = _albumManager.SelectAlbumByAlbumID(id);
+                int albumID = _albumManager.SelectAlbumIDFromTitle(albumTitle, artistID);
+                viewModel.album = _albumManager.SelectAlbumByAlbumID(albumID);
                 viewModel.songs = _songManager.SelectSongsByUserID(100001).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
 
                 if (!string.IsNullOrEmpty(albumTitle) && !string.IsNullOrEmpty(artistID))
                 {
-                    int albumID = _albumManager.SelectAlbumIDFromTitle(albumTitle, artistID);
                     viewModel.album = _albumManager.SelectAlbumByAlbumID(albumID);
                     viewModel.songs = _songManager.SelectSongsByUserID(100001).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
                 }
