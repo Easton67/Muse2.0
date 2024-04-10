@@ -1153,6 +1153,8 @@ AS
 	BEGIN
 		SELECT  [ArtistID], 		
 				[ImageFilePath],
+				[Photo],
+				[PhotoMimeType],
 				[FirstName],
 				[LastName],		
 				[Description],    
@@ -1172,6 +1174,8 @@ AS
 	BEGIN
 		SELECT  [ArtistID], 		
 				[ImageFilePath],
+				[Photo],
+				[PhotoMimeType],
 				[FirstName],
 				[LastName],		
 				[Description],    
@@ -1194,6 +1198,8 @@ AS
 		SELECT	[Song].[SongID], 
 				[Song].[Title],
 				[Song].[ImageFilePath],
+				[Song].[Photo],
+				[Song].[PhotoMimeType],
 				[Song].[Mp3FilePath],
 				[Song].[YearReleased],
 				[Song].[Lyrics],

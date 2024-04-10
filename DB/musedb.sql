@@ -29,6 +29,8 @@ CREATE TABLE [dbo].[User] (
 	[PasswordHash]	  [nvarchar](100)		     NOT NULL DEFAULT
 	'5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
 	[ImageFilePath]   [nvarchar](500)            NULL DEFAULT 'defaultAccount.png',
+	[Photo]			  [varbinary](MAX)	         NULL,
+	[PhotoMimeType]   [varchar](50)		         NULL,
 	[Active]		  [bit]						 NOT NULL DEFAULT 1,
 	[MinutesListened] [int]						 NULL DEFAULT 0,
 	[isPublic]		  [bit]					     DEFAULT 0
@@ -90,6 +92,8 @@ CREATE TABLE [dbo].[Artist] (
 	[ArtistID] 		  [nvarchar](200) 			 NOT NULL,
 	[ImageFilePath]   [nvarchar](500)            NULL DEFAULT 
 	'defaultAccount.png',
+	[Photo]			  [varbinary](MAX)	         NULL,
+	[PhotoMimeType]   [varchar](50)		         NULL,
 	[FirstName] 	  [nvarchar](50)             NULL DEFAULT 'Unknown',
 	[LastName] 		  [nvarchar](50)             NULL DEFAULT 'Unknown',
 	[Description]     [nvarchar](max)			 NULL DEFAULT "",
@@ -113,6 +117,8 @@ CREATE TABLE [dbo].[Album] (
 	[IsExplicit]    [bit]                        DEFAULT 0, 
 	[ImageFilePath] [nvarchar](500)              DEFAULT 
 	'defaultAlbumImage.png',
+	[Photo]			  [varbinary](MAX)	         NULL,
+	[PhotoMimeType]   [varchar](50)		         NULL,
 	[Description] 	[nvarchar](max)				 NULL, 
 	[YearReleased] 	[int]				 		 DEFAULT 2002, 
 	[DateAdded] 	[DateTime]
@@ -131,7 +137,9 @@ CREATE TABLE [dbo].[Song] (
     [SongID]         [int] IDENTITY(100000,1)    NOT NULL,
     [Title]          [nvarchar](180)          	 NOT NULL DEFAULT 'Unknown',
     [ImageFilePath]  [nvarchar](500)             DEFAULT '\bin\Debug\MuseConfig\art\SongDefault.jpg',
-    [Mp3FilePath]    [nvarchar](500)			 NOT NULL,
+	[Photo]			 [varbinary](MAX)	         NULL,
+	[PhotoMimeType]  [varchar](50)		         NULL,
+	[Mp3FilePath]    [nvarchar](500)			 NOT NULL,
     [YearReleased]   [int]						 DEFAULT 2023,
     [Lyrics]         [nvarchar](max)		     DEFAULT 'No Lyrics Provided',
     [Explicit]       [bit]						 NOT NULL DEFAULT 0,
@@ -193,6 +201,8 @@ CREATE TABLE [dbo].[Playlist] (
 	[Title]	[nvarchar](50)					   NOT NULL DEFAULT 'Playlist',
 	[ImageFilePath] [nvarchar](500)            DEFAULT 
 	'defaultAlbumImage.png',
+	[Photo]			  [varbinary](MAX)	       NULL,
+	[PhotoMimeType]   [varchar](50)		       NULL,
 	[Description] [nvarchar](max)			   NULL DEFAULT "",
 	[UserID] [int]
 	

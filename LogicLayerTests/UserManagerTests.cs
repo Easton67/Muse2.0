@@ -41,7 +41,7 @@ namespace LogicLayerTests
         {
             // arrange 
             string email = "Liam@gmail.com";
-            string password = "newuser";
+            string password = "password";
             bool expectedResult = true;
             bool actualResult = false;
 
@@ -71,7 +71,7 @@ namespace LogicLayerTests
         {
             // arrange
             string email = "Liam@gmail.com";
-            int expectedUserID = 1;
+            int expectedUserID = 4;
             int actualUserID = 0;
 
             // act
@@ -101,7 +101,7 @@ namespace LogicLayerTests
         public void TestGetRolesByUserIdReturnsCorrectRoles()
         {
             // arrange
-            int testID = 1;
+            int testID = 4;
             int expectedRoleCount = 2;
             int actualRoleCount = 0;
 
@@ -117,8 +117,8 @@ namespace LogicLayerTests
         {
             // arrange
             string email = "Liam@gmail.com";
-            string password = "newuser";
-            string newPassword = "password";
+            string password = "password";
+            string newPassword = "P@ssw0rd";
             bool expectedResult = true;
             bool actualResult = false;
 
@@ -226,7 +226,7 @@ namespace LogicLayerTests
         public void TestUpdateMinutesListenedWorksCorrectly()
         {
             // arrange
-            int userID = 9;
+            int userID = 3;
             int newMinutesListened = 90433;
 
             bool expectedResult = true;
@@ -242,7 +242,7 @@ namespace LogicLayerTests
         public void TestUpdateActiveWorksCorrectly()
         {
             // arrange
-            int userID = 9;
+            int userID = 3;
             bool oldActive = true;
             bool newActive = false;
 

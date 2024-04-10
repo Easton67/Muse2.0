@@ -17,7 +17,7 @@ namespace DataAccessFakes
             {
                 PlaylistID = 1,
                 Title = "Night",
-                ImageFilePath = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\AlbumArt",
+                ImageFilePath = "night.png",
                 Description = "Perfect playlist for once it gets dark out",
                 UserID = 100001
             });
@@ -25,7 +25,7 @@ namespace DataAccessFakes
             {
                 PlaylistID = 2,
                 Title = "Day",
-                ImageFilePath = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\AlbumArt",
+                ImageFilePath = "day.png",
                 Description = "Great for when its nice and sunny outside",
                 UserID = 100001
             });
@@ -33,7 +33,7 @@ namespace DataAccessFakes
             {
                 PlaylistID = 3,
                 Title = "Gym",
-                ImageFilePath = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\AlbumArt",
+                ImageFilePath = "gym.png",
                 Description = "Playlist for pushing weight",
                 UserID = 100002
             });

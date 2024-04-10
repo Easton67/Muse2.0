@@ -16,6 +16,8 @@ namespace DataObjects
             public bool isExplicit { get; set; }
             [DisplayName("Album Art")]
             public string ImageFilePath { get; set; }
+            public byte[] Photo { get; set; }
+            public string PhotoMimeType { get; set; }
             public string Description { get; set; }
             [DisplayName("Year Released")]
             public int YearReleased { get; set; }

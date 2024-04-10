@@ -30,18 +30,29 @@ namespace DataAccessLayer
 
                 var reader = cmd.ExecuteReader();
 
-                if (reader.HasRows)
+                if (reader.Read())
                 {
-                    reader.Read();
+                    int fieldIndex = 6; // column of photo data
+                    long fieldWidth;
+                    byte[] image = null;
+                    if (!reader.IsDBNull(fieldIndex))
+                    {
+                        fieldWidth = reader.GetBytes(fieldIndex, 0, null, 0, Int32.MaxValue); // buffer size 
+                        image = new byte[fieldWidth];
+                        reader.GetBytes(fieldIndex, 0, image, 0, image.Length);
+                    }
+
                     artist = new Artist
                     {
                         ArtistID = reader.GetString(0), 
-                        ImageFilePath = reader.GetString(1), 
-                        FirstName = reader.GetString(2), 
-                        LastName = reader.GetString(3), 
-                        Description = reader.GetString(4), 
-                        isLiked = reader.GetBoolean(5),
-                        DateOfBirth = reader.IsDBNull(6) ? new DateTime(1990, 1, 1) : reader.GetDateTime(6)
+                        ImageFilePath = reader.GetString(1),
+                        Photo = reader.IsDBNull(2) ? null : image,
+                        PhotoMimeType = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        FirstName = reader.GetString(4), 
+                        LastName = reader.GetString(5), 
+                        Description = reader.GetString(6), 
+                        isLiked = reader.GetBoolean(7),
+                        DateOfBirth = reader.IsDBNull(8) ? new DateTime(1990, 1, 1) : reader.GetDateTime(8)
                     };
                 }
                 else
@@ -71,19 +82,44 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (reader.HasRows)
                 {
-                    var artist = new Artist
+                    while (reader.Read())
                     {
-                        ArtistID = reader.GetString(0),
-                        ImageFilePath = reader.GetString(1),
-                        FirstName = reader.GetString(2),
-                        LastName = reader.GetString(3),
-                        Description = reader.GetString(4),
-                        isLiked = reader.GetBoolean(5),
-                        DateOfBirth = reader.IsDBNull(6) ? new DateTime(1990, 1, 1) : reader.GetDateTime(6)
-                    };
-                    artists.Add(artist);
+                        byte[] photo = null;
+                        long? fieldWidth = null;
+                        var artist = new Artist
+                        {
+                            ArtistID = reader.GetString(0),
+                            ImageFilePath = reader.GetString(1),
+                            FirstName = reader.GetString(4),
+                            LastName = reader.GetString(5),
+                            Description = reader.GetString(6),
+                            isLiked = reader.GetBoolean(7),
+                            DateOfBirth = reader.IsDBNull(8) ? new DateTime(1990, 1, 1) : reader.GetDateTime(8)
+                        };
+
+                        int columnIndex = 9;
+                        try
+                        {
+                            fieldWidth = reader.GetBytes(columnIndex, 0, null, 0, Int32.MaxValue);
+                        }
+                        catch (Exception)
+                        {
+                            photo = null;
+                        }
+
+                        if (photo != null)
+                        {
+                            int width = (int)fieldWidth;
+                            photo = new byte[width];
+                            reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
+                        }
+
+                        artist.PhotoMimeType = reader.IsDBNull(3) ? null : reader.GetString(3);
+                        artist.Photo = photo;
+                        artists.Add(artist);
+                    }
                 }
             }
             catch (Exception ex)
@@ -116,22 +152,45 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    byte[] photo = null;
+                    long? fieldWidth = null;
+
                     var song = new Song
                     {
                         SongID = reader.GetInt32(0),
                         Title = reader.GetString(1),
                         ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
-                        Mp3FilePath = reader.GetString(3),
-                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
-                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
-                        Explicit = reader.GetBoolean(6),
-                        Genre = reader.GetString(7),
-                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
-                        UserID = reader.GetInt32(9),
-                        Artist = reader.GetString(10),
-                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11)
+                        Mp3FilePath = reader.GetString(5),
+                        YearReleased = reader.IsDBNull(6) ? 2023 : reader.GetInt32(6),
+                        Lyrics = reader.IsDBNull(7) ? "No Lyrics Provided" : reader.GetString(7),
+                        Explicit = reader.GetBoolean(8),
+                        Genre = reader.GetString(9),
+                        Plays = reader.IsDBNull(10) ? 0 : reader.GetInt32(10),
+                        UserID = reader.GetInt32(11),
+                        Artist = reader.GetString(12),
+                        Album = reader.IsDBNull(13) ? "" : reader.GetString(13),
+                        isLiked = reader.GetBoolean(14)
                     };
-                    songs.Add(song);
+
+                    int columnIndex = 9;
+                    try
+                    {
+                        fieldWidth = reader.GetBytes(columnIndex, 0, null, 0, Int32.MaxValue);
+                    }
+                    catch (Exception)
+                    {
+                        photo = null;
+                    }
+
+                    if (photo != null)
+                    {
+                        int width = (int)fieldWidth;
+                        photo = new byte[width];
+                        reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
+                    }
+
+                    song.PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4);
+                    song.Photo = photo;
                 }
             }
             catch (Exception ex)
@@ -143,160 +202,6 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return songs;
-        }
-        public int UpdatePlaysBySongID(int SongID, int Plays)
-        {
-            int rows = 0;
-
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_update_song_plays";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@SongID", SqlDbType.Int);
-            cmd.Parameters.Add("@NewPlays", SqlDbType.Int);
-            cmd.Parameters["@SongID"].Value = SongID;
-            cmd.Parameters["@NewPlays"].Value = Plays;
-
-            try
-            {
-                conn.Open();
-                rows = cmd.ExecuteNonQuery();
-
-                if (rows == 0)
-                {
-                    throw new ArgumentException("Could not update song's play count.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
-        public int UpdateSong(Song oldSong, Song newSong)
-        {
-            int rows = 0;
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_update_song";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
-            cmd.Parameters.Add("@SongID", SqlDbType.Int);
-            cmd.Parameters.Add("@NewTitle", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewImageFilePath", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewYearReleased", SqlDbType.Int);
-            cmd.Parameters.Add("@NewLyrics", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewExplicit", SqlDbType.Bit);
-            cmd.Parameters.Add("@NewPlays", SqlDbType.Int);
-            cmd.Parameters.Add("@OldTitle", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@OldImageFilePath", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@OldYearReleased", SqlDbType.Int);
-            cmd.Parameters.Add("@OldLyrics", SqlDbType.Text);
-            cmd.Parameters.Add("@OldExplicit", SqlDbType.Bit);
-            cmd.Parameters.Add("@OldPlays", SqlDbType.Int);
-
-            cmd.Parameters["@SongID"].Value = newSong.SongID;
-            cmd.Parameters["@NewTitle"].Value = newSong.Title;
-            cmd.Parameters["@NewImageFilePath"].Value = newSong.ImageFilePath;
-            cmd.Parameters["@NewYearReleased"].Value = newSong.YearReleased;
-            cmd.Parameters["@NewLyrics"].Value = newSong.Lyrics;
-            cmd.Parameters["@NewExplicit"].Value = newSong.Explicit;
-            cmd.Parameters["@NewPlays"].Value = newSong.Plays;
-            cmd.Parameters["@OldTitle"].Value = oldSong.Title;
-            cmd.Parameters["@OldImageFilePath"].Value = oldSong.ImageFilePath;
-            cmd.Parameters["@OldYearReleased"].Value = oldSong.YearReleased;
-            cmd.Parameters["@OldLyrics"].Value = oldSong.Lyrics;
-            cmd.Parameters["@OldExplicit"].Value = oldSong.Explicit;
-            cmd.Parameters["@OldPlays"].Value = oldSong.Plays;
-
-            try
-            {
-                // open the connection
-                conn.Open();
-
-                // an update is executed nonquery - returns an int
-                rows = cmd.ExecuteNonQuery();
-
-                if (rows == 0)
-                {
-                    throw new ArgumentException("Could not update your song.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
-        public int DeleteSong(int SongID)
-        {
-            int rows = 0;
-
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_delete_song";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add("@SongID", SqlDbType.Int);
-            cmd.Parameters["@SongID"].Value = SongID;
-
-            try
-            {
-                conn.Open();
-
-                rows = cmd.ExecuteNonQuery();
-
-                if (rows == 0)
-                {
-                    throw new ArgumentException("Could not remove this song.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return rows;
-        }
-        public List<string> SelectAllGenres()
-        {
-            List<String> genres = new List<String>();
-
-            var conn = SqlConnectionProvider.GetConnection();
-            var cmdText = "sp_select_all_genres_from_songs";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            try
-            {
-                conn.Open();
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    genres.Add(reader.GetString(0));
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return genres;
         }
     }
 }

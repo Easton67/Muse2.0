@@ -3,6 +3,7 @@ using DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 namespace DataAccessFakes
 {
@@ -15,81 +16,92 @@ namespace DataAccessFakes
 
         public UserAccessorFake()
         {
-
             // when using just the user and not the UserVM
             fakeUsersNoRoles.Add(new User()
             {
-                UserID = 7,
-                FirstName = "Liam",
-                LastName = "Easton",
-                ProfileName = "Easton67",
-                Email = "Liam@gmail.com",
-                Active = true,
-                MinutesListened = 0
-            });
-
-            fakeUsersNoRoles.Add(new User()
-            {
-                UserID = 8,
-                FirstName = "Jess",
-                LastName = "Data",
-                ProfileName = "Jester",
-                Email = "jess@company.com",
-                Active = true,
-                MinutesListened = 0
-            });
-
-            fakeUsersNoRoles.Add(new User()
-            {
-                UserID = 9,
-                FirstName = "Bess",
-                LastName = "Data",
-                ProfileName = "Bessy",
-                Email = "Bess@company.com",
-                Active = true,
-                MinutesListened = 90432
-            });
-
-            fakeUsers.Add(new UserVM()
-            {
                 UserID = 1,
-                FirstName = "Liam",
-                LastName = "Easton",
                 ProfileName = "Easton67",
                 Email = "Liam@gmail.com",
+                FirstName = "Liam",
+                LastName = "Easton",
+                ImageFilePath = "defaultProfileImage.png",
                 Active = true,
-                MinutesListened = 0,
-                Roles = new List<string>()
+                MinutesListened = 960,
+                isPublic = true
             });
-            fakeUsers.Add(new UserVM()
+
+            fakeUsersNoRoles.Add(new User()
             {
                 UserID = 2,
-                FirstName = "Jess",
-                LastName = "Data",
-                ProfileName = "Jester",
-                Email = "jess@company.com",
+                ProfileName = "JohnnyBravo",
+                Email = "John@gmail.com",
+                FirstName = "John",
+                LastName = "Johnson",
+                ImageFilePath = "defaultProfileImage.png",
                 Active = true,
-                MinutesListened = 0,
+                MinutesListened = 302,
+                isPublic = true
+            });
+
+
+            fakeUsersNoRoles.Add(new User()
+            {
+                UserID = 3,
+                ProfileName = "Jessy192",
+                Email = "Jess@gmail.com",
+                FirstName = "Jess",
+                LastName = "Jones",
+                ImageFilePath = "defaultProfileImage.png",
+                Active = true,
+                MinutesListened = 341,
+                isPublic = false
+            });
+
+            fakeUsers.Add(new UserVM()
+            {
+                UserID = 4,
+                ProfileName = "Easton67",
+                Email = "Liam@gmail.com",
+                FirstName = "Liam",
+                LastName = "Easton",
+                ImageFilePath = "defaultProfileImage.png",
+                Active = true,
+                MinutesListened = 960,
+                isPublic = true,
                 Roles = new List<string>()
             });
             fakeUsers.Add(new UserVM()
             {
-                UserID = 3,
-                FirstName = "Bess",
-                LastName = "Data",
-                ProfileName = "Bessy",
-                Email = "Bess@company.com",
+                UserID = 5,
+                ProfileName = "JohnnyBravo",
+                Email = "John@gmail.com",
+                FirstName = "John",
+                LastName = "Johnson",
+                ImageFilePath = "defaultProfileImage.png",
                 Active = true,
-                MinutesListened = 0,
+                MinutesListened = 302,
+                isPublic = true,
+                Roles = new List<string>()
+            });
+            fakeUsers.Add(new UserVM()
+            {
+                UserID = 6,
+                ProfileName = "Jessy192",
+                Email = "Jess@gmail.com",
+                FirstName = "Jess",
+                LastName = "Jones",
+                ImageFilePath = "defaultProfileImage.png",
+                Active = true,
+                MinutesListened = 341,
                 Roles = new List<string>()
             });
 
-            passwordHashes.Add("9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e");
+            passwordHashes.Add("5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8");
             passwordHashes.Add("badhash");
             passwordHashes.Add("badhash");
 
-            fakeUsers[0].Roles.Add("TestRole1");
-            fakeUsers[0].Roles.Add("TestRole2");
+            fakeUsers[0].Roles.Add("Manager");
+            fakeUsers[0].Roles.Add("Admin");
         }
         public int InsertUser(User user, string password)
         {
@@ -111,10 +123,11 @@ namespace DataAccessFakes
                 UserID = 4,
                 FirstName = "Liam",
                 LastName = "Easton",
-                ProfileName = "Bessy",
+                ProfileName = "Easton67",
                 Email = "Liam@company.com",
                 Active = true,
                 MinutesListened = 12341234,
+                isPublic = true,
                 Roles = new List<string>()
             });
 
@@ -219,6 +232,7 @@ namespace DataAccessFakes
                     fakeUsersNoRoles[i].ImageFilePath = newUser.ImageFilePath;
                     fakeUsersNoRoles[i].Active = newUser.Active;
                     fakeUsersNoRoles[i].MinutesListened = newUser.MinutesListened;
+                    fakeUsersNoRoles[i].isPublic = newUser.isPublic;
                     rows = 1;
                     break;
                 }
@@ -284,7 +298,15 @@ namespace DataAccessFakes
 
         public List<string> SelectAllRoles()
         {
-            throw new NotImplementedException();
+            List<string> roles = new List<string>();
+
+            foreach (var fakeUser in fakeUsers)
+            {
+                roles = fakeUser.Roles;
+                break;
+            }
+
+            return roles;
         }
     }
 }

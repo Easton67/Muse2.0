@@ -21,11 +21,12 @@ namespace DataObjects
         public string LastName { get; set; }
         [DisplayName("Image File Path")]
         public string ImageFilePath { get; set; }
+        public byte[] Photo { get; set; }
+        public string PhotoMimeType { get; set; }
         [DisplayName("Active User")]
         public bool Active { get; set; }    
         [DisplayName("Minutes Listened")]
         public int MinutesListened { get; set; }
-
         [DisplayName("Public")]
         public bool isPublic { get; set; }
     }

@@ -15,6 +15,8 @@ namespace DataObjects
         public string Title { get; set; }
         [DisplayName("Album Art")]
         public string ImageFilePath { get; set; }
+        public byte[] Photo { get; set; }
+        public string PhotoMimeType { get; set; }
         [DisplayName("Song File Location")]
         public string Mp3FilePath { get; set; }
         [DisplayName("Year Released")]

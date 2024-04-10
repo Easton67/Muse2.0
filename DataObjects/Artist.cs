@@ -10,6 +10,8 @@ namespace DataObjects
     {
         public string ArtistID { get; set; }
         public string ImageFilePath { get; set; }
+        public byte[] Photo { get; set; }
+        public string PhotoMimeType { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Description { get; set; }

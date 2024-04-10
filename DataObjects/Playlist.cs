@@ -12,6 +12,8 @@ namespace DataObjects
         public int PlaylistID { get; set; }
         public string Title { get; set; }
         public string ImageFilePath { get; set; }
+        public byte[] Photo { get; set; }
+        public string PhotoMimeType { get; set; }
         public string Description { get; set; }
         public int UserID { get; set; }
     }
