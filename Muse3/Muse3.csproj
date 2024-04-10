@@ -1978,6 +1978,7 @@
     <Content Include="Views\User\ViewUpgradePlans.cshtml" />
     <Content Include="Views\Artist\Details.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Song\CreateFromFolder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

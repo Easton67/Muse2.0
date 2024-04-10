@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="fs-3 px-5 mt-4">
-            <p>
+            <p> 
                 @Model.Title
                 @if (Model.Explicit == true)
                 {
@@ -52,7 +52,7 @@
             }
             else
             {
-                <p class="text-nowrap">
+                <p>
                     Album:
                     <a class="mt-4" href="@Url.Action("DetailsFromArtistAndTitle", "Album", new { albumTitle = Model.Album, artistID = Model.Artist})">
                         @Model.Album
@@ -65,7 +65,7 @@
             }
             else
             {
-                <p class="text-nowrap">
+                <p>
                     Artist: 
                     <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = Model.Artist})">
                         @Model.Artist

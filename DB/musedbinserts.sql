@@ -1384,7 +1384,7 @@ print '' print '*** inserting UserFriend test records ***'
 GO
 INSERT INTO [dbo].[UserFriend] 
     ([UserID], [FriendID], [DayAddedAsFriend])
-VALUES
+VALUES	
 	(100001, 100000, '2021-06-16')
 GO
 

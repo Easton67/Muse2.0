@@ -260,7 +260,7 @@ namespace Muse2.Pages.AddSong
             foreach (string subfolder in subfolders)
             {
                 try
-                {
+                {   
                     string[] songFiles = Directory.GetFiles(subfolder);
 
                     string artist = "Unknown";
