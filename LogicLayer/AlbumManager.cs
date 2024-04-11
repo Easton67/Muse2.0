@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace LogicLayer
 {
-    public class AlbumManager
+    public class AlbumManager : IAlbumManager
     {
         private IAlbumAccessor _albumAccessor = null;
         public AlbumManager()

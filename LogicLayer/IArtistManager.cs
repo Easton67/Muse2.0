@@ -10,7 +10,7 @@ namespace LogicLayer
     public interface IArtistManager
     {
         Artist SelectArtistByArtistID(string artistID);
-        List<Song> SelectSongByArtistID(string artistID);
+        List<Song> SelectSongsByArtistID(string artistID);
         List<Artist> SelectAllArtists();
     }
 }

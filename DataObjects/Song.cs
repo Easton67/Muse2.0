@@ -43,6 +43,5 @@ namespace DataObjects
         public bool isLiked { get; set; }
         [DisplayName("Public")]
         public bool isPublic { get; set; }
-
     }
 }

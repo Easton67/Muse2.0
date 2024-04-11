@@ -44,12 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlbumAccessorFake.cs" />
+    <Compile Include="AlbumAccessorFakes.cs" />
     <Compile Include="ArtistAccessorFakes.cs" />
-    <Compile Include="PlaylistAccessorFake.cs" />
-    <Compile Include="ReviewAccessFake.cs" />
-    <Compile Include="SongAccessorFake.cs" />
-    <Compile Include="UserAccessorFake.cs" />
+    <Compile Include="PlaylistAccessorFakes.cs" />
+    <Compile Include="ReviewAccessorFakes.cs" />
+    <Compile Include="SongAccessorFakes.cs" />
+    <Compile Include="UserAccessorFakes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -55,6 +55,8 @@
     <Compile Include="SongManagerTests.cs" />
     <Compile Include="PlaylistManagerTests.cs" />
     <Compile Include="ReviewManagerTests.cs" />
+    <Compile Include="ArtistManagerTests.cs" />
+    <Compile Include="AlbumManagerTests.cs" />
     <Compile Include="UserManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

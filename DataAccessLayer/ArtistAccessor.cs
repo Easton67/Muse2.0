@@ -132,7 +132,7 @@ namespace DataAccessLayer
             }
             return artists;
         }
-        public List<Song> SelectSongsByArtistID(int SongID, int ArtistID)
+        public List<Song> SelectSongsByArtistID(string ArtistID)
         {
             List<Song> songs = new List<Song>();
             var conn = SqlConnectionProvider.GetConnection();
@@ -140,9 +140,7 @@ namespace DataAccessLayer
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@ArtistID", SqlDbType.Int);
-            cmd.Parameters.Add("@SongID", SqlDbType.Int);
             cmd.Parameters["@ArtistID"].Value = ArtistID;
-            cmd.Parameters["@SongID"].Value = SongID;
 
             try
             {

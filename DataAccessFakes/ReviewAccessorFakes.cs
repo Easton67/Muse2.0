@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace DataAccessFakes
 {
-    public class ReviewAccessFake : IReviewAccessor
+    public class ReviewAccessorFakes : IReviewAccessor
     {
         private List<Review> fakeReviews = new List<Review>();
-        public ReviewAccessFake()
+        public ReviewAccessorFakes()
         {
             fakeReviews.Add(new Review()
             {
@@ -58,11 +58,11 @@ namespace DataAccessFakes
         {
             fakeReviews.Add(new Review()
             {
-                ReviewID = 6,
+                ReviewID = 1,
                 Rating = 4,
                 Message = "this song is pretty good",
                 UserID = 100001,
-                SongID = 6
+                SongID = 1
             });
 
             return fakeReviews.Count;
@@ -71,19 +71,17 @@ namespace DataAccessFakes
         {
             return fakeReviews.FindAll(r => r.UserID == userID);
         }
+        public Review SelectReviewByReviewID(int userID, int reviewID)
+        {
+            return fakeReviews.Find(r => r.ReviewID == reviewID);
+        }
         public int UpdateReview(Review oldReview, Review newReview)
         {
             throw new NotImplementedException();
         }
         public int DeleteReview(int reviewID)
         {
-            int removedCount = fakeReviews.RemoveAll(review => review.ReviewID == reviewID);
-            return removedCount;
-        }
-
-        public Review SelectReviewByReviewID(int userID, int reviewID)
-        {
-            throw new NotImplementedException();
+            return fakeReviews.RemoveAll(review => review.ReviewID == reviewID);
         }
     }
 }

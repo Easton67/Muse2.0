@@ -10,7 +10,7 @@ namespace LogicLayer
     public interface IReviewManager
     {
         bool CreateReview(Review review);
-        List<Review> SelectReviewByUserID(int userID);
+        List<Review> SelectReviewsByUserID(int userID);
         Review SelectReviewByReviewID(int userID, int reviewID);
         bool UpdateReview(Review oldReview, Review newReview);
         bool DeleteReview(int reviewID);

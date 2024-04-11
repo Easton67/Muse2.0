@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace DataAccessFakes
 {
-    public class PlaylistAccessorFake : IPlaylistAccessor
+    public class PlaylistAccessorFakes : IPlaylistAccessor
     {
         private List<Playlist> fakePlaylists = new List<Playlist>();
-        public PlaylistAccessorFake()
+        private List<Song> fakePlaylistSongs = new List<Song>();
+
+        public PlaylistAccessorFakes()
         {
             fakePlaylists.Add(new Playlist()
             {
@@ -38,23 +40,28 @@ namespace DataAccessFakes
                 UserID = 100002
             });
         }
-        public int CreatePlaylist(Playlist newPlaylist)
+        public Playlist SelectPlaylistByUserID(int userId, int playlistID)
         {
-            throw new NotImplementedException();
-        }
-        public int InsertSongIntoPlaylist(int songID, int playlistID)
-        {
-            throw new NotImplementedException();
+            return fakePlaylists.FirstOrDefault(p => p.UserID == userId);
         }
         public List<Playlist> SelectPlaylistsByUserID(int userId)
         {
             return fakePlaylists.FindAll(p => p.UserID == userId);
         }
-        public int DeletePlaylist(int playlistID)
+        public int CreatePlaylist(Playlist newPlaylist)
         {
-            throw new NotImplementedException();
+            fakePlaylists.Add(new Playlist()
+            {
+                PlaylistID = 4,
+                Title = "Summer",
+                ImageFilePath = "summer.png",
+                Description = "Sunny playlist for throughout the summer",
+                UserID = 100001
+            });
+
+            return 1;
         }
-        public int RemoveSongFromPlaylist(int songID)
+        public int InsertSongIntoPlaylist(int songID, int playlistID)
         {
             throw new NotImplementedException();
         }
@@ -62,9 +69,20 @@ namespace DataAccessFakes
         {
             throw new NotImplementedException();
         }
-        public Playlist SelectPlaylistByUserID(int userId, int playlistID)
+        public int RemoveSongFromPlaylist(int songID)
         {
             throw new NotImplementedException();
+        }
+        public int DeletePlaylist(int playlistID)
+        {
+            int result = 0;
+
+            if (fakePlaylists.RemoveAll(p => p.PlaylistID == playlistID) == 1)
+            {
+                result = 1;
+            }
+
+            return result;
         }
     }
 }

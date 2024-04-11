@@ -16,14 +16,14 @@ namespace LogicLayerTests
         [TestInitialize]
         public void TestSetUp()
         {
-            _songManager = new SongManager(new SongAccessorFake());
+            _songManager = new SongManager(new SongAccessorFakes());
         }
         [TestMethod]
         public void TestGetSongsByUserIDReturnsCorrectSongs()
         {
             // arrange
-            int testUserID = 100000;
-            int expectedSongCount = 2;
+            int testUserID = 100001;
+            int expectedSongCount = 4;
             int actualSongCount = 0;
 
             // act
@@ -41,8 +41,8 @@ namespace LogicLayerTests
             {
                 SongID = 7,
                 Title = "Added Song",
-                ImageFilePath = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\PlaylistImages\\defaultAlbumImage",
-                Mp3FilePath = "C:\\Users\\67Eas\\source\\repos\\Muse2\\Muse2\\bin\\Debug\\net7.0-windows\\MuseConfig\\SongFiles\\bruh.mp3",
+                ImageFilePath = "defaultAlbumImage",
+                Mp3FilePath = "bruh.mp3",
                 YearReleased = 2023,
                 Lyrics = "fake",
                 Explicit = true,

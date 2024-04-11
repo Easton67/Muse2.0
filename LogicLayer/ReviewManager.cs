@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace LogicLayer
 {
-    public class ReviewManager
+    public class ReviewManager : IReviewManager
     {
         private IReviewAccessor _reviewAccessor = null;
         public ReviewManager()
@@ -60,7 +60,6 @@ namespace LogicLayer
             }
             return result;
         }
-
         public List<Review> SelectReviewsByUserID(int userID)
         {
             List<Review> reviews = new List<Review>();
