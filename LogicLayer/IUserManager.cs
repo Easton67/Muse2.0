@@ -24,5 +24,6 @@ namespace LogicLayer
         UserPass ResetPassword(string employeeID);
         List<UserFriend> SelectFriendsByUserID(int UserID);
         List<string> SelectAllRoles();
+        int RetrieveUserIDFromEmail(string email);
     }
 }

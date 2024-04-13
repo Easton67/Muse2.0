@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -154,7 +155,7 @@ namespace Muse3.Controllers
                 LogicLayer.UserManager _um = new LogicLayer.UserManager();
                 try
                 {
-                    if (_um.FindUser(model.Email))
+                    if (_um.FindUser(model.Email) == false)
                     {
                         var authenticated = _um.AuthenticateUser(model.Email, model.Password);
                         if (authenticated == true)
@@ -189,17 +190,16 @@ namespace Muse3.Controllers
                         }
                         else // not an existing user, create a user without roles
                         {
+                            // this gets the highest userID and will add 1 to it when the user is made
+                            var largestUserID = _um.SelectAllUsers().Select(x => x.UserID).Max();
                             var user = new ApplicationUser
                             {
-                                // We will uncomment the following two lines later, once our ViewModel and 
-                                // our View are updated to ask for them:
-                                // GivenName = model.GivenName.
-                                // FamilyName = model.FamilyName
                                 ProfileName = model.ProfileName,
                                 GivenName = model.FirstName,
                                 FamilyName = model.LastName,
                                 UserName = model.Email,
                                 Active = true,
+                                UserID = largestUserID + 1,
                                 ImageFilePath = "defaultAccount.png",
                                 Email = model.Email,
                             };
@@ -242,6 +242,75 @@ namespace Muse3.Controllers
         public ActionResult ForgotPassword()
         {
             return View();
+        }
+
+        // GET: /Account/RegisterUser
+        [AllowAnonymous]
+        public ActionResult RegisterUser()
+        {
+            return View();
+        }
+
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterUser(RegisterUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                LogicLayer.UserManager _um = new LogicLayer.UserManager();
+                try
+                {
+                    if (_um.FindUser(model.Email))
+                    {
+                        // if the user already exists, we need to use the regular Register method
+                        return RedirectToAction("Register", "Account");
+                    }
+                    else // not an existing user, create a DataObjects.User without roles
+                    {
+                        var user = new DataObjects.User()
+                        {
+                            // populate these fields with existing data from old user
+                            Email = model.Email,
+                            ImageFilePath = "defaultProfileImage.png",
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            ProfileName = model.ProfileName,
+                            Active = true
+                        };
+                        if (_um.InsertUser(user, "newUser"))
+                        {
+                            var userID = _um.RetrieveUserIDFromEmail(model.Email);
+                            var newUser = new ApplicationUser
+                            {
+                                ProfileName = model.ProfileName,
+                                GivenName = model.LastName,
+                                FamilyName = model.FirstName,
+                                Email = model.Email,
+                                UserName = model.Email,
+                                UserID = userID,
+                                ImageFilePath = "defaultProfileImage.png",
+                                Active = true,
+                                MinutesListened = 0,
+                            };
+                            var result = await UserManager.CreateAsync(newUser, "newUser");
+                            if (result.Succeeded)
+                            {
+                                return RedirectToAction("Index", "Admin");
+                            }
+                            AddErrors(result);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    // creating user failed
+                    return View(model);
+                }
+            }
+            // model state was not valid
+            return View(model);
         }
 
         //

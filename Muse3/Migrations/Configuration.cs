@@ -47,7 +47,7 @@
                 {
                     UserName = admin,
                     Email = admin,
-                    ImageFilePath = "defaultAlbumImage.png",
+                    ImageFilePath = "defaultAccountImage.png",
                     FamilyName = "Admin",
                     GivenName = "System"
                 };

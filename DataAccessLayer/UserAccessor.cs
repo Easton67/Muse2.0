@@ -113,31 +113,40 @@ namespace DataAccessLayer
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100);
             cmd.Parameters["@Email"].Value = email;
+
             try
             {
                 conn.Open();
 
                 var reader = cmd.ExecuteReader();
-                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-                if (reader.HasRows)
+                if (reader.Read())
                 {
-                    if (reader.Read())
+                    int fieldIndex = 6; // column of photo data
+                    long fieldWidth;
+                    byte[] image = null;
+                    if (!reader.IsDBNull(fieldIndex))
                     {
-                        userVM.UserID = reader.GetInt32(0);
-                        userVM.ProfileName = reader.GetString(1);
-                        userVM.Email = reader.GetString(2);
-                        userVM.FirstName = reader.IsDBNull(3) ? "" : reader.GetString(3);
-                        userVM.LastName = reader.IsDBNull(4) ? "" : reader.GetString(4);
-                        userVM.ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\" + reader.GetString(5);
-                        userVM.Active = reader.GetBoolean(6);
-                        userVM.MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7);
-                        userVM.isPublic = reader.GetBoolean(8);
+                        fieldWidth = reader.GetBytes(fieldIndex, 0, null, 0, Int32.MaxValue); // buffer size 
+                        image = new byte[fieldWidth];
+                        reader.GetBytes(fieldIndex, 0, image, 0, image.Length);
                     }
-                    else
-                    {
-                        throw new ArgumentException("User not found");
-                    }
+
+                    userVM.UserID = reader.GetInt32(0);
+                    userVM.ProfileName = reader.GetString(1);
+                    userVM.Email = reader.GetString(2);
+                    userVM.FirstName = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                    userVM.LastName = reader.IsDBNull(4) ? "" : reader.GetString(4);
+                    userVM.ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\" + reader.GetString(5);
+                    userVM.Photo = reader.IsDBNull(6) ? null : image;
+                    userVM.PhotoMimeType = reader.IsDBNull(7) ? null : reader.GetString(7);
+                    userVM.Active = reader.GetBoolean(8);
+                    userVM.MinutesListened = reader.IsDBNull(9) ? 0 : reader.GetInt32(9);
+                    userVM.isPublic = reader.GetBoolean(10);
+                }
+                else
+                {
+                    throw new ApplicationException("User not found");
                 }
             }
             catch (Exception ex)
@@ -162,21 +171,47 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (reader.HasRows)
                 {
-                    var user = new User
+                    while (reader.Read())
                     {
-                        UserID = reader.GetInt32(0),
-                        ProfileName = reader.GetString(1),
-                        Email = reader.GetString(2),
-                        FirstName = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                        LastName = reader.IsDBNull(4) ? "" : reader.GetString(4),
-                        ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\" + reader.GetString(5),
-                        Active = reader.GetBoolean(6),
-                        MinutesListened = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
-                        isPublic = reader.GetBoolean(8)
-                };
-                    allUsers.Add(user);
+                        byte[] photo = null;
+                        long? fieldWidth = null;
+                        var user = new User
+                        {
+                            UserID = reader.GetInt32(0),
+                            ProfileName = reader.GetString(1),
+                            Email = reader.GetString(2),
+                            FirstName = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                            LastName = reader.IsDBNull(4) ? "" : reader.GetString(4),
+                            ImageFilePath = reader.IsDBNull(5) ? defaultAccountImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\" + reader.GetString(5),
+                            Active = reader.GetBoolean(8),
+                            MinutesListened = reader.IsDBNull(9) ? 0 : reader.GetInt32(9),
+                            isPublic = reader.GetBoolean(10)
+                        };
+
+                        int columnIndex = 6;
+                        try
+                        {
+                            fieldWidth = reader.GetBytes(columnIndex, 0, null, 0, Int32.MaxValue);
+                        }
+                        catch (Exception)
+                        {
+                            photo = null;
+                        }
+
+                        if (photo != null)
+                        {
+                            int width = (int)fieldWidth;
+                            photo = new byte[width];
+                            reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
+                        }
+
+                        user.PhotoMimeType = reader.IsDBNull(7) ? null : reader.GetString(7);
+                        user.Photo = photo;
+
+                        allUsers.Add(user);
+                    }
                 }
             }
             catch (Exception ex)

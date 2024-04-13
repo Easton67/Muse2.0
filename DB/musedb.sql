@@ -21,22 +21,21 @@ GO
 print '' print '*** creating User Table ***'
 GO
 CREATE TABLE [dbo].[User] (
-	[UserID] 		  [int] IDENTITY(100000,1)   NOT NULL,
-	[ProfileName] 	  [nvarchar](100)          	 NOT NULL,
-	[Email]			  [nvarchar](100)			 NOT NULL,
-	[FirstName] 	  [nvarchar](50)             DEFAULT 'Unknown',
-	[LastName] 		  [nvarchar](50)             DEFAULT 'Unknown',
-	[PasswordHash]	  [nvarchar](100)		     NOT NULL DEFAULT
-	'5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
-	[ImageFilePath]   [nvarchar](500)            NULL DEFAULT 'defaultAccount.png',
-	[Photo]			  [varbinary](MAX)	         NULL,
-	[PhotoMimeType]   [varchar](50)		         NULL,
-	[Active]		  [bit]						 NOT NULL DEFAULT 1,
-	[MinutesListened] [int]						 NULL DEFAULT 0,
-	[isPublic]		  [bit]					     DEFAULT 0
-	CONSTRAINT [pk_UserID] PRIMARY KEY ([UserID]),
-	CONSTRAINT [ak_ProfileName] UNIQUE([ProfileName]),
-	CONSTRAINT [ak_Email] UNIQUE([Email])
+    [UserID]            [int] IDENTITY(100000,1)   NOT NULL,
+    [ProfileName]       [nvarchar](100)            NOT NULL,
+    [Email]             [nvarchar](100)            NOT NULL,
+    [FirstName]         [nvarchar](50)            DEFAULT 'Unknown',
+    [LastName]          [nvarchar](50)            DEFAULT 'Unknown',
+    [PasswordHash]      [nvarchar](100)            NOT NULL DEFAULT '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    [ImageFilePath]     [nvarchar](500)            NULL DEFAULT 'defaultAccount.png',
+    [Photo]             [varbinary](MAX)            NULL DEFAULT (CONVERT(varbinary(MAX), '0x89504E470D0A1A0A0000000D49484452000008C0000008C00803000000EC2E33170000000467414D410000B18F0BFC6105000000017352474200AECE1CE900000237504C544547704C0000000000000000000000000000000000000000000000000000000000000000FFFFFFFFFFFFF00000000000000000000000000000')),
+    [PhotoMimeType]     [varchar](50)              NULL DEFAULT 'image/png',
+    [Active]            [bit]                      NOT NULL DEFAULT 1,
+    [MinutesListened]   [int]                      NULL DEFAULT 0,
+    [isPublic]          [bit]                      DEFAULT 0,
+    CONSTRAINT [pk_UserID] PRIMARY KEY ([UserID]),
+    CONSTRAINT [ak_ProfileName] UNIQUE([ProfileName]),
+    CONSTRAINT [ak_Email] UNIQUE([Email])
 )
 GO
 

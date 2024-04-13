@@ -62,6 +62,23 @@ namespace Muse3.Models
         public bool RememberMe { get; set; }
     }
 
+    public class RegisterUserViewModel
+    {
+        [Display(Name = "ProfileName")]
+        public string ProfileName { get; set; }
+
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
+
     public class RegisterViewModel
     {
         [Display(Name = "ProfileName")]

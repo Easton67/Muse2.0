@@ -29,10 +29,11 @@
                     <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Upgrade Account", "ViewUpgradePlans", "User", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Help", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                     @{
                         if (User.IsInRole("Manager"))
                         {
-                            <li>@Html.ActionLink("Admin", "ViewAllUsers", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                         }
                     }
                     @Html.Partial("_LoginPartial")

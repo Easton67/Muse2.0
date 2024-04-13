@@ -246,10 +246,33 @@ namespace LogicLayer
             {
                 return _userAccessor.SelectUserVMByEmail(email) != null;
             }
+            catch (ApplicationException ax)
+            {
+                if(ax.Message == "User not found")
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("Database Error", ex);
+            }
+        }
+        public int RetrieveUserIDFromEmail(string email)
+        {
+            try
+            {
+                return _userAccessor.SelectUserVMByEmail(email).UserID;
+            }
             catch (Exception ex)
             {
                 throw new ApplicationException("Database Error", ex);
             }
         }
+
     }
 }

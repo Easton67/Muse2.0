@@ -61,6 +61,8 @@ AS
 			   [FirstName], 
 			   [LastName], 
 			   [ImageFilePath], 
+			   [Photo], 
+			   [PhotoMimeType], 
 			   [Active], 
 			   [MinutesListened],
 			   [isPublic]
@@ -98,6 +100,8 @@ AS
 			   [FirstName], 
 			   [LastName], 
 			   [ImageFilePath], 
+			   [Photo], 
+			   [PhotoMimeType], 
 			   [Active], 
 			   [MinutesListened],
 			   [isPublic]
@@ -882,14 +886,15 @@ CREATE PROCEDURE [dbo].[sp_create_playlist]
 (
 	@Title			[nvarchar](50),
 	@ImageFilePath  [nvarchar](500),
+	@Photo			[varbinary](max),
 	@Description	[Text],
 	@UserID			[int]
 )
 AS	
 	BEGIN
 		INSERT INTO [dbo].[Playlist] 
-			([Title], [ImageFilePath], [Description], [UserID])
-		VALUES (@Title, @ImageFilePath, @Description, @UserID)
+			([Title], [ImageFilePath], [Photo], [Description], [UserID])
+		VALUES (@Title, @ImageFilePath, @Photo, @Description, @UserID)
 	END
 GO
 
@@ -903,7 +908,13 @@ CREATE PROCEDURE [dbo].[sp_select_playlists_by_UserID]
 )
 AS	
 	BEGIN
-		SELECT	[PlaylistID], [Title], [Playlist].[ImageFilePath], [Description], [User].[UserID]
+		SELECT	[PlaylistID], 
+				[Title], 
+				[Playlist].[ImageFilePath], 
+				[Playlist].[Photo],
+				[Playlist].[PhotoMimeType],
+				[Description], 
+				[User].[UserID]
 		FROM	[Playlist] JOIN [User] ON [Playlist].[UserID] = [User].[UserID]
 		WHERE 	@UserID = [User].[UserID]
 	END

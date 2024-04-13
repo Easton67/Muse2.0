@@ -27,6 +27,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
+
                 rows = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -84,6 +85,8 @@ namespace DataAccessLayer
 
                 while (reader.Read())
                 {
+                    byte[] photo = null;
+                    long? fieldWidth = null;
                     var playlist = new Playlist
                     {
                         PlaylistID = reader.GetInt32(0),
@@ -92,6 +95,26 @@ namespace DataAccessLayer
                         Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
                         UserID = reader.GetInt32(4)
                     };
+
+                    int columnIndex = 9;
+                    try
+                    {
+                        fieldWidth = reader.GetBytes(columnIndex, 0, null, 0, Int32.MaxValue);
+                    }
+                    catch (Exception)
+                    {
+                        photo = null;
+                    }
+
+                    if (photo != null)
+                    {
+                        int width = (int)fieldWidth;
+                        photo = new byte[width];
+                        reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
+                    }
+
+                    playlist.PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4);
+                    playlist.Photo = photo;
                     playlists.Add(playlist);
                 }
             }

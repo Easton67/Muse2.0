@@ -4,6 +4,9 @@
     ViewBag.Title = "Index";
 }
 
+<p>
+    @Html.ActionLink("Register New User", "RegisterUser", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+</p>
 <table class="table">
     <tr>
         <th>
