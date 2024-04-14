@@ -23,6 +23,11 @@
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "invalid" })
                         </div>
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control form-email-password-input", placeholder = "Password" })
+                        <br />
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
                     </div>
                     <br />
                     <div class="row">
@@ -39,14 +44,6 @@
                 <br>
                 <br>
             </div>
-            @*<div class="row">
-                    <div class="offset-md-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>*@
         }
     </section>
 </main>

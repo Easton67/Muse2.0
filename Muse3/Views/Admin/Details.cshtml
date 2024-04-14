@@ -3,189 +3,134 @@
 @{
     ViewBag.Title = "Details";
 }
-    <dl class="dl-horizontal">
-        <dt>    
-            @Html.DisplayNameFor(model => model.ProfileName)
-        </dt>
+<div>
+    <dl class="dl-horizontal bg-dark p-5 br-30 mt-5 fs-3">
+        <h1 class="pb-3 text-decoration-underline">@Model.GivenName @Model.FamilyName</h1>
+        <div class="d-flex">
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)/UserName:
+            </dt>
+            <dd class="mx-3">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </div>
+        <div class="d-flex">
+            <dt>
+                @Html.DisplayNameFor(model => model.EmailConfirmed):
+            </dt>
+            <dd class="mx-3">
+                @Html.DisplayFor(model => model.EmailConfirmed)
+            </dd>
+        </div>
+        <div class="d-flex">
+            <dt>
+                @Html.DisplayNameFor(model => model.PasswordHash) :
+            </dt>
+            <dd class="mx-3">
+                @Html.DisplayFor(model => model.PasswordHash)
+            </dd>
+        </div>
+        <div class="d-flex">
+            <dt>
+                @Html.DisplayNameFor(model => model.SecurityStamp):
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ProfileName)
-        </dd>
+            <dd class="mx-3">
+                @Html.DisplayFor(model => model.SecurityStamp)
+            </dd>
+        </div>
+        <div class="d-flex">
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumberConfirmed):
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GivenName)
-        </dt>
+            <dd class="mx-3">
+                @Html.DisplayFor(model => model.PhoneNumberConfirmed)
+            </dd>
+        </div>
+        <div class="d-flex">
+            <dt>
+                @Html.DisplayNameFor(model => model.TwoFactorEnabled):
+            </dt>
+            <dd class="mx-3">
+                @Html.DisplayFor(model => model.TwoFactorEnabled)
+            </dd>
+        </div>
+        <div class="d-flex">
+            <dt>
+                @Html.DisplayNameFor(model => model.LockoutEndDateUtc):
+            </dt>
+            <dd class="mx-3">
+                @Html.DisplayFor(model => model.LockoutEndDateUtc)
+            </dd>
+        </div>
+        <div class="d-flex">
+            <dt>
+                @Html.DisplayNameFor(model => model.LockoutEnabled):
+            </dt>
+            <dd class="mx-3">
+                @Html.DisplayFor(model => model.LockoutEnabled)
+            </dd>
+        </div>
+        <div class="d-flex">
+            <dt>
+                @Html.DisplayNameFor(model => model.AccessFailedCount):
+            </dt>
+            <dd class="mx-3">
+                @Html.DisplayFor(model => model.AccessFailedCount)
+            </dd>
+        </div>
+        <div>
+            <dt>
+                Assigned Roles:
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.GivenName)
-        </dd>
+            <dd>
+                <ul>
+                    @foreach (string r in ViewBag.Roles)
+                    {
+                        <li>
+                            <strong>
+                                @r @Html.ActionLink("Remove Role", "RemoveRole", new { Id = Model.Id, Role = r })
+                            </strong>
+                        </li>
+                    }
+                </ul>
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FamilyName)
-        </dt>
+            <dt>
+                Unassigned Roles:
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FamilyName)
-        </dd>
+            <dd>
+                <ul>
+                    @foreach (string r in ViewBag.NoRoles)
+                    {
+                        <li>
+                            <strong>
+                                @r @Html.ActionLink("Add Role", "AddRole", new { Id = Model.Id, Role = r })
+                            </strong>
+                            @if (r == "Admin")
+                            {
+                                <span class="text-danger, fw-bold"></span>
+                            }
+                        </li>
+                    }
+                </ul>
+            </dd>
+        </div>
+        <div class="d-flex">
+            <dt>
+                Roles:
+            </dt>
+            <dd class="mx-3">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserID)
-        </dd>
-
-        <dt>
-            Profile Photo
-        </dt>
-
-        <dd>
-            <img src="/MuseConfig/ProfileImages/@Path.GetFileName(Model.ImageFilePath)" alt="Profile photo for @Model.ProfileName" />
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MinutesListened)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MinutesListened)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmailConfirmed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PasswordHash)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SecurityStamp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SecurityStamp)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TwoFactorEnabled)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LockoutEndDateUtc)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LockoutEnabled)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LockoutEnabled)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AccessFailedCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AccessFailedCount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            Assigned Roles:
-        </dt>
-
-        <dd>
-            <ul>
-                @foreach (string r in ViewBag.Roles)
-                {
-                    <li>
-                        <strong>
-                            @r @Html.ActionLink("Remove Role", "RemoveRole", new { Id = Model.Id, Role = r })
-                        </strong>
-                    </li>
-                }
-            </ul>
-        </dd>
-
-        <dt>
-            Unassigned Roles:
-        </dt>
-
-        <dd>
-            <ul>
-                @foreach (string r in ViewBag.NoRoles)
-                {
-                    <li>
-                        <strong>
-                            @r @Html.ActionLink("Add Role", "AddRole", new { Id = Model.Id, Role = r })
-                        </strong>
-                        @if (r == "Admin")
-                        {
-                            <span class="text-danger, fw-bold"></span>
-                        }
-                    </li>
-                }
-            </ul>
-        </dd>
-
+            </dd>
+        </div>
+        <p class="mt-3">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
     </dl>
 </div>
 <p>
