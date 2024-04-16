@@ -29,7 +29,6 @@ namespace DataAccessFakes
                 MinutesListened = 960,
                 isPublic = true
             });
-
             fakeUsersNoRoles.Add(new User()
             {
                 UserID = 2,
@@ -42,8 +41,6 @@ namespace DataAccessFakes
                 MinutesListened = 302,
                 isPublic = true
             });
-
-
             fakeUsersNoRoles.Add(new User()
             {
                 UserID = 3,
@@ -307,6 +304,11 @@ namespace DataAccessFakes
             }
 
             return roles;
+        }
+
+        public int InsertOrDeleteUserRole(int userID, string role, bool delete = false)
+        {
+            throw new NotImplementedException();
         }
     }
 }

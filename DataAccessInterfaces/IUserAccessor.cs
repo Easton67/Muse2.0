@@ -15,6 +15,7 @@ namespace DataAccessInterfaces
         int InsertUser(User user, string password);
         UserVM SelectUserVMByEmail(string email);
         List<string> SelectRolesByUserID(int UserID);
+        int InsertOrDeleteUserRole(int userID, string role, bool delete = false);
         List<User> SelectAllUsers();
         int UpdateUser(User oldUser, User newUser);
         int UpdateMinutesListened(int userID, int newMinutesListened);

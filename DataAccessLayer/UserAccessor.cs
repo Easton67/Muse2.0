@@ -3,6 +3,7 @@ using DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Reflection;
 
@@ -255,6 +256,36 @@ namespace DataAccessLayer
             }
             return roles;
         }
+
+        public int InsertOrDeleteUserRole(int employeeID, string role, bool delete = false)
+        {
+            int rows = 0;
+
+            string cmdText = delete ? "sp_remove_role" : "sp_add_role";
+            var conn = SqlConnectionProvider.GetConnection();
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@UserID", employeeID);
+            cmd.Parameters.AddWithValue("@RoleID", role);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return rows;
+        }
+
         public List<string>SelectRolesByUserID(int userID)
         {
             List<string> roles = new List<string>();

@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using DataAccessInterfaces;
+using System.Diagnostics.CodeAnalysis;
+using System.Data.SqlTypes;
 
 namespace DataAccessLayer
 {
+    [SuppressMessage("ReSharper", "PossibleIntendedRethrow")]
     public class PlaylistAccessor : IPlaylistAccessor
     {
         private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
@@ -74,48 +77,49 @@ namespace DataAccessLayer
             var cmdText = "sp_select_playlists_by_UserID";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@UserID", SqlDbType.Int);
-            cmd.Parameters["@UserID"].Value = userId;
+            cmd.Parameters.AddWithValue("@UserID", userId);
 
             try
             {
                 conn.Open();
-
                 var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                if (reader.HasRows)
                 {
-                    byte[] photo = null;
-                    long? fieldWidth = null;
-                    var playlist = new Playlist
+                    while (reader.Read())
                     {
-                        PlaylistID = reader.GetInt32(0),
-                        Title = reader.IsDBNull(1) ? "Playlist" : reader.GetString(1),
-                        ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages\\" + reader.GetString(2),
-                        Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                        UserID = reader.GetInt32(4)
-                    };
+                        byte[] photo = null;
+                        long? fieldWidth = null;
+                        Playlist playlist = new Playlist();
+                        playlist.PlaylistID = reader.GetInt32(0);
+                        playlist.Title = reader.IsDBNull(1) ? "Playlist" : reader.GetString(1);
+                        playlist.ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages\\" + reader.GetString(2);
+                        playlist.Description = reader.IsDBNull(5) ? "" : reader.GetString(5);
+                        playlist.UserID = reader.GetInt32(6);
 
-                    int columnIndex = 9;
-                    try
-                    {
-                        fieldWidth = reader.GetBytes(columnIndex, 0, null, 0, Int32.MaxValue);
-                    }
-                    catch (Exception)
-                    {
-                        photo = null;
-                    }
+                        int columnIndex = 3;
 
-                    if (photo != null)
-                    {
-                        int width = (int)fieldWidth;
-                        photo = new byte[width];
-                        reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
-                    }
+                        try
+                        {
+                            fieldWidth = reader.GetBytes(columnIndex, 0, null, 0, Int32.MaxValue);
+                        }
+                        catch (Exception)
+                        {
+                            photo = null;
+                        }
 
-                    playlist.PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4);
-                    playlist.Photo = photo;
-                    playlists.Add(playlist);
+                        if (photo == null)
+                        {
+                            int width = (int)fieldWidth;
+                            photo = new byte[width];
+                            reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
+                        }
+
+                        playlist.PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4);
+
+                        playlist.Photo = photo;
+
+                        playlists.Add(playlist);
+                    }
                 }
             }
             catch (Exception ex)
@@ -135,32 +139,39 @@ namespace DataAccessLayer
             var cmdText = "sp_select_playlist_by_UserID";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@UserID", SqlDbType.Int);
-            cmd.Parameters["@UserID"].Value = userId;
-            cmd.Parameters.Add("@PlaylistID", SqlDbType.Int);
-            cmd.Parameters["@PlaylistID"].Value = playlistID;
+
+            cmd.Parameters.AddWithValue("@UserID", userId);
+            cmd.Parameters.AddWithValue("@PlaylistID", playlistID);
 
             try
             {
                 conn.Open();
-
                 var reader = cmd.ExecuteReader();
-
-                if (reader.HasRows)
+                if (reader.Read())
                 {
-                    reader.Read();
+                    int fieldIndex = 3;
+                    long fieldWidth;
+                    byte[] image = null;
+
+                    if (!reader.IsDBNull(fieldIndex))
+                    {
+                        fieldWidth = reader.GetBytes(fieldIndex, 0, null, 0, Int32.MaxValue);
+                        image = new byte[fieldWidth];
+                        reader.GetBytes(fieldIndex, 0, image, 0, image.Length);
+                    }
+
                     playlist = new Playlist
                     {
                         PlaylistID = reader.GetInt32(0),
                         Title = reader.IsDBNull(1) ? "Playlist" : reader.GetString(1),
                         ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages\\" + reader.GetString(2),
-                        Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                        UserID = reader.GetInt32(4)
+
+                        Photo = reader.IsDBNull(3) ? null : image,
+                        PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4),
+
+                        Description = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                        UserID = reader.GetInt32(6)
                     };
-                }
-                else
-                {
-                    throw new ArgumentException("Playlist not found");
                 }
             }
             catch (Exception ex)
@@ -209,27 +220,23 @@ namespace DataAccessLayer
         public int UpdatePlaylist(Playlist oldPlaylist, Playlist newPlaylist)
         {
             int rows = 0;
+
             var conn = SqlConnectionProvider.GetConnection();
             var cmdText = "sp_update_playlist";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // Add parameters
-            cmd.Parameters.Add("@PlaylistID", SqlDbType.Int);
-            cmd.Parameters.Add("@NewTitle", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewImageFilePath", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@NewDescription", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@OldTitle", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@OldImageFilePath", SqlDbType.NVarChar);
-            cmd.Parameters.Add("@OldDescription", SqlDbType.NVarChar);
-
-            cmd.Parameters["@PlaylistID"].Value =  oldPlaylist.PlaylistID;
-            cmd.Parameters["@NewTitle"].Value =  newPlaylist.Title;
-            cmd.Parameters["@NewImageFilePath"].Value =  newPlaylist.ImageFilePath;
-            cmd.Parameters["@NewDescription"].Value =  newPlaylist.Description;
-            cmd.Parameters["@OldTitle"].Value =  oldPlaylist.Title;
-            cmd.Parameters["@OldImageFilePath"].Value =  oldPlaylist.ImageFilePath;
-            cmd.Parameters["@OldDescription"].Value =  oldPlaylist.Description;
+            cmd.Parameters.AddWithValue("@PlaylistID", oldPlaylist.PlaylistID);
+            cmd.Parameters.AddWithValue("@NewTitle", newPlaylist.Title);
+            cmd.Parameters.AddWithValue("@NewImageFilePath", newPlaylist.ImageFilePath);
+            cmd.Parameters.AddWithValue("@NewDescription", newPlaylist.Description);
+            cmd.Parameters.AddWithValue("@OldTitle", oldPlaylist.Title);
+            cmd.Parameters.AddWithValue("@OldImageFilePath", oldPlaylist.ImageFilePath);
+            cmd.Parameters.AddWithValue("@OldDescription", oldPlaylist.Description);
+            cmd.Parameters.AddWithValue("@NewPhoto", ((object)newPlaylist.Photo) ?? SqlBinary.Null);
+            cmd.Parameters.AddWithValue("@NewPhotoMimeType", ((object)newPlaylist.PhotoMimeType) ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@OldPhoto", ((object)newPlaylist.Photo) ?? SqlBinary.Null);
+            cmd.Parameters.AddWithValue("@OldPhotoMimeType", ((object)newPlaylist.PhotoMimeType) ?? DBNull.Value);
 
             try
             {

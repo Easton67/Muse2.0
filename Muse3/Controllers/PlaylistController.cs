@@ -1,7 +1,9 @@
 ﻿using DataObjects;
 using LogicLayer;
+using Muse3.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +21,20 @@ namespace Muse3.Controllers
         private PlaylistManager _playlistManager = new PlaylistManager();
         private SongManager _songManager = new SongManager();
         private List<Playlist> playlists = new List<Playlist>();
+
+        public FileContentResult GetPhoto(int PlaylistID)
+        {
+            Playlist playlist = _playlistManager.SelectPlaylistByUserID(100000, PlaylistID);
+            if (playlist.Photo != null && playlist.PhotoMimeType != null)
+            {
+                return File(playlist.Photo, playlist.PhotoMimeType);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public ActionResult ViewAllPlaylists()
         {
             try
@@ -100,21 +116,36 @@ namespace Muse3.Controllers
 
         // POST: Playlist/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Playlist playlist)
+        public ActionResult Edit(int id, Playlist playlist, HttpPostedFileBase image = null)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
+                    HttpPostedFileBase photo = image;
+                    string mimeType = null;
+                    byte[] photoOut = null;
+
+                    if (photo != null)
+                    {
+                        playlist.PhotoMimeType = photo.ContentType;
+                        playlist.Photo = new byte[photo.ContentLength];
+                        image.InputStream.Read(playlist.Photo, 0, photo.ContentLength);
+                    }
+
                     Playlist oldPlaylist = (Playlist)Session["oldPlaylist"];
                     _playlistManager.UpdatePlaylist(oldPlaylist, playlist);
-                }
 
-                return RedirectToAction("ViewAllPlaylists");
+                    return RedirectToAction("Edit");
+                }
+                catch (Exception ex)
+                {
+                    return View();
+                }
             }
-            catch
+            else
             {
-                return View(playlist);
+                return RedirectToAction("Edit");
             }
         }
 

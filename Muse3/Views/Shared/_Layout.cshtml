@@ -20,16 +20,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav text-nowrap">
-                    <li>@Html.ActionLink("Library", "Library", "Song", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Albums", "Albums", "Album", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Artists", "Artists", "Artist", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Playlist", "ViewAllPlaylists", "Playlist", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Reviews", "Reviews", "Review", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Library", "Library", "Song", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Albums", "Albums", "Album", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Artists", "Artists", "Artist", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Playlist", "ViewAllPlaylists", "Playlist", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Reviews", "Reviews", "Review", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Friends", "ViewAllFriends", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                     <li>@Html.ActionLink("Upgrade Account", "ViewUpgradePlans", "User", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Help", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                     @{
                         if (User.IsInRole("Manager"))
                         {

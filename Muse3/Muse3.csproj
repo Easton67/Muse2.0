@@ -1950,14 +1950,12 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Song\Library.cshtml" />
-    <Content Include="Views\Playlist\ViewAllPlaylists.cshtml" />
     <Content Include="Views\Review\Reviews.cshtml" />
     <Content Include="Views\User\ViewAllFriends.cshtml" />
     <Content Include="Views\Song\Details.cshtml" />
     <Content Include="Views\Song\Edit.cshtml" />
     <Content Include="Views\Review\Details.cshtml" />
     <Content Include="Views\Review\Create.cshtml" />
-    <Content Include="Views\Playlist\Details.cshtml" />
     <Content Include="Views\Playlist\Create.cshtml" />
     <Content Include="Views\Playlist\Edit.cshtml" />
     <Content Include="Views\Review\Edit.cshtml" />
@@ -1984,6 +1982,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Song\CreateFromFolder.cshtml" />
     <Content Include="Views\Account\RegisterUser.cshtml" />
+    <Content Include="Views\Playlist\Details.cshtml" />
+    <Content Include="Views\Playlist\ViewAllPlaylists.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

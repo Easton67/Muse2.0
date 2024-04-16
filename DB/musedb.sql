@@ -24,11 +24,12 @@ CREATE TABLE [dbo].[User] (
     [UserID]            [int] IDENTITY(100000,1)   NOT NULL,
     [ProfileName]       [nvarchar](100)            NOT NULL,
     [Email]             [nvarchar](100)            NOT NULL,
-    [FirstName]         [nvarchar](50)            DEFAULT 'Unknown',
-    [LastName]          [nvarchar](50)            DEFAULT 'Unknown',
+    [FirstName]         [nvarchar](50)             DEFAULT 'Unknown',
+    [LastName]          [nvarchar](50)             DEFAULT 'Unknown',
     [PasswordHash]      [nvarchar](100)            NOT NULL DEFAULT '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
     [ImageFilePath]     [nvarchar](500)            NULL DEFAULT 'defaultAccount.png',
-    [Photo]             [varbinary](MAX)            NULL DEFAULT (CONVERT(varbinary(MAX), '0x89504E470D0A1A0A0000000D49484452000008C0000008C00803000000EC2E33170000000467414D410000B18F0BFC6105000000017352474200AECE1CE900000237504C544547704C0000000000000000000000000000000000000000000000000000000000000000FFFFFFFFFFFFF00000000000000000000000000000')),
+    [Photo]             [varbinary](MAX)           NULL 
+	DEFAULT (CONVERT(varbinary(MAX), '0x89504E470D0A1A0A0000000D49484452000008C0000008C00803000000EC2E33170000000467414D410000B18F0BFC6105000000017352474200AECE1CE900000237504C544547704C0000000000000000000000000000000000000000000000000000000000000000FFFFFFFFFFFFF00000000000000000000000000000')),
     [PhotoMimeType]     [varchar](50)              NULL DEFAULT 'image/png',
     [Active]            [bit]                      NOT NULL DEFAULT 1,
     [MinutesListened]   [int]                      NULL DEFAULT 0,
@@ -200,8 +201,9 @@ CREATE TABLE [dbo].[Playlist] (
 	[Title]	[nvarchar](50)					   NOT NULL DEFAULT 'Playlist',
 	[ImageFilePath] [nvarchar](500)            DEFAULT 
 	'defaultAlbumImage.png',
-	[Photo]			  [varbinary](MAX)	       NULL,
-	[PhotoMimeType]   [varchar](50)		       NULL,
+    [Photo]             [varbinary](MAX)           NULL 
+	DEFAULT (CONVERT(varbinary(MAX), '0x89504E470D0A1A0A0000000D49484452000008C0000008C00803000000EC2E33170000000467414D410000B18F0BFC6105000000017352474200AECE1CE900000237504C544547704C0000000000000000000000000000000000000000000000000000000000000000FFFFFFFFFFFFF00000000000000000000000000000')),
+    [PhotoMimeType]     [nvarchar](50)              NULL DEFAULT 'image/png',
 	[Description] [nvarchar](max)			   NULL DEFAULT "",
 	[UserID] [int]
 	

@@ -56,6 +56,7 @@ namespace Muse3.Controllers
             return View(applicationUser);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult RemoveRole(string id, string role)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -70,31 +71,42 @@ namespace Muse3.Controllers
                 if(adminUsers < 2)
                 {
                     ViewBag.Error = "Cannot remove the last Admin.";
-                }
-                else
-                {
-                    userManager.RemoveFromRole(id, role);
+                    return RedirectToAction("Details", "Admin", new { id = user.Id});
                 }
             }
-            else
+
+            userManager.RemoveFromRole(id, role);
+
+            if(user.UserID != null)
             {
-                userManager.RemoveFromRole(id, role);
+                try
+                {
+                    var _userManager = new LogicLayer.UserManager();
+                    _userManager.DeleteUserRole((int)user.UserID, role);
+                }
+                catch (Exception)
+                {
+                    // nothing
+                }
             }
+            return RedirectToAction("Details", "Admin", new { id = user.Id });
 
             // get a list of roles the user has and put them into a viewbag as roles
             // along with a list of roles the user doesn't have as noRoles
-            var usrMgr = new LogicLayer.UserManager();
-            var allRoles = usrMgr.SelectAllRoles();
 
-            var roles = userManager.GetRoles(id);
-            var noRoles = allRoles.Except(roles);
+            //var usrMgr = new LogicLayer.UserManager();
+            //var allRoles = usrMgr.SelectAllRoles();
 
-            ViewBag.Roles = roles;
-            ViewBag.NoRoles = noRoles;
+            //var roles = userManager.GetRoles(id);
+            //var noRoles = allRoles.Except(roles);
 
-            return View("Details", user);
+            //ViewBag.Roles = roles;
+            //ViewBag.NoRoles = noRoles;
+
+            //return View("Details", user);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult AddRole(string id, string role)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -102,18 +114,36 @@ namespace Muse3.Controllers
 
             userManager.AddToRole(id, role);
 
+            if(user.UserID != null)
+            {
+                try
+                {
+                    var _userManager = new LogicLayer.UserManager();
+                    _userManager.AddUserRole((int)user.UserID, role);
+                }
+                catch (Exception)
+                {
+
+                    // do nothing
+                }
+            }
+            return RedirectToAction("Details", "Admin", new { id = user.Id });
+
+
+
             // get a list of roles the user has and put them into a viewbag as roles
             // along with a list of roles the user doesn't have as noRoles
-            var usrMgr = new LogicLayer.UserManager();
-            var allRoles = usrMgr.SelectAllRoles();
 
-            var roles = userManager.GetRoles(id);
-            var noRoles = allRoles.Except(roles);
+            //var usrMgr = new LogicLayer.UserManager();
+            //var allRoles = usrMgr.SelectAllRoles();
 
-            ViewBag.Roles = roles;
-            ViewBag.NoRoles = noRoles;
+            //var roles = userManager.GetRoles(id);
+            //var noRoles = allRoles.Except(roles);
 
-            return View("Details", user);
+            //ViewBag.Roles = roles;
+            //ViewBag.NoRoles = noRoles;
+
+            //return View("Details", user);
         }
     }
 }

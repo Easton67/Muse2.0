@@ -222,7 +222,7 @@ namespace LogicLayer
             }
             return result;
         }
-        public UserPass ResetPassword(string employeeID)
+        public UserPass ResetPassword(string userID)
         {
             throw new NotImplementedException();
         }
@@ -273,6 +273,31 @@ namespace LogicLayer
                 throw new ApplicationException("Database Error", ex);
             }
         }
-
+        public bool AddUserRole(int userID, string role)
+        {
+            bool result = false;
+            try
+            {
+                result = (1 == _userAccessor.InsertOrDeleteUserRole(userID, role));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Role not added!", ex);
+            }
+            return result;
+        }
+        public bool DeleteUserRole(int userID, string role)
+        {
+            bool result = false;
+            try
+            {
+                result = (1 == _userAccessor.InsertOrDeleteUserRole(userID, role, delete: true));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Role not removed!", ex);
+            }
+            return result;
+        }
     }
 }

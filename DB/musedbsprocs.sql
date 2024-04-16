@@ -109,6 +109,8 @@ AS
 	END
 GO
 
+/* Roles */
+
 /* sp_select_role_by_UserID */
 
 print '' print '*** creating sp_select_role_by_UserID ***'
@@ -134,6 +136,41 @@ AS
 	BEGIN
 		SELECT	[RoleID]
 		FROM	[Role]
+	END
+GO
+
+/* sp_add_role */
+
+print '' print '*** creating sp_add_role'
+GO
+CREATE PROCEDURE [sp_insert_employee_role]
+(
+	@UserID	     [int],
+	@RoleID		 [nvarchar](50)
+)
+AS
+	BEGIN
+		INSERT INTO [dbo].[UserRole]
+			([UserID], [RoleID])
+		VALUES
+			(@UserID, @RoleID)
+	END
+GO
+
+/* sp_remove_role */
+
+print '' print '*** creating sp_remove_role'
+GO
+CREATE PROCEDURE [sp_remove_role]
+(
+	@UserID			[int],
+	@RoleID			[nvarchar](50)
+)
+AS
+	BEGIN
+		DELETE FROM [dbo].[UserRole]
+		WHERE [UserID] =  @UserID
+		AND [RoleID] =    @RoleID
 	END
 GO
 
@@ -931,7 +968,13 @@ CREATE PROCEDURE [dbo].[sp_select_playlist_by_UserID]
 )
 AS	
 	BEGIN
-		SELECT	[PlaylistID], [Title], [Playlist].[ImageFilePath], [Description], [User].[UserID]
+		SELECT	[PlaylistID], 
+				[Title], 
+				[Playlist].[ImageFilePath], 
+				[Playlist].[Photo], 
+				[Playlist].[PhotoMimeType], 
+				[Description], 
+				[User].[UserID]
 		FROM	[Playlist] JOIN [User] ON [Playlist].[UserID] = [User].[UserID]
 		WHERE 	@UserID = [User].[UserID] AND @PlaylistID = [Playlist].[PlaylistID]
 	END
@@ -949,18 +992,26 @@ CREATE PROCEDURE [dbo].[sp_update_playlist]
 	@NewDescription   [nvarchar](max), 
 	@OldTitle         [nvarchar](180), 
 	@OldImageFilePath [nvarchar](500), 
-	@OldDescription   [nvarchar](max)
+	@OldDescription   [nvarchar](max),
+	@NewPhoto		  [varbinary](MAX),
+	@NewPhotoMimeType [nvarchar](50),
+	@OldPhoto		  [varbinary](MAX),
+	@OldPhotoMimeType [nvarchar](50)
 )
 AS
 	BEGIN
 		UPDATE [Playlist]
 		SET [Title] = @NewTitle,
 			[ImageFilePath] = @NewImageFilePath,
-			[Description] = @NewDescription
+			[Description] = @NewDescription,
+			[Photo] = @NewPhoto,
+			[PhotoMimeType] = @NewPhotoMimeType
 		WHERE [PlaylistID] = @PlaylistID
 		AND [Title] = @OldTitle
 		AND [ImageFilePath] = @OldImageFilePath
 		AND [Description] = @OldDescription
+		AND [Photo] = @OldPhoto
+		AND [PhotoMimeType] = @OldPhotoMimeType
 	END
 GO
 

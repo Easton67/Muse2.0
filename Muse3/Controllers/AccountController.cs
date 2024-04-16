@@ -245,7 +245,7 @@ namespace Muse3.Controllers
         }
 
         // GET: /Account/RegisterUser
-        [AllowAnonymous]
+        [Authorize(Roles = "Manager")]
         public ActionResult RegisterUser()
         {
             return View();
@@ -253,7 +253,7 @@ namespace Muse3.Controllers
 
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Manager")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterUser(RegisterUserViewModel model)
         {

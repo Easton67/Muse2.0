@@ -47,6 +47,7 @@
                 {
                     UserName = admin,
                     Email = admin,
+                    ProfileName = "System Admin",
                     ImageFilePath = "defaultAccountImage.png",
                     FamilyName = "Admin",
                     GivenName = "System"
