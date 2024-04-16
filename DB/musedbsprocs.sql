@@ -994,9 +994,7 @@ CREATE PROCEDURE [dbo].[sp_update_playlist]
 	@OldImageFilePath [nvarchar](500), 
 	@OldDescription   [nvarchar](max),
 	@NewPhoto		  [varbinary](MAX),
-	@NewPhotoMimeType [nvarchar](50),
-	@OldPhoto		  [varbinary](MAX),
-	@OldPhotoMimeType [nvarchar](50)
+	@NewPhotoMimeType [nvarchar](50)
 )
 AS
 	BEGIN
@@ -1007,11 +1005,6 @@ AS
 			[Photo] = @NewPhoto,
 			[PhotoMimeType] = @NewPhotoMimeType
 		WHERE [PlaylistID] = @PlaylistID
-		AND [Title] = @OldTitle
-		AND [ImageFilePath] = @OldImageFilePath
-		AND [Description] = @OldDescription
-		AND [Photo] = @OldPhoto
-		AND [PhotoMimeType] = @OldPhotoMimeType
 	END
 GO
 

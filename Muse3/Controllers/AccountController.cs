@@ -155,7 +155,7 @@ namespace Muse3.Controllers
                 LogicLayer.UserManager _um = new LogicLayer.UserManager();
                 try
                 {
-                    if (_um.FindUser(model.Email) == false)
+                    if (_um.FindUser(model.Email))
                     {
                         var authenticated = _um.AuthenticateUser(model.Email, model.Password);
                         if (authenticated == true)
@@ -170,7 +170,6 @@ namespace Muse3.Controllers
                                 UserID = oldUser.UserID,
                                 // ProfileName = oldUser.ProfileName,
                                 // MinutesListened = oldUser.MinutesListened,
-
                                 UserName = model.Email,
                                 Email = model.Email,
                             };

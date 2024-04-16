@@ -43,11 +43,15 @@
 
             if (!context.Users.Any(u => u.UserName.Equals(admin)))
             {
+                var _um = new LogicLayer.UserManager();
+                var largestUserID = _um.SelectAllUsers().Select(x => x.UserID).Max();
+
                 var user = new ApplicationUser()
                 {
                     UserName = admin,
                     Email = admin,
                     ProfileName = "System Admin",
+                    UserID = largestUserID + 1,
                     ImageFilePath = "defaultAccountImage.png",
                     FamilyName = "Admin",
                     GivenName = "System"

@@ -244,7 +244,8 @@ namespace LogicLayer
         {
             try
             {
-                return _userAccessor.SelectUserVMByEmail(email) != null;
+                var user = _userAccessor.SelectUserVMByEmail(email) != null;
+                return user;
             }
             catch (ApplicationException ax)
             {

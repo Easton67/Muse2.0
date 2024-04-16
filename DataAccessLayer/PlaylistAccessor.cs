@@ -107,7 +107,7 @@ namespace DataAccessLayer
                             photo = null;
                         }
 
-                        if (photo == null)
+                        if (photo != null)
                         {
                             int width = (int)fieldWidth;
                             photo = new byte[width];
@@ -234,17 +234,16 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@OldImageFilePath", oldPlaylist.ImageFilePath);
             cmd.Parameters.AddWithValue("@OldDescription", oldPlaylist.Description);
             cmd.Parameters.AddWithValue("@NewPhoto", ((object)newPlaylist.Photo) ?? SqlBinary.Null);
-            cmd.Parameters.AddWithValue("@NewPhotoMimeType", ((object)newPlaylist.PhotoMimeType) ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@OldPhoto", ((object)newPlaylist.Photo) ?? SqlBinary.Null);
-            cmd.Parameters.AddWithValue("@OldPhotoMimeType", ((object)newPlaylist.PhotoMimeType) ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@NewPhotoMimeType", newPlaylist.PhotoMimeType);
 
             try
             {
                 conn.Open();
                 rows = cmd.ExecuteNonQuery();
+
                 if (rows == 0)
                 {
-                    throw new ArgumentException("Could not update playlist.");
+                    throw new ArgumentException("Could not update your profile.");
                 }
             }
             catch (Exception ex)

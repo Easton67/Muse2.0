@@ -1,6 +1,8 @@
 ﻿using Antlr.Runtime.Misc;
 using DataObjects;
 using LogicLayer;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,13 +24,20 @@ namespace Muse3.Controllers
         private string imageFilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt";
         private List<Song> songs = new List<Song>();
 
+        public int GetUserID()
+        {
+            var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = _userManager.FindByEmail(User.Identity.GetUserName());
+            return (int)user.UserID;
+        }
+
         public ActionResult Library(string searchText, string ascOrDesc, string sortedProperty, string isFavorite, int? songID)
         {
             List<Song> songs = new List<Song>();
 
             try
             {
-                songs = _songManager.SelectSongsByUserID(100001);
+                songs = _songManager.SelectSongsByUserID(GetUserID());
 
                 if (!string.IsNullOrEmpty(searchText))
                 {
@@ -53,7 +62,7 @@ namespace Muse3.Controllers
 
                     _songManager.UpdateFavoriteStatus(songID.Value, favoriteOrUnfavorite);
 
-                    songs = _songManager.SelectSongsByUserID(100001);
+                    songs = _songManager.SelectSongsByUserID(GetUserID());
                 }
             }
             catch (Exception)
@@ -72,12 +81,12 @@ namespace Muse3.Controllers
             {
                 if (!string.IsNullOrEmpty(searchText))
                 {
-                    songs = _songManager.SelectSongsByUserID(100001);
+                    songs = _songManager.SelectSongsByUserID(GetUserID());
                     songs = songs.Where(x => x.Title.ToLower().Contains(searchText.ToLower())).ToList();
                 }
                 else
                 {
-                    songs = _songManager.SelectSongsByUserID(100001);
+                    songs = _songManager.SelectSongsByUserID(GetUserID());
                 }
             }
             catch (Exception)
@@ -95,7 +104,7 @@ namespace Muse3.Controllers
 
             try
             {
-                song = _songManager.SelectSongBySongID(100001, id);
+                song = _songManager.SelectSongBySongID(GetUserID(), id);
             }
             catch (Exception ex)
             {
@@ -260,7 +269,7 @@ namespace Muse3.Controllers
                             Explicit = exp,
                             Genre = genre,
                             Plays = 0,
-                            UserID = 100001,
+                            UserID = GetUserID(),
                             Album = album,
                             Artist = artist,
                         };
@@ -317,7 +326,7 @@ namespace Muse3.Controllers
                         Explicit = song.Explicit,
                         Genre = song.Genre,
                         Plays = song.Plays,
-                        UserID = 100001,
+                        UserID = GetUserID(),
                         Artist = song.Artist,
                         Album = song.Album,
                         DateUploaded = null,
@@ -356,7 +365,7 @@ namespace Muse3.Controllers
 
             try
             {
-                song = _songManager.SelectSongBySongID(100001, id);
+                song = _songManager.SelectSongBySongID(GetUserID(), id);
                 Session["oldSong"] = song;
             }
             catch (Exception ex)
@@ -386,7 +395,7 @@ namespace Muse3.Controllers
                         Explicit = song.Explicit,
                         Genre = song.Genre,
                         Plays = song.Plays,
-                        UserID = 100001,
+                        UserID = GetUserID(),
                         Artist = song.Artist,
                         Album = song.Album,
                         DateUploaded = null,

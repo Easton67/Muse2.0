@@ -9,7 +9,8 @@
 <div class="px-3">
     <div class="d-flex">
         <div class="your-element" data-tilt>
-            <img style="width: 200px; height: 200px; border-radius: 10px;" onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/PlaylistImages/@Path.GetFileName(@Model.Playlist.ImageFilePath)" alt="Album art">
+            <img style="width: 200px; height: 200px; border-radius: 10px;" src="@Url.Action("GetPhoto", new { @Model.Playlist.PlaylistID })" alt="Art for @Model.Playlist.Title playlist." />
+            @*<img  onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/PlaylistImages/@Path.GetFileName(@Model.Playlist.ImageFilePath)" alt="Album art">*@
         </div>
         <div class="px-3">
             <h2>@Model.Playlist.Title</h2>

@@ -1,5 +1,6 @@
 ﻿using DataObjects;
 using LogicLayer;
+using Microsoft.AspNet.Identity;
 using Muse3.Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System.Configuration;
 
 namespace Muse3.Controllers
 {
@@ -22,9 +26,17 @@ namespace Muse3.Controllers
         private SongManager _songManager = new SongManager();
         private List<Playlist> playlists = new List<Playlist>();
 
+        public int GetUserID()
+        {
+            var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var test = User.Identity.GetUserName();
+            var user = _userManager.FindByEmail(test);
+            return (int)user.UserID;
+        }
+
         public FileContentResult GetPhoto(int PlaylistID)
         {
-            Playlist playlist = _playlistManager.SelectPlaylistByUserID(100000, PlaylistID);
+            Playlist playlist = _playlistManager.SelectPlaylistByUserID(GetUserID(), PlaylistID);
             if (playlist.Photo != null && playlist.PhotoMimeType != null)
             {
                 return File(playlist.Photo, playlist.PhotoMimeType);
@@ -39,7 +51,7 @@ namespace Muse3.Controllers
         {
             try
             {
-                playlists = _playlistManager.SelectPlaylistsByUserID(100000);
+                playlists = _playlistManager.SelectPlaylistsByUserID(GetUserID());
             }
             catch (Exception)
             {
@@ -52,12 +64,13 @@ namespace Muse3.Controllers
         // GET: Playlist/Details/5
         public ActionResult Details(int id)
         {
+            int userID = GetUserID();
             PlaylistDetailsViewModel viewModel = new PlaylistDetailsViewModel();
 
             try
             {
-                viewModel.Playlist = _playlistManager.SelectPlaylistByUserID(100000, id);
-                viewModel.Songs = _songManager.SelectSongsByPlaylistID(100001, viewModel.Playlist.PlaylistID);
+                viewModel.Playlist = _playlistManager.SelectPlaylistByUserID(userID, id);
+                viewModel.Songs = _songManager.SelectSongsByPlaylistID(userID, viewModel.Playlist.PlaylistID);
             }
             catch (Exception ex)
             {
@@ -103,7 +116,7 @@ namespace Muse3.Controllers
 
             try
             {
-                playlist = _playlistManager.SelectPlaylistByUserID(100000, id);
+                playlist = _playlistManager.SelectPlaylistByUserID(GetUserID(), id);
                 Session["oldPlaylist"] = playlist;
             }
             catch (Exception ex)
@@ -118,6 +131,8 @@ namespace Muse3.Controllers
         [HttpPost]
         public ActionResult Edit(int id, Playlist playlist, HttpPostedFileBase image = null)
         {
+            playlist.UserID = GetUserID();
+
             if (ModelState.IsValid)
             {
                 try

@@ -1,5 +1,7 @@
 ﻿using DataObjects;
 using LogicLayer;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,14 @@ namespace Muse3.Controllers
     public class UserController : Controller
     {
         private UserManager _userManager = new UserManager();
+
+        public int GetUserID()
+        {
+            var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = _userManager.FindByEmail(User.Identity.GetUserName());
+            return (int)user.UserID;
+        }
+
         // GET: User
         public ActionResult ViewAllFriends()
         {
@@ -18,7 +28,7 @@ namespace Muse3.Controllers
 
             try
             {
-                friends = _userManager.SelectFriendsByUserID(100001);
+                friends = _userManager.SelectFriendsByUserID(GetUserID());
             }
             catch (Exception ex)
             {
@@ -35,7 +45,7 @@ namespace Muse3.Controllers
 
             try
             {
-                friends = _userManager.SelectFriendsByUserID(100001);
+                friends = _userManager.SelectFriendsByUserID(GetUserID());
             }
             catch (Exception ex)
             {
