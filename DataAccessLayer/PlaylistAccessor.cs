@@ -6,13 +6,16 @@ using System.Data;
 using DataAccessInterfaces;
 using System.Diagnostics.CodeAnalysis;
 using System.Data.SqlTypes;
+using System.IO;
 
 namespace DataAccessLayer
 {
     [SuppressMessage("ReSharper", "PossibleIntendedRethrow")]
     public class PlaylistAccessor : IPlaylistAccessor
     {
-        private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
+        private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages\\defaultAlbumImage.png";
+        private string playlistArtPath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages\\";
+
         public int CreatePlaylist(Playlist newPlaylist)
         {
             int rows = 0;
@@ -153,13 +156,6 @@ namespace DataAccessLayer
                     long fieldWidth;
                     byte[] image = null;
 
-                    if (!reader.IsDBNull(fieldIndex))
-                    {
-                        fieldWidth = reader.GetBytes(fieldIndex, 0, null, 0, Int32.MaxValue);
-                        image = new byte[fieldWidth];
-                        reader.GetBytes(fieldIndex, 0, image, 0, image.Length);
-                    }
-
                     playlist = new Playlist
                     {
                         PlaylistID = reader.GetInt32(0),
@@ -172,6 +168,36 @@ namespace DataAccessLayer
                         Description = reader.IsDBNull(5) ? "" : reader.GetString(5),
                         UserID = reader.GetInt32(6)
                     };
+
+                    if (!reader.IsDBNull(fieldIndex))
+                    {
+                        fieldWidth = reader.GetBytes(fieldIndex, 0, null, 0, Int32.MaxValue);
+                        image = new byte[fieldWidth];
+                        reader.GetBytes(fieldIndex, 0, image, 0, image.Length);
+                    }
+
+                    // turn the image file path into a byte array
+                    if (playlist.ImageFilePath != null)
+                    {
+                        string filePath = "";
+                        string fileType = "";
+                        try
+                        {
+                            filePath = playlistArtPath + playlist.ImageFilePath;
+                            fileType = Path.GetExtension(filePath);
+
+                            playlist.Photo = File.ReadAllBytes(filePath);
+                            playlist.PhotoMimeType = fileType;
+                        }
+                        catch (Exception ex)
+                        {
+                            filePath = defaultImg;
+                            fileType = Path.GetExtension(filePath);
+
+                            playlist.Photo = File.ReadAllBytes(filePath);
+                            playlist.PhotoMimeType = fileType;
+                        }
+                    }
                 }
             }
             catch (Exception ex)

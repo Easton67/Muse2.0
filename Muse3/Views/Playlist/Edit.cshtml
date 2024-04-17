@@ -8,60 +8,55 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.PlaylistID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+<div class="form-horizontal mx-5">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.PlaylistID)
+    <div class="d-flex gap-3">
+        <div>
+            <div class="mt-4">
+                <div class="pull-left" style="margin-right: 10px">
+                    <img class="img-thumbnail" width="300" height="300" src="@Url.Action("GetPhoto", new { Model.PlaylistID })" />
+                </div>
+            </div>
+            <div class="d-flex">
+                <div>
+                    <input type="submit" value="Save" class="btn btn-generic" />
+                </div>
+                <div class="m-2">
+                    <a class="btn" href="javascript:;">
+                        <input type="file" name="image" size="40" onchange="$('#upload-file-info').html($(this).val());" />
+                    </a>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImageFilePath, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageFilePath, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImageFilePath, "", new { @class = "text-danger" })
+        <div class="fs-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    <br />
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="mt-4">
-            <div class="pull-left" style="margin-right: 10px">
-                <img class="img-thumbnail" width="180" height="120" src="@Url.Action("GetPhoto", new { Model.PlaylistID })" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <a class="btn" href="javascript:;">
-                    Upload Image
-                    Choose file...
-                    <input type="file" name="image" size="40" onchange="$('#upload-file-info').html($(this).val());" />
-                </a>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    <br />
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
     </div>
+</div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "ViewAllPlaylists")
+    <a class="mt-4 btn btn-generic" href="@Url.Action("ViewAllPlaylists", "Playlist")">
+        All Playlists
+    </a>
 </div>
 
 @section Scripts {

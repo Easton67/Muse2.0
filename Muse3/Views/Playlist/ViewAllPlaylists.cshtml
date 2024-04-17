@@ -27,7 +27,7 @@
     {
         <tr>
             <td>
-                <img class="img-thumbnail" width="180" height="120" src="@Url.Action("GetPhoto", new { playlist.PlaylistID })" alt="Art for @playlist.Title playlist." />
+                <img src="@Url.Action("GetPhoto", new { playlist.PlaylistID })" alt="Art for @playlist.Title playlist." />
                 @*<img src="~/MuseConfig/PlaylistImages/@Path.GetFileName(item.ImageFilePath)" alt="Art for @item.Title playlist." />*@
             </td>
             <td>

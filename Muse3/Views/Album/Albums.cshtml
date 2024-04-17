@@ -55,7 +55,7 @@
         <tr>
             <td>
                 <a href="@Url.Action("Details", "Album", new { id = album.AlbumID })">
-                    <img src="/MuseConfig/AlbumArt/@Path.GetFileName(album.ImageFilePath)" alt="Album art for @album.Title">
+                    <img src="@Url.Action("GetPhoto", new { album.AlbumID })" alt="Art for @album.Title by @album.ArtistID." />
                 </a>
             </td>
             <td>

@@ -12,17 +12,19 @@ print '' print '*** creating sp_create_new_user ***'
 GO
 CREATE PROCEDURE [dbo].[sp_create_new_user]
 (
-	@PasswordHash [nvarchar](100),
-	@Email [nvarchar](100),
-	@ProfileName [nvarchar](200),
-	@ImageFilePath [nvarchar](500)
+	@PasswordHash  [nvarchar](100),
+	@Email 		   [nvarchar](100),
+	@ProfileName   [nvarchar](200),
+	@ImageFilePath [nvarchar](500),
+	@Photo 	       [varbinary](MAX),
+	@PhotoMimeType [nvarchar](50)
 )
 AS
 	BEGIN
 		INSERT INTO [dbo].[User]
-				([ProfileName], [Email], [PasswordHash], [ImageFilePath])
+				([ProfileName], [Email], [PasswordHash], [ImageFilePath], [Photo], [PhotoMimeType])
 			VALUES
-				(@ProfileName, @Email, @PasswordHash, @ImageFilePath)
+				(@ProfileName, @Email, @PasswordHash, @ImageFilePath, @Photo, @PhotoMimeType)
 	END
 GO
 
@@ -67,7 +69,7 @@ AS
 			   [MinutesListened],
 			   [isPublic]
 		FROM   [User]
-		WHERE	@Email = [Email]
+		WHERE  @Email = [Email]
 	END
 GO
 
@@ -390,7 +392,9 @@ AS
 			   [Title], 
 			   [ArtistID], 
 			   [IsExplicit], 
-			   [ImageFilePath], 
+			   [ImageFilePath],
+			   [Photo], 
+			   [PhotoMimeType], 
 			   [Description], 
 			   [YearReleased], 
 			   [DateAdded]
@@ -1112,6 +1116,8 @@ AS
 				[ArtistID],
 				[isExplicit],
 				[ImageFilePath],
+				[Photo],
+				[PhotoMimeType],
 				[Description],
 				[YearReleased],
 				[DateAdded]

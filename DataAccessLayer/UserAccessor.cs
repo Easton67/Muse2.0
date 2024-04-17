@@ -23,6 +23,8 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@Email", user.Email);
             cmd.Parameters.AddWithValue("@ProfileName", user.ProfileName);
             cmd.Parameters.AddWithValue("@ImageFilePath", user.ImageFilePath);
+            cmd.Parameters.AddWithValue("@Photo", user.Photo);
+            cmd.Parameters.AddWithValue("@PhotoMimeType", user.PhotoMimeType);
 
             try
             {
@@ -126,6 +128,7 @@ namespace DataAccessLayer
                     int fieldIndex = 6; // column of photo data
                     long fieldWidth;
                     byte[] image = null;
+
                     if (!reader.IsDBNull(fieldIndex))
                     {
                         fieldWidth = reader.GetBytes(fieldIndex, 0, null, 0, Int32.MaxValue); // buffer size 
@@ -256,7 +259,6 @@ namespace DataAccessLayer
             }
             return roles;
         }
-
         public int InsertOrDeleteUserRole(int employeeID, string role, bool delete = false)
         {
             int rows = 0;
@@ -285,7 +287,6 @@ namespace DataAccessLayer
 
             return rows;
         }
-
         public List<string>SelectRolesByUserID(int userID)
         {
             List<string> roles = new List<string>();
@@ -338,6 +339,8 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@NewMinutesListened", newUser.MinutesListened);
             cmd.Parameters.AddWithValue("@OldActive", oldUser.Active);
             cmd.Parameters.AddWithValue("@NewActive", newUser.Active);
+            cmd.Parameters.AddWithValue("@NewPhoto", newUser.Photo);
+            cmd.Parameters.AddWithValue("@NewPhotoMimeType", newUser.PhotoMimeType);
 
             try
             {
@@ -347,7 +350,7 @@ namespace DataAccessLayer
 
                 if (rows == 0)
                 {
-                    throw new ArgumentException("Could not update your profile.");
+                    throw new ArgumentException("Unable to update your profile.");
                 }
             }
             catch (Exception ex)
@@ -397,36 +400,18 @@ namespace DataAccessLayer
         {
             int rows = 0;
 
-            // start with a connection object
             var conn = SqlConnectionProvider.GetConnection();
-
-            // set the command text
             var commandText = "sp_update_PasswordHash";
-
-            // create the command object
             var cmd = new SqlCommand(commandText, conn);
-
-            // set the command text
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // Add parameters
-            cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100);
-            cmd.Parameters.Add("@NewPasswordHash", SqlDbType.NVarChar, 100);
-            cmd.Parameters.Add("@OldPasswordHash", SqlDbType.NVarChar, 100);
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@NewPasswordHash", newPasswordHash);
+            cmd.Parameters.AddWithValue("@OldPasswordHash", oldPasswordHash);
 
-            // we Need to set the parameter values
-            cmd.Parameters["@Email"].Value = email;
-            cmd.Parameters["@NewPasswordHash"].Value = newPasswordHash;
-            cmd.Parameters["@OldPasswordHash"].Value = oldPasswordHash;
-
-
-            // now that we are all set up, we execute command in a try-catch-finally
             try
             {
-                // open the connection
                 conn.Open();
-
-                // an update is executed nonquery - returns an int
                 rows = cmd.ExecuteNonQuery();
 
                 if (rows == 0)
@@ -453,8 +438,6 @@ namespace DataAccessLayer
             var commandText = "sp_update_active_user";
             var cmd = new SqlCommand(commandText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
-
-            // Add parameters
 
             cmd.Parameters.AddWithValue("@UserID", UserID);
             cmd.Parameters.AddWithValue("@NewActive", newActive);

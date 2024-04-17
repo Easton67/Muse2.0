@@ -1,5 +1,7 @@
 ﻿using DataObjects;
 using LogicLayer;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +22,34 @@ namespace Muse3.Controllers
         private AlbumManager _albumManager = new AlbumManager();
         private SongManager _songManager = new SongManager();
         List<Album> albums = new List<Album>();
+
+        public int GetUserID()
+        {
+            var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = _userManager.FindByEmail(User.Identity.GetUserName());
+            return (int)user.UserID;
+        }
+
+        public FileContentResult GetPhoto(int AlbumID)
+        {
+            try
+            {
+                Album album = _albumManager.SelectAlbumByAlbumID(AlbumID);
+                if (album.Photo != null && album.PhotoMimeType != null)
+                {
+                    return File(album.Photo, album.PhotoMimeType);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
 
         // GET: Album
         public ActionResult Albums(string searchText)
@@ -48,7 +78,7 @@ namespace Muse3.Controllers
             {
                 int albumID = _albumManager.SelectAlbumIDFromTitle(albumTitle, artistID);
                 viewModel.album = _albumManager.SelectAlbumByAlbumID(albumID);
-                viewModel.songs = _songManager.SelectSongsByUserID(100001).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
+                viewModel.songs = _songManager.SelectSongsByUserID(GetUserID()).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
 
                 if (!string.IsNullOrEmpty(albumTitle) && !string.IsNullOrEmpty(artistID))
                 {

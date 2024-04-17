@@ -1,5 +1,7 @@
 ﻿using DataObjects;
 using LogicLayer;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,13 @@ namespace Muse3.Controllers
         private ArtistManager _artistManager = new ArtistManager();
         private SongManager _songManager = new SongManager();
         private AlbumManager _albumManager = new AlbumManager();
+
+        public int GetUserID()
+        {
+            var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = _userManager.FindByEmail(User.Identity.GetUserName());
+            return (int)user.UserID;
+        }
 
         // GET: Artist
         public ActionResult Artists()
@@ -44,7 +53,7 @@ namespace Muse3.Controllers
             try
             {
                 viewModel.artist = _artistManager.SelectArtistByArtistID(id);
-                viewModel.songs = _songManager.SelectSongsByUserID(100001).Where(song => song.Artist == viewModel.artist.ArtistID).ToList();
+                viewModel.songs = _songManager.SelectSongsByUserID(GetUserID()).Where(song => song.Artist == viewModel.artist.ArtistID).ToList();
                 viewModel.albums = _albumManager
                                                 .SelectAllAlbums()
                                                 .Where(album => album.ArtistID == viewModel.artist.ArtistID && !string.Equals(album.Title, "None"))

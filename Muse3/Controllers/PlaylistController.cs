@@ -36,15 +36,23 @@ namespace Muse3.Controllers
 
         public FileContentResult GetPhoto(int PlaylistID)
         {
-            Playlist playlist = _playlistManager.SelectPlaylistByUserID(GetUserID(), PlaylistID);
-            if (playlist.Photo != null && playlist.PhotoMimeType != null)
+            try
             {
-                return File(playlist.Photo, playlist.PhotoMimeType);
+                Playlist playlist = _playlistManager.SelectPlaylistByUserID(GetUserID(), PlaylistID);
+                if (playlist.Photo != null && playlist.PhotoMimeType != null)
+                {
+                    return File(playlist.Photo, playlist.PhotoMimeType);
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch (Exception)
             {
-                return null;
+                throw;
             }
+            
         }
 
         public ActionResult ViewAllPlaylists()
@@ -132,6 +140,7 @@ namespace Muse3.Controllers
         public ActionResult Edit(int id, Playlist playlist, HttpPostedFileBase image = null)
         {
             playlist.UserID = GetUserID();
+            playlist.ImageFilePath = "Not implemented";
 
             if (ModelState.IsValid)
             {
@@ -151,7 +160,7 @@ namespace Muse3.Controllers
                     Playlist oldPlaylist = (Playlist)Session["oldPlaylist"];
                     _playlistManager.UpdatePlaylist(oldPlaylist, playlist);
 
-                    return RedirectToAction("Edit");
+                    return RedirectToAction("ViewAllPlaylists");
                 }
                 catch (Exception ex)
                 {
@@ -160,7 +169,7 @@ namespace Muse3.Controllers
             }
             else
             {
-                return RedirectToAction("Edit");
+                return RedirectToAction("ViewAllPlaylists");
             }
         }
 
