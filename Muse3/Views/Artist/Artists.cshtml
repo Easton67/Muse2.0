@@ -5,14 +5,15 @@
 }
 
 <div class="row mx-5 row-cols- lg-10">
-    @foreach (var item in Model)
+    @foreach (var artist in Model)
     {
         <div id="library-cards-container" class="col my-4 mx-5 inline w-auto">
             <div id="image-container" class="image-container">
-                <a href="@Url.Action("Details", "Artist", new { id = item.ArtistID })">
-                    <img class="artist-img" src="~/MuseConfig/ProfileImages/@item.ImageFilePath" alt="Photo of @item.ArtistID" />
+                <a href="@Url.Action("Details", "Artist", new { id = artist.ArtistID })">
+                    <img class="artist-img" src="@Url.Action("GetArtistPhoto", "Helper", new { artist.ArtistID })" alt="Photo of @artist.ArtistID." />
+                    @*<img class="artist-img" src="~/MuseConfig/ProfileImages/@item.ImageFilePath" alt="Photo of @item.ArtistID" />*@
                 </a>
-                <p class="mt-4 text-center">@item.ArtistID</p>
+                <p class="mt-4 text-center">@artist.ArtistID</p>
             </div>
         </div>
     }

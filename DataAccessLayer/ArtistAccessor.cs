@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessInterfaces;
+using System.IO;
 
 namespace DataAccessLayer
 {
     public class ArtistAccessor : IArtistAccessor
     {
         private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
+        private string artistArtPath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\";
 
         public Artist SelectArtistByArtistID(string artistID)
         {
@@ -54,6 +56,36 @@ namespace DataAccessLayer
                         isLiked = reader.GetBoolean(7),
                         DateOfBirth = reader.IsDBNull(8) ? new DateTime(1990, 1, 1) : reader.GetDateTime(8)
                     };
+
+                    if (!reader.IsDBNull(fieldIndex))
+                    {
+                        fieldWidth = reader.GetBytes(fieldIndex, 0, null, 0, Int32.MaxValue);
+                        image = new byte[fieldWidth];
+                        reader.GetBytes(fieldIndex, 0, image, 0, image.Length);
+                    }
+
+                    // turn the image file path into a byte array
+                    if (artist.ImageFilePath != null)
+                    {
+                        string filePath = "";
+                        string fileType = "";
+                        try
+                        {
+                            filePath = artistArtPath + artist.ImageFilePath;
+                            fileType = Path.GetExtension(filePath);
+
+                            artist.Photo = File.ReadAllBytes(filePath);
+                            artist.PhotoMimeType = fileType;
+                        }
+                        catch (Exception ex)
+                        {
+                            filePath = defaultImg;
+                            fileType = Path.GetExtension(filePath);
+
+                            artist.Photo = File.ReadAllBytes(filePath);
+                            artist.PhotoMimeType = fileType;
+                        }
+                    }
                 }
                 else
                 {
@@ -99,7 +131,7 @@ namespace DataAccessLayer
                             DateOfBirth = reader.IsDBNull(8) ? new DateTime(1990, 1, 1) : reader.GetDateTime(8)
                         };
 
-                        int columnIndex = 9;
+                        int columnIndex = 3;
                         try
                         {
                             fieldWidth = reader.GetBytes(columnIndex, 0, null, 0, Int32.MaxValue);
@@ -116,7 +148,7 @@ namespace DataAccessLayer
                             reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
                         }
 
-                        artist.PhotoMimeType = reader.IsDBNull(3) ? null : reader.GetString(3);
+                        artist.PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4);
                         artist.Photo = photo;
                         artists.Add(artist);
                     }
@@ -185,6 +217,29 @@ namespace DataAccessLayer
                         int width = (int)fieldWidth;
                         photo = new byte[width];
                         reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
+                    }
+
+                    // turn the image file path into a byte array
+                    if (song.ImageFilePath != null)
+                    {
+                        string filePath = "";
+                        string fileType = "";
+                        try
+                        {
+                            filePath = song.ImageFilePath;
+                            fileType = Path.GetExtension(filePath);
+
+                            song.Photo = File.ReadAllBytes(filePath);
+                            song.PhotoMimeType = fileType;
+                        }
+                        catch (Exception ex)
+                        {
+                            filePath = defaultImg;
+                            fileType = Path.GetExtension(filePath);
+
+                            song.Photo = File.ReadAllBytes(filePath);
+                            song.PhotoMimeType = fileType;
+                        }
                     }
 
                     song.PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4);

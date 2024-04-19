@@ -7,12 +7,16 @@
 
 <div class="px-3">
     <div class="d-flex">
-        <img style="width: 200px; height: 200px; border-radius: 50px;" src="/MuseConfig/ProfileImages/@Path.GetFileName(@Model.artist.ImageFilePath)" alt="Photo of @Model.artist.ArtistID">
-        <div class="px-3">
-            <h2>@Model.artist.ArtistID</h2>
-            <p>Name: @Model.artist.FirstName @Model.artist.LastName</p>
-            <p>Birthday: @Model.artist.DateOfBirth.Value.ToShortDateString()</p>
-            <p>Description: @Model.artist.Description</p>
+        <a href="@Url.Action("Details", "Artist", new { id = @Model.artist.ArtistID })">
+            <img style="width: 200px; height: 200px; border-radius: 50px;" src="@Url.Action("GetArtistPhoto", "Helper", new { @Model.artist.ArtistID })" alt="Photo of @Model.artist.ArtistID." />
+            @*<img class="artist-img" src="~/MuseConfig/ProfileImages/@item.ImageFilePath" alt="Photo of @item.ArtistID" />*@
+        </a>
+        <div class="px-3 fw-bolder">
+            <h2 class="fw-semibold">@Model.artist.ArtistID</h2>
+            <br class="fw-light"/>
+            <h4 class="fw-semibold">Birth Name: @Model.artist.FirstName @Model.artist.LastName</h4>
+            <h4 class="fw-semibold">Born: @Model.artist.DateOfBirth.Value.ToShortDateString()</h4>
+            <h4 class="fw-semibold">@Model.artist.Description</h4>
         </div>
     </div>
 
@@ -35,7 +39,8 @@
         {
             <div id="library-cards-container" class="col my-4 inline w-auto">
                 <a onclick="window.location.href='@Url.Action("Details", "Album", new { id = album.AlbumID })'">
-                    <img id="album-img" class="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(album.ImageFilePath)" alt="Album art for @album.Title by @album.ArtistID" />
+                    <img id="album-img" class="album-img" src="@Url.Action("GetAlbumPhoto", "Helper", new { album.AlbumID })" alt="Album art for @album.Title by @album.ArtistID" />
+                    @*<img id="album-img" class="album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(album.ImageFilePath)" alt="Album art for @album.Title by @album.ArtistID" />*@
                 </a>
                 <div class="mx-5 song-info-div">
                     <br>
@@ -90,7 +95,8 @@
             {
                 <tr class="playlist-table">
                     <td class="playlist-table-border">
-                        <img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(song.ImageFilePath)" alt="Album art" data-songid="@song.SongID">
+                        <img id="album-img" class="album-img list-album-img" src="@Url.Action("GetSongPhoto", "Helper", new { song.SongID })" alt="Album art" data-songid="@song.SongID">
+                        @*<img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(song.ImageFilePath)" alt="Album art" data-songid="@song.SongID">*@
                         <button id="library-play-button" class="library-play-button list-view-library-play-button">
                             <img id="library-play-img" src="~/Images/play.png" />
                         </button><br />
@@ -134,13 +140,11 @@
         var libraryURL = '@Url.Action("Details", "Artist")' + '?searchText=' + encodeURIComponent(title);
         window.location.href = libraryURL;
     };
-
     function showAlbums() {
         document.querySelector('#table-playlist-songs').style.display = 'none';
         document.querySelector('#album-view').style.display = 'flex';
         document.querySelector('#song-header-container').style.display = 'none';
     }
-
     function showSongs() {
         document.querySelector('#album-view').style.display = 'none';
         document.querySelector('#table-playlist-songs').style.display = 'table';

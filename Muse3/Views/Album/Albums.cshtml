@@ -55,7 +55,7 @@
         <tr>
             <td>
                 <a href="@Url.Action("Details", "Album", new { id = album.AlbumID })">
-                    <img src="@Url.Action("GetPhoto", new { album.AlbumID })" alt="Art for @album.Title by @album.ArtistID." />
+                    <img src="@Url.Action("GetAlbumPhoto", "Helper", new { album.AlbumID })" alt="Art for @album.Title by @album.ArtistID." />
                 </a>
             </td>
             <td>

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace Muse3.Controllers
 {
@@ -33,7 +34,6 @@ namespace Muse3.Controllers
         public ActionResult Artists()
         {
             List<Artist> artists = new List<Artist>();
-
             try
             {
                 artists = _artistManager.SelectAllArtists();
@@ -54,8 +54,7 @@ namespace Muse3.Controllers
             {
                 viewModel.artist = _artistManager.SelectArtistByArtistID(id);
                 viewModel.songs = _songManager.SelectSongsByUserID(GetUserID()).Where(song => song.Artist == viewModel.artist.ArtistID).ToList();
-                viewModel.albums = _albumManager
-                                                .SelectAllAlbums()
+                viewModel.albums = _albumManager.SelectAllAlbums()
                                                 .Where(album => album.ArtistID == viewModel.artist.ArtistID && !string.Equals(album.Title, "None"))
                                                 .ToList();
                 if (!string.IsNullOrEmpty(searchText))

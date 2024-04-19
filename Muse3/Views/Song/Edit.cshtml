@@ -15,7 +15,7 @@
                     <div class="col-md-10">
                         <img onclick="document.getElementById('file-input').click();"
                              id="album-img-edit"
-                             src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)"
+                             src="@Url.Action("GetSongPhoto", "Helper", new { songID = Model.SongID })"
                              alt="Album art for @Model.Album by @Model.Artist"
                              style="cursor: pointer;" />
                         <input type="file"

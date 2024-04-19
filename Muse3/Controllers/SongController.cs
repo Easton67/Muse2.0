@@ -31,6 +31,26 @@ namespace Muse3.Controllers
             return (int)user.UserID;
         }
 
+        public FileContentResult GetPhoto(int SongID)
+        {
+            try
+            {
+                Song song = _songManager.SelectSongBySongID(GetUserID(), SongID);
+                if (song.Photo != null && song.PhotoMimeType != null)
+                {
+                    return File(song.Photo, song.PhotoMimeType);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public ActionResult Library(string searchText, string ascOrDesc, string sortedProperty, string isFavorite, int? songID)
         {
             List<Song> songs = new List<Song>();
@@ -297,7 +317,6 @@ namespace Muse3.Controllers
             return View();
         }
 
-
         // POST: Song/Create
         [HttpPost]
         public ActionResult Create(Song song, HttpPostedFileBase mp3File, HttpPostedFileBase imageFile)
@@ -419,7 +438,7 @@ namespace Muse3.Controllers
             try
             {
                 _songManager.DeleteSong(id);
-
+                        
                 return RedirectToAction("Library");
             }
             catch

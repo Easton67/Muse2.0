@@ -31,7 +31,8 @@
         <div>
             @*https://micku7zu.github.io/vanilla-tilt.js/*@
             <div class="your-element" data-tilt>
-                <img onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art">
+                @*<img onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(@Model.ImageFilePath)" alt="Album art">*@
+                <img onclick="openFileDialog()" id="album-img-edit" src="@Url.Action("GetSongPhoto", "Helper", new { songID = Model.SongID })" alt="Art for @Model.Title by @Model.Artist." />
             </div>
             <p class="mt-2">Added: @Model.DateAdded.Date.ToShortDateString()</p>
             <div>

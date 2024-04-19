@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -12,6 +13,9 @@ namespace DataAccessLayer
     public class SongAccessor : ISongAccessor
     {
         private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png";
+        private string albumArtPath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\";
+
+
         public int InsertSong(Song song)
         {
             int rows = 0;
@@ -93,28 +97,65 @@ namespace DataAccessLayer
 
                 var reader = cmd.ExecuteReader();
 
-                if (reader.HasRows)
+                if (reader.Read())
                 {
-                    reader.Read();
+                    int fieldIndex = 3;
+                    long fieldWidth;
+                    byte[] image = null;
+
                     song = new Song
                     {
                         SongID = reader.GetInt32(0),
                         Title = reader.GetString(1),
                         ImageFilePath = reader.IsDBNull(2) ? defaultImg : AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\" + reader.GetString(2),
-                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(3),
-                        YearReleased = reader.IsDBNull(4) ? 2023 : reader.GetInt32(4),
-                        Lyrics = reader.IsDBNull(5) ? "No Lyrics Provided" : reader.GetString(5),
-                        Explicit = reader.GetBoolean(6),
-                        Genre = reader.GetString(7),
-                        Plays = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
-                        UserID = reader.GetInt32(9),
-                        Artist = reader.GetString(10),
-                        Album = reader.IsDBNull(11) ? "" : reader.GetString(11),
-                        DateUploaded = reader.IsDBNull(12) ? (DateTime?)null : reader.GetDateTime(12),
-                        DateAdded = reader.GetDateTime(13),
-                        isLiked = reader.GetBoolean(14),
-                        isPublic = reader.GetBoolean(15)
+
+                        Photo = reader.IsDBNull(3) ? null : image,
+                        PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4),
+
+                        Mp3FilePath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\SongFiles\\" + reader.GetString(5),
+                        YearReleased = reader.IsDBNull(6) ? 2023 : reader.GetInt32(6),
+                        Lyrics = reader.IsDBNull(7) ? "No Lyrics Provided" : reader.GetString(7),
+                        Explicit = reader.GetBoolean(8),
+                        Genre = reader.GetString(9),
+                        Plays = reader.IsDBNull(10) ? 0 : reader.GetInt32(10),
+                        UserID = reader.GetInt32(11),
+                        Artist = reader.GetString(12),
+                        Album = reader.IsDBNull(13) ? "" : reader.GetString(13),
+                        DateUploaded = reader.IsDBNull(14) ? (DateTime?)null : reader.GetDateTime(14),
+                        DateAdded = reader.GetDateTime(15),
+                        isLiked = reader.GetBoolean(16),
+                        isPublic = reader.GetBoolean(17)
                     };
+
+                    if (!reader.IsDBNull(fieldIndex))
+                    {
+                        fieldWidth = reader.GetBytes(fieldIndex, 0, null, 0, Int32.MaxValue);
+                        image = new byte[fieldWidth];
+                        reader.GetBytes(fieldIndex, 0, image, 0, image.Length);
+                    }
+
+                    // turn the image file path into a byte array
+                    if (song.ImageFilePath != null)
+                    {
+                        string filePath = "";
+                        string fileType = "";
+                        try
+                        {
+                            filePath = song.ImageFilePath;
+                            fileType = Path.GetExtension(filePath);
+
+                            song.Photo = File.ReadAllBytes(filePath);
+                            song.PhotoMimeType = fileType;
+                        }
+                        catch (Exception ex)
+                        {
+                            filePath = defaultImg;
+                            fileType = Path.GetExtension(filePath);
+
+                            song.Photo = File.ReadAllBytes(filePath);
+                            song.PhotoMimeType = fileType;
+                        }
+                    }
                 }
                 else
                 {

@@ -390,7 +390,7 @@ AS
 	BEGIN
 		SELECT [AlbumID], 
 			   [Title], 
-			   [ArtistID], 
+			   [ArtistID], 	
 			   [IsExplicit], 
 			   [ImageFilePath],
 			   [Photo], 
@@ -1178,6 +1178,8 @@ AS
 		SELECT	[Song].[SongID], 
 				[Song].[Title],
 				[Song].[ImageFilePath],
+				[Song].[Photo],
+				[Song].[PhotoMimeType],
 				[Song].[Mp3FilePath],
 				[Song].[YearReleased],
 				[Song].[Lyrics],
