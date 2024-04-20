@@ -14,8 +14,10 @@
 <body>
     <nav class="navbar sticky-lg-top navbar-expand-lg navbar-dark bg-purple-radial-background">
         <div class="container-fluid">
-            <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "" })">
-                <img id="nav-muse-logo" src="~/Images/museV3Logo.png" />
+            <a class="navbar-brand d-flex" href="@Url.Action("Index", "Home", new { area = "" })">
+                <img class="mx-3" id="nav-muse-logo" src="~/Images/museV3Logo.png" />
+                @*If I do a singular playbar, its going here, but I ran out of time to code the JS to get the source and play/pause on button click*@
+                @*<audio style="display: block;" controls src="/MuseConfig/SongFiles/Solo.mp3" data-audio-songid="100006"></audio>*@
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,13 +43,13 @@
                     }
                     @Html.Partial("_LoginPartial")
                 </ul>
-                <div class="mt-3">
+                @*<div class="mt-3">
                     <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "" })">
                         <svg xmlns="http://www.w3.org/2000/svg" width="82" height="80.003" viewBox="0 0 82 80.003">
                             <path id="Subtraction_1" data-name="Subtraction 1" d="M707.491,10526,694,10526a13,13,0,0,1-13-13v-54a13,13,0,0,1,13-13h56a13,13,0,0,1,13,13v54a13,13,0,0,1-13,13H734.517c5.41-.134,9.013-.88,9.013-4.09,0-2.794-2.4-7.061-5.846-10.377a22.217,22.217,0,0,0-15.355-6.519c8.682,0,15.743-8.385,15.743-18.688s-7.062-18.687-15.743-18.687-15.743,8.383-15.743,18.687,7.062,18.688,15.743,18.688l0,0c-7.372,0-12.942,4.468-15.606,7.132-3.953,3.952-6.117,8.346-6.146,10.473-.028,2.189,1.977,3.168,6.919,3.379Zm21.638,0H714.86l.32-.006.161,0c1.95-.034,4.16-.073,6.451-.073,2.045,0,3.968.029,5.828.058l.225,0,1.284.02Z" transform="translate(-681 -10446)" fill="rgba(171,156,209,0.32)" />
                         </svg>
                     </a>
-                </div>
+                </div>*@
             </div>
         </div>
     </nav>

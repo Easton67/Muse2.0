@@ -20,7 +20,6 @@ namespace Muse3.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private MessageManager _messageManager;
 
         public AccountController()
         {
@@ -339,7 +338,10 @@ namespace Muse3.Controllers
                 body.AppendLine("Your Homes for the Homeless account password reset link is below: ");
                 body.AppendLine(callbackUrl);
 
-                await _messageManager.SendEmail(user.Email
+
+                MessageManager _messageManager = new LogicLayer.MessageManager();
+
+        await _messageManager.SendEmail(user.Email
                     , "homesforthehomelesscompany@gmail.com"
                     , body.ToString());
                 return View("ForgotPasswordConfirmation");

@@ -399,7 +399,7 @@ div textarea {
     border-radius: 13px;
     max-width: fit-content;
     margin: 50px auto;
-    width: 800px;
+    width: 30rem;
     position: relative;
     backdrop-filter: blur(1em);
 }

@@ -2,6 +2,7 @@
 @model LoginViewModel
 @{
     ViewBag.Title = "Login";
+    ViewBag.PageType = "NoHero";
 }
 
 <main aria-labelledby="title">
@@ -32,14 +33,14 @@
                     <br />
                     <div class="row">
                         <div>
-                            <input id="submit" type="submit" value="Log in" class="btn bg-purple" />
+                            <input id="submit" type="submit" value="Log in" class="btn bg-purple fw-semibold" />
                         </div>
                     </div>
                 </form>
                 <br />
                 <div class="footer-buttons-container">
                     @Html.ActionLink("Sign Up", "Register", new { @class = "footer-buttons" })
-                    @Html.ActionLink("Forgot Password", "Register", new { @class = "footer-buttons" })
+                    @Html.ActionLink("Forgot Password", "Register", "Account", new { @class = "mx-2 footer-buttons" })
                 </div>
                 <br>
                 <br>

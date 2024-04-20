@@ -1,6 +1,7 @@
 ﻿@model Muse3.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+    ViewBag.PageType = "NoHero";
 }
 
 
@@ -47,12 +48,12 @@
             <br />
             <div class="row">
                 <div>
-                    <input id="submit" type="submit" value="Register" class="btn bg-purple" />
+                    <input id="submit" type="submit" value="Register" class="btn bg-purple fw-semibold" />
                 </div>
             </div>
         </form>
         <br />
-        <div class="footer-buttons-container">
+        <div class="footer-buttons-container d-flex">
             @Html.ActionLink("Forgot Password?", "ForgotPassword", null, new { @class = "mx-5 login-footer-links" })
             @Html.ActionLink("Login", "Login", null, new { @class = "mx-5 login-footer-links" })
         </div>
