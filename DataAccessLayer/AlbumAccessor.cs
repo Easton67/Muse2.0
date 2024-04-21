@@ -130,7 +130,6 @@ namespace DataAccessLayer
             }
             return album;
         }
-
         public List<Album> SelectAllAlbums()
         {
             List<Album> albums = new List<Album>();

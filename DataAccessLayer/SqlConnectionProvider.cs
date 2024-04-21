@@ -9,10 +9,6 @@ namespace DataAccessLayer
 {
     public class SqlConnectionProvider
     {
-        // use a factory method to ensure that there is only 
-        // one method in the entire project that has the 
-        // database connection string
-
         private static string connectionString = @"Data Source=E67\SQLEXPRESS;Initial Catalog=musedb;Integrated Security=True;";
 
         public static SqlConnection GetConnection()

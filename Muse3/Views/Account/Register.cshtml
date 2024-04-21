@@ -6,7 +6,6 @@
 
 
 <main aria-labelledby="title">
-
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
     {
         @Html.AntiForgeryToken()

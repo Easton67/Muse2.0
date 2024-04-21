@@ -95,7 +95,7 @@
                 }
                 else
                 {
-                    <a class="mt-4" href="@Url.Action("DetailsFromArtistAndTitle", "Album", new { albumTitle = item.ReviewedSong.Album, artistID = item.ReviewedSong.Artist})">
+                    <a class="mt-4" href="@Url.Action("Details", "Album", new { albumTitle = item.ReviewedSong.Album, artistID = item.ReviewedSong.Artist})">
                         @album
                     </a>
                 }

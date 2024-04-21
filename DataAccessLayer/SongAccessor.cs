@@ -411,17 +411,6 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@NewAlbumTitle", newSong.Album); 
             cmd.Parameters.AddWithValue("@NewIsLiked", newSong.isLiked);
 
-            cmd.Parameters.AddWithValue("@OldTitle", oldSong.Title);
-            cmd.Parameters.AddWithValue("@OldImageFilePath", oldSong.ImageFilePath);
-            cmd.Parameters.AddWithValue("@OldYearReleased", oldSong.YearReleased);
-            cmd.Parameters.AddWithValue("@OldLyrics", oldSong.Lyrics);
-            cmd.Parameters.AddWithValue("@OldExplicit", oldSong.Explicit);
-            cmd.Parameters.AddWithValue("@OldGenre", oldSong.Genre);
-            cmd.Parameters.AddWithValue("@OldPlays", oldSong.Plays);
-            cmd.Parameters.AddWithValue("@OldArtistID", oldSong.Artist);
-            cmd.Parameters.AddWithValue("@OldAlbumTitle", oldSong.Album);
-            cmd.Parameters.AddWithValue("@OldIsLiked", oldSong.isLiked);
-
             try
             {
                 conn.Open();

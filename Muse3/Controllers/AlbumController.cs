@@ -94,7 +94,7 @@ namespace Muse3.Controllers
             return View(viewModel);
         }
 
-        // GET: Album/Details
+        //GET: Album/Details
         //public ActionResult DetailsFromArtistAndTitle(string albumTitle, string artistID)
         //{
         //    AlbumDetailsViewModel viewModel = new AlbumDetailsViewModel();

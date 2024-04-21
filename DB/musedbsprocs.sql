@@ -652,18 +652,7 @@ CREATE PROCEDURE [dbo].[sp_update_song]
     @NewPlays int,
     @NewArtistID nvarchar(200),
     @NewAlbumTitle nvarchar(255),
-    @NewIsLiked bit,
-
-    @OldTitle nvarchar(180),
-    @OldImageFilePath nvarchar(500),
-    @OldYearReleased int,
-    @OldLyrics nvarchar(max),
-    @OldExplicit bit,
-    @OldGenre nvarchar(200),
-    @OldPlays int,
-    @OldArtistID nvarchar(200),
-    @OldAlbumTitle nvarchar(255),
-    @OldIsLiked bit
+    @NewIsLiked bit
 )
 AS
 	BEGIN

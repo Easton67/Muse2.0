@@ -1,5 +1,7 @@
 ﻿using DataObjects;
 using LogicLayer;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Muse3.Controllers
 {
+
     public class ReviewController : Controller
     {
         private ReviewManager _reviewManager = new ReviewManager();
@@ -15,12 +18,19 @@ namespace Muse3.Controllers
 
         List<Review> reviews = new List<Review>();
 
+        public int GetUserID()
+        {
+            var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = _userManager.FindByEmail(User.Identity.GetUserName());
+            return (int)user.UserID;
+        }
+
         // GET: Review
         public ActionResult Reviews()
         {
             try
             {
-                reviews = _reviewManager.SelectReviewsByUserID(100001);
+                reviews = _reviewManager.SelectReviewsByUserID(GetUserID());
             }
             catch (Exception)
             {
@@ -36,7 +46,7 @@ namespace Muse3.Controllers
 
             try
             {
-                review = _reviewManager.SelectReviewByReviewID(100000, id);
+                review = _reviewManager.SelectReviewByReviewID(GetUserID(), id);
             }
             catch (Exception ex)
             {
@@ -58,10 +68,10 @@ namespace Muse3.Controllers
         {
             Song song = new Song();
             Review review = new Review();
-
+            
             try
             {
-                song = _songManager.SelectSongBySongID(100001, songID);
+                song = _songManager.SelectSongBySongID(GetUserID(), songID);
                 review.ReviewedSong = song;
             }
             catch (Exception ex)
@@ -92,7 +102,7 @@ namespace Muse3.Controllers
             catch (Exception ex)
             {
                 return View(review);
-            }   
+            }
         }
 
         // GET: Review/Edit/5
@@ -102,7 +112,7 @@ namespace Muse3.Controllers
 
             try
             {
-                review = _reviewManager.SelectReviewByReviewID(100000, id);
+                review = _reviewManager.SelectReviewByReviewID(GetUserID(), id);
                 Session["oldReview"] = review;
             }
             catch (Exception ex)

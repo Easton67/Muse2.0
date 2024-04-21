@@ -36,7 +36,7 @@ namespace Muse3.Controllers
             List<Artist> artists = new List<Artist>();
             try
             {
-                artists = _artistManager.SelectAllArtists();
+                artists = _artistManager.SelectAllArtists();    
             }
             catch (Exception ex)
             {

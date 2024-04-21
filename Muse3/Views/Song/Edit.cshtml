@@ -8,8 +8,8 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="mx-5 my-4 d-flex justify-content-between">
-        <div class="d-flex justify-content-between">
+    <div class="mx-5 my-4">
+        <div class="d-flex justify-content-center">
             <div>
                 <div class="form-group">
                     <div class="col-md-10">
@@ -17,7 +17,7 @@
                              id="album-img-edit"
                              src="@Url.Action("GetSongPhoto", "Helper", new { songID = Model.SongID })"
                              alt="Album art for @Model.Album by @Model.Artist"
-                             style="cursor: pointer;" />
+                             style="cursor: pointer; width: 30rem; height: 30rem;" />
                         <input type="file"
                                id="file-input"
                                name="imageFile"
@@ -29,15 +29,17 @@
                     </div>
                 </div>
                 <p class="mt-2">Added: @Model.DateAdded.Date.ToShortDateString()</p>
-                <div class="d-flex">
-                    @Html.ActionLink("Back to Library", "Library")
-                </div>
-                <div class="col-md-10" style="display: none;">
-                    @Html.EditorFor(model => model.Plays, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+                <div class="d-flex justify-content-between">
+                    <div class="btn-add" onclick="window.location.href='@Url.Action("Library", "Song")'">
+                        Back to Library
+                    </div>
+                    <div class="btn-add" onclick="window.location.href='@Url.Action("Details", "Song", new { id = Model.SongID })'">
+                        View Song
+                    </div>
+                    <input type="submit" value="Save" class="btn-add" />
                 </div>
             </div>
-            <div class="fs-5 px-5 song-form-edit">
+            <div class="fs-5 px-5 song-form-edit mt-1"> 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
                     <br>
@@ -74,8 +76,6 @@
                     </div>
                 </div>
                 <br />
-            </div>
-            <div class="fs-5 px-5 song-form-edit">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
                     <br>
@@ -83,21 +83,6 @@
                         @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
                     </div>
-                </div>
-                <br />
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Plays, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
-                    <br>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Plays, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
-                    </div>
-                    <br />
-                </div>
-                <br />
-                <div>
-                    <br />
-                    <input type="submit" value="Save" class="btn bg-purple text-light w-75 fs-5" />
                 </div>
             </div>
             <div style="width: 500px; height: 300px;">
@@ -108,6 +93,7 @@
         </div>
     </div>
 }
+
 
 <script>
     function openFileDialog() {
