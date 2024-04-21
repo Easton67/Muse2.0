@@ -652,7 +652,9 @@ CREATE PROCEDURE [dbo].[sp_update_song]
     @NewPlays int,
     @NewArtistID nvarchar(200),
     @NewAlbumTitle nvarchar(255),
-    @NewIsLiked bit
+    @NewIsLiked bit,
+	@NewPhoto		  [varbinary](MAX),
+	@NewPhotoMimeType [nvarchar](50)
 )
 AS
 	BEGIN
@@ -685,6 +687,8 @@ AS
 		UPDATE [Song]
 		SET [Title] = @NewTitle,
 			[ImageFilePath] = @NewImageFilePath,
+			[NewPhoto] = @NewPhoto
+			[NewPhotoMimeType] = @NewPhotoMimeType
 			[YearReleased] = @NewYearReleased,
 			[Lyrics] = @NewLyrics,
 			[Explicit] = @NewExplicit,

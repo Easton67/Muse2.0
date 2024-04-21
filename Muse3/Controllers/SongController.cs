@@ -397,32 +397,43 @@ namespace Muse3.Controllers
 
         // POST: Song/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Song song, HttpPostedFileBase imageFile)
+        public ActionResult Edit(int id, Song song, HttpPostedFileBase imageFile = null)
         {
             try
             {
-                if (ModelState.IsValid)
+                HttpPostedFileBase photo = imageFile;
+                string mimeType = null;
+                byte[] photoOut = null;
+
+                if (photo != null)
                 {
-                    Song oldSong = (Song)Session["oldSong"];
-                    var newSong = new Song()
-                    {
-                        Title = song.Title,
-                        ImageFilePath = (imageFile != null) ? Path.GetFileName(imageFile.FileName) : Path.GetFileName(oldSong.ImageFilePath),
-                        Mp3FilePath = oldSong.Mp3FilePath,
-                        YearReleased = song.YearReleased,
-                        Lyrics = song.Lyrics,
-                        Explicit = song.Explicit,
-                        Genre = song.Genre,
-                        Plays = song.Plays,
-                        UserID = GetUserID(),
-                        Artist = song.Artist,
-                        Album = song.Album,
-                        DateUploaded = null,
-                        DateAdded = DateTime.Now,
-                        isLiked = false,
-                    };
-                    _songManager.UpdateSong(oldSong, newSong);
+                    song.PhotoMimeType = photo.ContentType;
+                    song.Photo = new byte[photo.ContentLength];
+                    imageFile.InputStream.Read(song.Photo, 0, photo.ContentLength);
                 }
+
+                Song oldSong = (Song)Session["oldSong"];
+
+                var newSong = new Song()
+                {
+                    Title = song.Title,
+                    ImageFilePath = (imageFile != null) ? Path.GetFileName(imageFile.FileName) : Path.GetFileName(oldSong.ImageFilePath),
+                    Mp3FilePath = oldSong.Mp3FilePath,
+                    YearReleased = song.YearReleased,
+                    Lyrics = song.Lyrics,
+                    Explicit = song.Explicit,
+                    Genre = song.Genre,
+                    Plays = song.Plays,
+                    UserID = GetUserID(),
+                    Artist = song.Artist,
+                    Album = song.Album,
+                    DateUploaded = null,
+                    DateAdded = DateTime.Now,
+                    isLiked = false,
+                };
+
+                _songManager.UpdateSong(oldSong, newSong);
+
                 return RedirectToAction("Library");
             }
             catch

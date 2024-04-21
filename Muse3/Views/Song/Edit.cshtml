@@ -41,7 +41,7 @@
             </div>
             <div class="fs-5 px-5 song-form-edit mt-1"> 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                    Title:
                     <br>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
@@ -50,7 +50,7 @@
                 </div>
                 <br />
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Album, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                    Album:
                     <br>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Album, new { htmlAttributes = new { @class = "form-control" } })
@@ -59,7 +59,7 @@
                 </div>
                 <br />
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Artist, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                    Artist:
                     <br>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Artist, new { htmlAttributes = new { @class = "form-control" } })
@@ -68,7 +68,7 @@
                 </div>
                 <br />
                 <div class="form-group">
-                    Year Released
+                    Year Released:
                     <br>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.YearReleased, new { htmlAttributes = new { @class = "form-control" } })
@@ -77,7 +77,7 @@
                 </div>
                 <br />
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+                    Genre:
                     <br>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
@@ -85,8 +85,8 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 500px; height: 300px;">
-                <div style="width: 500px; height: 300px;">
+            <div>
+                <div>
                     @Html.TextAreaFor(model => model.Lyrics, new { @class = "form-control", rows = "4", id = "lyrics" })
                 </div>
             </div>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using static System.Net.Mime.MediaTypeNames;
@@ -398,7 +399,29 @@ namespace DataAccessLayer
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // Add parameters
+            // turn the image file path into a byte array
+            if (newSong.ImageFilePath != null)
+            {
+                string filePath = "";
+                string fileType = "";
+                try
+                {
+                    filePath = albumArtPath + newSong.ImageFilePath;
+                    fileType = Path.GetExtension(filePath);
+
+                    newSong.Photo = File.ReadAllBytes(filePath);
+                    newSong.PhotoMimeType = fileType;
+                }
+                catch (Exception)
+                {
+                    filePath = defaultImg;
+                    fileType = Path.GetExtension(filePath);
+
+                    newSong.Photo = File.ReadAllBytes(filePath);
+                    newSong.PhotoMimeType = fileType;
+                }
+            }
+
             cmd.Parameters.AddWithValue("@SongID", oldSong.SongID);
             cmd.Parameters.AddWithValue("@NewTitle", newSong.Title);
             cmd.Parameters.AddWithValue("@NewImageFilePath", newSong.ImageFilePath);
@@ -410,6 +433,8 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@NewArtistID", newSong.Artist); 
             cmd.Parameters.AddWithValue("@NewAlbumTitle", newSong.Album); 
             cmd.Parameters.AddWithValue("@NewIsLiked", newSong.isLiked);
+            cmd.Parameters.AddWithValue("@NewPhoto", ((object)newSong.Photo) ?? SqlBinary.Null);
+            cmd.Parameters.AddWithValue("@NewPhotoMimeType", newSong.PhotoMimeType);
 
             try
             {
