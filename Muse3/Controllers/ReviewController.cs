@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace Muse3.Controllers
 {
@@ -70,7 +71,6 @@ namespace Muse3.Controllers
             }
             catch (Exception ex)
             {
-
                 throw;
             }
 
@@ -81,10 +81,15 @@ namespace Muse3.Controllers
         [HttpPost]
         public ActionResult CreateWithSongProvided(Review review)
         {
+
             try
             {
+                Song song = new Song();
                 if (ModelState.IsValid)
                 {
+                    song = _songManager.SelectSongBySongID(GetUserID(), review.SongID);
+                    review.ReviewedSong = song;
+                    review.UserID = GetUserID();
                     _reviewManager.CreateReview(review);
                     return RedirectToAction("Reviews");
                 }

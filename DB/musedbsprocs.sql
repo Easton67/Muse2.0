@@ -423,8 +423,8 @@ AS
 		SET [Title] = @NewTitle, 
 			[ImageFilePath] = @NewImageFilePath, 
 			[Description] = @NewDescription,
-			[YearReleased] = @NewYearReleased
-			[Photo] = @NewPhoto
+			[YearReleased] = @NewYearReleased,
+			[Photo] = @NewPhoto,
 			[PhotoMimeType] = @NewPhotoMimeType
 		WHERE [AlbumID] = @AlbumID
 	END
@@ -837,6 +837,8 @@ AS
 		SELECT [Song].[SongID], 
 			   [Song].[Title],
 			   [Song].[ImageFilePath],
+			   [Song].[Photo],
+			   [Song].[PhotoMimeType],
 			   [Song].[Mp3FilePath],
 			   [Song].[YearReleased],
 			   [Song].[Lyrics],
@@ -849,6 +851,7 @@ AS
 			   [Song].[DateUploaded],
 			   [Song].[DateAdded],
 			   [Song].[isLiked],
+			   [Song].[isPublic],
 			   [Review].[ReviewID], 
 			   [Review].[Rating], 
 			   [Review].[Message], 
@@ -860,6 +863,7 @@ AS
 		LEFT JOIN [Album] ON [SongAlbum].[AlbumID] = [Album].[AlbumID]
 		JOIN [User] ON [Review].[UserID] = [User].[UserID]
 		WHERE [Review].[UserID] = @UserID
+		AND [Review].[ReviewID] = @ReviewID
 	END
 GO
 

@@ -29,10 +29,29 @@
     </div>
 </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table text-light">
+@*card view*@
+<div id="library-grid-view" class="mx-1 row row-cols-lg-10 gap-4">
+    @foreach (var review in Model)
+    {
+        <div class="card album-card" loading="lazy" style="width: 18rem;
+                                        height: 18rem;
+                                        background-image: url('@Url.Action("GetSongPhoto", "Helper", new { review.ReviewedSong.SongID })'); "
+             onclick="window.location.href='@Url.Action("Details", "Review", new { id = review.ReviewID })'">
+
+            @*used as spacer*@
+            <a style="display: block; width: 100%; height: 100%;">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title h3 fw-bold text-dark">@review.ReviewedSong.Title</h5>
+                <p class="card-text fw-bold h5 text-dark">@review.ReviewedSong.Artist</p>
+                <p class="card-text fw-bold h5 text-dark"></p>
+                <p class="card-text fw-bold h5 text-dark">@review.Rating / 5</p>
+            </div>
+        </div>
+    }
+</div>
+
+@*<table class="table text-light">
     <tr class="text-nowrap">
         <th>
             Art
@@ -117,7 +136,7 @@
             </td>
         </tr>
     }
-</table>
+</table>*@
 
 <script>
     var deleteButtons = document.querySelectorAll('.delete-button');

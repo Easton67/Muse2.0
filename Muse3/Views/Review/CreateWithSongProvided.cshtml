@@ -2,17 +2,20 @@
 
 @{
     ViewBag.Title = "CreateWithSongProvided";
-    ViewBag.Hero = "Review";    
+    ViewBag.Title = "Review";   
 }
 
-<div class="mx-5 my-4 d-flex justify-content-between">
+<div class="mx-5 my-4 d-flex justify-content-center">
     <div class="d-flex justify-content-between">
         <div>
-            @*https://micku7zu.github.io/vanilla-tilt.js/*@
-            <div class="your-element" data-tilt>
-                <img onclick="openFileDialog()" id="album-img-edit" src="@Url.Action("GetSongPhoto", "Helper", new { songID = Model.ReviewedSong.SongID })" alt="Art for @Model.ReviewedSong.Title by @Model.ReviewedSong.Artist." />
+            <div>
+                <img id="album-img-edit" style="width: 30rem; height: 30rem;" src="@Url.Action("GetSongPhoto", "Helper", new { songID = Model.ReviewedSong.SongID })" alt="Art for @Model.ReviewedSong.Title by @Model.ReviewedSong.Artist." />
             </div>
-            <p class="mt-2">Added: @Model.ReviewedSong.DateAdded.Date.ToShortDateString()</p>
+            <div class="mt-3">
+                <button class="btn-add" onclick="window.location.href='@Url.Action("Library", "Song")'">
+                    Back to Library
+                </button>
+            </div>
         </div>
         <div class="fs-3 px-5 mt-4">
             <p>
@@ -57,45 +60,44 @@
             {
                 <p>Genre: @Html.DisplayFor(model => model.ReviewedSong.Genre)</p>
             }
-        </div>
+            <p class="mt-2 fs-5">Added: @Model.ReviewedSong.DateAdded.Date.ToShortDateString()</p>
+            <div class="text-nowrap mt-4">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            Rating:
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control", min = "0", max = "5" } })
+                                @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            Description:
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "form-control", placeholder = "Message" } })
+                                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-add" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            </div>
         <div>
-            <textarea readonly="readonly" style="height: 600px;" id="lyrics">@Model.ReviewedSong.Lyrics</textarea>
+            <textarea readonly="readonly" id="lyrics">@Model.ReviewedSong.Lyrics</textarea>
         </div>
     </div>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group mt-4">
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "form-control", placeholder = "Message" } })
-                    @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
-        <div>
-            @Html.ActionLink("All Reviews", "Index")
-        </div>
-    }
 </div>
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

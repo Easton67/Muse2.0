@@ -35,9 +35,8 @@
     <img onclick="searchForAlbum()" class="icon px-3" src="~/Images/search.svg" />
 </div>
 
-
 @*card view*@
-<div id="library-grid-view" class="mx-1 row row-cols- lg-10 gap-4">
+<div id="library-grid-view" class="mx-1 row row-cols-lg-10 gap-4">
     @foreach (var album in Model)
     {
     <div class="card album-card" loading="lazy" style="width: 18rem; 
@@ -56,62 +55,55 @@
     }
 </div>
 
+@*table view*@
 
-
-
-
-
-
-    @*table view*@
-
-    @*<table class="table text-light">
+@*<table class="table text-light">
+        <tr>
+            <th>
+                <p>@Html.DisplayNameFor(model => model.ImageFilePath)</p>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtistID)
+            </th>
+            <th>
+                Details
+            </th>
+        </tr>
+        @foreach (var album in Model)
+        {
             <tr>
-                <th>
-                    <p>@Html.DisplayNameFor(model => model.ImageFilePath)</p>
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ArtistID)
-                </th>
-                <th>
-                    Details
-                </th>
-            </tr>
-            @foreach (var album in Model)
-            {
-                <tr>
-                    <td>
-                        <a href="@Url.Action("Details", "Album", new { id = album.AlbumID })">
-                            <img src="@Url.Action("GetAlbumPhoto", "Helper", new { album.AlbumID })" alt="Art for @album.Title by @album.ArtistID." />
+                <td>
+                    <a href="@Url.Action("Details", "Album", new { id = album.AlbumID })">
+                        <img src="@Url.Action("GetAlbumPhoto", "Helper", new { album.AlbumID })" alt="Art for @album.Title by @album.ArtistID." />
+                    </a>
+                </td>
+                <td>
+                    <p class="mt-4">@Html.ActionLink(album.Title, "Details", new { albumTitle = album.Title,  artistID = album.ArtistID })</p>
+                </td>
+                <td>
+                    <p class="mt-4">
+                        <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = album.ArtistID })">
+                            @album.ArtistID
                         </a>
-                    </td>
-                    <td>
-                        <p class="mt-4">@Html.ActionLink(album.Title, "Details", new { albumTitle = album.Title,  artistID = album.ArtistID })</p>
-                    </td>
-                    <td>
-                        <p class="mt-4">
-                            <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = album.ArtistID })">
-                                @album.ArtistID
-                            </a>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="mt-4">
-                            <button class="delete-button fw-bold text-danger text-danger bg-transparent border-0"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#delete-modal"
-                                    data-album-id="@album.AlbumID"
-                                    data-album-name="@album.Title">
-                                Delete
-                            </button>
-                        </p>
-                    </td>
-                </tr>
-            }
-
-        </table>*@
+                    </p>
+                </td>
+                <td>
+                    <p class="mt-4">
+                        <button class="delete-button fw-bold text-danger text-danger bg-transparent border-0"
+                                data-bs-toggle="modal"
+                                data-bs-target="#delete-modal"
+                                data-album-id="@album.AlbumID"
+                                data-album-name="@album.Title">
+                            Delete
+                        </button>
+                    </p>
+                </td>
+            </tr>
+        }
+</table>*@
 
     <script>
     var deleteButtons = document.querySelectorAll('.delete-button');
