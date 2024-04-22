@@ -352,6 +352,19 @@ namespace Muse3.Controllers
                         DateAdded = DateTime.Now,
                         isLiked = false,
                     };
+
+                    // get the photo and the mime type from the file
+                    HttpPostedFileBase photo = imageFile;
+                    string mimeType = null;
+                    byte[] photoOut = null;
+
+                    if (photo != null)
+                    {
+                        newSong.PhotoMimeType = photo.ContentType;
+                        newSong.Photo = new byte[photo.ContentLength];
+                        imageFile.InputStream.Read(newSong.Photo, 0, photo.ContentLength);
+                    }
+
                     if (ModelState.IsValid)
                     {
                         _songManager.InsertSong(newSong);

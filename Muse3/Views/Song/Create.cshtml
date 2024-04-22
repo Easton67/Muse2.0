@@ -12,7 +12,7 @@
     <div class="fs-4 pt-3 px-4 text-nowrap">
         <img id="album-img-edit" style="border: none; width: 250px; height: 250px;" src="/MuseConfig/AlbumArt/defaultAlbumImage.png" />
         <div class="form-group mt-4">
-            @Html.LabelFor(model => model.ImageFilePath, htmlAttributes: new { @class = "control-label col-md-2" })
+            Album Art:
             <div class="col-md-10">
                 <input type="file" name="imageFile" class="form-control" accept="image/png" onchange="albumImagePreview(event)" />
                 @Html.ValidationMessageFor(model => model.ImageFilePath, "", new { @class = "text-danger fs-5" })
@@ -20,7 +20,7 @@
         </div>
 
         <div class="form-group mt-3">
-            Song
+            MP3:
             <div class="col-md-10">
                 <input type="file" name="mp3File" class="form-control" accept="audio/mpeg" />
                 @Html.ValidationMessageFor(model => model.Mp3FilePath, "", new { @class = "text-danger fs-5" })

@@ -14,7 +14,8 @@
             }
             else
             {
-                <img style="width: 200px; height: 200px; border-radius: 10px;" onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(Model.album.ImageFilePath)" alt="Album art for @Model.album.Title">
+                <img id="album-img-edit" style="width: 200px; height: 200px; border-radius: 10px;" src="@Url.Action("GetAlbumPhoto", "Helper", new { albumID = Model.album.AlbumID })" alt="Art for @Model.album.Title by @Model.album.ArtistID." />
+                @*<img style="width: 200px; height: 200px; border-radius: 10px;" onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/AlbumArt/@Path.GetFileName(Model.album.ImageFilePath)" alt="Album art for @Model.album.Title">*@
             }
         </div>
         <div class="px-3">
@@ -43,6 +44,8 @@
         }
     </div>
 
+    @if (Model.songs.Count > 0)
+    {
     <div class="pt-2">
         <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
             <tr class="text-nowrap fw-bold">
@@ -112,9 +115,14 @@
                         <p class="mt-4">@song.Plays</p>
                     </td>
                 </tr>
-            }
+         }
         </table>
     </div>
+    }
+    else
+    {
+        <h1 class="mt-5">No songs have added to this album yet.</h1>
+    }
 </div>
 <div class="pt-5"></div>
 

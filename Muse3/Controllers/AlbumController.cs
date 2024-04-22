@@ -17,6 +17,7 @@ namespace Muse3.Controllers
         public Album album { get; set; }
         public List<Song> songs { get; set; }
     }
+
     public class AlbumController : Controller
     {
         private AlbumManager _albumManager = new AlbumManager();
@@ -28,27 +29,6 @@ namespace Muse3.Controllers
             var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = _userManager.FindByEmail(User.Identity.GetUserName());
             return (int)user.UserID;
-        }
-
-        public FileContentResult GetPhoto(int AlbumID)
-        {
-            try
-            {
-                Album album = _albumManager.SelectAlbumByAlbumID(AlbumID);
-                if (album.Photo != null && album.PhotoMimeType != null)
-                {
-                    return File(album.Photo, album.PhotoMimeType);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
         }
 
         // GET: Album
@@ -76,14 +56,16 @@ namespace Muse3.Controllers
 
             try
             {
-                int albumID = _albumManager.SelectAlbumIDFromTitle(albumTitle, artistID);
-                viewModel.album = _albumManager.SelectAlbumByAlbumID(albumID);
-                viewModel.songs = _songManager.SelectSongsByUserID(GetUserID()).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
-
                 if (!string.IsNullOrEmpty(albumTitle) && !string.IsNullOrEmpty(artistID))
                 {
+                    int albumID = _albumManager.SelectAlbumIDFromTitle(albumTitle, artistID);
                     viewModel.album = _albumManager.SelectAlbumByAlbumID(albumID);
-                    viewModel.songs = _songManager.SelectSongsByUserID(100001).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
+                    viewModel.songs = _songManager.SelectSongsByUserID(GetUserID()).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
+                }
+                if (id != null)
+                {
+                    viewModel.album = _albumManager.SelectAlbumByAlbumID((int)id);
+                    viewModel.songs = _songManager.SelectSongsByUserID(GetUserID()).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
                 }
             }
             catch (Exception ex)
@@ -93,26 +75,6 @@ namespace Muse3.Controllers
 
             return View(viewModel);
         }
-
-        //GET: Album/Details
-        //public ActionResult DetailsFromArtistAndTitle(string albumTitle, string artistID)
-        //{
-        //    AlbumDetailsViewModel viewModel = new AlbumDetailsViewModel();
-
-        //    try
-        //    {
-        //        int albumID = _albumManager.SelectAlbumIDFromTitle(albumTitle, artistID);
-        //        viewModel.album = _albumManager.SelectAlbumByAlbumID(albumID);
-        //        viewModel.songs = _songManager.SelectSongsByUserID(100001).Where(x => x.Album.ToLower() == viewModel.album.Title.ToLower()).ToList();
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw;
-        //    }
-
-        //    return View(viewModel);
-        //}
 
         // GET: Album/Create
         public ActionResult Create()

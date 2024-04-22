@@ -183,7 +183,7 @@ namespace DataAccessLayer
                         string fileType = "";
                         try
                         {
-                            filePath = playlistArtPath + playlist.ImageFilePath;
+                            filePath = playlist.ImageFilePath;
                             fileType = Path.GetExtension(filePath);
 
                             playlist.Photo = File.ReadAllBytes(filePath);

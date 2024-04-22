@@ -58,12 +58,6 @@ namespace Muse3.Controllers
         }
 
         // GET: Review/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // GET: Review/Create
         public ActionResult CreateWithSongProvided(int songID)
         {
             Song song = new Song();
@@ -85,7 +79,7 @@ namespace Muse3.Controllers
 
         // POST: Review/Create
         [HttpPost]
-        public ActionResult Create(Review review)
+        public ActionResult CreateWithSongProvided(Review review)
         {
             try
             {

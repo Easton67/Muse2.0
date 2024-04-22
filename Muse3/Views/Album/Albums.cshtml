@@ -37,10 +37,10 @@
 
 
 @*card view*@
-<div id="library-grid-view" class="row row-cols- lg-10 gap-4">
+<div id="library-grid-view" class="mx-1 row row-cols- lg-10 gap-4">
     @foreach (var album in Model)
     {
-    <div class="card album-card" style="width: 18rem; 
+    <div class="card album-card" loading="lazy" style="width: 18rem; 
                                         height: 18rem; 
                                         background-image: url('@Url.Action("GetAlbumPhoto", "Helper", new { album.AlbumID })'); "
          onclick="window.location.href='@Url.Action("Details", "Album", new { id = album.AlbumID })'">  

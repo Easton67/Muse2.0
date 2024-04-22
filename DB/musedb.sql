@@ -169,6 +169,7 @@ GO
 CREATE TABLE [dbo].[SongAlbum] (
 	[SongID]      	[int]						 NOT NULL,
 	[AlbumID]		[int]						 NOT NULL,
+	[TrackNumber]   [int]						 NULL,
 	CONSTRAINT [fk_SongAlbum_SongID] FOREIGN KEY([SongID])
 		REFERENCES [dbo].[Song]([SongID]) ON DELETE CASCADE,
 		

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using static System.Net.Mime.MediaTypeNames;
 using System.IO;
+using System.Data.SqlTypes;
 
 namespace DataAccessLayer
 {
@@ -113,7 +114,6 @@ namespace DataAccessLayer
                             album.PhotoMimeType = fileType;
                         }
                     }
-
                 }
                 else
                 {
@@ -273,13 +273,9 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@NewTitle", newAlbum.Title);
             cmd.Parameters.AddWithValue("@NewImageFilePath", newAlbum.ImageFilePath);
             cmd.Parameters.AddWithValue("@NewDescription", newAlbum.Description);
-            cmd.Parameters.AddWithValue("@NewYearReleased", newAlbum.YearReleased);
-
-            cmd.Parameters.AddWithValue("@OldTitle", oldAlbum.Title);
-            cmd.Parameters.AddWithValue("@OldImageFilePath", oldAlbum.ImageFilePath);
-            cmd.Parameters.AddWithValue("@OldDescription", oldAlbum.Description);
-            cmd.Parameters.AddWithValue("@OldYearReleased", oldAlbum.YearReleased);
-
+            cmd.Parameters.AddWithValue("@NewYearReleased", newAlbum.YearReleased); 
+            cmd.Parameters.AddWithValue("@NewPhoto", ((object)newAlbum.Photo) ?? SqlBinary.Null);
+            cmd.Parameters.AddWithValue("@NewPhotoMimeType", newAlbum.PhotoMimeType);
 
             try
             {

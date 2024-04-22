@@ -414,11 +414,8 @@ CREATE PROCEDURE [dbo].[sp_update_album]
 	@NewImageFilePath [nvarchar](500),
 	@NewDescription   [nvarchar](max),
 	@NewYearReleased  [int],
-
-	@OldTitle 		  [nvarchar](100),
-	@OldImageFilePath [nvarchar](500),
-	@OldDescription   [nvarchar](max),
-	@OldYearReleased  [int]
+	@NewPhoto		  [varbinary](MAX),
+	@NewPhotoMimeType [nvarchar](50)
 )
 AS
 	BEGIN
@@ -427,11 +424,9 @@ AS
 			[ImageFilePath] = @NewImageFilePath, 
 			[Description] = @NewDescription,
 			[YearReleased] = @NewYearReleased
+			[Photo] = @NewPhoto
+			[PhotoMimeType] = @NewPhotoMimeType
 		WHERE [AlbumID] = @AlbumID
-		AND	  [Title] = @OldTitle
-		AND   [ImageFilePath] = @OldImageFilePath 
-		AND   [Description] = @OldDescription
-		AND   [YearReleased] = @OldYearReleased
 	END
 GO
 
@@ -687,8 +682,8 @@ AS
 		UPDATE [Song]
 		SET [Title] = @NewTitle,
 			[ImageFilePath] = @NewImageFilePath,
-			[NewPhoto] = @NewPhoto
-			[NewPhotoMimeType] = @NewPhotoMimeType
+			[Photo] = @NewPhoto,	
+			[PhotoMimeType] = @NewPhotoMimeType,
 			[YearReleased] = @NewYearReleased,
 			[Lyrics] = @NewLyrics,
 			[Explicit] = @NewExplicit,
