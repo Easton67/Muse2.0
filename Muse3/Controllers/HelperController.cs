@@ -15,6 +15,7 @@ namespace Muse3.Controllers
         private ArtistManager _artistManager = new ArtistManager();
         private SongManager _songManager = new SongManager();
         private AlbumManager _albumManager = new AlbumManager();
+        private PlaylistManager _playlistManager = new PlaylistManager();
 
         // GET: Helper
         public ActionResult Index()
@@ -77,6 +78,26 @@ namespace Muse3.Controllers
                 if (album.Photo != null && album.PhotoMimeType != null)
                 {
                     return File(album.Photo, album.PhotoMimeType);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public FileContentResult GetPlaylistPhoto(int playlistID)
+        {
+            try
+            {
+                Playlist playlist = _playlistManager.SelectPlaylistByUserID(GetUserID(), playlistID);
+                if (playlist.Photo != null && playlist.PhotoMimeType != null)
+                {
+                    return File(playlist.Photo, playlist.PhotoMimeType);
                 }
                 else
                 {

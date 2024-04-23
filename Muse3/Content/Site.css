@@ -301,7 +301,7 @@ audio {
 
 .album-img {
     border-radius: 8px;
-    border: 5px solid white;
+/*    border: 5px solid white;*/
     width: 200px;
     height: 200px;
 }
@@ -511,4 +511,8 @@ footer {
 
 .album-card:hover {
     scale: 1.1;
+}
+
+.tableRow:hover{
+    background-color: mediumpurple;
 }

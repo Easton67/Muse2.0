@@ -29,8 +29,7 @@ namespace Muse3.Controllers
         public int GetUserID()
         {
             var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var test = User.Identity.GetUserName();
-            var user = _userManager.FindByEmail(test);
+            var user = _userManager.FindByEmail(User.Identity.GetUserName());
             return (int)user.UserID;
         }
 
@@ -52,7 +51,6 @@ namespace Muse3.Controllers
             {
                 throw;
             }
-            
         }
 
         public ActionResult ViewAllPlaylists()
@@ -60,6 +58,11 @@ namespace Muse3.Controllers
             try
             {
                 playlists = _playlistManager.SelectPlaylistsByUserID(GetUserID());
+                foreach (var playlist in playlists) 
+                {
+                    var playlistId = playlist.PlaylistID; 
+                    playlist.SongCount = _songManager.SelectSongsByPlaylistID(GetUserID(), playlistId).Count();
+                }
             }
             catch (Exception)
             {
@@ -69,16 +72,65 @@ namespace Muse3.Controllers
             return View(playlists);
         }
 
+        public ActionResult AddSongToPlaylist(int playlistID)
+        {
+            List<Song> songs = new List<Song>();
+
+            try
+            {
+                songs = _songManager.SelectSongsByUserID(GetUserID());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            ViewBag.PlaylistID = playlistID;
+            return View(songs);
+        }
+
+        [HttpPost]
+        public ActionResult AddSongToPlaylist(int playlistID, int songID)
+        {
+            try
+            {
+                _playlistManager.InsertSongIntoPlaylist(songID, playlistID);
+                return RedirectToAction("Details", "Playlist", new { id = playlistID });
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "Playlist", "AddSongToPlaylist"));
+            }
+
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult RemoveFromPlaylist(int songID, int playlistID)
+        {
+            List<Song> songs = new List<Song>();
+            try
+            {
+                _playlistManager.RemoveSongFromPlaylist(songID);
+                return RedirectToAction("Details", "Playlist", new { id = playlistID });
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "Playlist", "RemoveFromPlaylist"));
+            }
+
+            return View();
+        }
+
         // GET: Playlist/Details/5
         public ActionResult Details(int id)
         {
-            int userID = GetUserID();
             PlaylistDetailsViewModel viewModel = new PlaylistDetailsViewModel();
 
             try
             {
-                viewModel.Playlist = _playlistManager.SelectPlaylistByUserID(userID, id);
-                viewModel.Songs = _songManager.SelectSongsByPlaylistID(userID, viewModel.Playlist.PlaylistID);
+                viewModel.Playlist = _playlistManager.SelectPlaylistByUserID(GetUserID(), id);
+                viewModel.Songs = _songManager.SelectSongsByPlaylistID(GetUserID(), viewModel.Playlist.PlaylistID);
             }
             catch (Exception ex)
             {

@@ -56,6 +56,7 @@ namespace Muse3.Controllers
                 viewModel.songs = _songManager.SelectSongsByUserID(GetUserID()).Where(song => song.Artist == viewModel.artist.ArtistID).ToList();
                 viewModel.albums = _albumManager.SelectAllAlbums()
                                                 .Where(album => album.ArtistID == viewModel.artist.ArtistID && !string.Equals(album.Title, "None"))
+                                                .OrderBy(x => x.YearReleased)
                                                 .ToList();
                 if (!string.IsNullOrEmpty(searchText))
                 {

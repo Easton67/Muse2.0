@@ -1989,6 +1989,7 @@
     <Content Include="Views\Account\RegisterUser.cshtml" />
     <Content Include="Views\Playlist\Details.cshtml" />
     <Content Include="Views\Playlist\ViewAllPlaylists.cshtml" />
+    <Content Include="Views\Playlist\AddSongToPlaylist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

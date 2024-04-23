@@ -1,0 +1,107 @@
+﻿@model IEnumerable<DataObjects.Song>
+
+@{
+    ViewBag.Title = "AddSongToPlaylist";
+    ViewBag.Hero = "Add Songs to Playlist";
+    int thisPlaylistID = ViewBag.PlaylistID;
+    int charLimit = 25;
+    var mp3FilePath = "";
+    string songID = "";
+}
+
+<div id="library-list-view" class="pt-4">
+    <table class="table">
+        <tr>
+            <th>
+                <p class="text-nowrap">Album Art</p>
+            </th>
+            <th>
+                <div class="d-flex">
+                    @Html.DisplayNameFor(model => model.Title)
+                </div>
+            </th>
+            <th>
+                <div class="d-flex">
+                    @Html.DisplayNameFor(model => model.Artist)
+                </div>
+            </th>
+            <th>
+                <div class="d-flex">
+                    @Html.DisplayNameFor(model => model.Album)
+                </div>
+            </th>
+            <th>
+                <div class="d-flex">
+                    <p class="text-nowrap">Year Released</p>
+                </div>
+            </th>
+            <th>
+                <div class="d-flex">
+                    @Html.DisplayNameFor(model => model.Genre)
+                </div>
+            </th>
+            <th>
+                <div class="d-flex">
+                    <p class="text-nowrap">Date Added</p>
+                </div>
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <form id="addSongForm" method="post" action="@Url.Action("AddSongToPlaylist", "Playlist", new { playlistID = thisPlaylistID})">
+                <input type="hidden" name="songID" id="songID" />
+            </form>
+            <tr class="tableRow" onclick="document.getElementById('songID').value = @item.SongID; document.getElementById('addSongForm').submit();">
+                <td>
+                    <img id="album-img" class="album-img list-album-img" loading="lazy" src="@Url.Action("GetSongPhoto", "Helper", new { item.SongID })" alt="Art for @item.Title playlist." data-songid="@item.SongID" />
+                    @*<img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art" data-songid="@item.SongID">*@
+                    <button id="library-play-button" class="library-play-button list-view-library-play-button">
+                        <img id="library-play-img" src="~/Images/play.png" />
+                    </button><br />
+                    <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(item.Mp3FilePath)" data-audio-songid="@item.SongID"></audio>
+                </td>
+                @{
+                    string title = item.Title.Length >= charLimit ? item.Title.Substring(0, charLimit) + "..." : item.Title;
+                    string album = item.Album.Length >= charLimit ? item.Album.Substring(0, charLimit) + "..." : item.Album;
+                    string artist = item.Artist.Length >= charLimit ? item.Artist.Substring(0, charLimit) + "..." : item.Artist;
+                }
+                <td>
+                    <p class="text-nowrap">
+                        @Html.ActionLink(title, "Details", new { id = item.SongID })
+                        @if (item.Explicit == true)
+                        {
+                            <img class="explicit-white" src="~/Images/explicit.png" />
+                        }
+                    </p>
+                </td>
+                <td>
+                    <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = item.Artist })">
+                        @artist
+                    </a>
+                </td>
+                <td>
+                    @if (album.Length.Equals(0))
+                    {
+                        <p>Unknown</p>
+                    }
+                    else
+                    {
+                        <a class="mt-4" href="@Url.Action("Details", "Album", new { albumTitle = item.Album, artistID = item.Artist})">
+                            @album
+                        </a>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.YearReleased)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @item.DateAdded.ToShortDateString()
+                </td>
+            </tr>
+        }
+    </table>
+</div>

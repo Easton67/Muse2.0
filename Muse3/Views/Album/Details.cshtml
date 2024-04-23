@@ -64,9 +64,9 @@
                 <th>
                     Album
                 </th>
-                <th>
+                @*<th>
                     Plays
-                </th>
+                </th>*@
             </tr>
             @{
                 int trackNumber = 0;
@@ -75,7 +75,7 @@
             {
                 <tr class="playlist-table">
                     <td class="playlist-table-border">
-                        <img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(song.ImageFilePath)" alt="Album art" data-songid="@song.SongID">
+                        <img id="album-img" class="album-img list-album-img" src="@Url.Action("GetSongPhoto", "Helper", new { songID = song.SongID })" alt="Album art" data-songid="@song.SongID">
                         <button id="library-play-button" class="library-play-button list-view-library-play-button">
                             <img id="library-play-img" src="~/Images/play.png" />
                         </button><br />
@@ -111,9 +111,9 @@
                             </a>
                         </p>
                     </td>
-                    <td>
+                    @*<td>
                         <p class="mt-4">@song.Plays</p>
-                    </td>
+                    </td>*@
                 </tr>
          }
         </table>

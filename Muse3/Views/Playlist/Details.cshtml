@@ -6,11 +6,33 @@
     int charLimit = 30;
 }
 
+
+@*delete modal*@
+<div class="modal text-light" id="delete-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5>Are you sure you want to delete @Model.Playlist.Title?</h5>
+                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Delete", "Playlist", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Playlist.Title" />
+                    <div class="form-actions">
+                        <input id="confirm-delete-button" type="submit" value="Delete" class="btn btn-danger" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="px-3">
     <div class="d-flex">
         <div class="your-element" data-tilt>
             <img style="width: 200px; height: 200px; border-radius: 10px;" src="@Url.Action("GetPhoto", new { @Model.Playlist.PlaylistID })" alt="Art for @Model.Playlist.Title playlist." />
-            @*<img  onclick="openFileDialog()" id="album-img-edit" src="/MuseConfig/PlaylistImages/@Path.GetFileName(@Model.Playlist.ImageFilePath)" alt="Album art">*@
         </div>
         <div class="px-3">
             <h2>@Model.Playlist.Title</h2>
@@ -18,70 +40,88 @@
         </div>
     </div>
 
-    <button class="btn-add">
-        @Html.ActionLink("Add Song", "Create", "Song")
+    <button class="btn-add" onclick="window.location.href='@Url.Action("AddSongToPlaylist", "Playlist", new { Model.Playlist.PlaylistID })'">
+        Add Song to Playlist
     </button>
-    <div>
-        <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
-            <tr class="text-nowrap fw-bold">
-                <th>
-                    Album Art
-                </th>
-                <th style="text-align: center;">
-                    Title
-                </th>
-                <th>
-                    Artist
-                </th>
-                <th>
-                    Album
-                </th>
-                <th>
-                    Year Released
-                </th>
-                <th>
-                    Genre
-                </th>
-                <th>
-                    Plays
-                </th>
-            </tr>
-            @foreach (var song in Model.Songs)
-            {
-                <tr class="playlist-table">
-                    <td class="playlist-table-border">
-                        <img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(song.ImageFilePath)" alt="Album art" data-songid="@song.SongID">
-                        <button id="library-play-button" class="library-play-button list-view-library-play-button">
-                            <img id="library-play-img" src="~/Images/play.png" />
-                        </button><br />
-                        <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(song.Mp3FilePath)" data-audio-songid="@song.SongID"></audio>
-                    </td>
-                    @{
-                        string title = song.Title.Length >= charLimit ? song.Title.Substring(0, charLimit) + "..." : song.Title;
-                        string album = song.Album.Length >= charLimit ? song.Album.Substring(0, charLimit) + "..." : song.Album;
-                        string artist = song.Artist.Length >= charLimit ? song.Artist.Substring(0, charLimit) + "..." : song.Artist;
-                    }
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        <p style="white-space: nowrap;">@title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /></p>
-                    </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @Html.ActionLink(@artist, "Details", "Artist", new { id = song.Artist, style = "color: white; text-decoration: none;" })
-                    </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @Html.ActionLink(@album, "Details", "Album", new { id = song.Album, style = "color: white; text-decoration: none;" })
-                    </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @song.YearReleased
-                    </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @song.Genre
-                    </td>
-                    <td class="playlist-table-border pt-4 fs-4 text-nowrap">
-                        @song.Plays
-                    </td>
+
+    @if (Model.Songs.Count() > 0)
+    {
+        <div>
+            <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
+                <tr class="text-nowrap fw-bold">
+                    <th>
+                        Album Art
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Artist
+                    </th>
+                    <th>
+                        Album
+                    </th>
+                    <th>
+                        Year Released
+                    </th>
+                    <th>
+                        Genre
+                    </th>
+                    <th>
+                        Options
+                    </th>
                 </tr>
-            }
-        </table>
-    </div>
+                @foreach (var song in Model.Songs)
+                {
+                    <tr class="playlist-table">
+                        <td class="playlist-table-border">
+                            <img id="album-img" class="album-img list-album-img" src="@Url.Action("GetSongPhoto", "Helper", new { songID = song.SongID })" alt="Album art" data-songid="@song.SongID">
+                            <button id="library-play-button" class="library-play-button list-view-library-play-button">
+                                <img id="library-play-img" src="~/Images/play.png" />
+                            </button><br />
+                            <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(song.Mp3FilePath)" data-audio-songid="@song.SongID"></audio>
+                        </td>
+                        @{
+                            string title = song.Title.Length >= charLimit ? song.Title.Substring(0, charLimit) + "..." : song.Title;
+                            string album = song.Album.Length >= charLimit ? song.Album.Substring(0, charLimit) + "..." : song.Album;
+                            string artist = song.Artist.Length >= charLimit ? song.Artist.Substring(0, charLimit) + "..." : song.Artist;
+                        }
+                        <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                            <p style="white-space: nowrap;">@title<img style="filter: invert(100%); padding-left: 4px; width: 20px; height: 16px" src="~/Images/explicit.png" /></p>
+                        </td>
+                        <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                            @Html.ActionLink(@artist, "Details", "Artist", new { id = song.Artist, style = "color: white; text-decoration: none;" })
+                        </td>
+                        <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                            @Html.ActionLink(@album, "Details", "Album", new { id = song.Album, style = "color: white; text-decoration: none;" })
+                        </td>
+                        <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                            @song.YearReleased
+                        </td>
+                        <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                            @song.Genre
+                        </td>
+                        <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                            @using (Html.BeginForm("RemoveFromPlaylist", "Playlist", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden" name="songID" value="@song.SongID" />
+                                <input type="hidden" name="playlistID" value="@Model.Playlist.PlaylistID" />
+
+                                <div class="form-actions">
+                                    <input type="submit" value="Delete" class="btn btn-danger" />
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    else
+    {
+        <h1 class="mt-5">No songs have added to this playlist yet.</h1>
+    }
 </div>
 <div class="pt-5"></div>
