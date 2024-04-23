@@ -351,6 +351,7 @@ namespace Muse3.Controllers
                         DateUploaded = null,
                         DateAdded = DateTime.Now,
                         isLiked = false,
+                        isPublic = false,
                     };
 
                     // get the photo and the mime type from the file
@@ -443,6 +444,7 @@ namespace Muse3.Controllers
                     DateUploaded = null,
                     DateAdded = DateTime.Now,
                     isLiked = false,
+                    isPublic = false,
                 };
 
                 _songManager.UpdateSong(oldSong, newSong);

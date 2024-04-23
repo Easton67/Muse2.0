@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -9,13 +10,16 @@ namespace Muse3.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public int? UserID { get; set; }
         public string ProfileName { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
-        public int? UserID { get; set; }
         public string ImageFilePath { get; set; }
+        public byte[] Photo { get; set; } = null;
+        public string PhotoMimeType { get; set; } = null;
         public bool Active { get; set; }
         public int MinutesListened { get; set; }
+        public bool isPublic { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

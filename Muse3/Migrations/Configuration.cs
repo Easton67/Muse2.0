@@ -8,9 +8,16 @@
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Antlr.Runtime.Misc;
+    using DataObjects;
+    using System.Web;
+    using System.IO;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Muse3.Models.ApplicationDbContext>
     {
+        private string defaultAccountImg = AppDomain.CurrentDomain.BaseDirectory + "\\MuseConfig\\ProfileImages\\defaultAccount.png";
+        private string accountImageLocation = AppDomain.CurrentDomain.BaseDirectory + "\\MuseConfig\\ProfileImages\\";
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
@@ -48,14 +55,26 @@
 
                 var user = new ApplicationUser()
                 {
+                    UserID = largestUserID + 1,
+                    ProfileName = "System Admin",
                     UserName = admin,
                     Email = admin,
-                    ProfileName = "System Admin",
-                    UserID = largestUserID + 1,
-                    ImageFilePath = "defaultAccountImage.png",
+                    ImageFilePath = "defaultAccount.png",
                     FamilyName = "Admin",
-                    GivenName = "System"
+                    GivenName = "System",
+                    Active = true,
+                    MinutesListened = 0,
+                    isPublic = false
                 };
+
+                string imagePath = Path.Combine(accountImageLocation, user.ImageFilePath);
+
+                if (File.Exists(imagePath))
+                {
+                    byte[] imageBytes = File.ReadAllBytes(imagePath);
+                    user.Photo = imageBytes;
+                    user.PhotoMimeType = "image/png";
+                }
 
                 IdentityResult result = userManager.Create(user, adminPassword);
                 context.SaveChanges();

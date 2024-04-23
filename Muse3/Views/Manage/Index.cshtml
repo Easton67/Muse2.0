@@ -20,7 +20,12 @@
                         @Html.ActionLink("Create", "SetPassword")
                     }
                 </button>
+                @Model.User.ProfileName
+                @Model.User.GivenName
+                @Model.User.FamilyName
+                @Model.User.ImageFilePath
             </dd>
+
             @*<dt>External Logins:</dt>
                 <dd>
                     @Model.Logins.Count

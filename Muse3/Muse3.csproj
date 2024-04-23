@@ -179,7 +179,6 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\SongController.cs" />
-    <Compile Include="Controllers\Subscriber.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -207,6 +206,14 @@
     <Compile Include="Migrations\202404221809410_Changes.cs" />
     <Compile Include="Migrations\202404221809410_Changes.designer.cs">
       <DependentUpon>202404221809410_Changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404230518368_AddToUser.cs" />
+    <Compile Include="Migrations\202404230518368_AddToUser.designer.cs">
+      <DependentUpon>202404230518368_AddToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404230528488_AddedPhotoAndPhotoMimeType.cs" />
+    <Compile Include="Migrations\202404230528488_AddedPhotoAndPhotoMimeType.designer.cs">
+      <DependentUpon>202404230528488_AddedPhotoAndPhotoMimeType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1960,13 +1967,11 @@
     <Content Include="Views\Song\Details.cshtml" />
     <Content Include="Views\Song\Edit.cshtml" />
     <Content Include="Views\Review\Details.cshtml" />
-    <Content Include="Views\Review\Create.cshtml" />
     <Content Include="Views\Playlist\Create.cshtml" />
     <Content Include="Views\Playlist\Edit.cshtml" />
     <Content Include="Views\Review\Edit.cshtml" />
     <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Playlist\Delete.cshtml" />
-    <Content Include="Views\Review\Delete.cshtml" />
     <Content Include="Views\Admin\Details.cshtml" />
     <Content Include="Views\Profile\Details.cshtml" />
     <Content Include="Views\Artist\Create.cshtml" />
@@ -2057,6 +2062,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202404221809410_Changes.resx">
       <DependentUpon>202404221809410_Changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404230518368_AddToUser.resx">
+      <DependentUpon>202404230518368_AddToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404230528488_AddedPhotoAndPhotoMimeType.resx">
+      <DependentUpon>202404230528488_AddedPhotoAndPhotoMimeType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

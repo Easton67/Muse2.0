@@ -11,7 +11,7 @@ namespace DataAccessLayer
 {
     public class UserAccessor : IUserAccessor
     {
-        private string defaultAccountImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\ProfileImages\\defaultAccount.png";
+        private string defaultAccountImg = AppDomain.CurrentDomain.BaseDirectory + "\\MuseConfig\\ProfileImages\\defaultAccount.png";
         public int InsertUser(User user, string password)
         {
             int rows = 0;

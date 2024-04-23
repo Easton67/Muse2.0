@@ -522,6 +522,8 @@ AS
 	END
 GO
 
+/* sp_insert_song*/
+
 print '' print '*** creating sp_insert_song ***'
 GO
 
@@ -529,6 +531,8 @@ CREATE PROCEDURE [dbo].[sp_insert_song]
 (
     @Title           [nvarchar](180),
     @ImageFilePath   [nvarchar](500),
+    @Photo   		 [varbinary](MAX),
+    @PhotoMimeType   [varchar](50),
     @Mp3FilePath     [nvarchar](500),
     @YearReleased    [int],
     @Lyrics          [text],
@@ -537,7 +541,9 @@ CREATE PROCEDURE [dbo].[sp_insert_song]
     @Plays           [int],
     @UserID          [int],
     @ArtistID        [nvarchar](200),
-    @AlbumTitle      [nvarchar](255)
+    @AlbumTitle      [nvarchar](255),
+	@isLiked         [bit],
+    @isPublic        [bit]
 )
 AS
 	BEGIN
@@ -569,11 +575,41 @@ AS
 
 		-- insert song
 		INSERT INTO [dbo].[Song] 
-			([Title], [Mp3FilePath], [ImageFilePath], [YearReleased], [Lyrics], 
-			[Explicit], [Genre], [Plays], [UserID], [ArtistID], [AlbumID])
+			(
+				[Title], 
+				[Mp3FilePath], 
+				[ImageFilePath], 
+				[Photo], 
+				[PhotoMimeType], 
+				[YearReleased], 
+				[Lyrics], 
+				[Explicit], 
+				[Genre], 
+				[Plays], 
+				[UserID], 
+				[ArtistID], 
+				[AlbumID],
+				[isLiked],
+				[isPublic]
+			)
 		VALUES 
-			(@Title, @Mp3FilePath, @ImageFilePath, @YearReleased, @Lyrics, 
-			@Explicit, @Genre, @Plays, @UserID, @ArtistID, @AlbumID)
+			(
+				@Title, 
+				@Mp3FilePath,
+				@ImageFilePath,     
+				@Photo,  		
+    			@PhotoMimeType, 
+				@YearReleased, 
+				@Lyrics, 
+				@Explicit, 
+				@Genre, 
+				@Plays, 
+				@UserID, 
+				@ArtistID,
+				@AlbumID,
+				@isLiked, 
+				@isPublic
+			)
 
 		-- get song id from the created song
 		SELECT @SongID = SCOPE_IDENTITY()

@@ -27,6 +27,8 @@ namespace DataAccessLayer
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Title", song.Title);
             cmd.Parameters.AddWithValue("@ImageFilePath", song.ImageFilePath);
+            cmd.Parameters.AddWithValue("@Photo", song.Photo);
+            cmd.Parameters.AddWithValue("@PhotoMimeType", song.PhotoMimeType);
             cmd.Parameters.AddWithValue("@Mp3FilePath", song.Mp3FilePath);
             cmd.Parameters.AddWithValue("@YearReleased", song.YearReleased);
             cmd.Parameters.AddWithValue("@Lyrics", song.Lyrics);
@@ -36,6 +38,8 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@UserID", song.UserID);
             cmd.Parameters.AddWithValue("@ArtistID", song.Artist);
             cmd.Parameters.AddWithValue("@AlbumTitle", song.Album);
+            cmd.Parameters.AddWithValue("@isLiked", song.isLiked);
+            cmd.Parameters.AddWithValue("@isPublic", song.isPublic);
 
             try
             {

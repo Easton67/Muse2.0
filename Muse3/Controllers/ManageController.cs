@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DataObjects;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -15,6 +16,13 @@ namespace Muse3.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        public ApplicationUser GetUser()
+        {
+            var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = _userManager.FindByEmail(User.Identity.GetUserName());
+            return user;
+        }
 
         public ManageController()
         {
@@ -54,6 +62,7 @@ namespace Muse3.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -72,6 +81,7 @@ namespace Muse3.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+            model.User = GetUser();
             return View(model);
         }
 

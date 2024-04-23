@@ -11,32 +11,35 @@
     <button class="btn-add" onclick="window.location.href='@Url.Action("Create", "Song")'">
         Add Song
     </button>
-    @*@using (Html.BeginForm("CreateFromFolder", "Song", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-
-            @Html.Hidden("songFolder", "C:\\Users\\67Eas\\Downloads\\Songs\\test")
-
-            <input type="file" name="folderInput" id="folderInput" />
-
-            <button class="btn-add" onclick="window.location.href='@Url.Action("Create", "Song")'">
-                Add Songs From Folder
-            </button>
-        }*@
-
-    @*@using (Html.BeginForm("CreateFromFolder", "Song", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @if (Model.Count() > 0)
     {
-        @Html.AntiForgeryToken()
+        @*@using (Html.BeginForm("CreateFromFolder", "Song", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
 
-        @Html.Hidden("songFolder")
+                @Html.Hidden("songFolder", "C:\\Users\\67Eas\\Downloads\\Songs\\test")
 
-        <input type="file" name="folderInput" id="folderInput" webkitdirectory/>
-    }*@
+                <input type="file" name="folderInput" id="folderInput" />
 
-    <input id="searchBox" type="text" placeholder="Search for song...">
-    <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
-    <img class="icon px-3" src="~/Images/list-icon.svg" onclick="window.location.href='@Url.Action("Library", "Song")'" />
-    <img class="icon px-3" src="~/Images/grid-icon.svg" onclick="window.location.href='@Url.Action("LibraryGridView", "Song")'" />
+                <button class="btn-add" onclick="window.location.href='@Url.Action("Create", "Song")'">
+                    Add Songs From Folder
+                </button>
+            }*@
+
+        @*@using (Html.BeginForm("CreateFromFolder", "Song", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.Hidden("songFolder")
+
+                <input type="file" name="folderInput" id="folderInput" webkitdirectory/>
+            }*@
+
+        <input id="searchBox" type="text" placeholder="Search for song...">
+        <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
+        <img class="icon px-3" src="~/Images/list-icon.svg" onclick="window.location.href='@Url.Action("Library", "Song")'" />
+        <img class="icon px-3" src="~/Images/grid-icon.svg" onclick="window.location.href='@Url.Action("LibraryGridView", "Song")'" />
+    }
 </div>
 
 @*Libary delete modal*@
@@ -69,190 +72,196 @@
         data-bs-target="#subscriber-modal">
     Become a subscriber
 </button>
-<div id="library-list-view" class="pt-4">
-    <table class="table">
-        <tr>
-            <th>
-                <p class="text-nowrap">Album Art</p>
-            </th>
-            <th>
-                <div class="d-flex">
-                    @Html.DisplayNameFor(model => model.Title)
-                    <div style="margin-top: -3px!important;" class="mx-3">
-                        <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Title" })'" />
-                        <br />
-                        <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Title" })'" />
-                    </div>
-                </div>
-            </th>
-            <th>
-                <div class="d-flex">
-                    @Html.DisplayNameFor(model => model.Artist)
-                    <div style="margin-top: -3px!important;" class="mx-3">
-                        <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Artist" })'" />
-                        <br />
-                        <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Artist" })'" />
-                    </div>
-                </div>
-            </th>
-            <th>
-                <div class="d-flex">
-                    @Html.DisplayNameFor(model => model.Album)
-                    <div style="margin-top: -3px!important;" class="mx-3">
-                        <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Album" })'" />
-                        <br />
-                        <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Album" })'" />
-                    </div>
-                </div>
-            </th>
-            <th>
-                <div class="d-flex">
-                    <p class="text-nowrap">Year Released</p>
-                    <div style="margin-top: -3px!important;" class="mx-3">
-                        <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "YearReleased" })'" />
-                        <br />
-                        <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "YearReleased" })'" />
-                    </div>
-                </div>
-            </th>
-            <th>
-                <div class="d-flex">
-                    @Html.DisplayNameFor(model => model.Genre)
-                    <div style="margin-top: -3px!important;" class="mx-3">
-                        <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Genre" })'" />
-                        <br />
-                        <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Genre" })'" />
-                    </div>
-                </div>
-            </th>
-            @*<th>
+@if (Model.Count() > 0)
+{
+    <div id="library-list-view" class="pt-4">
+        <table class="table">
+            <tr>
+                <th>
+                    <p class="text-nowrap">Album Art</p>
+                </th>
+                <th>
                     <div class="d-flex">
-                        @Html.DisplayNameFor(model => model.Plays)
+                        @Html.DisplayNameFor(model => model.Title)
                         <div style="margin-top: -3px!important;" class="mx-3">
                             <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                                 onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Plays" })'" />
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Title" })'" />
                             <br />
                             <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                                 onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Plays" })'" />
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Title" })'" />
                         </div>
                     </div>
-                </th>*@
-            <th>
-                <div class="d-flex">    
-                    @Html.DisplayNameFor(model => model.isLiked)
-                </div>
-            </th>
-            <th>
-                <div class="d-flex">
-                    <p class="text-nowrap">Date Added</p>
-                    <div style="margin-top: -3px!important;" class="mx-3">
-                        <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "DateAdded" })'" />
-                        <br />
-                        <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                             onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "DateAdded" })'" />
+                </th>
+                <th>
+                    <div class="d-flex">
+                        @Html.DisplayNameFor(model => model.Artist)
+                        <div style="margin-top: -3px!important;" class="mx-3">
+                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Artist" })'" />
+                            <br />
+                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Artist" })'" />
+                        </div>
                     </div>
-                </div>
-            </th>
-            <th>
-                Options
-            </th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <img id="album-img" class="album-img list-album-img" loading="lazy" src="@Url.Action("GetSongPhoto", "Helper", new { item.SongID })" alt="Art for @item.Title playlist." data-songid="@item.SongID" />
-                    @*<img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art" data-songid="@item.SongID">*@
-                    <button id="library-play-button" class="library-play-button list-view-library-play-button">
-                        <img id="library-play-img" src="~/Images/play.png" />
-                    </button><br />
-                    <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(item.Mp3FilePath)" data-audio-songid="@item.SongID"></audio>
-                </td>
-                @{
-                    string title = item.Title.Length >= charLimit ? item.Title.Substring(0, charLimit) + "..." : item.Title;
-                    string album = item.Album.Length >= charLimit ? item.Album.Substring(0, charLimit) + "..." : item.Album;
-                    string artist = item.Artist.Length >= charLimit ? item.Artist.Substring(0, charLimit) + "..." : item.Artist;
-                }
-                <td>
-                    <p class="text-nowrap">
-                        @Html.ActionLink(title, "Details", new { id = item.SongID })
-                        @if (item.Explicit == true)
-                        {
-                            <img class="explicit-white" src="~/Images/explicit.png" />
-                        }
-                    </p>
-                </td>
-                <td>
-                    <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = item.Artist })">
-                        @artist
-                    </a>
-                </td>
-                <td>
-                    @if (album.Length.Equals(0))
-                    {
-                        <p>Unknown</p>
-                    }
-                    else
-                    {
-                        <a class="mt-4" href="@Url.Action("Details", "Album", new { albumTitle = item.Album, artistID = item.Artist})">
-                            @album
-                        </a>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.YearReleased)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Plays)
-                </td>*@
-                <td>
-                    @if (item.isLiked == true)
-                    {
-                        <img onclick="favorite(this)"
-                             class="favorite"
-                             src="~/Images/heart-icon-filled.svg"
-                             data-favoritedSong="@item.SongID" />
-                    }
-                    else
-                    {
-                        <img onclick="favorite(this)"
-                             class="favorite unfilled"
-                             src="~/Images/heart-icon.svg"
-                             data-favoritedSong="@item.SongID" />
-                    }
-                </td>
-                <td>
-                    @item.DateAdded.ToShortDateString()
-                </td>
-                <td>
-                    <button class="delete-button fw-bold text-danger text-danger bg-transparent border-0"
-                            data-bs-toggle="modal"
-                            data-bs-target="#delete-modal"
-                            data-song-id="@item.SongID"
-                            data-song-name="@item.Title">
-                        Delete
-                    </button>
-                </td>
+                </th>
+                <th>
+                    <div class="d-flex">
+                        @Html.DisplayNameFor(model => model.Album)
+                        <div style="margin-top: -3px!important;" class="mx-3">
+                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Album" })'" />
+                            <br />
+                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Album" })'" />
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="d-flex">
+                        <p class="text-nowrap">Year Released</p>
+                        <div style="margin-top: -3px!important;" class="mx-3">
+                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "YearReleased" })'" />
+                            <br />
+                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "YearReleased" })'" />
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="d-flex">
+                        @Html.DisplayNameFor(model => model.Genre)
+                        <div style="margin-top: -3px!important;" class="mx-3">
+                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Genre" })'" />
+                            <br />
+                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Genre" })'" />
+                        </div>
+                    </div>
+                </th>
+                @*<th>
+                        <div class="d-flex">
+                            @Html.DisplayNameFor(model => model.Plays)
+                            <div style="margin-top: -3px!important;" class="mx-3">
+                                <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                        onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Plays" })'" />
+                                <br />
+                                <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                        onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Plays" })'" />
+                            </div>
+                        </div>
+                    </th>*@
+                <th>
+                    <div class="d-flex">
+                        @Html.DisplayNameFor(model => model.isLiked)
+                    </div>
+                </th>
+                <th>
+                    <div class="d-flex">
+                        <p class="text-nowrap">Date Added</p>
+                        <div style="margin-top: -3px!important;" class="mx-3">
+                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "DateAdded" })'" />
+                            <br />
+                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "DateAdded" })'" />
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    Options
+                </th>
             </tr>
-        }
-    </table>
-</div>
 
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img id="album-img" class="album-img list-album-img" loading="lazy" src="@Url.Action("GetSongPhoto", "Helper", new { item.SongID })" alt="Art for @item.Title playlist." data-songid="@item.SongID" />
+                        @*<img id="album-img" class="album-img list-album-img" src="/MuseConfig/AlbumArt/@Path.GetFileName(item.ImageFilePath)" alt="Album art" data-songid="@item.SongID">*@
+                        <button id="library-play-button" class="library-play-button list-view-library-play-button">
+                            <img id="library-play-img" src="~/Images/play.png" />
+                        </button><br />
+                        <audio controls src="/MuseConfig/SongFiles/@Path.GetFileName(item.Mp3FilePath)" data-audio-songid="@item.SongID"></audio>
+                    </td>
+                    @{
+                        string title = item.Title.Length >= charLimit ? item.Title.Substring(0, charLimit) + "..." : item.Title;
+                        string album = item.Album.Length >= charLimit ? item.Album.Substring(0, charLimit) + "..." : item.Album;
+                        string artist = item.Artist.Length >= charLimit ? item.Artist.Substring(0, charLimit) + "..." : item.Artist;
+                    }
+                    <td>
+                        <p class="text-nowrap">
+                            @Html.ActionLink(title, "Details", new { id = item.SongID })
+                            @if (item.Explicit == true)
+                            {
+                                <img class="explicit-white" src="~/Images/explicit.png" />
+                            }
+                        </p>
+                    </td>
+                    <td>
+                        <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = item.Artist })">
+                            @artist
+                        </a>
+                    </td>
+                    <td>
+                        @if (album.Length.Equals(0))
+                        {
+                            <p>Unknown</p>
+                        }
+                        else
+                        {
+                            <a class="mt-4" href="@Url.Action("Details", "Album", new { albumTitle = item.Album, artistID = item.Artist})">
+                                @album
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearReleased)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Plays)
+                        </td>*@
+                    <td>
+                        @if (item.isLiked == true)
+                        {
+                            <img onclick="favorite(this)"
+                                    class="favorite"
+                                    src="~/Images/heart-icon-filled.svg"
+                                    data-favoritedSong="@item.SongID" />
+                        }
+                        else
+                        {
+                            <img onclick="favorite(this)"
+                                    class="favorite unfilled"
+                                    src="~/Images/heart-icon.svg"
+                                    data-favoritedSong="@item.SongID" />
+                        }
+                    </td>
+                    <td>
+                        @item.DateAdded.ToShortDateString()
+                    </td>
+                    <td>
+                        <button class="delete-button fw-bold text-danger text-danger bg-transparent border-0"
+                                data-bs-toggle="modal"
+                                data-bs-target="#delete-modal"
+                                data-song-id="@item.SongID"
+                                data-song-name="@item.Title">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+else
+{
+    <h1 class="mt-5">No songs in your library.</h1>
+}
 <script>
     function searchForSong() {
         var title = document.getElementById("searchBox").value.trim().toLowerCase();

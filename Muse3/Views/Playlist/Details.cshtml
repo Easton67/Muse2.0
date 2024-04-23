@@ -101,7 +101,7 @@
                         <td class="playlist-table-border pt-4 fs-4 text-nowrap">
                             @song.Genre
                         </td>
-                        <td class="playlist-table-border pt-4 fs-4 text-nowrap">
+                        <td class="playlist-table-border text-nowrap">
                             @using (Html.BeginForm("RemoveFromPlaylist", "Playlist", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
@@ -110,7 +110,7 @@
                                 <input type="hidden" name="playlistID" value="@Model.Playlist.PlaylistID" />
 
                                 <div class="form-actions">
-                                    <input type="submit" value="Delete" class="btn btn-danger" />
+                                    <input type="submit" value="Remove" class="btn text-danger fs-4 pt-3 fw-bold mt-0" />
                                 </div>
                             }
                         </td>

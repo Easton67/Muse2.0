@@ -142,12 +142,6 @@ namespace Muse3.Controllers
             }
         }
 
-        // GET: Review/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: Review/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, Review review)
