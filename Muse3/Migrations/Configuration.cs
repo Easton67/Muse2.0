@@ -12,6 +12,7 @@
     using DataObjects;
     using System.Web;
     using System.IO;
+    using System.ComponentModel;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Muse3.Models.ApplicationDbContext>
     {
@@ -67,6 +68,23 @@
                     isPublic = false
                 };
 
+                List<string> desktopRoles = new List<string>() { "Admin" };
+
+                var desktopUser = new UserVM()
+                {
+                    UserID = (int)user.UserID,
+                    ProfileName = "System Admin",
+                    Email = admin,
+                    FirstName = "System",
+                    LastName = "Admin",
+                    ImageFilePath = "defaultAccount.png",
+                    Active = true,
+                    MinutesListened = 0,
+                    isPublic = false,
+
+                    Roles = desktopRoles,
+                };
+
                 string imagePath = Path.Combine(accountImageLocation, user.ImageFilePath);
 
                 if (File.Exists(imagePath))
@@ -74,6 +92,9 @@
                     byte[] imageBytes = File.ReadAllBytes(imagePath);
                     user.Photo = imageBytes;
                     user.PhotoMimeType = "image/png";
+
+                    desktopUser.Photo = imageBytes;
+                    desktopUser.PhotoMimeType = "image/png";
                 }
 
                 IdentityResult result = userManager.Create(user, adminPassword);
@@ -83,6 +104,8 @@
                 {
                     userManager.AddToRole(user.Id, "Admin");
                     userManager.AddToRole(user.Id, "Manager");
+
+                    _um.InsertUser(desktopUser, "P@ssw0rd");
                     context.SaveChanges();
                 }
             }

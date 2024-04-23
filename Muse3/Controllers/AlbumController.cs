@@ -22,7 +22,6 @@ namespace Muse3.Controllers
     {
         private AlbumManager _albumManager = new AlbumManager();
         private SongManager _songManager = new SongManager();
-        List<Album> albums = new List<Album>();
 
         public int GetUserID()
         {
@@ -34,9 +33,11 @@ namespace Muse3.Controllers
         // GET: Album
         public ActionResult Albums(string searchText)
         {
+            List<Album> albums = new List<Album>();
+
             try
             {
-                albums = _albumManager.SelectAllAlbums().Where(x => !x.Title.Equals("None") && !x.Title.Equals("Unknown")).ToList();
+                albums = _albumManager.SelectAlbumsByUserID(GetUserID()).Where(x => !x.Title.Equals("None") && !x.Title.Equals("Unknown")).ToList();
                 if (!string.IsNullOrEmpty(searchText))
                 {
                     albums = albums.Where(x => x.Title.ToLower().Contains(searchText.ToLower())).ToList();

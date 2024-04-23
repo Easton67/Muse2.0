@@ -14,6 +14,7 @@ namespace DataAccessInterfaces
         Album SelectAlbumByAlbumID(int AlbumID);
         int SelectAlbumIDFromTitle(string albumTitle, string artistID);
         List<Album> SelectAllAlbums();
+        List<Album> SelectAlbumsByUserID(int userID);
         int UpdateAlbum(Album oldAlbum, Album newAlbum);
         int DeleteAlbum(int albumId);
         int RemoveSongFromAlbum(int songID);

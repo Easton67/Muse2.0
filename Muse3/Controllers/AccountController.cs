@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using DataObjects;
 using LogicLayer;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -211,6 +213,51 @@ namespace Muse3.Controllers
                                 return RedirectToAction("Library", "Song");
                             }
                             AddErrors(result);
+                        }
+                    }
+                    else
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            // this gets the highest userID and will add 1 to it when the user is made
+                            var largestUserID = _um.SelectAllUsers().Select(x => x.UserID).Max();
+                            var user = new ApplicationUser
+                            {
+                                ProfileName = model.ProfileName,
+                                GivenName = model.FirstName,
+                                FamilyName = model.LastName,
+                                UserName = model.Email,
+                                Active = true,
+                                UserID = largestUserID + 1,
+                                ImageFilePath = "defaultAccount.png",
+                                Email = model.Email,
+                            };
+
+                            List<string> desktopRoles = new List<string>() { "User" };
+
+                            var desktopUser = new UserVM()
+                            {
+                                UserID = (int)user.UserID,
+                                ProfileName = model.ProfileName,
+                                Email = model.Email,
+                                FirstName = model.FirstName,
+                                LastName = model.LastName,
+                                ImageFilePath = "defaultAccount.png",
+                                Active = true,
+                                MinutesListened = 0,
+                                isPublic = false,
+
+                                Roles = desktopRoles,
+                            };
+
+                            var result = await UserManager.CreateAsync(user, model.Password);
+                            var userResult = _um.InsertUser(desktopUser, model.Password);
+                            if (result.Succeeded && userResult == true)
+                            {
+                                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                return RedirectToAction("Library", "Song");
+                            }
+                            AddErrors(result);  
                         }
                     }
                 }

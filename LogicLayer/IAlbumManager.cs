@@ -13,6 +13,7 @@ namespace LogicLayer
         bool InsertSongIntoAlbumID(int songID, int albumID);
         int SelectAlbumIDFromTitle(string albumTitle, string artistID);
         Album SelectAlbumByAlbumID(int AlbumID);
+        List<Album> SelectAlbumsByUserID(int userID);
         List<Album> SelectAllAlbums();
         bool UpdateAlbum(Album oldAlbum, Album newAlbum);
         bool DeleteAlbum(int albumId);

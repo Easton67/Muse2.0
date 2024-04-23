@@ -92,7 +92,7 @@ namespace DataAccessFakes
         }
         public Album SelectAlbumByAlbumID(int AlbumID)
         {
-            throw new NotImplementedException();
+            return fakeAlbums.FirstOrDefault(x => x.AlbumID == AlbumID);
         }
         public int SelectAlbumIDFromTitle(string albumTitle, string artistID)
         {
@@ -119,6 +119,10 @@ namespace DataAccessFakes
         public int RemoveSongFromAlbum(int songID)
         {
             throw new NotImplementedException();
+        }
+        public List<Album> SelectAlbumsByUserID(int userID)
+        {
+            return fakeAlbums.Where(x => x.UserID == userID).ToList();
         }
     }
 }

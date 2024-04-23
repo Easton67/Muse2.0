@@ -12,6 +12,15 @@ img {
     user-select: none;
 }
 
+.grow {
+    transition: all .2s ease-in-out;
+    user-select: none;
+}
+
+.grow:Hover {
+    scale: 1.1;
+}
+
 .explicit-white {
     filter: invert(100%);
     padding-left: 4px;
@@ -516,3 +525,18 @@ footer {
 .tableRow:hover{
     background-color: mediumpurple;
 }
+
+/* Upgrade Account */
+
+.upgradeOptions:hover {
+    border: 5px dashed white;
+}
+
+.upgradeOptionsList {
+    margin-left: -10px;
+}
+
+.upgradeOptionsList li {
+    list-style-type: "✔️ ";
+}
+

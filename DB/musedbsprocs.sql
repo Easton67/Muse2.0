@@ -14,17 +14,14 @@ CREATE PROCEDURE [dbo].[sp_create_new_user]
 (
 	@PasswordHash  [nvarchar](100),
 	@Email 		   [nvarchar](100),
-	@ProfileName   [nvarchar](200),
-	@ImageFilePath [nvarchar](500),
-	@Photo 	       [varbinary](MAX),
-	@PhotoMimeType [nvarchar](50)
+	@ProfileName   [nvarchar](200)
 )
 AS
 	BEGIN
 		INSERT INTO [dbo].[User]
-				([ProfileName], [Email], [PasswordHash], [ImageFilePath], [Photo], [PhotoMimeType])
+				([ProfileName], [Email], [PasswordHash])
 			VALUES
-				(@ProfileName, @Email, @PasswordHash, @ImageFilePath, @Photo, @PhotoMimeType)
+				(@ProfileName, @Email, @PasswordHash)
 	END
 GO
 
@@ -567,8 +564,8 @@ AS
 		IF @AlbumID IS NULL
 		BEGIN
 			INSERT INTO [dbo].[Album] 
-				([Title], [ArtistID], [ImageFilePath])
-			VALUES (@AlbumTitle, @ArtistID, @ImageFilePath)
+				([Title], [ArtistID], [ImageFilePath], [UserID])
+			VALUES (@AlbumTitle, @ArtistID, @ImageFilePath, @UserID)
 
 			SELECT @AlbumID = SCOPE_IDENTITY()
 		END
@@ -1148,8 +1145,35 @@ AS
 				[PhotoMimeType],
 				[Description],
 				[YearReleased],
-				[DateAdded]
+				[DateAdded],
+				[UserID]
 		FROM	[Album]
+	END
+GO
+
+/* sp_select_albums_by_UserID */
+
+print '' print '*** creating sp_select_albums_by_UserID ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_albums_by_UserID]
+(
+	@UserID     [int]
+)
+AS
+	BEGIN
+		SELECT  [AlbumID], 
+				[Title], 
+				[ArtistID],
+				[isExplicit],
+				[ImageFilePath],
+				[Photo],
+				[PhotoMimeType],
+				[Description],
+				[YearReleased],
+				[DateAdded],
+				[UserID]
+		FROM	[Album]
+		WHERE   [UserID] = @UserID
 	END
 GO
 

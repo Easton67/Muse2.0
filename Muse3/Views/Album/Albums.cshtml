@@ -31,81 +31,91 @@
     <button class="btn-add">
         @Html.ActionLink("Add Album", "Create")
     </button>
-    <input id="searchBox" type="text" placeholder="Search for album...">
-    <img onclick="searchForAlbum()" class="icon px-3" src="~/Images/search.svg" />
-</div>
-
-@*card view*@
-<div id="library-grid-view" class="mx-1 row row-cols-lg-10 gap-4">
-    @foreach (var album in Model)
+    @if (Model.Count() > 0)
     {
-    <div class="card album-card" loading="lazy" style="width: 18rem; 
-                                        height: 18rem; 
-                                        background-image: url('@Url.Action("GetAlbumPhoto", "Helper", new { album.AlbumID })'); "
-         onclick="window.location.href='@Url.Action("Details", "Album", new { id = album.AlbumID })'">  
-        
-        @*used as spacer*@
-        <a style="display: block; width: 100%; height: 100%;">
-        </a>
-        <div class="card-body">
-            <h5 class="card-title h3 fw-bold text-dark">@album.Title</h5>
-            <p class="card-text fw-bold h5 text-dark">@album.ArtistID</p>
-        </div>
-    </div>
+        <input id="searchBox" type="text" placeholder="Search for album...">
+        <img onclick="searchForAlbum()" class="icon px-3" src="~/Images/search.svg" />
     }
-</div>
+    </div>
+
+@if (Model.Count() > 0)
+{
+    @*card view*@
+    <div id="library-grid-view" class="mx-1 row row-cols-lg-10 gap-4">
+        @foreach (var album in Model)
+        {
+            <div class="card album-card" loading="lazy" style="width: 18rem;
+                                        height: 18rem;
+                                        background-image: url('@Url.Action("GetAlbumPhoto", "Helper", new { album.AlbumID })'); "
+                 onclick="window.location.href='@Url.Action("Details", "Album", new { id = album.AlbumID })'">
+
+                @*used as spacer*@
+                <a style="display: block; width: 100%; height: 100%;">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title h3 fw-bold text-dark">@album.Title</h5>
+                    <p class="card-text fw-bold h5 text-dark">@album.ArtistID</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+else 
+{ 
+    <h1>No albums have been created yet.</h1>
+}
 
 @*table view*@
 
 @*<table class="table text-light">
-        <tr>
-            <th>
-                <p>@Html.DisplayNameFor(model => model.ImageFilePath)</p>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArtistID)
-            </th>
-            <th>
-                Details
-            </th>
-        </tr>
-        @foreach (var album in Model)
-        {
             <tr>
-                <td>
-                    <a href="@Url.Action("Details", "Album", new { id = album.AlbumID })">
-                        <img src="@Url.Action("GetAlbumPhoto", "Helper", new { album.AlbumID })" alt="Art for @album.Title by @album.ArtistID." />
-                    </a>
-                </td>
-                <td>
-                    <p class="mt-4">@Html.ActionLink(album.Title, "Details", new { albumTitle = album.Title,  artistID = album.ArtistID })</p>
-                </td>
-                <td>
-                    <p class="mt-4">
-                        <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = album.ArtistID })">
-                            @album.ArtistID
-                        </a>
-                    </p>
-                </td>
-                <td>
-                    <p class="mt-4">
-                        <button class="delete-button fw-bold text-danger text-danger bg-transparent border-0"
-                                data-bs-toggle="modal"
-                                data-bs-target="#delete-modal"
-                                data-album-id="@album.AlbumID"
-                                data-album-name="@album.Title">
-                            Delete
-                        </button>
-                    </p>
-                </td>
+                <th>
+                    <p>@Html.DisplayNameFor(model => model.ImageFilePath)</p>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ArtistID)
+                </th>
+                <th>
+                    Details
+                </th>
             </tr>
-        }
-</table>*@
+            @foreach (var album in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Details", "Album", new { id = album.AlbumID })">
+                            <img src="@Url.Action("GetAlbumPhoto", "Helper", new { album.AlbumID })" alt="Art for @album.Title by @album.ArtistID." />
+                        </a>
+                    </td>
+                    <td>
+                        <p class="mt-4">@Html.ActionLink(album.Title, "Details", new { albumTitle = album.Title,  artistID = album.ArtistID })</p>
+                    </td>
+                    <td>
+                        <p class="mt-4">
+                            <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = album.ArtistID })">
+                                @album.ArtistID
+                            </a>
+                        </p>
+                    </td>
+                    <td>
+                        <p class="mt-4">
+                            <button class="delete-button fw-bold text-danger text-danger bg-transparent border-0"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#delete-modal"
+                                    data-album-id="@album.AlbumID"
+                                    data-album-name="@album.Title">
+                                Delete
+                            </button>
+                        </p>
+                    </td>
+                </tr>
+            }
+    </table>*@
 
-    <script>
+<script>
     var deleteButtons = document.querySelectorAll('.delete-button');
 
     // add a click event to all delete buttons
@@ -124,4 +134,4 @@
         var albumURL = '@Url.Action("Albums", "Album")' + '?searchText=' + encodeURIComponent(title);
         window.location.href = albumURL;
     };
-    </script>
+</script>

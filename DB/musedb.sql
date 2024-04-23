@@ -59,8 +59,6 @@ CREATE TABLE [dbo].[UserFriend] (
     CONSTRAINT [u_UserFriend_Unique] UNIQUE([UserID], [FriendID])
 )
 
-
-
 /* Role Table */
 print '' print '*** creating Role table ***'
 GO
@@ -119,11 +117,15 @@ CREATE TABLE [dbo].[Album] (
 	'defaultAlbumImage.png',
 	[Photo]			  [varbinary](MAX)	         NULL,
 	[PhotoMimeType]   [varchar](50)		         NULL,
-	[Description] 	[nvarchar](max)				 NULL, 
-	[YearReleased] 	[int]				 		 DEFAULT 2002, 
-	[DateAdded] 	[DateTime]
+	[Description] 	  [nvarchar](max)			 NULL, 
+	[YearReleased] 	  [int]				 		 DEFAULT 2002, 
+	[DateAdded] 	  [DateTime],
+	[UserID] 		  [int]						 NULL
+	
 	CONSTRAINT [fk_Album_ArtistID] FOREIGN KEY([ArtistID])
 		REFERENCES [dbo].[Artist]([ArtistID]),
+	CONSTRAINT [fk_Album_UserID] FOREIGN KEY([UserID])
+		REFERENCES [dbo].[User]([UserID]),
 
 	CONSTRAINT[pk_AlbumID] PRIMARY KEY([AlbumID])
 )

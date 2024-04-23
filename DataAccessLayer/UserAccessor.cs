@@ -22,9 +22,9 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@PasswordHash", password);
             cmd.Parameters.AddWithValue("@Email", user.Email);
             cmd.Parameters.AddWithValue("@ProfileName", user.ProfileName);
-            cmd.Parameters.AddWithValue("@ImageFilePath", user.ImageFilePath);
-            cmd.Parameters.AddWithValue("@Photo", user.Photo);
-            cmd.Parameters.AddWithValue("@PhotoMimeType", user.PhotoMimeType);
+            //cmd.Parameters.AddWithValue("@ImageFilePath", user.ImageFilePath);
+            //cmd.Parameters.AddWithValue("@Photo", user.Photo);
+            //cmd.Parameters.AddWithValue("@PhotoMimeType", user.PhotoMimeType);
 
             try
             {

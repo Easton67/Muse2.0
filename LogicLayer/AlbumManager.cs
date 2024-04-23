@@ -87,7 +87,21 @@ namespace LogicLayer
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Album not found", ex);
+                throw new ApplicationException("Albums not found", ex);
+            }
+            return albums;
+        }
+        public List<Album> SelectAlbumsByUserID(int userID)
+        {
+            List<Album> albums = new List<Album>();
+
+            try
+            {
+                albums = _albumAccessor.SelectAlbumsByUserID(userID);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Albums not found", ex);
             }
             return albums;
         }
