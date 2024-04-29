@@ -159,7 +159,7 @@ namespace DataAccessLayer
                         album.Description = reader.IsDBNull(7) ? "No description." : reader.GetString(7);
                         album.YearReleased = reader.IsDBNull(8) ? 2002 : reader.GetInt32(8);
                         album.DateAdded = reader.IsDBNull(9) ? DateTime.Now.Date : reader.GetDateTime(9);
-                        album.UserID = reader.GetInt32(10);
+                        album.UserID = reader.IsDBNull(10) ? 0 : reader.GetInt32(10);
 
                         int columnIndex = 5;
 
@@ -211,48 +211,47 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
+
                 var reader = cmd.ExecuteReader();
-                if (reader.Read())
+
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    byte[] photo = null;
+                    long? fieldWidth = null;
+
+                    var album = new Album();
+                    album.AlbumID = reader.GetInt32(0);
+                    album.Title = reader.GetString(1);
+                    album.ArtistID = reader.GetString(2);
+                    album.isExplicit = reader.GetBoolean(3);
+                    album.ImageFilePath = reader.IsDBNull(4) ? defaultAlbumImg : reader.GetString(4);
+                    album.Description = reader.IsDBNull(7) ? "No description." : reader.GetString(7);
+                    album.YearReleased = reader.IsDBNull(8) ? 2002 : reader.GetInt32(8);
+                    album.DateAdded = reader.IsDBNull(9) ? DateTime.Now.Date : reader.GetDateTime(9);
+                    album.UserID = reader.GetInt32(10);
+
+                    int columnIndex = 5;
+
+                    try
                     {
-                        byte[] photo = null;
-                        long? fieldWidth = null;
-
-                        var album = new Album();
-                        album.AlbumID = reader.GetInt32(0);
-                        album.Title = reader.GetString(1);
-                        album.ArtistID = reader.GetString(2);
-                        album.isExplicit = reader.GetBoolean(3);
-                        album.ImageFilePath = reader.IsDBNull(4) ? defaultAlbumImg : reader.GetString(4);
-                        album.Description = reader.IsDBNull(7) ? "No description." : reader.GetString(7);
-                        album.YearReleased = reader.IsDBNull(8) ? 2002 : reader.GetInt32(8);
-                        album.DateAdded = reader.IsDBNull(9) ? DateTime.Now.Date : reader.GetDateTime(9);
-                        album.UserID = reader.GetInt32(10);
-
-                        int columnIndex = 5;
-
-                        try
-                        {
-                            fieldWidth = reader.GetBytes(columnIndex, 0, null, 0, Int32.MaxValue);
-                        }
-                        catch (Exception)
-                        {
-                            photo = null;
-                        }
-
-                        if (photo != null)
-                        {
-                            int width = (int)fieldWidth;
-                            photo = new byte[width];
-                            reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
-                        }
-
-                        album.PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4);
-                        album.Photo = photo;
-
-                        albums.Add(album);
+                        fieldWidth = reader.GetBytes(columnIndex, 0, null, 0, Int32.MaxValue);
                     }
+                    catch (Exception)
+                    {
+                        photo = null;
+                    }
+
+                    if (photo != null)
+                    {
+                        int width = (int)fieldWidth;
+                        photo = new byte[width];
+                        reader.GetBytes(columnIndex, 0, photo, 0, photo.Length);
+                    }
+
+                    album.PhotoMimeType = reader.IsDBNull(4) ? null : reader.GetString(4);
+                    album.Photo = photo;
+
+                    albums.Add(album);
                 }
                 return albums;
             }

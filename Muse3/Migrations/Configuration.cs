@@ -103,7 +103,8 @@
                 if (result.Succeeded)
                 {
                     userManager.AddToRole(user.Id, "Admin");
-                    userManager.AddToRole(user.Id, "Manager");
+                    //userManager.AddToRole(user.Id, "Manager");
+                    userManager.AddToRole(user.Id, "Subscriber");
 
                     _um.InsertUser(desktopUser, "P@ssw0rd");
                     context.SaveChanges();

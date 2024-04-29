@@ -1277,21 +1277,21 @@ PRINT '*** inserting Album test records ***'
 GO
 
 INSERT INTO [dbo].[Album] 
-    ([Title], [ArtistID], [ImageFilePath], [Description])
+    ([Title], [ArtistID], [ImageFilePath], [Description], [UserID])
 VALUES
-    ('Views', 'Drake', 'views.jpg', 'Drake''s 6th album'),
-    ('Nothing was the Same', 'Drake', 'nothingwasthesame.jpg', 'Drake''s 3rd album'),
-    ('Scorpion', 'Drake', 'scorpion.jpg', 'Drake''s 8th album'),
-    ('Graduation', 'KanYe', 'graduation.jpg', 'Kanye West''s 8th album'),
-    ('Blonde', 'Frank Ocean', 'blonde.jpeg', 'Frank Ocean''s album'),
-    ('ASTROWORLD', 'Travis Scott', 'astroworld.jpg', 'Travis Scott''s album'),
-    ('Honky Chateau', 'Elton John', 'HonkyChateau.jpg', 'Elton John''s album'),
-    ('Because The Internet', 'Childish Gambino', 'becausetheinternet.jpg', 'Childish Gambino''s album'),
-    ('The Life of Pablo', 'KanYe', 'thelifeofpablo.jpg', 'Kanye West''s album'),
-    ('Eternal Atake', 'Lil Uzi Vert', 'eternalatake.jpg', 'Lil Uzi Vert''s album'),
-    ('Heroes and Villains', 'Metro Boomin', 'heroesandvillains.jpg', 'Metro Boomin album'),
-    ('Playboi Carti', 'Playboi Carti', 'playboicarti.jpg', 'Playboi Carti''s album'),
-    ('The House Is Burning', 'Isaiah Rashad', 'thehouseisburning.jpg', 'Isaiah Rashad''s album')
+    ('Views', 'Drake', 'views.jpg', 'Drake''s 6th album', 100000),
+    ('Nothing was the Same', 'Drake', 'nothingwasthesame.jpg', 'Drake''s 3rd album', 100000),
+    ('Scorpion', 'Drake', 'scorpion.jpg', 'Drake''s 8th album', 100000),
+    ('Graduation', 'KanYe', 'graduation.jpg', 'Kanye West''s 8th album', 100001),
+    ('Blonde', 'Frank Ocean', 'blonde.jpeg', 'Frank Ocean''s album', 100001),
+    ('ASTROWORLD', 'Travis Scott', 'astroworld.jpg', 'Travis Scott''s album', 100001),
+    ('Honky Chateau', 'Elton John', 'HonkyChateau.jpg', 'Elton John''s album', 100001),
+    ('Because The Internet', 'Childish Gambino', 'becausetheinternet.jpg', 'Childish Gambino''s album', 100001),
+    ('The Life of Pablo', 'KanYe', 'thelifeofpablo.jpg', 'Kanye West''s album', 100001),
+    ('Eternal Atake', 'Lil Uzi Vert', 'eternalatake.jpg', 'Lil Uzi Vert''s album', 100001),
+    ('Heroes and Villains', 'Metro Boomin', 'heroesandvillains.jpg', 'Metro Boomin album', 100001),
+    ('Playboi Carti', 'Playboi Carti', 'playboicarti.jpg', 'Playboi Carti''s album', 100001),
+    ('The House Is Burning', 'Isaiah Rashad', 'thehouseisburning.jpg', 'Isaiah Rashad''s album', 100001)
 GO
 
 print '' print '*** inserting SongAlbum test records ***'

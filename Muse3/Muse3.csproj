@@ -247,8 +247,10 @@
     <Content Include="Images\grid-icon.svg" />
     <Content Include="Images\bigvec.jpg" />
     <Content Include="Images\explicit.png" />
+    <Content Include="Images\GuyListeningToMusic.png" />
     <Content Include="Images\heart-icon-filled.svg" />
     <Content Include="Images\heart-icon.svg" />
+    <Content Include="Images\LayingDownListeningToMusic.png" />
     <Content Include="Images\list-icon.svg" />
     <Content Include="Images\museFavIcon.ico" />
     <Content Include="Images\museLogoClassic.png" />
@@ -1987,7 +1989,6 @@
     <Content Include="Views\Song\LibraryGridView.cshtml" />
     <Content Include="Views\Review\CreateWithSongProvided.cshtml" />
     <Content Include="Views\Shared\_SubscriberModal.cshtml" />
-    <Content Include="Views\User\ViewUpgradePlans.cshtml" />
     <Content Include="Views\Artist\Details.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Song\CreateFromFolder.cshtml" />
@@ -1995,6 +1996,7 @@
     <Content Include="Views\Playlist\Details.cshtml" />
     <Content Include="Views\Playlist\ViewAllPlaylists.cshtml" />
     <Content Include="Views\Playlist\AddSongToPlaylist.cshtml" />
+    <Content Include="Views\Admin\ViewUpgradePlans.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

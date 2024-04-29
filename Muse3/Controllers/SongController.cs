@@ -57,7 +57,10 @@ namespace Muse3.Controllers
 
             try
             {
-                songs = _songManager.SelectSongsByUserID(GetUserID());
+                songs = _songManager.SelectSongsByUserID(GetUserID())
+                                    .GroupBy(s => s.SongID) 
+                                    .Select(x => x.First()) 
+                                    .ToList();
 
                 if (!string.IsNullOrEmpty(searchText))
                 {
@@ -99,14 +102,13 @@ namespace Muse3.Controllers
 
             try
             {
+                songs = _songManager.SelectSongsByUserID(GetUserID())
+                    .GroupBy(s => s.SongID)
+                    .Select(x => x.First())
+                    .ToList();
                 if (!string.IsNullOrEmpty(searchText))
                 {
-                    songs = _songManager.SelectSongsByUserID(GetUserID());
                     songs = songs.Where(x => x.Title.ToLower().Contains(searchText.ToLower())).ToList();
-                }
-                else
-                {
-                    songs = _songManager.SelectSongsByUserID(GetUserID());
                 }
             }
             catch (Exception)
@@ -430,6 +432,7 @@ namespace Muse3.Controllers
 
                 var newSong = new Song()
                 {
+                    SongID = oldSong.SongID,
                     Title = song.Title,
                     ImageFilePath = (imageFile != null) ? Path.GetFileName(imageFile.FileName) : Path.GetFileName(oldSong.ImageFilePath),
                     Mp3FilePath = oldSong.Mp3FilePath,

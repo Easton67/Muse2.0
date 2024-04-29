@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "ViewAllFriends";
+    ViewBag.Hero = "Your Friends";
 }
 
 <h2>Friends</h2>
@@ -9,7 +10,23 @@
 <p>
     @Html.ActionLink("Add", "Create")
 </p>
-<table class="table bg-dark text-light">
+
+<div class="row mx-5 row-cols- lg-10">
+    @foreach (var friend in Model)
+    {
+        <div id="library-cards-container" class="col my-4 mx-5 inline w-auto">
+            <div id="image-container" class="image-container">
+                <a href="@Url.Action("Details", "User", new { id = friend.UserID })">
+                    <img class="artist-img" src="@Url.Action("GetFriendPhoto", "Helper", new { friendID = friend.UserID })" alt="Photo of @friend.ProfileName" />
+                </a>
+                <p class="mt-4 text-center">@friend.ProfileName</p>
+            </div>
+        </div>
+    }
+</div>
+
+@*table view
+<table>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ImageFilePath)
@@ -63,6 +80,6 @@
             @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
         </td>
     </tr>
-}
+}*@
 
 </table>

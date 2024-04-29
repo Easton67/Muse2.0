@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace Muse3.Controllers
 {
@@ -23,23 +24,6 @@ namespace Muse3.Controllers
 
         // GET: User
         public ActionResult ViewAllFriends()
-        {
-            List<UserFriend> friends = new List<UserFriend>();
-
-            try
-            {
-                friends = _userManager.SelectFriendsByUserID(GetUserID());
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-            return View(friends);
-        }
-
-        public ActionResult ViewUpgradePlans()
         {
             List<UserFriend> friends = new List<UserFriend>();
 

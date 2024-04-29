@@ -434,6 +434,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@NewExplicit", newSong.Explicit);
             cmd.Parameters.AddWithValue("@NewGenre", newSong.Genre); 
             cmd.Parameters.AddWithValue("@NewPlays", newSong.Plays);
+            cmd.Parameters.AddWithValue("@UserID", newSong.UserID);
             cmd.Parameters.AddWithValue("@NewArtistID", newSong.Artist); 
             cmd.Parameters.AddWithValue("@NewAlbumTitle", newSong.Album); 
             cmd.Parameters.AddWithValue("@NewIsLiked", newSong.isLiked);

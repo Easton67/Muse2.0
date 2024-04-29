@@ -678,6 +678,7 @@ CREATE PROCEDURE [dbo].[sp_update_song]
     @NewExplicit bit,
     @NewGenre nvarchar(200),
     @NewPlays int,
+	@UserID int,
     @NewArtistID nvarchar(200),
     @NewAlbumTitle nvarchar(255),
     @NewIsLiked bit,
@@ -691,8 +692,9 @@ AS
 		-- check if @artistID already exists
 		IF NOT EXISTS (SELECT 1 FROM [dbo].[Artist] WHERE [ArtistID] = @NewArtistID)
 		BEGIN
-			INSERT INTO [dbo].[Artist] ([ArtistID])
-			VALUES (@NewArtistID)
+			INSERT INTO [dbo].[Artist] 
+				([ArtistID], [UserID])
+			VALUES (@NewArtistID, @UserID)
 		END
 
 		-- get albumID from the albumtitle and the artist
@@ -703,10 +705,11 @@ AS
 
 		-- make new album if it doesn't exist
 		IF @AlbumID IS NULL
+		DECLARE @DateAdded DATETIME = GETDATE()
 		BEGIN
 			INSERT INTO [dbo].[Album]
-				([Title], [ArtistID])
-			VALUES (@NewAlbumTitle, @NewArtistID)
+				([Title], [ArtistID], [DateAdded])
+			VALUES (@NewAlbumTitle, @NewArtistID, @DateAdded)
 
 			SELECT @AlbumID = SCOPE_IDENTITY()
 		END
@@ -722,6 +725,7 @@ AS
 			[Explicit] = @NewExplicit,
 			[Genre] = @NewGenre,
 			[Plays] = @NewPlays,
+			[UserID] = @UserID,
 			[ArtistID] = @NewArtistID,
 			[AlbumID] = @AlbumID,
 			[IsLiked] = @NewIsLiked

@@ -106,6 +106,28 @@ namespace Muse3.Controllers
             //return View("Details", user);
         }
 
+        public ActionResult RemoveSubscriberStatus(string role)
+        {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.FindByEmail(User.Identity.GetUserName());
+
+            userManager.RemoveFromRole(user.Id, role);
+
+            if (user.UserID != null)
+            {
+                try
+                {
+                    var _userManager = new LogicLayer.UserManager();
+                    _userManager.DeleteUserRole((int)user.UserID, role);
+                }
+                catch (Exception)
+                {
+                    // nothing
+                }
+            }
+            return RedirectToAction("ViewUpgradePlans", "Admin", new { id = user.Id });
+        }
+
         [Authorize(Roles = "Manager")]
         public ActionResult AddRole(string id, string role)
         {
@@ -129,8 +151,6 @@ namespace Muse3.Controllers
             }
             return RedirectToAction("Details", "Admin", new { id = user.Id });
 
-
-
             // get a list of roles the user has and put them into a viewbag as roles
             // along with a list of roles the user doesn't have as noRoles
 
@@ -144,6 +164,50 @@ namespace Muse3.Controllers
             //ViewBag.NoRoles = noRoles;
 
             //return View("Details", user);
+        }
+
+        public ActionResult AddSubscriberStatus(string role)
+        {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.FindByEmail(User.Identity.GetUserName());
+
+            userManager.AddToRole(user.Id, role);
+
+            if (user.UserID != null)
+            {
+                try
+                {
+                    var _userManager = new LogicLayer.UserManager();
+                    _userManager.AddUserRole((int)user.UserID, role);
+                }
+                catch (Exception)
+                {
+                    // do nothing
+                }
+            }
+            return RedirectToAction("ViewUpgradePlans", "Admin", new { id = user.Id });
+        }
+
+        [Authorize]
+        public ActionResult ViewUpgradePlans(int? id)
+        {
+            var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = _userManager.FindByEmail(User.Identity.GetUserName());
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var usrMgr = new LogicLayer.UserManager();
+            var allRoles = usrMgr.SelectAllRoles();
+
+            var roles = _userManager.GetRoles(user.Id);
+            var noRoles = allRoles.Except(roles);
+
+            ViewBag.Roles = roles;
+            ViewBag.NoRoles = noRoles;
+            return View(user);
         }
     }
 }

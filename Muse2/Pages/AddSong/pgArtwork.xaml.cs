@@ -125,6 +125,5 @@ namespace Muse2.Pages.AddSong
                 encoder.Save(stream);
             }
         }
-
     }
 }

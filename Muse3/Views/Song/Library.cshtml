@@ -36,7 +36,10 @@
             }*@
 
         <input id="searchBox" type="text" placeholder="Search for song...">
-        <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
+        if (User.IsInRole("Subscriber"))
+        {
+            <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
+        }
         <img class="icon px-3" src="~/Images/list-icon.svg" onclick="window.location.href='@Url.Action("Library", "Song")'" />
         <img class="icon px-3" src="~/Images/grid-icon.svg" onclick="window.location.href='@Url.Action("LibraryGridView", "Song")'" />
     }
@@ -66,12 +69,14 @@
 </div>
 
 @*list view*@
-<button type="button"
+
+@*SubscriberModal*@
+@*<button type="button"
         class="btn btn-primary"
         data-bs-toggle="modal"
         data-bs-target="#subscriber-modal">
     Become a subscriber
-</button>
+</button>*@
 @if (Model.Count() > 0)
 {
     <div id="library-list-view" class="pt-4">
@@ -83,63 +88,79 @@
                 <th>
                     <div class="d-flex">
                         @Html.DisplayNameFor(model => model.Title)
-                        <div style="margin-top: -3px!important;" class="mx-3">
-                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Title" })'" />
-                            <br />
-                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Title" })'" />
-                        </div>
+                        @if (User.IsInRole("Subscriber"))
+                        {
+                            <div style="margin-top: -3px!important;" class="mx-3">
+                                <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Title" })'" />
+                                <br />
+                                <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Title" })'" />
+                            </div>
+                        }
                     </div>
                 </th>
                 <th>
                     <div class="d-flex">
                         @Html.DisplayNameFor(model => model.Artist)
-                        <div style="margin-top: -3px!important;" class="mx-3">
-                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Artist" })'" />
-                            <br />
-                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Artist" })'" />
-                        </div>
+                        @if (User.IsInRole("Subscriber"))
+                        {
+                            <div style="margin-top: -3px!important;" class="mx-3">
+                                <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Artist" })'" />
+                                <br />
+                                <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Artist" })'" />
+                            </div>
+                        }
                     </div>
                 </th>
                 <th>
                     <div class="d-flex">
                         @Html.DisplayNameFor(model => model.Album)
-                        <div style="margin-top: -3px!important;" class="mx-3">
-                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Album" })'" />
-                            <br />
-                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Album" })'" />
-                        </div>
+                        @if (User.IsInRole("Subscriber"))
+                        {
+                            <div style="margin-top: -3px!important;" class="mx-3">
+                                <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Album" })'" />
+                                <br />
+                                <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Album" })'" />
+                            </div>
+                        }
                     </div>
                 </th>
                 <th>
                     <div class="d-flex">
                         <p class="text-nowrap">Year Released</p>
-                        <div style="margin-top: -3px!important;" class="mx-3">
-                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "YearReleased" })'" />
-                            <br />
-                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "YearReleased" })'" />
-                        </div>
+                        @if (User.IsInRole("Subscriber"))
+                        {
+                            <div style="margin-top: -3px!important;" class="mx-3">
+                                <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "YearReleased" })'" />
+                                <br />
+                                <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "YearReleased" })'" />
+                            </div>
+                        }
                     </div>
                 </th>
                 <th>
                     <div class="d-flex">
                         @Html.DisplayNameFor(model => model.Genre)
-                        <div style="margin-top: -3px!important;" class="mx-3">
-                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Genre" })'" />
-                            <br />
-                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Genre" })'" />
-                        </div>
+                        @if (User.IsInRole("Subscriber"))
+                        {
+                            <div style="margin-top: -3px!important;" class="mx-3">
+                                <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "Genre" })'" />
+                                <br />
+                                <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "Genre" })'" />
+                            </div>
+                        }
                     </div>
                 </th>
+                @*Had plays here, but plays dont function like they did on my webapp so I scrapped it*@
                 @*<th>
                         <div class="d-flex">
                             @Html.DisplayNameFor(model => model.Plays)
@@ -160,13 +181,16 @@
                 <th>
                     <div class="d-flex">
                         <p class="text-nowrap">Date Added</p>
-                        <div style="margin-top: -3px!important;" class="mx-3">
-                            <img class="arrow arrow-up" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "DateAdded" })'" />
-                            <br />
-                            <img class="arrow arrow-down" src="~/Images/caret-down.png"
-                                    onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "DateAdded" })'" />
-                        </div>
+                        @if (User.IsInRole("Subscriber"))
+                        {
+                            <div style="margin-top: -3px!important;" class="mx-3">
+                                <img class="arrow arrow-up" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "asc", sortedProperty = "DateAdded" })'" />
+                                <br />
+                                <img class="arrow arrow-down" src="~/Images/caret-down.png"
+                                     onclick="window.location.href='@Url.Action("Library", "Song", new { searchText = "", ascOrDesc = "desc", sortedProperty = "DateAdded" })'" />
+                            </div>
+                        }
                     </div>
                 </th>
                 <th>

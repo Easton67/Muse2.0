@@ -1,0 +1,43 @@
+﻿@model Muse3.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "ViewUpgradePlans";
+    ViewBag.Hero = "Upgrade Account";
+}
+
+<div class="d-flex br-10 p-5 fs-5 form-backdrop justify-content-between gap-5" onclick="window.location.href='@Url.Action("AddSubscriberStatus", "Admin", new { role = "Subscriber" })'">
+    <div></div>
+    <div class="bg-dark upgradeOptions p-4 grow">
+        <h1>Free</h1>
+        <ul class="text-nowrap mt-5 upgradeOptionsList">
+            <li>Create and listen to songs</li>
+            <li>Create playlists</li>
+            <li>Create albums</li>
+        </ul>
+    </div>
+
+    <div class="bg-dark upgradeOptions p-4 grow" onclick="window.location.href='@Url.Action("RemoveSubscriberStatus", "Admin", new { role = "Subscriber" })'">
+        @*<h1>Starter</h1>*@
+        <h1>Pro</h1>
+        <h2 class="my-1">$3 monthly</h2>
+        <ul class="text-nowrap upgradeOptionsList">
+            <li>Everything included from free tier</li>
+            <li>Search button functionality</li>
+            <li>Sort features</li>
+            <li>Review songs</li>
+            <li>Add Friends</li>
+        </ul>
+    </div>
+    <div></div>
+    @*if I wanted to add another tier, but I dont have enough features to add another one*@
+    @*<div class="bg-dark upgradeOptions p-4 grow">
+            <h1>Pro</h1>
+            <h2 class="my-1">$5 monthly</h2>
+            <ul class="text-nowrap upgradeOptionsList">
+                <li>Everything included from free tier</li>
+                <li>Everything included from Starter tier</li>
+                <li>Add Friends</li>
+            </ul>
+        </div>*@
+</div>
+

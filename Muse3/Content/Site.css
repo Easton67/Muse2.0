@@ -84,7 +84,11 @@ body {
 }
 
 .bg-purple {
-    background-color: rgba(120, 107, 176, 1)
+    background-color: rgba(120, 107, 176, 1);
+}
+
+.purple {
+    color: rgba(120, 107, 176, 1) ;
 }
 
 /* Details pages / create button */
@@ -379,6 +383,10 @@ audio {
     padding-left: 30px;
 }
 
+#lyrics:hover {
+    cursor: pointer;
+}
+
 div textarea {
     background-color: transparent;
     border-radius: 5px;
@@ -527,7 +535,6 @@ footer {
 }
 
 /* Upgrade Account */
-
 .upgradeOptions:hover {
     border: 5px dashed white;
 }
@@ -539,4 +546,7 @@ footer {
 .upgradeOptionsList li {
     list-style-type: "✔️ ";
 }
+
+
+
 

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace Muse3.Controllers
 {
@@ -16,6 +17,7 @@ namespace Muse3.Controllers
         private SongManager _songManager = new SongManager();
         private AlbumManager _albumManager = new AlbumManager();
         private PlaylistManager _playlistManager = new PlaylistManager();
+        private UserManager _userManager = new UserManager();
 
         // GET: Helper
         public ActionResult Index()
@@ -49,7 +51,6 @@ namespace Muse3.Controllers
                 throw;
             }
         }
-
         public FileContentResult GetSongPhoto(int songID)
         {
             try
@@ -69,7 +70,6 @@ namespace Muse3.Controllers
                 throw;
             }
         }
-
         public FileContentResult GetAlbumPhoto(int albumID)
         {
             try
@@ -89,7 +89,6 @@ namespace Muse3.Controllers
                 throw;
             }
         }
-
         public FileContentResult GetPlaylistPhoto(int playlistID)
         {
             try
@@ -98,6 +97,35 @@ namespace Muse3.Controllers
                 if (playlist.Photo != null && playlist.PhotoMimeType != null)
                 {
                     return File(playlist.Photo, playlist.PhotoMimeType);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public FileContentResult GetFriendPhoto(int FriendID)
+        {
+            try
+            {
+                User friend = _userManager.SelectAllUsers().FirstOrDefault(x => x.UserID == FriendID);
+
+                string imagePath = Path.Combine(friend.ImageFilePath);
+
+                if (System.IO.File.Exists(friend.ImageFilePath))
+                {
+                    byte[] imageBytes = System.IO.File.ReadAllBytes(imagePath);
+                    friend.Photo = imageBytes;
+                    friend.PhotoMimeType = Path.GetExtension(friend.ImageFilePath);
+                }
+
+                if (friend?.Photo != null && friend?.PhotoMimeType != null)
+                {
+                    return File(friend.Photo, friend.PhotoMimeType);
                 }
                 else
                 {

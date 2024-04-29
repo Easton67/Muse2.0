@@ -8,6 +8,8 @@
 }
 
 @*card view*@
+@if(Model.Count() > 0)
+{
 <div id="library-grid-view" class="mx-1 row row-cols-lg-10 gap-4">
     @foreach (var review in Model)
     {
@@ -19,16 +21,32 @@
             @*used as spacer*@
             <a style="display: block; width: 100%; height: 100%;">
             </a>
-            <div class="card-body">
-                <h5 class="card-title h3 fw-bold text-dark">@review.ReviewedSong.Title</h5>
-                <p class="card-text fw-bold h5 text-dark">@review.ReviewedSong.Artist</p>
-                <p class="card-text fw-bold h5 text-dark"></p>
-                <p class="card-text fw-bold h5 text-dark">@review.Rating / 5</p>
+            <div class="card-body bg-dark text-white">
+                <p class="card-title h4 text-nowrap fw-bold">@review.ReviewedSong.Title</p>
+                <p class="card-text fw-bold h5">@review.ReviewedSong.Artist</p>
+                @{
+                    string stars = ""; 
+                    for (int i = 0; i < review.Rating; i++)
+                    {
+                        stars += "⭐";
+                    }
+                }<br />
+                <p class=" card-text fw-bold h5 text-dark">@stars</p>
             </div>
         </div>
-    }
+}
 </div>
+}
+else {
+    <div class="d-flex justify-content-center">
+        <div>
+            <h1 class="mt-4 text-center">No Reviews yet. <br /><br /> Go to your library, and view a song's details to write a review</h1>
+            <button class="btn-generic fs-2" onclick="window.location.href='@Url.Action("Library", "Song")'">Library</button>    
+        </div>
+    </div>
+}
 
+@*table view*@
 @*<table class="table text-light">
     <tr class="text-nowrap">
         <th>

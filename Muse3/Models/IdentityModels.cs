@@ -46,6 +46,6 @@ namespace Muse3.Models
 
         public System.Data.Entity.DbSet<DataObjects.Review> Reviews { get; set; }
 
-        // public System.Data.Entity.DbSet<Muse3.Models.ApplicationUser> ApplicationUsers { get; set; }
+        //public System.Data.Entity.DbSet<Muse3.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
