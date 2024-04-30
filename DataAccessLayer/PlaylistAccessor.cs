@@ -16,7 +16,7 @@ namespace DataAccessLayer
         private string defaultImg = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages\\defaultAlbumImage.png";
         private string playlistArtPath = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages\\";
 
-        public int CreatePlaylist(Playlist newPlaylist)
+        public int CreatePlaylist(Playlist playlist)
         {
             int rows = 0;
 
@@ -25,10 +25,12 @@ namespace DataAccessLayer
             var cmd = new SqlCommand(cmdText, conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Title", newPlaylist.Title);
-            cmd.Parameters.AddWithValue("@ImageFilePath", newPlaylist.ImageFilePath);
-            cmd.Parameters.AddWithValue("@Description", newPlaylist.Description);
-            cmd.Parameters.AddWithValue("@UserID", newPlaylist.UserID);
+            cmd.Parameters.AddWithValue("@Title", playlist.Title);
+            cmd.Parameters.AddWithValue("@ImageFilePath", playlist.ImageFilePath);
+            cmd.Parameters.AddWithValue("@Photo", playlist.Photo);
+            cmd.Parameters.AddWithValue("@PhotoMimeType", playlist.PhotoMimeType);
+            cmd.Parameters.AddWithValue("@Description", playlist.Description);
+            cmd.Parameters.AddWithValue("@UserID", playlist.UserID);
 
             try
             {

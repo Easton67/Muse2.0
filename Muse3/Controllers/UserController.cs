@@ -11,6 +11,8 @@ using System.IO;
 
 namespace Muse3.Controllers
 {
+
+    [Authorize]
     public class UserController : Controller
     {
         private UserManager _userManager = new UserManager();

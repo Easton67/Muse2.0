@@ -956,15 +956,16 @@ CREATE PROCEDURE [dbo].[sp_create_playlist]
 (
 	@Title			[nvarchar](50),
 	@ImageFilePath  [nvarchar](500),
-	@Photo			[varbinary](max),
+	@Photo			[varbinary](MAX),
+	@PhotoMimeType	[nvarchar](50),
 	@Description	[Text],
 	@UserID			[int]
 )
 AS	
 	BEGIN
 		INSERT INTO [dbo].[Playlist] 
-			([Title], [ImageFilePath], [Photo], [Description], [UserID])
-		VALUES (@Title, @ImageFilePath, @Photo, @Description, @UserID)
+			([Title], [ImageFilePath], [Photo], [PhotoMimeType], [Description], [UserID])
+		VALUES (@Title, @ImageFilePath, @Photo, @PhotoMimeType, @Description, @UserID)
 	END
 GO
 

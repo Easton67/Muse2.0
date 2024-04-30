@@ -61,7 +61,7 @@
 
 <script>
     function searchForSong() {
-        var title = document.getElementById("songSearchBox").value.trim().toLowerCase();
+        var title = document.getElementById("searchBox").value.trim().toLowerCase();
         var libraryURL = '@Url.Action("LibraryGridView", "Song")' + '?searchText=' + encodeURIComponent(title);
         window.location.href = libraryURL;
     };

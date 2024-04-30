@@ -20,11 +20,13 @@ namespace Muse3.Controllers
         public List<Song> Songs { get; set; }
     }
 
+    [Authorize]
     public class PlaylistController : Controller
     {
         private PlaylistManager _playlistManager = new PlaylistManager();
         private SongManager _songManager = new SongManager();
         private List<Playlist> playlists = new List<Playlist>();
+        private string imageFilesLocation = AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\PlaylistImages";
 
         public int GetUserID()
         {
@@ -129,12 +131,32 @@ namespace Muse3.Controllers
 
         // POST: Playlist/Create
         [HttpPost]
-        public ActionResult Create(Playlist playlist)
+        public ActionResult Create(Playlist playlist, HttpPostedFileBase imageFile)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var image = Path.GetFileName(imageFile.FileName);
+                    var imageFilePath = Path.Combine(imageFilesLocation, image);
+                    imageFile.SaveAs(imageFilePath);
+
+                    playlist.UserID = GetUserID();
+                    playlist.SongCount = 0;
+                    playlist.ImageFilePath = image;
+
+                    // get the photo and the mime type from the file
+                    HttpPostedFileBase photo = imageFile;
+                    string mimeType = null;
+                    byte[] photoOut = null;
+
+                    if (photo != null)
+                    {
+                        playlist.PhotoMimeType = photo.ContentType;
+                        playlist.Photo = new byte[photo.ContentLength];
+                        imageFile.InputStream.Read(playlist.Photo, 0, photo.ContentLength);
+                    }
+
                     _playlistManager.CreatePlaylist(playlist);
                     return RedirectToAction("ViewAllPlaylists");
                 }

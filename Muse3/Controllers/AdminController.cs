@@ -13,11 +13,13 @@ using Muse3.Models;
 
 namespace Muse3.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         // private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationUserManager userManager;
 
+        [Authorize(Roles = "Admin")]
         // GET: Admin
         public ActionResult Index()
         {
@@ -26,6 +28,7 @@ namespace Muse3.Controllers
             return View (userManager.Users.OrderBy(n => n.FamilyName).ToList());
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Admin/Details/5
         public ActionResult Details(string id)
         {
@@ -110,7 +113,9 @@ namespace Muse3.Controllers
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.FindByEmail(User.Identity.GetUserName());
-            userManager.RemoveFromRole(user.Id, role);  
+            ApplicationDbContext context = new ApplicationDbContext();
+            userManager.RemoveFromRole(user.Id, role);
+            context.SaveChanges();
 
             if (user.UserID != null)
             {
@@ -127,7 +132,6 @@ namespace Muse3.Controllers
             
             return RedirectToAction("ViewUpgradePlans", "Admin", new { id = user.Id });
         }
-
         [Authorize(Roles = "Admin")]
         public ActionResult AddRole(string id, string role)
         {
@@ -171,7 +175,9 @@ namespace Muse3.Controllers
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.FindByEmail(User.Identity.GetUserName());
 
+            ApplicationDbContext context = new ApplicationDbContext();
             userManager.AddToRole(user.Id, role);
+            context.SaveChanges();
 
             if (user.UserID != null)
             {
@@ -187,8 +193,7 @@ namespace Muse3.Controllers
             }
             return RedirectToAction("ViewUpgradePlans", "Admin", new { id = user.Id });
         }
-
-        
+        [Authorize]
         public ActionResult ViewUpgradePlans(int? id)
         {
             var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();

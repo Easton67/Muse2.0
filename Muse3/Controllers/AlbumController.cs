@@ -18,6 +18,7 @@ namespace Muse3.Controllers
         public List<Song> songs { get; set; }
     }
 
+    [Authorize]
     public class AlbumController : Controller
     {
         private AlbumManager _albumManager = new AlbumManager();

@@ -30,19 +30,28 @@
 </div>
 
 <div class="px-3">
-    <div class="d-flex">
-        <div class="your-element" data-tilt>
-            <img style="width: 200px; height: 200px; border-radius: 10px;" src="@Url.Action("GetPhoto", new { @Model.Playlist.PlaylistID })" alt="Art for @Model.Playlist.Title playlist." />
+
+    <div class="d-flex justify-content-between">
+        <div>
+            <div class="d-flex">
+                <img style="width: 200px; height: 200px; border-radius: 10px;" src="@Url.Action("GetPlaylistPhoto", "Helper", new { @Model.Playlist.PlaylistID })" alt="Art for @Model.Playlist.Title playlist." />
+                <div class="px-3">
+                    <h2>@Model.Playlist.Title</h2>
+                    <p>@Model.Playlist.Description</p>
+                </div>
+            </div>
+
+            <button class="btn-add" onclick="window.location.href='@Url.Action("AddSongToPlaylist", "Playlist", new { Model.Playlist.PlaylistID })'">
+                Add Song to Playlist
+            </button>
         </div>
-        <div class="px-3">
-            <h2>@Model.Playlist.Title</h2>
-            <p>Description: @Model.Playlist.Description</p>
+        <div>
+            
         </div>
     </div>
 
-    <button class="btn-add" onclick="window.location.href='@Url.Action("AddSongToPlaylist", "Playlist", new { Model.Playlist.PlaylistID })'">
-        Add Song to Playlist
-    </button>
+
+   
 
     @if (Model.Songs.Count() > 0)
     {

@@ -1967,7 +1967,6 @@
     <Content Include="Views\Song\Details.cshtml" />
     <Content Include="Views\Song\Edit.cshtml" />
     <Content Include="Views\Review\Details.cshtml" />
-    <Content Include="Views\Playlist\Create.cshtml" />
     <Content Include="Views\Playlist\Edit.cshtml" />
     <Content Include="Views\Review\Edit.cshtml" />
     <Content Include="Views\Album\Delete.cshtml" />
@@ -1995,6 +1994,7 @@
     <Content Include="Views\Playlist\ViewAllPlaylists.cshtml" />
     <Content Include="Views\Playlist\AddSongToPlaylist.cshtml" />
     <Content Include="Views\Admin\ViewUpgradePlans.cshtml" />
+    <Content Include="Views\Playlist\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

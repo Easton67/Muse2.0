@@ -16,6 +16,8 @@ using System.Web.Mvc;
 
 namespace Muse3.Controllers
 {
+
+    [Authorize]
     public class SongController : Controller
     {
         private SongManager _songManager = new SongManager();
@@ -142,182 +144,183 @@ namespace Muse3.Controllers
             return View();
         }
 
-        public ActionResult CreateFromFolder()
-        {
-            return View();
-        }
+        // thought I had time to get this working.
+        //public ActionResult CreateFromFolder()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public ActionResult CreateFromFolder(HttpPostedFileBase file)
-        {
-            //string[] subfolders = Directory.GetDirectories(file);
-            string Muse3SongFilesDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent + "\\Muse3\\MuseConfig\\SongFiles";
-            string Muse3AlbumArtDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent + "\\Muse3\\MuseConfig\\AlbumArt";
+        //[HttpPost]
+        //public ActionResult CreateFromFolder(HttpPostedFileBase file)
+        //{
+        //    //string[] subfolders = Directory.GetDirectories(file);
+        //    string Muse3SongFilesDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent + "\\Muse3\\MuseConfig\\SongFiles";
+        //    string Muse3AlbumArtDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent + "\\Muse3\\MuseConfig\\AlbumArt";
             
-            int numberOfSongsAdded = 0;
+        //    int numberOfSongsAdded = 0;
 
-            //foreach (string subfolder in subfolders)
-            //{
-                try
-                {
-                    //string[] songFiles = Directory.GetFiles(subfolder);
+        //    //foreach (string subfolder in subfolders)
+        //    //{
+        //        try
+        //        {
+        //            //string[] songFiles = Directory.GetFiles(subfolder);
 
-                    string album = "Unknown";
-                    string genre = "Unknown"; 
-                    int yearReleased = 0;
-                    string artist = "Unknown";
-                    string songTitle = "Unknown";
-                    string imageFilePath = "defaultAlbumImage.png";
-                    string lyrics = "No Lyrics Provided.";
-                    bool exp = false;
+        //            string album = "Unknown";
+        //            string genre = "Unknown"; 
+        //            int yearReleased = 0;
+        //            string artist = "Unknown";
+        //            string songTitle = "Unknown";
+        //            string imageFilePath = "defaultAlbumImage.png";
+        //            string lyrics = "No Lyrics Provided.";
+        //            bool exp = false;
 
-                    string mp3FilePath = null;
-                    string txtFilePath = null;
+        //            string mp3FilePath = null;
+        //            string txtFilePath = null;
 
-                    //foreach (string file in songFiles)
-                    //{
-                        string extension = Path.GetExtension(file.FileName).ToLower();
-                        switch (extension)
-                        {
-                            case ".mp3":
-                                mp3FilePath = file.FileName;
-                                break;
-                            case ".png":
-                                imageFilePath = file.FileName;
-                                break;
-                            case ".txt":
-                                if (file.FileName.Contains("information.txt"))
-                                {
-                                    try
-                                    {
-                                        string[] lines = System.IO.File.ReadAllLines(file.FileName);
+        //            //foreach (string file in songFiles)
+        //            //{
+        //                string extension = Path.GetExtension(file.FileName).ToLower();
+        //                switch (extension)
+        //                {
+        //                    case ".mp3":
+        //                        mp3FilePath = file.FileName;
+        //                        break;
+        //                    case ".png":
+        //                        imageFilePath = file.FileName;
+        //                        break;
+        //                    case ".txt":
+        //                        if (file.FileName.Contains("information.txt"))
+        //                        {
+        //                            try
+        //                            {
+        //                                string[] lines = System.IO.File.ReadAllLines(file.FileName);
 
-                                        foreach (string line in lines)
-                                        {
-                                            if (line.StartsWith("Title:"))
-                                            {
-                                                songTitle = line.Substring("Title:".Length).Trim();
-                                            }
-                                            else if (line.StartsWith("Artist:"))
-                                            {
-                                                artist = line.Substring("Artist:".Length).Trim();
-                                            }
-                                            else if (line.StartsWith("Release Year:"))
-                                            {
-                                                if (line.Substring("Release Year:".Length).Trim().Equals("Release year not found"))
-                                                {
-                                                    yearReleased = 2023;
-                                                }
-                                                else
-                                                {
-                                                    yearReleased = (DateTime.ParseExact(line.Substring("Release Year:".Length).Trim(), "dd MMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture)).Year;
-                                                }
-                                            }
-                                            else if (line.StartsWith("Album Name:"))
-                                            {
-                                                album = line.Substring("Album Name:".Length).Trim();
-                                            }
-                                            else if (line.StartsWith("Genre:"))
-                                            {
-                                                genre = line.Substring("Genre:".Length).Trim();
-                                            }
-                                            else if (line.StartsWith("Explicit:"))
-                                            {
-                                                exp = bool.Parse(line.Substring("Explicit:".Length).Trim().ToLower());
-                                            }
-                                        }
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        // Handle exception
-                                    }
-                                }
-                                else
-                                {
-                                    if (new FileInfo(file.FileName).Length > 0)
-                                    {
-                                        lyrics = System.IO.File.ReadAllText(file.FileName);
-                                    }
-                                }
-                                break;
-                        }
-                    //}
+        //                                foreach (string line in lines)
+        //                                {
+        //                                    if (line.StartsWith("Title:"))
+        //                                    {
+        //                                        songTitle = line.Substring("Title:".Length).Trim();
+        //                                    }
+        //                                    else if (line.StartsWith("Artist:"))
+        //                                    {
+        //                                        artist = line.Substring("Artist:".Length).Trim();
+        //                                    }
+        //                                    else if (line.StartsWith("Release Year:"))
+        //                                    {
+        //                                        if (line.Substring("Release Year:".Length).Trim().Equals("Release year not found"))
+        //                                        {
+        //                                            yearReleased = 2023;
+        //                                        }
+        //                                        else
+        //                                        {
+        //                                            yearReleased = (DateTime.ParseExact(line.Substring("Release Year:".Length).Trim(), "dd MMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture)).Year;
+        //                                        }
+        //                                    }
+        //                                    else if (line.StartsWith("Album Name:"))
+        //                                    {
+        //                                        album = line.Substring("Album Name:".Length).Trim();
+        //                                    }
+        //                                    else if (line.StartsWith("Genre:"))
+        //                                    {
+        //                                        genre = line.Substring("Genre:".Length).Trim();
+        //                                    }
+        //                                    else if (line.StartsWith("Explicit:"))
+        //                                    {
+        //                                        exp = bool.Parse(line.Substring("Explicit:".Length).Trim().ToLower());
+        //                                    }
+        //                                }
+        //                            }
+        //                            catch (Exception ex)
+        //                            {
+        //                                // Handle exception
+        //                            }
+        //                        }
+        //                        else
+        //                        {
+        //                            if (new FileInfo(file.FileName).Length > 0)
+        //                            {
+        //                                lyrics = System.IO.File.ReadAllText(file.FileName);
+        //                            }
+        //                        }
+        //                        break;
+        //                }
+        //            //}
 
-                    if (!string.IsNullOrEmpty(mp3FilePath))
-                    {
-                        try
-                        {
-                            System.IO.File.Copy(mp3FilePath, Path.Combine(songfilesLocation, Path.GetFileName(mp3FilePath)), true);
-                            System.IO.File.Copy(mp3FilePath, Path.Combine(Muse3SongFilesDirectory, Path.GetFileName(mp3FilePath)), true);
+        //            if (!string.IsNullOrEmpty(mp3FilePath))
+        //            {
+        //                try
+        //                {
+        //                    System.IO.File.Copy(mp3FilePath, Path.Combine(songfilesLocation, Path.GetFileName(mp3FilePath)), true);
+        //                    System.IO.File.Copy(mp3FilePath, Path.Combine(Muse3SongFilesDirectory, Path.GetFileName(mp3FilePath)), true);
 
-                            string unsplitSongTitle = Path.GetFileNameWithoutExtension(mp3FilePath);
-                            if (unsplitSongTitle.Contains(" - "))
-                            {
-                                string[] parts = unsplitSongTitle.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
-                                if (parts.Length == 2)
-                                {
-                                    songTitle = parts[1].Trim();
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            // Handle exception
-                        }
-                    }
+        //                    string unsplitSongTitle = Path.GetFileNameWithoutExtension(mp3FilePath);
+        //                    if (unsplitSongTitle.Contains(" - "))
+        //                    {
+        //                        string[] parts = unsplitSongTitle.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
+        //                        if (parts.Length == 2)
+        //                        {
+        //                            songTitle = parts[1].Trim();
+        //                        }
+        //                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    // Handle exception
+        //                }
+        //            }
 
-                    if (!string.IsNullOrEmpty(imageFilePath))
-                    {
-                        try
-                        {
-                            System.IO.File.Copy(imageFilePath, Path.Combine(Muse3AlbumArtDirectory, Path.GetFileName(imageFilePath)), true);
-                        }
-                        catch (Exception ex)
-                        {
-                            // Handle exception
-                        }
-                    }
+        //            if (!string.IsNullOrEmpty(imageFilePath))
+        //            {
+        //                try
+        //                {
+        //                    System.IO.File.Copy(imageFilePath, Path.Combine(Muse3AlbumArtDirectory, Path.GetFileName(imageFilePath)), true);
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    // Handle exception
+        //                }
+        //            }
 
-                    try
-                    {
-                        var newSong = new Song()
-                        {
-                            DateAdded = DateTime.Now.Date,
-                            Title = songTitle,
-                            ImageFilePath = Path.GetFileName(imageFilePath),
-                            Mp3FilePath = Path.GetFileName(mp3FilePath),
-                            YearReleased = yearReleased,
-                            Lyrics = lyrics,
-                            Explicit = exp,
-                            Genre = genre,
-                            Plays = 0,
-                            UserID = GetUserID(),
-                            Album = album,
-                            Artist = artist,
-                        };
+        //            try
+        //            {
+        //                var newSong = new Song()
+        //                {
+        //                    DateAdded = DateTime.Now.Date,
+        //                    Title = songTitle,
+        //                    ImageFilePath = Path.GetFileName(imageFilePath),
+        //                    Mp3FilePath = Path.GetFileName(mp3FilePath),
+        //                    YearReleased = yearReleased,
+        //                    Lyrics = lyrics,
+        //                    Explicit = exp,
+        //                    Genre = genre,
+        //                    Plays = 0,
+        //                    UserID = GetUserID(),
+        //                    Album = album,
+        //                    Artist = artist,
+        //                };
 
-                        bool result = _songManager.InsertSong(newSong);
-                        if (result == true)
-                        {
-                            numberOfSongsAdded++;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
+        //                bool result = _songManager.InsertSong(newSong);
+        //                if (result == true)
+        //                {
+        //                    numberOfSongsAdded++;
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
 
-                    }
-                }
-                catch (Exception)
-                {
+        //            }
+        //        }
+        //        catch (Exception)
+        //        {
 
-                }
-            //}
+        //        }
+        //    //}
 
-            ViewBag.SuccessMessage = $"{numberOfSongsAdded} songs were added to your library.";
-            ViewBag.ErrorMessage = "An error occurred while processing your request.";
+        //    ViewBag.SuccessMessage = $"{numberOfSongsAdded} songs were added to your library.";
+        //    ViewBag.ErrorMessage = "An error occurred while processing your request.";
 
-            return View();
-        }
+        //    return View();
+        //}
 
         // POST: Song/Create
         [HttpPost]

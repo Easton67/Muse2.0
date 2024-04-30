@@ -12,6 +12,7 @@ using System.Runtime.Remoting.Metadata.W3cXsd2001;
 namespace Muse3.Controllers
 {
 
+    [Authorize]
     public class ReviewController : Controller
     {
         private ReviewManager _reviewManager = new ReviewManager();
