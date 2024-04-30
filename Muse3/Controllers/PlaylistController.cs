@@ -33,26 +33,6 @@ namespace Muse3.Controllers
             return (int)user.UserID;
         }
 
-        public FileContentResult GetPhoto(int PlaylistID)
-        {
-            try
-            {
-                Playlist playlist = _playlistManager.SelectPlaylistByUserID(GetUserID(), PlaylistID);
-                if (playlist.Photo != null && playlist.PhotoMimeType != null)
-                {
-                    return File(playlist.Photo, playlist.PhotoMimeType);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         public ActionResult ViewAllPlaylists()
         {
             try

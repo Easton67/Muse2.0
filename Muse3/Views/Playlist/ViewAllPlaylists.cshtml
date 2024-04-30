@@ -43,10 +43,10 @@
         @foreach (var playlist in Model)
         {
             <div class="card album-card" loading="lazy" style="width: 18rem;
-                                            height: 18rem;
-                                            background-image: url('@Url.Action("GetPlaylistPhoto", "Helper", new { playlist.PlaylistID })'); "
+                                                                height: 18rem;
+                                                                background-image: url('@Url.Action("GetPlaylistPhoto", "Helper", new { playlist.PlaylistID })'); "
                  onclick="window.location.href='@Url.Action("Details", "Playlist", new { id = playlist.PlaylistID })'">
-                @*used as spacer*@ 
+                @*used as spacer*@
                 <a style="display: block; width: 100%; height: 550%;">
                 </a>
                 <div class="card-body text-center my-3">
@@ -54,7 +54,7 @@
                     <h5 class="card-title h3 fw-bold text-dark">
                         @if (playlist.SongCount == 0)
                         {
-
+                            <span>0 songs</span>
                         }
                         else if (playlist.SongCount == 1)
                         {
@@ -71,49 +71,51 @@
         }
     </div>
 }
-else 
-{ 
+else
+{
     <h1 class="mt-5">No playlists have been created yet.</h1>
 }
 
 
+
+@*table view*@
 @*<button class="btn-add">
-    @Html.ActionLink("Create New", "Create")
-</button>
+        @Html.ActionLink("Create New", "Create")
+    </button>
 
-<table class="table">
-    <tr>
-        <th>
-            <p>Playlist artwork</p>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>Options</th>
-    </tr>
-
-    @foreach (var playlist in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                <img src="@Url.Action("GetPlaylistPhoto", "Helper", new { playlist.PlaylistID })" alt="Art for @playlist.Title playlist." />-->
-                <img src="~/MuseConfig/PlaylistImages/@Path.GetFileName(item.ImageFilePath)" alt="Art for @item.Title playlist." />
-                </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => playlist.Title)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => playlist.Description)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = playlist.PlaylistID }) |
-                                @Html.ActionLink("Details", "Details", new { id = playlist.PlaylistID }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = playlist.PlaylistID })
-                            </td>
-                        </tr>
-                    }
+            <th>
+                <p>Playlist artwork</p>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>Options</th>
+        </tr>
 
-                </table>*@
+        @foreach (var playlist in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Action("GetPlaylistPhoto", "Helper", new { playlist.PlaylistID })" alt="Art for @playlist.Title playlist." />-->
+                    <img src="~/MuseConfig/PlaylistImages/@Path.GetFileName(item.ImageFilePath)" alt="Art for @item.Title playlist." />
+                    </td>
+                <td>
+                    @Html.DisplayFor(modelItem => playlist.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => playlist.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = playlist.PlaylistID }) |
+                    @Html.ActionLink("Details", "Details", new { id = playlist.PlaylistID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = playlist.PlaylistID })
+                </td>
+            </tr>
+        }
+
+    </table>*@

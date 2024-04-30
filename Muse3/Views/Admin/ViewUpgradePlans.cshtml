@@ -5,9 +5,17 @@
     ViewBag.Hero = "Upgrade Account";
 }
 
-<div class="d-flex br-10 p-5 fs-5 form-backdrop justify-content-between gap-5" onclick="window.location.href='@Url.Action("AddSubscriberStatus", "Admin", new { role = "Subscriber" })'">
+<div class="d-flex br-10 p-5 fs-5 form-backdrop justify-content-between gap-5">
     <div></div>
-    <div class="bg-dark upgradeOptions p-4 grow">
+    <div class="bg-dark upgradeOptions p-4 grow br-10" onclick="window.location.href='@Url.Action("RemoveSubscriberStatus", "Admin", new { role = "Subscriber" })'">
+        @if (!User.IsInRole("Subscriber"))
+        {
+            <h4 class="text-decoration-underline text-center text-info mt-3">Current Tier</h4>
+        }
+        else
+        {
+            <div class="mt-5"></div>
+        }
         <h1>Free</h1>
         <ul class="text-nowrap mt-5 upgradeOptionsList">
             <li>Create and listen to songs</li>
@@ -16,8 +24,16 @@
         </ul>
     </div>
 
-    <div class="bg-dark upgradeOptions p-4 grow" onclick="window.location.href='@Url.Action("RemoveSubscriberStatus", "Admin", new { role = "Subscriber" })'">
+    <div class="bg-dark upgradeOptions p-4 grow br-10" onclick="window.location.href='@Url.Action("AddSubscriberStatus", "Admin", new { role = "Subscriber" })'">
         @*<h1>Starter</h1>*@
+        @if (User.IsInRole("Subscriber"))
+        {
+            <h4 class="text-decoration-underline text-center text-info">Current Tier</h4>
+        }
+        else
+        {
+            <div class="mt-5"></div>
+        }
         <h1>Pro</h1>
         <h2 class="my-1">$3 monthly</h2>
         <ul class="text-nowrap upgradeOptionsList">
@@ -39,5 +55,8 @@
                 <li>Add Friends</li>
             </ul>
         </div>*@
+</div>
+<div class="text-center mt-4">
+    *Note that all changes made will be reflected on your next sign-in
 </div>
 

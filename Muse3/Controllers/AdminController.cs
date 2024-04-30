@@ -56,7 +56,7 @@ namespace Muse3.Controllers
             return View(applicationUser);
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin")]
         public ActionResult RemoveRole(string id, string role)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -105,13 +105,12 @@ namespace Muse3.Controllers
 
             //return View("Details", user);
         }
-
+        [Authorize]
         public ActionResult RemoveSubscriberStatus(string role)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.FindByEmail(User.Identity.GetUserName());
-
-            userManager.RemoveFromRole(user.Id, role);
+            userManager.RemoveFromRole(user.Id, role);  
 
             if (user.UserID != null)
             {
@@ -125,10 +124,11 @@ namespace Muse3.Controllers
                     // nothing
                 }
             }
+            
             return RedirectToAction("ViewUpgradePlans", "Admin", new { id = user.Id });
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddRole(string id, string role)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -165,7 +165,7 @@ namespace Muse3.Controllers
 
             //return View("Details", user);
         }
-
+        [Authorize]
         public ActionResult AddSubscriberStatus(string role)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -188,7 +188,7 @@ namespace Muse3.Controllers
             return RedirectToAction("ViewUpgradePlans", "Admin", new { id = user.Id });
         }
 
-        [Authorize]
+        
         public ActionResult ViewUpgradePlans(int? id)
         {
             var _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();

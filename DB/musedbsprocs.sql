@@ -142,7 +142,7 @@ GO
 
 print '' print '*** creating sp_add_role'
 GO
-CREATE PROCEDURE [sp_insert_employee_role]
+CREATE PROCEDURE [sp_add_role]
 (
 	@UserID	     [int],
 	@RoleID		 [nvarchar](50)

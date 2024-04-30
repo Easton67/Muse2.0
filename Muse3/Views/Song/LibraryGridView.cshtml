@@ -12,8 +12,11 @@
     <button class="btn-add" onclick="window.location.href='@Url.Action("Create", "Song")'">
         Add Song
     </button>
-    <input id="searchBox" type="text" placeholder="Search for song...">
-    <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
+    @if (User.IsInRole("Subscriber"))
+    {
+        <input id="searchBox" type="text" placeholder="Search for song...">
+        <img onclick="searchForSong()" class="icon px-3" src="~/Images/search.svg" />
+    }
     <img class="icon px-3" src="~/Images/list-icon.svg" onclick="window.location.href='@Url.Action("Library", "Song")'" />
     <img class="icon px-3" src="~/Images/grid-icon.svg" onclick="window.location.href='@Url.Action("LibraryGridView", "Song")'" />
 </div>

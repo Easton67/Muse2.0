@@ -28,10 +28,7 @@
 </div>
 
 <div class="d-flex pt-3">
-    <button class="btn-add">
-        @Html.ActionLink("Add Album", "Create")
-    </button>
-    @if (Model.Count() > 0)
+    @if (Model.Count() > 0 && User.IsInRole("Subscriber"))
     {
         <input id="searchBox" type="text" placeholder="Search for album...">
         <img onclick="searchForAlbum()" class="icon px-3" src="~/Images/search.svg" />
