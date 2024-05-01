@@ -4,10 +4,10 @@
     ViewBag.Title = "Edit";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(Html.BeginForm("Edit", "Album", FormMethod.Post, new { enctype = "multipart/form-data" })))
 {
     @Html.AntiForgeryToken()
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center gap-5">
         <div class="form-group">
             <img id="album-img-edit" style="cursor: pointer; width: 20rem; height: 20rem;" src="/MuseConfig/AlbumArt/defaultAlbumImage.png" />
             <div class="form-group mt-4 text-nowrap">
@@ -17,46 +17,31 @@
                     @Html.ValidationMessageFor(model => model.ImageFilePath, "", new { @class = "text-danger fs-5" })
                 </div>
             </div>
+            <div class="w-50 mt-4">
+                <div class="btn-add text-center" onclick="window.location.href='@Url.Action("Albums", "Album")'">
+                    All Albums
+                </div>
+            </div>
         </div>
-        <div class="px-3">
-            <div class="form-group">
-                Title:
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                </div>
+        <div class="px-3 w-25">
+            <div class="mt-5">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Title" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+            <div class="mt-5">
+                @Html.EditorFor(model => model.YearReleased, new { htmlAttributes = new { @class = "form-control", placeholder = "Year Released", max = DateTime.Now.Year } })
+                @Html.ValidationMessageFor(model => model.YearReleased, "", new { @class = "text-danger"     })
+            </div>
+            <div class="mt-5">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Description" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
             <div class="form-group mt-3">
-                Artist:
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ArtistID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ArtistID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group mt-3 text-nowrap">
-                Year Released:
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.YearReleased, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.YearReleased, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group mt-3">
-                Description:
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class ="form-group mt-5">
-                <input type="submit" value="Save" class="btn bg-purple text-light w-75 fs-5" />
+                <input type="submit" value="Save" class="btn btn-add fs-4" />
             </div>
         </div>
     </div>
 }
-
-<div class="mt-5">
-    @Html.ActionLink("All Albums", "Albums")
-</div>
 
 <script>
     function openFileDialog() {

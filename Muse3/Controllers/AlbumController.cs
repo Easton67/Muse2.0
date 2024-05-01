@@ -129,6 +129,10 @@ namespace Muse3.Controllers
         {
             try
              {
+                HttpPostedFileBase photo = imageFile;
+                string mimeType = null;
+                byte[] photoOut = null;
+
                 if (ModelState.IsValid)
                 {
                     var oldAlbum = (Album)Session["oldAlbum"];
@@ -136,16 +140,27 @@ namespace Muse3.Controllers
                     {
                         AlbumID = oldAlbum.AlbumID,
                         Title = album.Title,
+                        Photo = oldAlbum.Photo,
+                        PhotoMimeType = oldAlbum.PhotoMimeType,
                         ArtistID = album.ArtistID,
                         isExplicit = album.isExplicit,
                         ImageFilePath = (imageFile != null) ? Path.GetFileName(imageFile.FileName) : Path.GetFileName(oldAlbum.ImageFilePath),
                         Description = album.Description,
                         YearReleased = album.YearReleased,
+                        UserID = album.UserID,
                         DateAdded = album.DateAdded
                     };
+
+                    if (photo != null)
+                    {
+                        newAlbum.PhotoMimeType = photo.ContentType;
+                        newAlbum.Photo = new byte[photo.ContentLength];
+                        imageFile.InputStream.Read(newAlbum.Photo, 0, photo.ContentLength);
+                    }
+
                     _albumManager.UpdateAlbum(oldAlbum, newAlbum);
                 }
-                return RedirectToAction("Details");
+                return RedirectToAction("Albums");
             }
             catch
             {

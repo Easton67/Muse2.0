@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    ViewBag.Hero = "All Users";
 }
 
 @if(User.IsInRole("Admin"))
@@ -22,9 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.UserID)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.ImageFilePath)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Active)
         </th>
@@ -46,9 +47,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.UserID)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.ImageFilePath)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Active)
         </td>

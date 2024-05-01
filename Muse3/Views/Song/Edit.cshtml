@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
+    ViewBag.Hero = "Edit Song";
 }
 
 @using (Html.BeginForm(Html.BeginForm("Edit", "Song", FormMethod.Post, new { enctype = "multipart/form-data" })))
@@ -39,50 +40,26 @@
                     <input type="submit" value="Save" class="btn-add" />
                 </div>
             </div>
-            <div class="fs-5 px-5 song-form-edit mt-1"> 
-                <div class="form-group">
-                    Title:
-                    <br>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                    </div>
+            <div class="px-5 mt-5 song-form-edit">
+                <div>
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Title" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                 </div>
-                <br />
-                <div class="form-group">
-                    Album:
-                    <br>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Album, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Album, "", new { @class = "text-danger" })
-                    </div>
+                <div class="mt-5">
+                    @Html.EditorFor(model => model.Album, new { htmlAttributes = new { @class = "form-control", placeholder = "Album" } })
+                    @Html.ValidationMessageFor(model => model.Album, "", new { @class = "text-danger" })
                 </div>
-                <br />
-                <div class="form-group">
-                    Artist:
-                    <br>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Artist, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Artist, "", new { @class = "text-danger" })
-                    </div>
+                <div class="mt-5">
+                    @Html.EditorFor(model => model.Artist, new { htmlAttributes = new { @class = "form-control", placeholder = "Artist" } })
+                    @Html.ValidationMessageFor(model => model.Artist, "", new { @class = "text-danger" })
                 </div>
-                <br />
-                <div class="form-group">
-                    Year Released:
-                    <br>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.YearReleased, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.YearReleased, "", new { @class = "text-danger" })
-                    </div>
+                <div class="mt-5">
+                    @Html.EditorFor(model => model.YearReleased, new { htmlAttributes = new { @class = "form-control", placeholder = "Year Released", max = DateTime.Now.Year } })
+                    @Html.ValidationMessageFor(model => model.YearReleased, "", new { @class = "text-danger" })
                 </div>
-                <br />
-                <div class="form-group">
-                    Genre:
-                    <br>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
-                    </div>
+                <div class="mt-5">
+                    @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control", placeholder = "Genre" } })
+                    @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div>
