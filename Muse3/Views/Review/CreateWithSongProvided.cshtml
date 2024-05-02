@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "CreateWithSongProvided";
-    ViewBag.Title = "Review";   
+    ViewBag.Hero = "Write a Review";   
 }
 
 <div class="mx-5 my-4 d-flex justify-content-center">
@@ -17,85 +17,78 @@
                 </button>
             </div>
         </div>
-        <div class="fs-3 px-5 mt-4">
-            <p>
-                @Model.ReviewedSong.Title
-                @if (Model.ReviewedSong.Explicit == true)
-                {
-                    <img class="explicit-white" src="~/Images/explicit.png" />
-                }
-            </p>
-            @if (Model.ReviewedSong.Album.Length.Equals(0))
-            {
-                <p>Album: Unknown</p>
-            }
-            else
-            {
-                <p>
-                    Album:
-                    <a class="mt-4" href="@Url.Action("Details", "Album", new { albumTitle = Model.ReviewedSong.Album, artistID = Model.ReviewedSong.Artist})">
-                        @Model.ReviewedSong.Album
-                    </a>
-                </p>
-            }
-            @if (Model.ReviewedSong.Artist.Length.Equals(0))
-            {
-                <p>Artist: Unknown</p>
-            }
-            else
-            {
-                <p>
-                    Artist:
-                    <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = Model.ReviewedSong.Artist})">
-                        @Model.ReviewedSong.Artist
-                    </a>
-                </p>
-            }
-            <p>Year Released: @Html.DisplayFor(model => model.ReviewedSong.YearReleased)</p>
-            @if (Model.ReviewedSong.Genre.Length.Equals(0))
-            {
-                <p>Genre: None</p>
-            }
-            else
-            {
-                <p>Genre: @Html.DisplayFor(model => model.ReviewedSong.Genre)</p>
-            }
-            <p class="mt-2 fs-5">Added: @Model.ReviewedSong.DateAdded.Date.ToShortDateString()</p>
-            <div class="text-nowrap mt-4">
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="d-flex justify-content-between">
 
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            Rating:
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control", min = "0", max = "5" } })
-                                @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+                <div>
+                    <div class="fs-3 px-5 mt-4">
+                        <p>
+                            @Model.ReviewedSong.Title
+                            @if (Model.ReviewedSong.Explicit == true)
+                            {
+                                <img class="explicit-white" src="~/Images/explicit.png" />
+                            }
+                        </p>
+                        @if (Model.ReviewedSong.Album.Length.Equals(0))
+                        {
+                            <p>Album: Unknown</p>
+                        }
+                        else
+                        {
+                            <p>
+                                Album:
+                                <a class="mt-4" href="@Url.Action("Details", "Album", new { albumTitle = Model.ReviewedSong.Album, artistID = Model.ReviewedSong.Artist})">
+                                    @Model.ReviewedSong.Album
+                                </a>
+                            </p>
+                        }
+                        @if (Model.ReviewedSong.Artist.Length.Equals(0))
+                        {
+                            <p>Artist: Unknown</p>
+                        }
+                        else
+                        {
+                            <p>
+                                Artist:
+                                <a class="mt-4" href="@Url.Action("Details", "Artist", new { id = Model.ReviewedSong.Artist})">
+                                    @Model.ReviewedSong.Artist
+                                </a>
+                            </p>
+                        }
+                        <div class="text-nowrap mt-4">
 
-                        <div class="form-group mt-4">
-                            Description:
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "form-control", placeholder = "Message" } })
-                                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    Rating:
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control fs-2", min = "0", max = "5" } })
+                                        @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-add" />
+                                <div class="form-group mt-4">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Create" class="btn btn-add" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                }
+                </div>
+                <div>
+                    <div class="form-group">
+                        <h2 class="fw-bold">Description:</h2>
+                        <div>
+                            @Html.TextAreaFor(model => model.Message, new { htmlAttributes = new { @class = "form-control", placeholder = "Message" } })
+                            @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
-        <div>
-            <textarea readonly="readonly" id="lyrics">@Model.ReviewedSong.Lyrics</textarea>
-        </div>
+        }
     </div>
 </div>
 

@@ -14,7 +14,7 @@
         </a>
         <div class="px-3 fw-bolder">
             <h2 class="fw-semibold">@Model.artist.ArtistID</h2>
-            <br class="fw-light"/>
+            <br class="fw-light" />
             <h4 class="fw-semibold">Birth Name: @Model.artist.FirstName @Model.artist.LastName</h4>
             <h4 class="fw-semibold">Born: @Model.artist.DateOfBirth.Value.ToShortDateString()</h4>
             <h4 class="fw-semibold">@Model.artist.Description</h4>
@@ -63,15 +63,30 @@
 
     <div id="song-header-container">
         <div class="d-flex pt-3">
-            <h1 class="pt-3 fw-semibold">Songs</h1>
-            <input id="searchBox" class="mx-3 px-3 mt-3" type="text" placeholder="Search for song...">
-            <img onclick="searchForSong()" class="icon px-3 pt-3" src="~/Images/search.svg" />
+            @if (Model.songs.Count() == 0)
+            {
+                <h1 class="pt-3 fw-semibold">No Songs</h1>
+            }
+            else if (Model.songs.Count() > 0 && Model.songs.Count() < 10)
+            {
+                <h1 class="pt-3 fw-semibold">Songs</h1>
+            }
+            else
+            {
+                <h1 class="pt-3 fw-semibold">Songs</h1>
+                <input id="searchBox" class="mx-3 px-3 mt-3" type="text" placeholder="Search for song...">
+                <img onclick="searchForSong()" class="icon px-3 pt-3" src="~/Images/search.svg" />
+            }
         </div>
     </div>
 
+
+
     @*songs*@
-    <div class="mt-2">
-        <table id="table-playlist-songs" class="table text-white bg-dark-transparent">
+    <div class="mt-2" id="table-playlist-songs">
+    @if (Model.songs.Count() > 0)
+    {
+        <table class="table text-white bg-dark-transparent">
             <tr class="text-nowrap fw-bold">
                 <th>
                     Album Art
@@ -132,6 +147,11 @@
                 </tr>
             }
         </table>
+        }
+        else
+        {
+
+        }
     </div>
 </div>
 <div class="pt-5"></div>
@@ -148,7 +168,7 @@
     }
     function showSongs() {
         document.querySelector('#album-view').style.display = 'none';
-        document.querySelector('#table-playlist-songs').style.display = 'table';
+        document.querySelector('#table-playlist-songs').style.display = 'flex';
         document.querySelector('#song-header-container').style.display = 'block';
     }
 </script>

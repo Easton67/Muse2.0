@@ -1968,7 +1968,6 @@
     <Content Include="Views\Song\Edit.cshtml" />
     <Content Include="Views\Review\Details.cshtml" />
     <Content Include="Views\Playlist\Edit.cshtml" />
-    <Content Include="Views\Review\Edit.cshtml" />
     <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Playlist\Delete.cshtml" />
     <Content Include="Views\Admin\Details.cshtml" />
