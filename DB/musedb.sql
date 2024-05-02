@@ -124,6 +124,7 @@ CREATE TABLE [dbo].[Album] (
 	
 	CONSTRAINT [fk_Album_ArtistID] FOREIGN KEY([ArtistID])
 		REFERENCES [dbo].[Artist]([ArtistID]),
+
 	CONSTRAINT [fk_Album_UserID] FOREIGN KEY([UserID])
 		REFERENCES [dbo].[User]([UserID]),
 
@@ -142,7 +143,7 @@ CREATE TABLE [dbo].[Song] (
 	[Photo]			 [varbinary](MAX)	         NULL,
 	[PhotoMimeType]  [varchar](50)		         NULL,
 	[Mp3FilePath]    [nvarchar](500)			 NOT NULL,
-    [YearReleased]   [int]						 DEFAULT 2023,
+    [YearReleased]   [int]						 DEFAULT 2024,
     [Lyrics]         [nvarchar](max)		     DEFAULT 'No Lyrics Provided',
     [Explicit]       [bit]						 NOT NULL DEFAULT 0,
     [Genre]          [nvarchar](200)			 NULL DEFAULT "None",

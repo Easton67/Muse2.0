@@ -84,10 +84,13 @@
             <p class="mt-2 fs-5">Added: @Model.DateAdded.Date.ToShortDateString()</p>
             <br />
             <div class="text-nowrap mt-4">
-                <a class="mt-4" href="@Url.Action("CreateWithSongProvided", "Review", new { songID = Model.SongID })">
-                    Write a Review
-                </a>
-                .
+                @if (User.IsInRole("Subscriber"))
+                {
+                    <a class="mt-4" href="@Url.Action("CreateWithSongProvided", "Review", new { songID = Model.SongID })">
+                        Write a Review .
+                    </a>
+                }
+
                 @Html.ActionLink("Edit", "Edit", new { id = Model.SongID }) .
                 <button class="delete-button fw-semibold text-danger"
                         style="border: none; color: white; background-color: transparent; font-size: 30px;"
