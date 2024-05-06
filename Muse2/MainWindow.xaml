@@ -119,10 +119,11 @@
                        FontWeight="Bold"
                        FontSize="20" Margin="0,0,30,0" />
                 <Image x:Name="imgExplicit"
-                       Source="/explicit.png"
+                       Source="/Resources/explicit-white.png"
                        Width="12"
                        Height="12"
-                       Margin="-46,0,0,9" />
+                       Margin="-46,0,0,9"/>
+
                 </TextBlock>
                 <Label x:Name="lblSongArtist"
                        Content="Artist"

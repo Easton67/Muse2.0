@@ -60,6 +60,7 @@ namespace Muse2
             {
                 lblCurrentTime.Content = mediaPlayer.Position.ToString(@"mm\:ss");
             }
+
             // Check for if Natural Duration has a valid time span to avoid 
             // the "Duration value of Automatic" error
 
@@ -549,32 +550,21 @@ namespace Muse2
         #region Song Control Helpers
         public void CurrentSongHelper(Song selectedSong)
         {
-            try
-            {
+
                 lblSongTitle.Content = selectedSong.Title;
                 lblSongArtist.Content = selectedSong.Artist;
                 imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
-                try
-                {
-                    imgCoverArt.Source = (selectedSong.ImageFilePath.Length > 1) ?
-                        new BitmapImage(new System.Uri(selectedSong.ImageFilePath)) :
-                        new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song cover unable to be found" +
-                    "Please make sure your image file exists",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-            }
-            catch (Exception ex)
+            try
             {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Song file could not be played. " +
-                "Please make sure your song file exists",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                imgCoverArt.Source = (selectedSong.ImageFilePath.Length > 1) ?
+                    new BitmapImage(new System.Uri(selectedSong.ImageFilePath)) :
+                    new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
             }
+            catch (Exception)
+            {
+                imgCoverArt.Source = new BitmapImage(new System.Uri(AppDomain.CurrentDomain.BaseDirectory + "MuseConfig\\AlbumArt\\defaultAlbumImage.png"));
+            }
+
         }
         private void UpdateSongPlayCount()
         {

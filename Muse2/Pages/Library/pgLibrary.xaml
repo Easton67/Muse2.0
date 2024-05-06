@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="900" d:DesignWidth="1500"
       Title="pgLibrary" Loaded="Page_Loaded">
-    <Grid>
+    <Grid HorizontalAlignment="Left">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -25,7 +25,7 @@
                 Panel.ZIndex="2" 
                 GotFocus="txtSearch_GotFocus" 
                 LostFocus="txtSearch_LostFocus" 
-                TextChanged="txtSearch_TextChanged" Margin="0,0,183,0">
+                TextChanged="txtSearch_TextChanged" Margin="0,0,1115,0">
             <TextBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -63,7 +63,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="" Width="2"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Title}" Width="500"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="500"/>
                 <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" Width="300"/>
                 <DataGridTextColumn Header="Album" Binding="{Binding Album}" Width="300"/>
                 <DataGridTextColumn Header="Year" Binding="{Binding YearReleased}" Width="75"/>

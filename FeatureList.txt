@@ -1,0 +1,46 @@
+1.0
+play song
+pause song
+next song
+rewind to beginning
+view all songs
+update song
+delete song
+Create (upload) song
+create lyrics
+view lyrics
+update lyrics
+delete lyrics
+
+2.0
+Log in
+Logout
+Sign up
+View your public account
+ - favorite artist
+ - favorite album
+ - favorite song
+ - Name
+ - Age
+ - Profile
+ - Recently Played
+ - Your Friends
+View your personal information
+Update your personal information
+Delete Account
+Save to database
+Delete Song
+Create playlist
+Listen to playlist
+Update playlist
+Delete Playlist
+
+2.5
+Upload songs from a folder
+Download youtube playlist to autosort songs and then upload
+
+
+
+
+
+

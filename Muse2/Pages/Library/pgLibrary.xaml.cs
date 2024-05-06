@@ -455,5 +455,10 @@ namespace Muse2.Pages.Library
             }
         }
         #endregion
+
+        private void grdLibrary_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
