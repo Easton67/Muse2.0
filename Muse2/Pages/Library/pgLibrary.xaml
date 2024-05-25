@@ -38,7 +38,7 @@
                    MouseDoubleClick="grdLibrary_MouseDoubleClick" 
                    PreviewKeyDown="grdLibrary_PreviewKeyDown" 
                    ContextMenuOpening="grdLibrary_ContextMenuOpening" 
-                   GridLinesVisibility="None">
+                   GridLinesVisibility="None" Margin="0,24,0,0">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="BorderBrush" Value="Transparent" />

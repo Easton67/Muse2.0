@@ -10,36 +10,40 @@
     <Grid>
         <Grid>
             <StackPanel>
-                <StackPanel Margin="0,43,0,0">
-                    <StackPanel Margin="0,5,0,0">
+                <StackPanel Margin="22,-7,0,0">
+                    <StackPanel Margin="1,5,0,0">
                         <TextBlock x:Name= "lblEmail"
                                     Style="{StaticResource txtLogin}"
-                                    Text="Email"        
-                                    Margin="0,0,0,-6" 
-                                    Padding="10,0,0,1"/>
+                                    Text="Email:"        
+                                    Margin="-23,0,0,-6" 
+                                    Padding="10,0,0,1" 
+                                    FontSize="15"/>
                         <TextBox x:Name="txtEmail"
                                    Text="Email Field"
                                    Style="{StaticResource txtBoxLoginInput}"
-                                   Margin="10,0,31,0"
-                                   Padding="20,0,0,0" />
+                                   Margin="-12,1,0,0"
+                                   Padding="-23,7,0,0" 
+                                   FontSize="15"/>
                     </StackPanel>
                     <StackPanel Margin="0,5,0,0">
                         <TextBlock x:Name="txtPasswordLabel" 
                                    Style="{StaticResource txtLogin}"
-                                   Text="Password"                         
-                                   Margin="10,0,0,0"/>
+                                   Text="Password:" 
+                                   Margin="-14,44,0,0"
+                                   FontSize="15"/>
                         <PasswordBox x:Name="pwdPassword"
+                                     Password="Password" 
                                      Style="{StaticResource pwdBoxLoginInput}"
-                                     Margin="10,0,29,0" 
-                                     Padding="20,0,0,3"/>
+                                     Margin="-12,0,0,0"
+                                     Padding="-22,10,0,0" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
             <TextBox x:Name="txtShownPasswordTop"
                      Text="Shown Password Field"
+                     Background="{StaticResource clrTertiary}"
                      Style="{StaticResource txtBoxLoginShownInput}"
-                     Margin="32,1,28,6" 
-                     Padding="19,0,0,0" />
+                     Margin="8,4,0,9" Padding="0,11,0,0" />
             <StackPanel x:Name="stkShowPasswordButtons" Margin="0,114,0,0">
                 <Button x:Name="btnShowPasswordTop" 
                         Style="{StaticResource btnShowPassword}"

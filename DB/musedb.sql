@@ -203,10 +203,9 @@ GO
 CREATE TABLE [dbo].[Playlist] (
 	[PlaylistID]  [int] IDENTITY(100000,1)     NOT NULL,
 	[Title]	[nvarchar](50)					   NOT NULL DEFAULT 'Playlist',
-	[ImageFilePath] [nvarchar](500)            DEFAULT 
-	'defaultAlbumImage.png',
-    [Photo]             [varbinary](MAX)           NULL,
-	[PhotoMimeType]     [varchar](50)              NULL,
+	[ImageFilePath] [nvarchar](500)            DEFAULT 'defaultAlbumImage.png',
+    [Photo]             [varbinary](MAX)       NULL,
+	[PhotoMimeType]     [varchar](50)          NULL,
 	[Description] [nvarchar](max)			   NULL DEFAULT "",
 	[UserID] [int]
 	
