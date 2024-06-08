@@ -25,29 +25,29 @@
                     </Style>
                 </Button.Resources>
             </Button>
+            <Label
+                Content="Playlists"
+                Foreground="{StaticResource clrLight}"
+                Style="{StaticResource lblBold}" 
+                HorizontalAlignment="Left" 
+                Margin="0,8,0,0" 
+                FontSize="20" />
             <DataGrid 
-                    x:Name="grdPlaylists" 
-                    BorderThickness="3,3,3,3" 
-                    AutoGenerateColumns="false" 
-                    FontWeight="UltraBlack" 
-                    HorizontalGridLinesBrush="White" 
-                    VerticalAlignment="Top" 
-                    HorizontalAlignment="right" 
-                    FontSize="12" 
-                    CanUserResizeColumns="False" 
-                    CanUserResizeRows="False" 
-                    IsReadOnly="True" 
-                    SelectionMode="Single" 
-                    CanUserSortColumns="False" 
-                    CanUserReorderColumns="False" 
-                    BorderBrush="Black" 
-                    Panel.ZIndex="5" 
+                    x:Name="grdPlaylists"
+                    GridLinesVisibility="None" 
+                    Style="{StaticResource dgDefault}"
                     MouseDoubleClick="grdPlaylists_MouseDoubleClick" 
-                    Width="171" 
-                    HorizontalScrollBarVisibility="Disabled" >
+                    Width="171" >
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="Foreground" Value="White" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Playlists" 
+                    <DataGridTextColumn 
                     Binding="{Binding Title}" 
+                    FontSize="18" 
                     Width="165" 
                     CanUserResize="True" 
                     IsReadOnly="True"/>

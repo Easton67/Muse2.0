@@ -171,6 +171,17 @@
 
         <!--#endRegion-->
 
+        <!--#region Label Styles-->
+
+        <Style x:Key="lblBold" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource clrLight}"/>
+        </Style>
+
+        <!--#endRegion-->
+
         <!--#region TextBlock Styles-->
         <Style x:Key="txtSubHeader" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Medium" />
@@ -190,6 +201,27 @@
         <!--#endRegion-->
 
         <!--#region TextBox Styles-->
+        <Style x:Key="txtCode" TargetType="TextBox">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="10,0,10,0" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderBrush="{StaticResource clrDark}" BorderThickness="0,0,0,3">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="20,0,0,0"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style x:Key="txtBoxLoginShownInput" TargetType="TextBox">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="Medium"/>
@@ -279,7 +311,7 @@
             <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="FontSize" Value="20" />
         </Style>
-
+        
         <Style TargetType="DataGridRow">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="OpacityMask" Value="{StaticResource clrSecondary}" />

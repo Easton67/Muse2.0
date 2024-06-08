@@ -256,7 +256,7 @@ namespace Muse2.Pages.Login
                     if (resetCode.Equals(userEnteredCode))
                     {
                         stkForgetPasswordInputs.Visibility = Visibility.Visible;
-                        lblPassword.Content = "New Password";
+                        lblPassword.Text = "New Password";
                         stkPassword.Visibility = Visibility.Visible;
                         stkConfirmPassword.Visibility = Visibility.Visible;
                         stkVerificationCode.Visibility = Visibility.Hidden;

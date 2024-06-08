@@ -11,122 +11,54 @@
         <StackPanel x:Name="stkForgetPasswordInputs">
             <StackPanel x:Name="stkEmail" Margin="0,17,0,5">
                 <TextBlock x:Name= "lblEmail"
-                              Style="{StaticResource txtLoginLabel}"
-                              Text="Profile Name"
-                              Padding="9,0,0,1" />
+                           Style="{StaticResource txtLoginLabel}"
+                           Text="Email"
+                           Padding="9,0,0,1" />
                 <TextBox x:Name="txtEmail"
-                         FontSize="13"
-                         FontWeight="Medium"
-                         FontFamily="Montserrat"                            
-                         Foreground="Black"
-                         CaretBrush="Black"
-                         BorderBrush="Black"
-                         BorderThickness="0,0,0,2"
-                         Height="28"
-                         VerticalContentAlignment="Center"
-                         Margin="10,5,31,0"
-                         Padding="20,0,0,0" 
-                         VerticalAlignment="Center" 
-                         Width="209">
-                    <TextBox.Background>
-                        <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\user-icon.png"
-                                     Stretch="None"
-                                     AlignmentX="Left"/>
-                    </TextBox.Background>
-                </TextBox>
+                         Text="Email Field"
+                         Style="{StaticResource txtBoxLoginInput}"
+                         Margin="10,5,31,0" Padding="-23,0,0,0" />
             </StackPanel>
             <StackPanel x:Name="stkPassword" 
-                        Margin="0,-4,0,0">
-                <Label x:Name="lblPassword"
-                       Content="Password"
-                       Foreground="Black"
-                       FontSize="12"
-                       FontWeight="Medium"                          
-                       Margin="5,0,0,0"/>
-
+                        Margin="0,1,0,0">
+                <TextBlock x:Name="lblPassword"
+                           Text="Password"
+                           Style="{StaticResource txtLoginLabel}"                         
+                           Margin="8,0,0,0"/>
                 <PasswordBox x:Name="pwdPassword"
-                            FontSize="13"
-                            FontWeight="Medium"
-                            Foreground="Black"
-                            CaretBrush="Black"
-                            BorderBrush="Black"
-                            BorderThickness="0,0,0,2"
-                            Height="28"
-                            VerticalContentAlignment="Center"
-                            Margin="10,0,29,0" 
-                            Width="210" 
-                            Padding="20,0,0,3">
-                    <PasswordBox.Background>
-                        <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
-                                    Stretch="None"
-                                    AlignmentX="Left"/>
-                    </PasswordBox.Background>
-                </PasswordBox>
+                             Password="Password" 
+                             Style="{StaticResource pwdBoxLoginInput}"
+                             Margin="10,0,29,0" 
+                             Padding="20,0,0,3" />
             </StackPanel>
             <TextBox x:Name="txtShownPasswordTop"
-                    FontSize="13"
-                    FontWeight="Medium"
-                    Foreground="Black"
-                    CaretBrush="Black"
-                    BorderBrush="Black"
-                    BorderThickness="0,0,0,0"
-                    Height="21"
-                    VerticalContentAlignment="Center"
-                    Margin="31,-36,28,0" 
-                    Cursor="Arrow"
-                    Width="187" 
-                    IsReadOnly="True" 
-                    Panel.ZIndex="8" Background="White"/>
+                     Text="Shown Password Field"
+                     Style="{StaticResource txtBoxLoginShownInput}"
+                     Margin="8,-29,28,0" />
             <StackPanel x:Name="stkConfirmPassword" Margin="0,14,0,0">
-                <TextBlock
-                           x:Name="txtConfirmPasswordLabel"
+                <TextBlock x:Name="txtConfirmPasswordLabel"
                            Text="Confirm Password"
-                           Foreground="Black"
-                           FontSize="12"
-                           FontWeight="Medium"                           
+                           Style="{StaticResource txtLoginLabel}"                         
                            Margin="10,0,0,0"/>
                 <PasswordBox x:Name="pwdConfirmPassword"
-                                FontSize="13"
-                                FontWeight="Medium"
-                                Foreground="Black"
-                                CaretBrush="Black"
-                                BorderBrush="Black"
-                                BorderThickness="0,0,0,2"
-                                Height="28"
-                                VerticalContentAlignment="Center"
-                                Margin="10,0,29,0" 
-                                Width="210" 
-                                Padding="20,0,0,3">
-                    <PasswordBox.Background>
-                        <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
-                           Stretch="None"
-                           AlignmentX="Left"/>
-                    </PasswordBox.Background>
-                </PasswordBox>
+                             Password="Password" 
+                             Style="{StaticResource pwdBoxLoginInput}"
+                             Margin="10,0,29,0" 
+                             Padding="20,0,0,3" />
             </StackPanel>
             <TextBox x:Name="txtShownPasswordBottom"
-                    FontSize="13"
-                    FontWeight="Medium"
-                    Foreground="Black"
-                    CaretBrush="Black"
-                    BorderBrush="Black"
-                    BorderThickness="0,0,0,0"
-                    Height="21"
-                    VerticalContentAlignment="Center"
-                    Margin="31,-29,28,0" 
-                    Cursor="Arrow"
-                    Width="187" 
-                    IsReadOnly="True" 
-                    Panel.ZIndex="8"/>
+                     Text="Shown Password Field"
+                     Style="{StaticResource txtBoxLoginShownInput}"
+                     Margin="8,-29,28,0" />
         </StackPanel>
         <StackPanel x:Name="stkVerificationCode" Orientation="Horizontal" Margin="0,-118,0,-76" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="txtCode1" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" PreviewTextInput="txtCode1_PreviewTextInput" />
-                <TextBox x:Name="txtCode2" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" PreviewTextInput="txtCode2_PreviewTextInput"  />
-                <TextBox x:Name="txtCode3" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" PreviewTextInput="txtCode3_PreviewTextInput" />
-                <TextBox x:Name="txtCode4" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" PreviewTextInput="txtCode4_PreviewTextInput" />
-                <TextBox x:Name="txtCode5" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" PreviewTextInput="txtCode5_PreviewTextInput" />
-                <TextBox x:Name="txtCode6" FontSize="20" Margin="10,0,10,0" BorderThickness="0,0,0,3" BorderBrush="Black" MaxLength="1" Width="18" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" PreviewTextInput="txtCode6_PreviewTextInput" />
+                <TextBox Style="{StaticResource txtCode}" x:Name="txtCode1" Margin="10,0,10,0" PreviewTextInput="txtCode1_PreviewTextInput" />
+                <TextBox Style="{StaticResource txtCode}" x:Name="txtCode2" Margin="10,0,10,0" PreviewTextInput="txtCode2_PreviewTextInput" />
+                <TextBox Style="{StaticResource txtCode}" x:Name="txtCode3" Margin="10,0,10,0" PreviewTextInput="txtCode3_PreviewTextInput" />
+                <TextBox Style="{StaticResource txtCode}" x:Name="txtCode4" Margin="10,0,10,0" PreviewTextInput="txtCode4_PreviewTextInput" />
+                <TextBox Style="{StaticResource txtCode}" x:Name="txtCode5" Margin="10,0,10,0" PreviewTextInput="txtCode5_PreviewTextInput" />
+                <TextBox Style="{StaticResource txtCode}" x:Name="txtCode6" Margin="10,0,10,0" PreviewTextInput="txtCode6_PreviewTextInput" />
             </StackPanel>
         </StackPanel>
         <StackPanel>
@@ -145,7 +77,7 @@
                     HorizontalContentAlignment="Right" 
                     HorizontalAlignment="Right" 
                     Padding="1,0,1,0" 
-                    Margin="0,118,8,-49" Click="btnShowPasswordTop_Click" >
+                    Margin="0,91,8,-27" Click="btnShowPasswordTop_Click" >
                 <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">

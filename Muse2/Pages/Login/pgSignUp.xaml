@@ -43,42 +43,29 @@
                     <PasswordBox x:Name="pwdPassword"
                       Style="{StaticResource pwdBoxLoginInput}"
                       Margin="10,0,29,0" 
-                      Padding="20,0,0,3">
-                        <PasswordBox.Background>
-                            <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
-                              Stretch="None"
-                              AlignmentX="Left"/>
-                        </PasswordBox.Background>
-                    </PasswordBox>
+                      Padding="-20,0,0,3" />
                 </StackPanel>
                 <StackPanel Margin="0,5,0,0">
                     <TextBlock
-                      x:Name="txtConfirmPasswordLabel"
-                      Text="Confirm Password"
-                      Style="{StaticResource txtLoginLabel}"                         
-                      Margin="10,0,0,0"/>
+                          x:Name="txtConfirmPasswordLabel"
+                          Text="Confirm Password"
+                          Style="{StaticResource txtLoginLabel}"                         
+                          Margin="10,0,0,0"/>
                     <PasswordBox x:Name="pwdConfirmPassword"
-                                 Password="Password" 
                                  Style="{StaticResource pwdBoxLoginInput}"
                                  Margin="10,0,29,0" 
-                                 Padding="20,0,0,3">
-                        <PasswordBox.Background>
-                            <ImageBrush ImageSource="C:\Users\67Eas\source\repos\WpfTutorials\Wpf-LoginForm\Images\key-icon.png"
-                              Stretch="None"
-                              AlignmentX="Left"/>
-                        </PasswordBox.Background>
+                                 Padding="-20,0,0,3">
                     </PasswordBox>
                 </StackPanel>
             </StackPanel>
             <TextBox x:Name="txtShownPasswordTop"
                      Text="Shown Password Field"
                      Style="{StaticResource txtBoxLoginShownInput}"
-                     Margin="8,1,28,6" /> 
+                     Margin="8,3.4,28,6" /> 
             <TextBox x:Name="txtShownPasswordBottom"
                      Text="Shown Password Field"
                      Style="{StaticResource txtBoxLoginShownInput}"
-                     Margin="10,98,28,6"
-                     Padding="-2,0,0,0" />
+                     Margin="8,98.1,28,6" />
             <StackPanel x:Name="stkShowPasswordButtons" Margin="0,114,0,0">
                 <Button x:Name="btnShowPasswordTop" 
                         Height="16" 
