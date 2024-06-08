@@ -160,9 +160,9 @@
                     <ControlTemplate TargetType="Button">
                         <Border CornerRadius="9"
                                 BorderThickness="0,0,0,0">
-                            <Grid>
+                            <!--<Grid>
                                 <Image Source="C:\Users\67Eas\Downloads\eye.png"/>
-                            </Grid>
+                            </Grid>-->
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -180,7 +180,7 @@
             <Setter Property="TextAlignment" Value="Center" />
         </Style>
 
-        <Style x:Key="txtLogin" TargetType="TextBlock">
+        <Style x:Key="txtLoginLabel" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="Foreground" Value="{StaticResource clrLight}" />
             <Setter Property="FontFamily" Value="Montserrat" />

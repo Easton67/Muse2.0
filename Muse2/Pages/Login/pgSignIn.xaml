@@ -13,21 +13,19 @@
                 <StackPanel Margin="22,-7,0,0">
                     <StackPanel Margin="1,5,0,0">
                         <TextBlock x:Name= "lblEmail"
-                                    Style="{StaticResource txtLogin}"
+                                    Style="{StaticResource txtLoginLabel}"
                                     Text="Email:"        
                                     Margin="-23,0,0,-6" 
-                                    Padding="10,0,0,1" 
-                                    FontSize="15"/>
+                                    Padding="10,0,0,1" />
                         <TextBox x:Name="txtEmail"
                                    Text="Email Field"
                                    Style="{StaticResource txtBoxLoginInput}"
                                    Margin="-12,1,0,0"
-                                   Padding="-23,7,0,0" 
-                                   FontSize="15"/>
+                                   Padding="-23,7,0,0" />
                     </StackPanel>
                     <StackPanel Margin="0,5,0,0">
                         <TextBlock x:Name="txtPasswordLabel" 
-                                   Style="{StaticResource txtLogin}"
+                                   Style="{StaticResource txtLoginLabel}"
                                    Text="Password:" 
                                    Margin="-14,44,0,0"
                                    FontSize="15"/>

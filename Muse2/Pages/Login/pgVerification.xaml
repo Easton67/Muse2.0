@@ -10,15 +10,10 @@
     <Grid>
         <StackPanel x:Name="stkForgetPasswordInputs">
             <StackPanel x:Name="stkEmail" Margin="0,17,0,5">
-                <Label x:Name= "lblEmail"
-                        Content="Email"
-                        Foreground="Black"
-                        FontSize="12"
-                        FontWeight="Medium"
-                        FontFamily="Montserrat"                             
-                        Margin="0,0,0,-6" 
-                        Padding="10,0,0,1" 
-                        Width="250"/>
+                <TextBlock x:Name= "lblEmail"
+                              Style="{StaticResource txtLoginLabel}"
+                              Text="Profile Name"
+                              Padding="9,0,0,1" />
                 <TextBox x:Name="txtEmail"
                          FontSize="13"
                          FontWeight="Medium"
@@ -135,31 +130,11 @@
             </StackPanel>
         </StackPanel>
         <StackPanel>
-            <Button x:Name="btnEnterCode"  
+            <Button x:Name="btnEnterCode" 
+                    Style="{StaticResource btnLoginMain}"
                      Content="SEND EMAIL"
-                     Foreground="Black"
-                     FontSize="12"
-                     FontFamily="Montserrat"
-                     Cursor="Hand" 
-                     FontWeight="SemiBold" 
                      Margin="0,202,0,0" 
                      Click="btnEnterCode_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Width="150" 
-                     Height="40"
-                     CornerRadius="20">
-                            <Border.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFE5BAEA"/>
-                                    <GradientStop Color="#FFE8CBCB" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <ContentPresenter VerticalAlignment="Center"
-                         HorizontalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
             </Button>
         </StackPanel>
         <StackPanel>

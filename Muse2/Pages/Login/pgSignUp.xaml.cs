@@ -36,6 +36,8 @@ namespace Muse2.Pages.Login
         {
             txtShownPasswordTop.Visibility = Visibility.Hidden;
             txtShownPasswordBottom.Visibility = Visibility.Hidden;
+            txtProfileName.Text = "";
+            txtEmail.Text = "";
         }
         private void btnShowPasswordTop_Click(object sender, RoutedEventArgs e)
         {
@@ -134,7 +136,7 @@ namespace Muse2.Pages.Login
             {
                 ProfileName = profileName,
                 Email = email,
-                ImageFilePath = "C:\\Users\\67Eas\\Downloads\\eye.png"
+                ImageFilePath = "userimage.png"
             };
             try
             {
