@@ -80,8 +80,9 @@ namespace Muse2.Pages.AddSong
 
                     // Copy the selected MP3 file to SongFiles
                     string newFilePath = System.IO.Path.Combine(destinationFolder, System.IO.Path.GetFileName(mp3FileName));
-                    File.Copy(newFilePath, Path.Combine(Muse3SongFilesDirectory, Path.GetFileName(newFilePath)), true);
-                    File.Copy(mp3FileName, newFilePath, true);
+                    string pathToCopyTo = Path.Combine(Muse3SongFilesDirectory, Path.GetFileName(newFilePath));
+                    // File.Copy(newFilePath, pathToCopyTo, true);
+                    File.Copy(mp3FileName, pathToCopyTo, true);
 
                     mp3FileName = System.IO.Path.GetFileName(newFilePath);
 

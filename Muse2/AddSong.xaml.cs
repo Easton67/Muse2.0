@@ -19,6 +19,7 @@ namespace Muse2
     /// </summary>
     public partial class AddSong : Window
     {
+        private UserVM _loggedInUser = null;
         private string _lyrics;
         private string _mp3FileName;
         private string _songTitle;
@@ -26,8 +27,8 @@ namespace Muse2
         private int _yearReleased;
         private bool _isExplicit;
         private int _plays;
-        private UserVM _loggedInUser = null;
         private string _mp3File = "";
+        private string _fullImageFilePath;
         // set this to the default when adding, and then change it if a picture is selected
         private string _imageFilePath = "defaultAlbumImage.png";
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -148,6 +149,7 @@ namespace Muse2
 
             pgArtwork addArtwork = (pgArtwork)pages["frmArtwork"];
             _imageFilePath = addArtwork.imageFilePath;
+            _fullImageFilePath = addArtwork.fullImageFilePath;
 
             pgLyrics addLyrics = (pgLyrics)pages["frmLyrics"];
             _lyrics = addLyrics.lyrics;
@@ -164,9 +166,15 @@ namespace Muse2
                     Explicit = _isExplicit,
                     Plays = _plays,
                     UserID = _loggedInUser.UserID,
+                    Artist = _artistName,
                     Album = "",
-                    Artist = _artistName
+                    DateUploaded = null,
+                    DateAdded = DateTime.Now.Date
                 };
+
+                newSong.Photo = File.ReadAllBytes(_fullImageFilePath);
+                newSong.PhotoMimeType = GetMimeType(_fullImageFilePath);
+
                 var sm = new SongManager();
                 bool result = sm.InsertSong(newSong);
                 this.Close();
@@ -175,6 +183,17 @@ namespace Muse2
             {
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message);
             }
+        }
+        private string GetMimeType(string filePath)
+        {
+            string mimeType = "application/unknown";
+            string ext = System.IO.Path.GetExtension(filePath).ToLower();
+            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
+            if (regKey != null && regKey.GetValue("Content Type") != null)
+            {
+                mimeType = regKey.GetValue("Content Type").ToString();
+            }
+            return mimeType;
         }
     }
 }

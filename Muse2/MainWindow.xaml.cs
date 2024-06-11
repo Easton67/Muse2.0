@@ -520,7 +520,7 @@ namespace Muse2
             selectedSong = userSongs[userSongs.IndexOf(selectedSong) + 1];
             barSongLength.Value = 00.00;
             sliderSongLength.Value = 00.00;
-            CurrentSongHelper(selectedSong);
+            CurrentSongHelper(selectedSong); 
             mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
             if (btnPause.Visibility == Visibility.Visible)
             {

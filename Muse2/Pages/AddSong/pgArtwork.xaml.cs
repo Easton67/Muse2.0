@@ -14,6 +14,7 @@ namespace Muse2.Pages.AddSong
     public partial class pgArtwork : Page
     {
         public string imageFilePath = "defaultAlbumImage";
+        public string fullImageFilePath;
         private string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         public pgArtwork()
         {
@@ -40,6 +41,7 @@ namespace Muse2.Pages.AddSong
 
                 if (result == true)
                 {
+                    fullImageFilePath = openFileDialog.FileName;
                     imageFilePath = openFileDialog.FileName;
 
                     string destinationFolder = baseDirectory + "\\MuseConfig\\AlbumArt";
