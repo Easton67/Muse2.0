@@ -25,19 +25,12 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Label
-                Content="Playlists"
-                Foreground="{StaticResource clrLight}"
-                Style="{StaticResource lblBold}" 
-                HorizontalAlignment="Left" 
-                Margin="0,8,0,0" 
-                FontSize="20" />
             <DataGrid 
                     x:Name="grdPlaylists"
                     GridLinesVisibility="None" 
                     Style="{StaticResource dgDefault}"
                     MouseDoubleClick="grdPlaylists_MouseDoubleClick" 
-                    Width="171" >
+                    Width="171" Margin="0,12,0,0" >
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="BorderBrush" Value="Transparent" />
@@ -46,6 +39,7 @@
                 </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn 
+                    Header="Playlists"
                     Binding="{Binding Title}" 
                     FontSize="18" 
                     Width="165" 

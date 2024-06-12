@@ -168,6 +168,7 @@ namespace Muse2
                     UserID = _loggedInUser.UserID,
                     Artist = _artistName,
                     Album = "",
+                    Genre = "",
                     DateUploaded = null,
                     DateAdded = DateTime.Now.Date
                 };

@@ -509,6 +509,7 @@ namespace Muse2
             }
             mediaPlayer.Open(new Uri(selectedSong.Mp3FilePath));
             CurrentSongHelper(selectedSong);
+            mediaPlayer.Play();
             btnPlay.Visibility = Visibility.Hidden;
             btnPause.Visibility = Visibility.Visible;
             mediaPlayer.Play();
@@ -551,9 +552,9 @@ namespace Muse2
         public void CurrentSongHelper(Song selectedSong)
         {
 
-                lblSongTitle.Content = selectedSong.Title;
-                lblSongArtist.Content = selectedSong.Artist;
-                imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
+            lblSongTitle.Content = selectedSong.Title;
+            lblSongArtist.Content = selectedSong.Artist;
+            imgExplicit.Visibility = (selectedSong.Explicit) ? Visibility.Visible : Visibility.Hidden;
             try
             {
                 imgCoverArt.Source = (selectedSong.ImageFilePath.Length > 1) ?
